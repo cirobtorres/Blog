@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, useMemo } from "react";
 import { CKEditor, useCKEditorCloud } from "@ckeditor/ckeditor5-react";
 import { EditorConfig } from "@ckeditor/ckeditor5-core/src/editor/editorconfig";
 import "../styles/ckeditor.css";
+import savePublication from "../lib/publication";
 
 export default function BLogEditor() {
   const editorContainerRef = useRef<HTMLDivElement | null>(null);
@@ -18,8 +19,13 @@ export default function BLogEditor() {
     return () => setIsLayoutReady(false);
   }, []);
 
-  const handleSave = () => {
-    console.log(outputData); // ---------> Supabase
+  const handleSave = async () => {
+    const temp = await savePublication({
+      title: "",
+      sub_title: "",
+      content: outputData,
+    }); // ---------> Supabase
+    console.log(temp);
   };
 
   const { ClassicEditor, editorConfig } = useMemo(() => {
@@ -375,7 +381,7 @@ export default function BLogEditor() {
         type="button"
         onClick={handleSave} // ---------> Supabase
       >
-        Save
+        Publicar
       </button>
     </form>
   );
