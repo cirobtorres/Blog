@@ -11,19 +11,18 @@ export default function Editor() {
   const editorRef = useRef<HTMLDivElement | null>(null);
   const editorWordCountRef = useRef<HTMLDivElement | null>(null);
   const [isLayoutReady, setIsLayoutReady] = useState(false);
-  const [title, setTitle] = useState(""); // ---------> Supabase
-  const [titleWords, setTitleWords] = useState(0);
-  const [titleCharacters, setTitleCharacters] = useState(0);
-  const [subTitle, setSubtitle] = useState(""); // ---------> Supabase
-  const [subTitleWords, setSubTitleWords] = useState(0);
-  const [subTitleCharacters, setSubTitleCharacters] = useState(0);
-  const [bodyContent, setBodyContent] = useState(""); // ---------> Supabase
   const cloud = useCKEditorCloud({ version: "44.1.0" });
 
-  useEffect(() => {
-    setIsLayoutReady(true);
-    return () => setIsLayoutReady(false);
-  }, []);
+  // ------------------------------=====Data-sent-to-database=====------------------------------
+  const [title, setTitle] = useState(""); // TITLE
+  const [titleWords, setTitleWords] = useState(0);
+  const [titleCharacters, setTitleCharacters] = useState(0);
+
+  const [subTitle, setSubtitle] = useState(""); // SUBTITLE
+  const [subTitleWords, setSubTitleWords] = useState(0);
+  const [subTitleCharacters, setSubTitleCharacters] = useState(0);
+
+  const [bodyContent, setBodyContent] = useState(""); // CONTENT
 
   const handleSave = async () => {
     if (title !== "" && subTitle !== "" && bodyContent !== "") {
@@ -31,10 +30,16 @@ export default function Editor() {
         title,
         sub_title: subTitle,
         content: bodyContent,
-      }); // ---------> Supabase
-      console.log(publication); // TEMP
+      });
+      console.log(publication); // TODO: DELETE ME, I'm temporary
     }
   };
+  // ----------------------------------------===========----------------------------------------
+
+  useEffect(() => {
+    setIsLayoutReady(true);
+    return () => setIsLayoutReady(false);
+  }, []);
 
   const { ClassicEditor, editorConfig } = useMemo(() => {
     if (cloud.status !== "success" || !isLayoutReady) {
@@ -132,10 +137,11 @@ export default function Editor() {
             "subscript",
             "superscript",
             "specialCharacters",
-            "horizontalLine",
             "link",
             "bookmark",
+            "horizontalLine",
             "-",
+            // "|",
             "uploadImage",
             "insertImageViaUrl",
             "mediaEmbed",
@@ -309,6 +315,10 @@ export default function Editor() {
               color: "hsl(251, 100%, 68%)",
               label: "Purple",
             },
+            {
+              color: "hsl(350, 81%, 58%)",
+              label: "Pink",
+            },
             // ...
           ],
         },
@@ -329,6 +339,10 @@ export default function Editor() {
             {
               color: "hsl(251, 100%, 68%)",
               label: "Purple",
+            },
+            {
+              color: "hsl(350, 81%, 58%)",
+              label: "Pink",
             },
             // ...
           ],
@@ -413,6 +427,8 @@ export default function Editor() {
             placeholder="Título"
             maxLength={125}
             value={title}
+            type="text"
+            autoComplete="off"
             onChange={(event) => {
               const words = event.target.value;
               const numberOfWords = words.match(/[\w-]+/g)?.length;
@@ -468,7 +484,7 @@ export default function Editor() {
                     wordCount.wordCountContainer
                   );
                 }}
-                onChange={(event, editor) => setBodyContent(editor.getData())} // ---------> Supabase
+                onChange={(event, editor) => setBodyContent(editor.getData())} // IMPORTANT
                 onAfterDestroy={() => {
                   if (editorWordCountRef.current)
                     Array.from(editorWordCountRef.current.children).forEach(
@@ -489,7 +505,7 @@ export default function Editor() {
       <div className="flex justify-end">
         <button
           type="button"
-          onClick={handleSave} // ---------> Supabase
+          onClick={handleSave}
           className="w-1/4 py-1 font-extrabold border border-[#59565d] text-[#aef726] bg-[#4a494b]"
         >
           Publicar!
