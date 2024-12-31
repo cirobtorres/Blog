@@ -3,15 +3,21 @@
 import { useState, useEffect, useRef, useMemo } from "react";
 import { CKEditor, useCKEditorCloud } from "@ckeditor/ckeditor5-react";
 import { EditorConfig } from "@ckeditor/ckeditor5-core/src/editor/editorconfig";
-import "../styles/ckeditor.css";
-import savePublication from "../lib/publication";
+import savePublication from "../../lib/publication";
+import "../../styles/ckeditor.css";
 
-export default function BLogEditor() {
+export default function Editor() {
   const editorContainerRef = useRef<HTMLDivElement | null>(null);
   const editorRef = useRef<HTMLDivElement | null>(null);
   const editorWordCountRef = useRef<HTMLDivElement | null>(null);
   const [isLayoutReady, setIsLayoutReady] = useState(false);
-  const [outputData, setOutputData] = useState(""); // ---------> Supabase
+  const [title, setTitle] = useState(""); // ---------> Supabase
+  const [titleWords, setTitleWords] = useState(0);
+  const [titleCharacters, setTitleCharacters] = useState(0);
+  const [subTitle, setSubtitle] = useState(""); // ---------> Supabase
+  const [subTitleWords, setSubTitleWords] = useState(0);
+  const [subTitleCharacters, setSubTitleCharacters] = useState(0);
+  const [bodyContent, setBodyContent] = useState(""); // ---------> Supabase
   const cloud = useCKEditorCloud({ version: "44.1.0" });
 
   useEffect(() => {
@@ -20,12 +26,14 @@ export default function BLogEditor() {
   }, []);
 
   const handleSave = async () => {
-    const temp = await savePublication({
-      title: "",
-      sub_title: "",
-      content: outputData,
-    }); // ---------> Supabase
-    console.log(temp);
+    if (title !== "" && subTitle !== "" && bodyContent !== "") {
+      const publication = await savePublication({
+        title,
+        sub_title: subTitle,
+        content: bodyContent,
+      }); // ---------> Supabase
+      console.log(publication); // TEMP
+    }
   };
 
   const { ClassicEditor, editorConfig } = useMemo(() => {
@@ -81,8 +89,6 @@ export default function BLogEditor() {
       PasteFromMarkdownExperimental,
       PasteFromOffice,
       RemoveFormat,
-      ShowBlocks,
-      SourceEditing,
       SpecialCharacters,
       SpecialCharactersArrows,
       SpecialCharactersCurrency,
@@ -108,12 +114,9 @@ export default function BLogEditor() {
       ClassicEditor,
       editorConfig: {
         licenseKey: process.env.NEXT_PUBLIC_CKEDITOR_LICENSE_KEY,
+        initialData: "",
         toolbar: {
           items: [
-            "sourceEditing",
-            "showBlocks",
-            "findAndReplace",
-            "|",
             "paragraph",
             "heading1",
             "heading2",
@@ -125,15 +128,14 @@ export default function BLogEditor() {
             "bold",
             "italic",
             "strikethrough",
+            "|",
             "subscript",
             "superscript",
-            "removeFormat",
-            "|",
             "specialCharacters",
             "horizontalLine",
             "link",
             "bookmark",
-            "|",
+            "-",
             "uploadImage",
             "insertImageViaUrl",
             "mediaEmbed",
@@ -151,8 +153,11 @@ export default function BLogEditor() {
             "bulletedList",
             "numberedList",
             "todoList",
+            "|",
             "outdent",
             "indent",
+            "|",
+            "findAndReplace",
           ],
           shouldNotGroupWhenFull: true,
         },
@@ -203,8 +208,6 @@ export default function BLogEditor() {
           PasteFromMarkdownExperimental,
           PasteFromOffice,
           RemoveFormat,
-          ShowBlocks,
-          SourceEditing,
           SpecialCharacters,
           SpecialCharactersArrows,
           SpecialCharactersCurrency,
@@ -231,13 +234,23 @@ export default function BLogEditor() {
           "heading2",
           "heading3",
           "|",
+          "fontColor",
+          "fontBackgroundColor",
+          "|",
           "bold",
           "italic",
+          "strikethrough",
+          "removeFormat",
+          "|",
+          "subscript",
+          "superscript",
           "|",
           "link",
+          "blockquote",
           "|",
           "bulletedList",
           "numberedList",
+          "todoList",
         ],
         blockToolbar: [
           "paragraph",
@@ -245,17 +258,9 @@ export default function BLogEditor() {
           "heading2",
           "heading3",
           "|",
-          "fontColor",
-          "fontBackgroundColor",
-          "|",
-          "bold",
-          "italic",
-          "|",
-          "link",
-          "insertTable",
-          "|",
           "bulletedList",
           "numberedList",
+          "|",
           "outdent",
           "indent",
         ],
@@ -286,6 +291,60 @@ export default function BLogEditor() {
             },
           ],
         },
+        fontColor: {
+          colors: [
+            {
+              color: "hsl(285, 11%, 7%)",
+              label: "Black",
+            },
+            {
+              color: "hsl(278, 8%, 80%)",
+              label: "White",
+            },
+            {
+              color: "hsl(81, 82%, 55%)",
+              label: "Green",
+            },
+            {
+              color: "hsl(251, 100%, 68%)",
+              label: "Purple",
+            },
+            // ...
+          ],
+        },
+        fontBackgroundColor: {
+          colors: [
+            {
+              color: "hsl(285, 11%, 7%)",
+              label: "Black",
+            },
+            {
+              color: "hsl(278, 8%, 80%)",
+              label: "White",
+            },
+            {
+              color: "hsl(81, 82%, 55%)",
+              label: "Green",
+            },
+            {
+              color: "hsl(251, 100%, 68%)",
+              label: "Purple",
+            },
+            // ...
+          ],
+        },
+        codeBlock: {
+          languages: [
+            { language: "typescript", label: "TypeScript" },
+            { language: "python", label: "Python" },
+            { language: "kotlin", label: "Kotlin" },
+            { language: "java", label: "Java" },
+            { language: "html", label: "HTML" },
+            { language: "css", label: "CSS" },
+            { language: "sql", label: "SQL" },
+            // ...
+          ],
+        },
         htmlSupport: {
           allow: [
             {
@@ -308,7 +367,6 @@ export default function BLogEditor() {
             "resizeImage",
           ],
         },
-        initialData: "",
         link: {
           addTargetToExternalLinks: true,
           defaultProtocol: "https://",
@@ -344,11 +402,62 @@ export default function BLogEditor() {
   }, [cloud, isLayoutReady]);
 
   return (
-    <form className="main-container">
+    <form className="main-container my-4">
       <div
         className="editor-container editor-container_classic-editor editor-container_include-style editor-container_include-block-toolbar editor-container_include-word-count"
         ref={editorContainerRef}
       >
+        <div className="mb-2">
+          <input
+            id="publication-title"
+            placeholder="Título"
+            maxLength={125}
+            value={title}
+            onChange={(event) => {
+              const words = event.target.value;
+              const numberOfWords = words.match(/[\w-]+/g)?.length;
+              const numberOfCharacters = words.length;
+              setTitle(words);
+              setTitleWords(numberOfWords || 0);
+              setTitleCharacters(numberOfCharacters || 0);
+            }}
+            className="w-full p-2 text-blog-silver bg-[var(--ck-color-base-background)] border border-[var(--ck-custom-border)] focus:border-[var(--ck-color-focus-border)] outline-none focus:[box-shadow:var(--ck-inner-shadow),_0_0] placeholder:text-blog-placeholder"
+          />
+          <div className="editor_container__word-count">
+            <div className="ck ck-word-count">
+              <div className="ck-word-count__words">Words: {titleWords}</div>
+              <div className="ck-word-count__characters">
+                Characters: {titleCharacters}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="mb-2">
+          <textarea
+            id="publication-subtitle"
+            placeholder="Subtítulo"
+            rows={3}
+            maxLength={255}
+            value={subTitle}
+            onChange={(event) => {
+              const words = event.target.value;
+              const numberOfWords = words.match(/[\w-]+/g)?.length;
+              const numberOfCharacters = words.length;
+              setSubtitle(words);
+              setSubTitleWords(numberOfWords || 0);
+              setSubTitleCharacters(numberOfCharacters || 0);
+            }}
+            className="w-full p-2 text-blog-silver bg-[var(--ck-color-base-background)] border border-[var(--ck-custom-border)] focus:border-[var(--ck-color-focus-border)] outline-none focus:[box-shadow:var(--ck-inner-shadow),_0_0] placeholder:text-blog-placeholder resize-none scrollbar"
+          />
+          <div className="editor_container__word-count">
+            <div className="ck ck-word-count">
+              <div className="ck-word-count__words">Words: {subTitleWords}</div>
+              <div className="ck-word-count__characters">
+                Characters: {subTitleCharacters}
+              </div>
+            </div>
+          </div>
+        </div>
         <div className="editor-container__editor">
           <div ref={editorRef}>
             {ClassicEditor && editorConfig && (
@@ -359,7 +468,7 @@ export default function BLogEditor() {
                     wordCount.wordCountContainer
                   );
                 }}
-                onChange={(event, editor) => setOutputData(editor.getData())} // ---------> Supabase
+                onChange={(event, editor) => setBodyContent(editor.getData())} // ---------> Supabase
                 onAfterDestroy={() => {
                   if (editorWordCountRef.current)
                     Array.from(editorWordCountRef.current.children).forEach(
@@ -377,12 +486,15 @@ export default function BLogEditor() {
           ref={editorWordCountRef}
         />
       </div>
-      <button
-        type="button"
-        onClick={handleSave} // ---------> Supabase
-      >
-        Publicar
-      </button>
+      <div className="flex justify-end">
+        <button
+          type="button"
+          onClick={handleSave} // ---------> Supabase
+          className="w-1/4 py-1 font-extrabold border border-[#59565d] text-[#aef726] bg-[#4a494b]"
+        >
+          Publicar!
+        </button>
+      </div>
     </form>
   );
 }

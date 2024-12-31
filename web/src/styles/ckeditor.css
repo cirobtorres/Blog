@@ -1,12 +1,6 @@
-@import url("https://fonts.googleapis.com/css2?family=Oswald&family=PT+Serif:ital,wght@0,400;0,700;1,400&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400;1,700&display=swap");
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #131014;
-    --foreground: #ededed;
-  }
-}
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Oswald&family=PT+Serif:ital,wght@0,400;0,700;1,400&display=swap"); */
+/* @import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400;1,700&display=swap"); */
 
 @media print {
   body {
@@ -15,31 +9,23 @@
 }
 
 .main-container {
-  font-family: "Lato";
+  /* font-family: "Lato"; */
+  font-family: "Open Sans";
   width: fit-content;
   margin-left: auto;
   margin-right: auto;
 }
 
 .ck-content {
-  font-family: "Lato";
+  /* font-family: "Lato"; */
+  font-family: "Open Sans";
   line-height: 1.6;
   word-break: break-word;
 }
 
-.editor-container_classic-editor .editor-container__editor {
-  min-width: 795px;
-  max-width: 795px;
-}
-
-/*
-.editor-container_include-block-toolbar {
-  margin-left: 42px;
-}
-*/
-
 .ck-content h3.category {
-  font-family: "Oswald";
+  /* font-family: "Oswald"; */
+  font-family: "Open Sans";
   font-size: 20px;
   font-weight: bold;
   color: #555;
@@ -49,7 +35,8 @@
 }
 
 .ck-content h2.document-title {
-  font-family: "Oswald";
+  /* font-family: "Oswald"; */
+  font-family: "Open Sans";
   font-size: 50px;
   font-weight: bold;
   margin: 0;
@@ -58,7 +45,8 @@
 }
 
 .ck-content h3.document-subtitle {
-  font-family: "Oswald";
+  /* font-family: "Oswald"; */
+  font-family: "Open Sans";
   font-size: 20px;
   color: #555;
   margin: 0 0 1em;
@@ -89,7 +77,8 @@
 }
 
 .ck-content blockquote.side-quote {
-  font-family: "Oswald";
+  /* font-family: "Oswald"; */
+  font-family: "Open Sans";
   font-style: normal;
   float: right;
   width: 35%;
@@ -192,27 +181,263 @@
   .editor-container__editor
   .ck-editor
   .ck-editor__editable {
-  min-height: 600px;
-  border-radius: 0;
+  min-height: 500px;
 }
 
-/*------------------------------Editing------------------------------*/
-.ck-content {
+.editor-container_classic-editor .editor-container__editor {
+  min-width: 900px;
+  max-width: 900px;
+}
+
+/*
+.editor-container_include-block-toolbar {
+  margin-left: 42px;
+}
+*/
+
+.editor-container {
+  margin-bottom: 4px;
+}
+
+pre {
+  margin-bottom: 1em;
+}
+
+/* Remove weird border color when disabling downloadable button from link */
+.ck.ck-list__item
+  > .ck-button.ck-on:not(.ck-list-item-button):focus:not(.ck-disabled) {
+  border-color: transparent;
+}
+
+/* Remove top/bottom from from most suspended lists */
+.ck.ck-list {
+  padding: 0;
+}
+
+/*------------------------------CKeditor-Scrollbar------------------------------*/
+.ck-content::-webkit-scrollbar,
+.ck-dropdown__panel::-webkit-scrollbar,
+.ck-character-grid::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.ck-content::-webkit-scrollbar-track,
+.ck-dropdown__panel::-webkit-scrollbar-track,
+.ck-character-grid::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+  cursor: default;
+  /* border-radius: 6px; */
+}
+
+.ck-content::-webkit-scrollbar-thumb,
+.ck-dropdown__panel::-webkit-scrollbar-thumb,
+.ck-character-grid::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  cursor: default;
+  /* border-radius: 6px; */
+}
+
+.ck-content::-webkit-scrollbar-thumb:hover,
+.ck-dropdown__panel::-webkit-scrollbar-thumb:hover,
+.ck-character-grid::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+}
+
+/*------------------------------To-Do-List------------------------------*/
+.ck-editor__editable.ck-content
+  .todo-list
+  .todo-list__label
+  > span[contenteditable="false"]
+  > input {
+  -webkit-appearance: none;
+  appearance: none;
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  outline: 2px solid #ccc7cf;
+  border-radius: 3px;
+  margin-left: 0;
+  margin-right: -15px;
+  left: -25px;
+  right: 0;
+  width: var(--ck-todo-list-checkmark-size);
+  height: var(--ck-todo-list-checkmark-size);
+}
+
+.ck-editor__editable.ck-content
+  .todo-list
+  .todo-list__label
+  > span[contenteditable="false"]
+  > input[checked] {
+  outline: 2px solid #a9eb2f;
+}
+
+.ck-editor__editable.ck-content
+  .todo-list
+  .todo-list__label
+  > span[contenteditable="false"]
+  > input[checked]:before {
+  background: #a9eb2f;
+  border-color: #a9eb2f;
+}
+
+.ck-editor__editable.ck-content
+  .todo-list
+  .todo-list__label
+  > span[contenteditable="false"]
+  > input[checked]:after {
+  border-color: #333333;
+}
+
+/*------------------------------Word-Count------------------------------*/
+.ck.ck-word-count {
+  background-color: #4a494b;
+  color: #ccc7cf;
+}
+
+/*------------------------------Hr------------------------------*/
+.ck-horizontal-line hr {
+  height: 0px;
+  background-color: transparent;
+  border-bottom: 1px solid #59565d;
+}
+
+/*------------------------------Blockquote------------------------------*/
+.ck-content blockquote {
+  position: relative;
+  border-left: transparent;
+  font-style: italic;
+  margin-left: 0;
+  margin-right: 0;
+  overflow: hidden;
+  padding-left: 2.5em;
+  padding-right: 1.5em;
+  margin-bottom: 1em;
+}
+
+.ck-content blockquote p {
+  text-indent: 0rem;
+  word-break: keep-all;
+  margin-bottom: 0;
+}
+
+.ck-content blockquote p:first-child::before {
+  content: "“";
+  position: absolute;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  top: -0.5rem;
+  left: 0.75rem;
+  font-size: 2.5rem;
+  color: #ccc7cf;
+}
+.ck-content blockquote p:last-child::after {
+  content: "”";
+  position: absolute;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  bottom: 0;
+  font-size: 2.5rem;
+  text-indent: 0.5rem;
+  line-height: 0.25rem;
+  color: #ccc7cf;
+}
+
+.ck-content blockquote p strong {
+  color: inherit;
+}
+
+/*------------------------------Code------------------------------*/
+.ck.ck-editor__editable pre[data-language]:after {
+  background: var(--ck-color-code-block-label-background);
+  color: #fff;
+  font-family: var(--ck-font-face);
+  font-size: 10px;
+  line-height: 10px;
+  padding: var(--ck-spacing-tiny) var(--ck-spacing-medium);
+  right: 5px;
+  top: -8px;
+  border: 1px solid #c4c4c4;
+  border-radius: 2px;
+  white-space: nowrap;
+}
+
+/*------------------------------Text-Color------------------------------*/
+.ck-editor__main {
+  * {
+    color: #cdc8d0;
+  }
+  i,
+  s,
+  b,
+  sub,
+  sup,
+  strong {
+    color: inherit;
+  }
+  a {
+    color: #a9eb2f;
+    font-weight: 700;
+    text-decoration: underline;
+  }
+  a:visited {
+    color: #a9eb2f;
+    /* color: #5f50a0; */
+  }
+}
+/*------------------------------Heading-Paragraph------------------------------*/
+.ck-editor__main {
   h1 {
     font-size: 3rem;
     font-weight: 900;
+    margin-bottom: 0.25em;
   }
   h2 {
     font-size: 2rem;
     font-weight: 900;
+    margin-bottom: 0.5em;
   }
   h3 {
     font-size: 1.5rem;
+    margin-bottom: 1em;
+  }
+  p {
+    margin-bottom: 1em;
   }
 }
 
-.ck-horizontal-line hr {
-  height: 0px;
-  background-color: transparent;
-  border-bottom: 1px solid black;
+/*------------------------------Table------------------------------*/
+.ck-content .table table {
+  border: 1px double var(--ck-custom-border);
+  border-collapse: collapse;
+  border-spacing: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.ck-content .table table td,
+.ck-content .table table th {
+  border: 1px solid var(--ck-custom-border);
+  min-width: 2em;
+  padding: 0.4em;
+}
+
+/*------------------------------Lists------------------------------*/
+.ck-editor__main {
+  ul,
+  ol {
+    margin-left: 30px;
+    span {
+      margin-left: 16px;
+      margin-bottom: 1em;
+    }
+  }
+  ul {
+    margin-bottom: 1em;
+    span {
+      margin-bottom: 0.5em;
+    }
+  }
+  ul.todo-list {
+    margin-left: 0;
+  }
 }
