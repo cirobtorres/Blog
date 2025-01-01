@@ -3,7 +3,9 @@
 @tailwind utilities;
 
 :root {
-  --blog-dark-purple: hsl(285, 11%, 7%);
+  --blog-dark-background: hsl(285, 11%, 7%);
+  --blog-dark-widgets: hsl(300, 7%, 5%);
+  --blog-publication-hero: hsl(320, 14%, 8%);
   --blog-light-purple: hsl(251, 100%, 68%);
   --blog-silver: hsl(278, 8%, 80%);
   --blog-toxic-green: hsl(81, 93%, 56%);
@@ -15,6 +17,10 @@
   --scrollbar-thumb-hover: #636066;
 
   /* ---------------------------------------- CKeditor 5 ---------------------------------------- */
+  /* --ck-editor-max-width: 800px; */
+  --ck-editor-max-width: 100%;
+  --ck-editor-min-width: 280px;
+  --ck-editor-min-height: 800px;
   --ck-border-radius: 0px;
   --ck-spacing-unit: 0.6em;
   --ck-spacing-standard: var(--ck-spacing-unit);
@@ -40,7 +46,7 @@
   --ck-color-button-default-background: var(--ck-custom-background);
   --ck-color-button-action-text: var(--ck-custom-white);
   --ck-color-tooltip-text: var(--blog-silver);
-  --ck-color-tooltip-background: var(--blog-dark-purple);
+  --ck-color-tooltip-background: var(--blog-dark-background);
   --ck-color-link-default: var(--ck-color-focus-border);
   --ck-color-widget-hover-border: var(--blog-light-purple);
   --ck-color-shadow-drop: hsla(0, 0%, 0%, 0.2);
@@ -93,7 +99,8 @@
 }
 
 body {
-  background: var(--blog-dark-purple);
+  color: var(--blog-silver);
+  background: var(--blog-dark-background);
 
   /* 
   Some browsers has "vertical-align: baseline" as default for <textarea>, 
@@ -112,14 +119,21 @@ body {
 
 .scrollbar::-webkit-scrollbar-track {
   background: var(--scrollbar-track);
-  border-radius: 6px;
+  /* border-radius: 6px; */
 }
 
 .scrollbar::-webkit-scrollbar-thumb {
   background: var(--scrollbar-thumb);
-  border-radius: 6px;
+  /* border-radius: 6px; */
 }
 
 .scrollbar::-webkit-scrollbar-thumb:hover {
   background: var(--scrollbar-thumb-hover);
+}
+
+@layer base {
+  .blog-center-content {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
 }

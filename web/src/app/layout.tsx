@@ -1,20 +1,6 @@
 import type { Metadata } from "next";
-import {
-  // Geist,
-  // Geist_Mono,
-  Open_Sans,
-} from "next/font/google";
+import { Open_Sans } from "next/font/google";
 import "../styles/globals.css";
-
-// const geistSans = Geist({
-//   variable: "--font-geist-sans",
-//   subsets: ["latin"],
-// });
-
-// const geistMono = Geist_Mono({
-//   variable: "--font-geist-mono",
-//   subsets: ["latin"],
-// });
 
 const openSans = Open_Sans({
   variable: "--font-open-sans",
@@ -32,11 +18,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="pt">
       <body className={`${openSans.variable} scrollbar antialiased`}>
-        <header></header>
-        <main>{children}</main>
-        <footer></footer>
+        {children}
       </body>
     </html>
   );

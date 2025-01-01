@@ -8,9 +8,9 @@
 
 .main-container {
   font-family: "Open Sans";
-  width: fit-content;
-  margin-left: auto;
-  margin-right: auto;
+  /* width: fit-content; */
+  /* margin-left: auto; */
+  /* margin-right: auto; */
 }
 
 .ck-content {
@@ -29,12 +29,12 @@ pre {
   .editor-container__editor
   .ck-editor
   .ck-editor__editable {
-  min-height: 500px;
+  min-height: var(--ck-editor-min-height);
 }
 
 .editor-container_classic-editor .editor-container__editor {
-  min-width: 900px;
-  max-width: 900px;
+  min-width: var(--ck-editor-min-width);
+  max-width: var(--ck-editor-max-width);
 }
 
 /*------------------------------FontColor-and-FontBackgroundColor-buttons------------------------------*/
@@ -253,18 +253,17 @@ pre {
   }
 }
 /*------------------------------Heading-Paragraph------------------------------*/
-.ck-editor__main {
-  h1 {
-    font-size: 3rem;
+.ck-content {
+  h2 {
+    font-size: 2.5rem;
     font-weight: 900;
     margin-bottom: 0.25em;
   }
-  h2 {
+  h3 {
     font-size: 2rem;
-    font-weight: 900;
     margin-bottom: 0.5em;
   }
-  h3 {
+  h4 {
     font-size: 1.5rem;
     margin-bottom: 1em;
   }
@@ -278,8 +277,6 @@ pre {
   border: 1px double var(--ck-custom-border);
   border-collapse: collapse;
   border-spacing: 0;
-  height: 100%;
-  width: 100%;
 }
 
 .ck-content .table table td,
@@ -287,6 +284,11 @@ pre {
   border: 1px solid var(--ck-custom-border);
   min-width: 2em;
   padding: 0.4em;
+}
+
+.ck-content .table {
+  height: 100%;
+  width: 100%;
 }
 
 /*------------------------------Lists------------------------------*/

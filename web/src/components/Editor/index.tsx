@@ -6,7 +6,7 @@ import { EditorConfig } from "@ckeditor/ckeditor5-core/src/editor/editorconfig";
 import savePublication from "../../lib/publication";
 import "../../styles/ckeditor.css";
 
-export default function Editor() {
+export default function EditorComponent() {
   const editorContainerRef = useRef<HTMLDivElement | null>(null);
   const editorRef = useRef<HTMLDivElement | null>(null);
   const editorWordCountRef = useRef<HTMLDivElement | null>(null);
@@ -31,9 +31,10 @@ export default function Editor() {
         sub_title: subTitle,
         content: bodyContent,
       });
-      console.log(publication); // TODO: DELETE ME, I'm temporary
+      console.log(publication); // TODO: DELETE ME
     }
   };
+
   // ----------------------------------------===========----------------------------------------
 
   useEffect(() => {
@@ -112,6 +113,7 @@ export default function Editor() {
       TableToolbar,
       TextTransformation,
       TodoList,
+      Undo,
       WordCount,
     } = cloud.CKEditor;
 
@@ -119,13 +121,20 @@ export default function Editor() {
       ClassicEditor,
       editorConfig: {
         licenseKey: process.env.NEXT_PUBLIC_CKEDITOR_LICENSE_KEY,
-        initialData: "",
+        ui: { viewportOffset: { top: 48 } },
+        placeholder: "",
+        initialData:
+          '<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Laborum aspernatur perferendis at omnis, qui ex, maiores in, eos veniam nobis corrupti harum quo! Blanditiis, excepturi? Possimus voluptates nemo officiis expedita.</p><figure class="table" style="width:100%;"><table class="ck-table-resized"><colgroup><col style="width:25%;"><col style="width:25%;"><col style="width:25%;"><col style="width:25%;"></colgroup><tbody><tr><td>Example 1</td><td>Example 2</td><td>Example 3</td><td>Example 4</td></tr><tr><td>abc</td><td>ABC</td><td>12</td><td>123</td></tr><tr><td>xyz</td><td>XYZ</td><td>X</td><td>Y</td></tr></tbody></table></figure><div class="raw-html-embed"><h2>Hello World!</h2></div><p>&lt;h2&gt;Hello World!&lt;/h2&gt;</p><pre><code class="language-typescript">const helloWorld = () =&gt; {\t    console.log("Hello World");\n}</code></pre><h2>Hello World!</h2><hr><h3>Congratulations on setting up CKEditor 5! 🎉</h3><p>You\'ve successfully created a CKEditor 5 project. This powerful text editor will enhance your application, enabling rich text editing capabilities that are customizable and easy to use.</p><h3>What\'s next?</h3><ol><li><strong>Integrate into your app</strong>: time to bring the editing into your application. Take the code you created and add to your application.</li><li><strong>Explore features:</strong> Experiment with different plugins and toolbar options to discover what works best for your needs.</li><li><strong>Customize your editor:</strong> Tailor the editor\'s configuration to match your application\'s style and requirements. Or even write your plugin!</li></ol><p>Keep experimenting, and don\'t hesitate to push the boundaries of what you can achieve with CKEditor 5. Your feedback is invaluable to us as we strive to improve and evolve. Happy editing!</p><h3>Helpful resources</h3><ul><li>📝 <a target="_blank" rel="noopener noreferrer" href="https://portal.ckeditor.com/checkout?plan=free">Trial sign up</a>,</li><li>📕 <a target="_blank" rel="noopener noreferrer" href="https://ckeditor.com/docs/ckeditor5/latest/installation/index.html">Documentation</a>,</li><li>⭐️ <a target="_blank" rel="noopener noreferrer" href="https://github.com/ckeditor/ckeditor5">GitHub</a> (star us if you can!),</li><li>🏠 <a target="_blank" rel="noopener noreferrer" href="https://ckeditor.com">CKEditor Homepage</a>,</li><li>🧑‍💻 <a target="_blank" rel="noopener noreferrer" href="https://ckeditor.com/ckeditor-5/demo/">CKEditor 5 Demos</a>,</li></ul><h3>Need help?</h3><ul class="todo-list"><li><label class="todo-list__label"><input type="checkbox" disabled="disabled"><span class="todo-list__label__description">First example</span></label></li><li><label class="todo-list__label"><input type="checkbox" disabled="disabled"><span class="todo-list__label__description">Second Example</span></label></li><li><label class="todo-list__label"><input type="checkbox" checked="checked" disabled="disabled"><span class="todo-list__label__description">Third Example</span></label></li></ul><p>See this text, but the editor is not starting up? Check the browser\'s console for clues and guidance. It may be related to an incorrect license key if you use premium features or another feature-related requirement. If you cannot make it work, file a GitHub issue, and we will help as soon as possible!</p><blockquote><p>See this text, but the editor is not starting up? Check the browser\'s console for clues and guidance. It may be related to an incorrect license key if you use premium features or another feature-related requirement. If you cannot make it work, file a GitHub issue, and we will help as soon as possible!</p></blockquote>',
         toolbar: {
           items: [
+            "findAndReplace",
+            "undo",
+            "redo",
+            "|",
             "paragraph",
-            "heading1",
             "heading2",
             "heading3",
+            "heading4",
             "|",
             "fontColor",
             "fontBackgroundColor",
@@ -140,8 +149,7 @@ export default function Editor() {
             "link",
             "bookmark",
             "horizontalLine",
-            "-",
-            // "|",
+            "|",
             "uploadImage",
             "insertImageViaUrl",
             "mediaEmbed",
@@ -162,8 +170,6 @@ export default function Editor() {
             "|",
             "outdent",
             "indent",
-            "|",
-            "findAndReplace",
           ],
           shouldNotGroupWhenFull: true,
         },
@@ -232,13 +238,14 @@ export default function Editor() {
           TableToolbar,
           TextTransformation,
           TodoList,
+          Undo,
           WordCount,
         ],
         balloonToolbar: [
           "paragraph",
-          "heading1",
           "heading2",
           "heading3",
+          "heading4",
           "|",
           "fontColor",
           "fontBackgroundColor",
@@ -257,12 +264,15 @@ export default function Editor() {
           "bulletedList",
           "numberedList",
           "todoList",
+          "|",
+          "undo",
+          "redo",
         ],
         blockToolbar: [
           "paragraph",
-          "heading1",
           "heading2",
           "heading3",
+          "heading4",
           "|",
           "bulletedList",
           "numberedList",
@@ -278,12 +288,6 @@ export default function Editor() {
               class: "ck-heading_paragraph",
             },
             {
-              model: "heading1",
-              view: "h1",
-              title: "Heading 1",
-              class: "ck-heading_heading1",
-            },
-            {
               model: "heading2",
               view: "h2",
               title: "Heading 2",
@@ -294,6 +298,12 @@ export default function Editor() {
               view: "h3",
               title: "Heading 3",
               class: "ck-heading_heading3",
+            },
+            {
+              model: "heading4",
+              view: "h4",
+              title: "Heading 4",
+              class: "ck-heading_heading4",
             },
           ],
         },
@@ -401,7 +411,6 @@ export default function Editor() {
             reversed: true,
           },
         },
-        placeholder: "",
         table: {
           contentToolbar: [
             "tableColumn",
@@ -416,7 +425,7 @@ export default function Editor() {
   }, [cloud, isLayoutReady]);
 
   return (
-    <form className="main-container my-4">
+    <form className="main-container">
       <div
         className="editor-container editor-container_classic-editor editor-container_include-style editor-container_include-block-toolbar editor-container_include-word-count"
         ref={editorContainerRef}
