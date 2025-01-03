@@ -17,14 +17,19 @@ export default async function HomePage() {
     <BodyComponent>
       <main>
         <div className="w-full blog-center-content">
-          {publications?.map((publication) => (
-            <Link
-              href={`publicacoes/${publication.id}/${publication.slug}`}
-              key={publication.id}
-            >
-              {publication.title}
-            </Link>
-          ))}
+          {publications && (
+            <ul>
+              {publications.map((publication) => (
+                <li key={publication.id}>
+                  <Link
+                    href={`publicacoes/${publication.id}/${publication.slug}`}
+                  >
+                    {publication.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       </main>
     </BodyComponent>

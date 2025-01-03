@@ -9,7 +9,7 @@ import { SUPABASE_CLIENT } from "../utils/constants";
       provide: SUPABASE_CLIENT,
       useFactory: () => {
         const supabaseUrl = process.env.SUPABASE_URL;
-        const supabaseKey = process.env.SUPABASE_API_SECRET_KEY;
+        const supabaseKey = process.env.SUPABASE_API_KEY;
         return createClient(supabaseUrl, supabaseKey);
       },
     },
