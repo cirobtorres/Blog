@@ -36,13 +36,7 @@ export default async function PublicationsPage({ params }: Params) {
         <div className="py-20 mb-20 bg-blog-publication-hero">
           <div className="blog-center-content flex flex-col gap-4">
             <h1 className="text-5xl font-extrabold">{publication.title}</h1>
-            <p className="text-2xl">
-              TEMPORARY: Lorem, ipsum dolor sit amet consectetur adipisicing
-              elit. Esse obcaecati adipisci vero alias recusandae iusto ipsam
-              enim hic ab molestiae nisi, rerum quaerat in praesentium magnam
-              fugit temporibus ratione error!
-            </p>
-            {/* <p>{publication.sub_title}</p> */}
+            <p className="text-2xl">{publication.sub_title}</p>
             <div className="flex gap-4">
               <p>Autor</p>
               <time>{publication.updated_at}</time>
@@ -52,7 +46,7 @@ export default async function PublicationsPage({ params }: Params) {
         </div>
         <div
           dangerouslySetInnerHTML={{ __html: publication.content }}
-          className="blog-center-content mb-20"
+          className="blog-center-content mb-20 blog-heading blog-text blog-blockquote blog-code blog-lists blog-todo-list blog-table blog-hr"
         />
         <div className="h-40 bg-blog-dark-background" />
       </main>

@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -7,6 +9,7 @@
   --blog-dark-widgets: hsl(300, 7%, 5%);
   --blog-publication-hero: hsl(320, 14%, 8%);
   --blog-light-purple: hsl(251, 100%, 68%);
+  --blog-dark-purple: hsl(251, 34%, 45%);
   --blog-silver: hsl(278, 8%, 80%);
   --blog-toxic-green: hsl(81, 93%, 56%);
   --blog-error: hsl(350, 81%, 58%);
@@ -32,12 +35,14 @@
   --ck-inner-shadow: 2px 2px 3px var(--ck-color-shadow-inner) inset;
   --ck-drop-shadow: 0 1px 2px 1px var(--ck-color-shadow-drop);
   --ck-drop-shadow-active: 0 3px 6px 1px var(--ck-color-shadow-drop-active);
+  --ck-todo-list-checkmark-size: 1rem;
   --ck-custom-background: hsl(270, 1%, 29%);
   --ck-color-toolbar-background: var(--ck-custom-background);
   --ck-color-base-background: hsl(257, 8%, 18%);
   --ck-custom-foreground: hsl(255, 3%, 18%);
   --ck-color-button-on-color: var(--ck-color-focus-border);
   --ck-custom-border: hsl(270, 4%, 35%);
+  --ck-color-code-block-label-background: black;
   --ck-color-base-border: var(--ck-custom-border);
   --ck-color-base-foreground: var(--ck-custom-foreground);
   --ck-color-focus-border: var(--blog-toxic-green);
@@ -100,6 +105,7 @@
 
 body {
   color: var(--blog-silver);
+  font-family: "Open Sans";
   background: var(--blog-dark-background);
 
   /* 
@@ -135,5 +141,264 @@ body {
   .blog-center-content {
     max-width: 1280px;
     margin: 0 auto;
+  }
+  /*------------------------------Heading-Paragraph------------------------------*/
+  .blog-heading,
+  .ck-content {
+    h2 {
+      font-size: 2.5rem;
+      font-weight: 900;
+      margin-bottom: 0.25em;
+    }
+    h3 {
+      font-size: 2rem;
+      margin-bottom: 0.5em;
+    }
+    h4 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    p {
+      margin-bottom: 1rem;
+    }
+  }
+
+  /*------------------------------Texts------------------------------*/
+  .blog-text,
+  .ck-content {
+    line-height: 1.6;
+    i,
+    s,
+    b,
+    sub,
+    sup,
+    code,
+    strong {
+      color: inherit;
+    }
+    a {
+      color: var(--blog-toxic-green);
+      /* font-weight: 700; */
+      text-decoration: underline;
+    }
+    a:visited {
+      color: var(--blog-toxic-green);
+      color: var(--blog-dark-purple);
+    }
+  }
+
+  /*------------------------------Lists------------------------------*/
+  .blog-lists,
+  .ck-content {
+    ul,
+    ol {
+      margin-left: 1.5rem;
+      margin-bottom: 1rem;
+      li {
+        padding-left: 2rem;
+        margin-left: 1.5rem;
+        margin-bottom: 1rem;
+      }
+    }
+    ul {
+      list-style-type: disc;
+      li {
+        margin-bottom: 0.5rem;
+      }
+    }
+    ol {
+      list-style-type: decimal;
+    }
+    ul.todo-list {
+      list-style-type: none;
+      li {
+        margin-left: 0.5rem;
+      }
+    }
+  }
+
+  /*------------------------------Todo-List------------------------------*/
+  .blog-todo-list .todo-list .todo-list__label > input,
+  .ck.ck-content
+    .todo-list
+    .todo-list__label
+    > span[contenteditable="false"]
+    > input {
+    -webkit-appearance: none;
+    appearance: none;
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    outline: 2px solid var(--blog-silver);
+    border-radius: 3px;
+    margin-left: 0;
+    margin-right: 0;
+    left: -2.5rem;
+    right: 0;
+    width: var(--ck-todo-list-checkmark-size);
+    height: var(--ck-todo-list-checkmark-size);
+  }
+
+  .blog-todo-list .todo-list .todo-list__label > input[checked],
+  .ck.ck-content
+    .todo-list
+    .todo-list__label
+    > span[contenteditable="false"]
+    > input[checked] {
+    outline: 2px solid var(--blog-toxic-green);
+    width: var(--ck-todo-list-checkmark-size);
+    height: var(--ck-todo-list-checkmark-size);
+  }
+
+  .blog-todo-list .todo-list .todo-list__label > input[checked]:before,
+  .ck.ck-content
+    .todo-list
+    .todo-list__label
+    > span[contenteditable="false"]
+    > input[checked]:before {
+    position: absolute;
+    box-sizing: border-box;
+    display: block;
+    content: "";
+    width: 100%;
+    height: 100%;
+    transition: box-shadow 0.25s ease-in-out;
+    background: var(--blog-toxic-green);
+    border: 1px solid var(--blog-toxic-green);
+  }
+
+  .blog-todo-list .todo-list .todo-list__label > input[checked]:after,
+  .ck.ck-content
+    .todo-list
+    .todo-list__label
+    > span[contenteditable="false"]
+    > input[checked]:after {
+    border-color: var(--blog-dark-widgets);
+    border-style: solid;
+    border-width: 0 calc(var(--ck-todo-list-checkmark-size) / 8)
+      calc(var(--ck-todo-list-checkmark-size) / 8) 0;
+    box-sizing: content-box;
+    content: "";
+    display: block;
+    height: calc(var(--ck-todo-list-checkmark-size) / 2.6);
+    left: calc(var(--ck-todo-list-checkmark-size) / 3);
+    pointer-events: none;
+    position: absolute;
+    top: calc(var(--ck-todo-list-checkmark-size) / 5.3);
+    transform: rotate(45deg);
+    width: calc(var(--ck-todo-list-checkmark-size) / 5.3);
+  }
+
+  /*------------------------------Blockquote------------------------------*/
+  .blog-blockquote blockquote,
+  .ck-content blockquote {
+    position: relative;
+    border-left: transparent;
+    font-style: italic;
+    margin-left: 0;
+    margin-right: 0;
+    overflow: hidden;
+    padding-left: 2.5rem;
+    padding-right: 1.5em;
+    margin-bottom: 1rem;
+  }
+
+  .blog-blockquote blockquote p,
+  .ck-content blockquote p {
+    text-indent: 0rem;
+    word-break: keep-all;
+    margin-bottom: 0;
+  }
+
+  .blog-blockquote blockquote p:first-child::before,
+  .ck-content blockquote p:first-child::before {
+    content: "“";
+    position: absolute;
+    font-family: Georgia, "Times New Roman", Times, serif;
+    top: -0.5rem;
+    left: 0.75rem;
+    font-size: 2.5rem;
+    color: var(--blog-silver);
+  }
+  .blog-blockquote blockquote p:last-child::after,
+  .ck-content blockquote p:last-child::after {
+    content: "”";
+    position: absolute;
+    font-family: Georgia, "Times New Roman", Times, serif;
+    bottom: 0;
+    font-size: 2.5rem;
+    text-indent: 0.5rem;
+    line-height: 0.25rem;
+    color: var(--blog-silver);
+  }
+
+  .blog-blockquote blockquote p strong,
+  .ck-content blockquote p strong {
+    color: inherit;
+  }
+
+  /*------------------------------Code------------------------------*/
+  .blog-code pre,
+  .ck-content pre {
+    background: var(--ck-color-code-block-label-background);
+    margin: 1rem 0;
+    /* border: 1px solid var(--ck-custom-border); */
+    border: 1px solid transparent;
+    border-radius: 8px;
+    color: var(--blog-silver);
+    direction: ltr;
+    font-style: normal;
+    min-width: 200px;
+    padding: 1rem;
+    tab-size: 4;
+    text-align: left;
+    white-space: pre-wrap;
+  }
+
+  .blog-code pre[data-language]:after,
+  .ck.ck-content pre[data-language]:after {
+    background: var(--ck-color-code-block-label-background);
+    color: var(--blog-toxic-green);
+    font-family: var(--ck-font-face);
+    font-size: 14px;
+    line-height: 16px;
+    right: 5px;
+    top: 5px;
+    /* border: 1px solid var(--ck-custom-border); */
+    border-radius: 8px;
+    white-space: nowrap;
+  }
+
+  /*------------------------------Table------------------------------*/
+  .blog-table .table table,
+  .ck-content .table table {
+    border: 1px double var(--ck-custom-border);
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+
+  .blog-table .table table td,
+  .blog-table .table table th,
+  .ck-content .table table td,
+  .ck-content .table table th {
+    border: 1px solid var(--ck-custom-border);
+    min-width: 2rem;
+    padding: 0.4rem;
+  }
+
+  .blog-table .table,
+  .ck-content .table {
+    height: 100%;
+    width: 100%;
+  }
+
+  /*------------------------------Hr------------------------------*/
+  .blog-hr hr,
+  .ck-content .ck-horizontal-line hr {
+    height: 0px;
+    background-color: transparent;
+    border-bottom: 1px solid var(--scrollbar-thumb);
+    border-top-width: 0;
+    margin: 3rem 0;
   }
 }
