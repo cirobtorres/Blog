@@ -28,6 +28,7 @@ export class PublicationService {
           slug: slugify(title),
           sub_title,
           content,
+          private: false,
         },
       ])
       .select()

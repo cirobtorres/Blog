@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Open_Sans } from "next/font/google";
 import "../styles/globals.css";
+import "../styles/ckeditor.css";
 
 const openSans = Open_Sans({
   variable: "--font-open-sans",
@@ -18,8 +19,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt">
-      <body className={`${openSans.variable} scrollbar antialiased`}>
+    <html lang="pt" className="h-full">
+      <body
+        className={`${openSans.variable} h-full min-h-svh scrollbar antialiased`}
+      >
         {children}
       </body>
     </html>

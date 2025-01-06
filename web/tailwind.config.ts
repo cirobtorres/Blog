@@ -8,6 +8,9 @@ export default {
   ],
   theme: {
     extend: {
+      aria: {
+        current: "current=page",
+      },
       colors: {
         "blog-silver": "var(--blog-silver)",
         "blog-toxic-green": "var(--blog-toxic-green)",

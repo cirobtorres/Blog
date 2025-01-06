@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+@import "highlight.js/styles/github-dark.css";
 
 @tailwind base;
 @tailwind components;
@@ -18,83 +19,6 @@
   --scrollbar-track: transparent;
   --scrollbar-thumb: #59565d;
   --scrollbar-thumb-hover: #636066;
-
-  /* ---------------------------------------- CKeditor 5 ---------------------------------------- */
-  /* --ck-editor-max-width: 800px; */
-  --ck-editor-max-width: 100%;
-  --ck-editor-min-width: 280px;
-  --ck-editor-min-height: 800px;
-  --ck-border-radius: 0px;
-  --ck-spacing-unit: 0.6em;
-  --ck-spacing-standard: var(--ck-spacing-unit);
-  --ck-spacing-large: calc(var(--ck-spacing-unit) * 1.5);
-  --ck-spacing-medium: calc(var(--ck-spacing-unit) * 0.8);
-  --ck-spacing-small: calc(var(--ck-spacing-unit) * 0.5);
-  --ck-spacing-tiny: calc(var(--ck-spacing-unit) * 0.3);
-  --ck-spacing-extra-tiny: calc(var(--ck-spacing-unit) * 0.16);
-  --ck-inner-shadow: 2px 2px 3px var(--ck-color-shadow-inner) inset;
-  --ck-drop-shadow: 0 1px 2px 1px var(--ck-color-shadow-drop);
-  --ck-drop-shadow-active: 0 3px 6px 1px var(--ck-color-shadow-drop-active);
-  --ck-todo-list-checkmark-size: 1rem;
-  --ck-custom-background: hsl(270, 1%, 29%);
-  --ck-color-toolbar-background: var(--ck-custom-background);
-  --ck-color-base-background: hsl(257, 8%, 18%);
-  --ck-custom-foreground: hsl(255, 3%, 18%);
-  --ck-color-button-on-color: var(--ck-color-focus-border);
-  --ck-custom-border: hsl(270, 4%, 35%);
-  --ck-color-code-block-label-background: black;
-  --ck-color-base-border: var(--ck-custom-border);
-  --ck-color-base-foreground: var(--ck-custom-foreground);
-  --ck-color-focus-border: var(--blog-toxic-green);
-  --ck-color-text: var(--blog-silver);
-  --ck-color-toolbar-border: var(--ck-custom-border);
-  --ck-color-button-default-background: var(--ck-custom-background);
-  --ck-color-button-action-text: var(--ck-custom-white);
-  --ck-color-tooltip-text: var(--blog-silver);
-  --ck-color-tooltip-background: var(--blog-dark-background);
-  --ck-color-link-default: var(--ck-color-focus-border);
-  --ck-color-widget-hover-border: var(--blog-light-purple);
-  --ck-color-shadow-drop: hsla(0, 0%, 0%, 0.2);
-  --ck-color-focus-outer-shadow: transparent;
-  --ck-color-shadow-inner: var(--ck-color-shadow-drop);
-  --ck-color-focus-disabled-shadow: var(--ck-color-shadow-drop);
-  --ck-color-focus-border-coordinates: 218, 81.8%, 56.9%;
-  --ck-color-button-save: var(--blog-toxic-green);
-  --ck-color-button-cancel: var(--blog-error);
-  --ck-color-engine-placeholder-text: var(--blog-placeholder);
-  --ck-color-panel-border: var(--ck-custom-border);
-  --ck-color-panel-background: var(--ck-custom-background);
-  --ck-color-button-default-hover-background: hsl(270, 1%, 22%);
-  --ck-color-button-default-active-background: hsl(270, 2%, 20%);
-  --ck-color-button-default-disabled-background: var(--ck-custom-background);
-  --ck-color-button-on-background: var(--ck-custom-foreground);
-  --ck-color-button-on-hover-background: hsl(255, 4%, 16%);
-  --ck-color-button-on-active-background: hsl(255, 4%, 14%);
-  --ck-color-button-on-active-shadow: hsl(240, 3%, 19%);
-  --ck-color-button-on-disabled-background: var(--ck-custom-foreground);
-  --ck-color-dropdown-panel-border: var(--ck-custom-border);
-  --ck-color-dropdown-panel-background: var(--ck-custom-background);
-  --ck-color-dialog-background: var(--ck-custom-background);
-  --ck-color-dialog-form-header-border: var(--ck-custom-border);
-  --ck-color-split-button-hover-background: var(
-    --ck-color-button-default-hover-background
-  );
-  --ck-color-split-button-hover-border: var(--ck-custom-foreground);
-  --ck-color-input-background: var(--ck-custom-background);
-  --ck-color-input-border: hsl(257, 3%, 43%);
-  --ck-color-input-disabled-background: hsl(255, 4%, 21%);
-  --ck-color-input-disabled-border: hsl(250, 3%, 38%);
-  --ck-color-labeled-field-label-background: var(--ck-custom-background);
-  --ck-color-list-background: var(--ck-custom-background);
-  --ck-color-list-button-hover-background: var(
-    --ck-color-button-default-hover-background
-  );
-  --ck-color-base-error: var(--blog-error);
-  --ck-color-input-error-border: var(--blog-error);
-  --ck-color-focus-error-shadow: rgba(228, 64, 64, 0.247);
-  --ck-color-list-button-on-background: transparent;
-  --ck-color-list-button-on-background-focus: transparent;
-  --ck-color-list-button-on-text: transparent;
 }
 
 * {
@@ -338,21 +262,38 @@ body {
   }
 
   /*------------------------------Code------------------------------*/
+  .blog-code .hljs {
+    background: var(--ck-color-code-block-label-background);
+    border-radius: 8px;
+    /* .hljs-keyword {
+      color: var(--blog-toxic-green);
+    }
+    .hljs-variable {
+      color: var(--blog-toxic-green);
+    }
+    .hljs-title {
+      color: var(--blog-light-purple);
+    }
+    .hljs-name {
+      color: var(--blog-error);
+    } */
+  }
+
   .blog-code pre,
   .ck-content pre {
     background: var(--ck-color-code-block-label-background);
-    margin: 1rem 0;
+    color: var(--blog-silver);
     /* border: 1px solid var(--ck-custom-border); */
     border: 1px solid transparent;
     border-radius: 8px;
-    color: var(--blog-silver);
-    direction: ltr;
-    font-style: normal;
+    margin: 1rem 0;
     min-width: 200px;
-    padding: 1rem;
-    tab-size: 4;
+    line-height: 1.5rem;
+    direction: ltr;
     text-align: left;
     white-space: pre-wrap;
+    font-style: normal;
+    tab-size: 4;
   }
 
   .blog-code pre[data-language]:after,

@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "../../../../utils/supabase/server";
+import PublicationContent from "../../../../components/PublicationContent";
 
 interface Params {
   params: {
@@ -44,9 +45,9 @@ export default async function PublicationsPage({ params }: Params) {
             </div>
           </div>
         </div>
-        <div
-          dangerouslySetInnerHTML={{ __html: publication.content }}
-          className="blog-center-content mb-20 blog-heading blog-text blog-blockquote blog-code blog-lists blog-todo-list blog-table blog-hr"
+        <PublicationContent
+          slug={publication.slug}
+          content={publication.content}
         />
         <div className="h-40 bg-blog-dark-background" />
       </main>
