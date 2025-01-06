@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import hljs from "highlight.js";
-import PublicationContentAnchorTracker from "../PublicationContentAnchorTracker";
+import AnchorTracker from "../AnchorTracker";
 import { generateHeadersId } from "../../functions/anchors";
 // import typescript from "highlight.js/lib/languages/typescript";
 // import python from "highlight.js/lib/languages/python";
@@ -30,8 +30,8 @@ const PublicationContent = ({
   });
 
   return (
-    <div className="relative flex mx-auto max-w-screen-2xl">
-      <PublicationContentAnchorTracker bodyId={slug} content={content} />
+    <div className="relative flex gap-8 mx-auto max-w-screen-2xl">
+      <AnchorTracker bodyId={slug} content={content} />
       <div
         dangerouslySetInnerHTML={{
           __html: generateHeadersId(content),

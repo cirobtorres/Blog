@@ -1,18 +1,22 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { MdKeyboardArrowDown } from "react-icons/md";
+import { useEffect } from "react";
 import { generateAnchors } from "../../functions/anchors";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "../shadcnui/accordion";
 
-const PublicationContentAnchorTracker = ({
+const AnchorTracker = ({
   bodyId,
   content,
 }: {
   bodyId: string;
   content: string;
 }) => {
-  const [hide, setHide] = useState(true);
   const anchorList = generateAnchors(content);
 
   const linkAnchorsListener = () => {
@@ -77,43 +81,36 @@ const PublicationContentAnchorTracker = ({
   }, []);
 
   return (
-    <nav className="self-start w-full max-w-72 sticky top-3 mt-3">
-      <button
-        onClick={() => setHide(!hide)}
-        className="flex items-center font-extrabold uppercase text-base pr-1"
-      >
-        Conteúdo
-        <MdKeyboardArrowDown
-          className="text-3xl transition-transform"
-          style={{ transform: hide ? "" : "rotate(-180deg)" }}
-        />
-      </button>
-      <ul
-        id="link-anchor-tracker"
-        className={`transition-colors duration-300 overflow-auto scrollbar ${
-          hide ? "h-auto" : "h-0"
-        }`}
-      >
-        {anchorList?.map((text, index) => (
-          <li key={index} className="mb-1">
-            <Link
-              href={`#${Object.keys(text)}`}
-              aria-current={index === 0 ? "page" : "false"} // When pages load, the first anchor is supposed to be the colored one
-              className={
-                `text-sm transition-all duration-150 aria-current:text-blog-toxic-green aria-current:font-extrabold` +
-                ` ${generatePaddingForSessions(text)}`
-              }
-            >
-              {/* 
+    <Accordion
+      type="single"
+      collapsible
+      defaultValue="item-1"
+      className="self-start w-full max-w-72 sticky top-3 mt-3"
+    >
+      <AccordionItem value="item-1">
+        <AccordionTrigger>Conteúdo</AccordionTrigger>
+        <AccordionContent>
+          {anchorList?.map((text, index) => (
+            <li key={index} className="mb-1">
+              <Link
+                href={`#${Object.keys(text)}`}
+                aria-current={index === 0 ? "page" : "false"} // When pages load, the first anchor is supposed to be the colored one
+                className={
+                  `flex text-sm transition-all duration-150 aria-current:text-blog-toxic-green break-words` +
+                  ` ${generatePaddingForSessions(text)}`
+                }
+              >
+                {/* 
                 Replaces <h2>Example Title</h2> to Example Title
               */}
-              {Object.values(text)[0].replace(/<\/?h[2-4][^>]*>/gi, "")}
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </nav>
+                {Object.values(text)[0].replace(/<\/?h[2-4][^>]*>/gi, "")}
+              </Link>
+            </li>
+          ))}
+        </AccordionContent>
+      </AccordionItem>
+    </Accordion>
   );
 };
 
-export default PublicationContentAnchorTracker;
+export default AnchorTracker;

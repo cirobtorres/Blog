@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Open_Sans } from "next/font/google";
-import "../styles/globals.css";
 import "../styles/ckeditor.css";
+// import "../styles/shadcnui.css";
+import "../styles/globals.css";
 
 const openSans = Open_Sans({
   variable: "--font-open-sans",

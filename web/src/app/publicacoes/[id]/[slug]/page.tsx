@@ -36,8 +36,10 @@ export default async function PublicationsPage({ params }: Params) {
       <main>
         <div className="py-20 mb-20 bg-blog-publication-hero">
           <div className="blog-center-content flex flex-col gap-4">
-            <h1 className="text-5xl font-extrabold">{publication.title}</h1>
-            <p className="text-2xl">{publication.sub_title}</p>
+            <h1 className="text-5xl font-extrabold break-words">
+              {publication.title}
+            </h1>
+            <p className="text-2xl break-words">{publication.sub_title}</p>
             <div className="flex gap-4">
               <p>Autor</p>
               <time>{publication.updated_at}</time>
