@@ -63,11 +63,9 @@ export default function EditorComponent() {
       BlockQuote,
       BlockToolbar,
       Bold,
-      // Bookmark,
       CodeBlock,
       Essentials,
       FindAndReplace,
-      // FontBackgroundColor,
       FontColor,
       FullPage,
       GeneralHtmlSupport,
@@ -86,8 +84,6 @@ export default function EditorComponent() {
       ImageTextAlternative,
       ImageToolbar,
       ImageUpload,
-      // Indent,
-      // IndentBlock,
       Italic,
       Link,
       LinkImage,
@@ -117,7 +113,6 @@ export default function EditorComponent() {
       TableToolbar,
       TextTransformation,
       TodoList,
-      // Undo,
       WordCount,
     } = cloud.CKEditor;
 
@@ -131,8 +126,6 @@ export default function EditorComponent() {
         toolbar: {
           items: [
             "findAndReplace",
-            // "undo",
-            // "redo",
             "|",
             "paragraph",
             "heading2",
@@ -140,7 +133,6 @@ export default function EditorComponent() {
             "heading4",
             "|",
             "fontColor",
-            // "fontBackgroundColor",
             "|",
             "bold",
             "italic",
@@ -150,7 +142,6 @@ export default function EditorComponent() {
             "superscript",
             "specialCharacters",
             "link",
-            // "bookmark",
             "horizontalLine",
             "|",
             "uploadImage",
@@ -163,17 +154,11 @@ export default function EditorComponent() {
             "htmlEmbed",
             "|",
             "alignment",
-            // "alignment:left",
-            // "alignment:right",
-            // "alignment:center",
-            // "alignment:justify",
             "|",
             "bulletedList",
             "numberedList",
             "todoList",
             "|",
-            // "outdent",
-            // "indent",
           ],
           shouldNotGroupWhenFull: true,
         },
@@ -188,11 +173,9 @@ export default function EditorComponent() {
           BlockQuote,
           BlockToolbar,
           Bold,
-          // Bookmark,
           CodeBlock,
           Essentials,
           FindAndReplace,
-          // FontBackgroundColor,
           FontColor,
           FullPage,
           GeneralHtmlSupport,
@@ -211,8 +194,6 @@ export default function EditorComponent() {
           ImageTextAlternative,
           ImageToolbar,
           ImageUpload,
-          // Indent,
-          // IndentBlock,
           Italic,
           Link,
           LinkImage,
@@ -242,7 +223,6 @@ export default function EditorComponent() {
           TableToolbar,
           TextTransformation,
           TodoList,
-          // Undo,
           WordCount,
         ],
         balloonToolbar: [
@@ -252,7 +232,6 @@ export default function EditorComponent() {
           "heading4",
           "|",
           "fontColor",
-          // "fontBackgroundColor",
           "|",
           "bold",
           "italic",
@@ -268,9 +247,6 @@ export default function EditorComponent() {
           "bulletedList",
           "numberedList",
           "todoList",
-          // "|",
-          // "undo",
-          // "redo",
         ],
         blockToolbar: [
           "paragraph",
@@ -336,34 +312,10 @@ export default function EditorComponent() {
             // ...
           ],
         },
-        // fontBackgroundColor: {
-        //   colors: [
-        //     {
-        //       color: "hsl(285, 11%, 7%)",
-        //       label: "Black",
-        //     },
-        //     {
-        //       color: "hsl(278, 8%, 80%)",
-        //       label: "White",
-        //     },
-        //     {
-        //       color: "hsl(81, 82%, 55%)",
-        //       label: "Green",
-        //     },
-        //     {
-        //       color: "hsl(251, 100%, 68%)",
-        //       label: "Purple",
-        //     },
-        //     {
-        //       color: "hsl(350, 81%, 58%)",
-        //       label: "Pink",
-        //     },
-        //     // ...
-        //   ],
-        // },
         codeBlock: {
           languages: [
-            { language: "typescript", label: "TypeScript" }, // The first is the default one
+            // The first is the default one
+            { language: "typescript", label: "TypeScript" },
             { language: "python", label: "Python" },
             { language: "kotlin", label: "Kotlin" },
             { language: "java", label: "Java" },

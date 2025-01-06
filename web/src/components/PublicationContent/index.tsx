@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import hljs from "highlight.js";
 import PublicationContentAnchorTracker from "../PublicationContentAnchorTracker";
+import { generateHeadersId } from "../../functions/anchors";
 // import typescript from "highlight.js/lib/languages/typescript";
 // import python from "highlight.js/lib/languages/python";
 // import kotlin from "highlight.js/lib/languages/kotlin";
@@ -18,29 +19,6 @@ const PublicationContent = ({
   slug: string;
   content: string;
 }) => {
-  const returnBodyWithAnchorHeading = (content: string) => {
-    let h2Index = 0;
-    let h3Index = 0;
-    let h4Index = 0;
-
-    return content.replace(/<h([2-4])/g, (match, level) => {
-      if (level === "2") {
-        h2Index++;
-        h3Index = 0;
-        h4Index = 0;
-        return `<h2 id="anchor-${h2Index}-${h3Index}-${h4Index}"`;
-      } else if (level === "3") {
-        h3Index++;
-        h4Index = 0;
-        return `<h3 id="anchor-${h2Index}-${h3Index}-${h4Index}"`;
-      } else if (level === "4") {
-        h4Index++;
-        return `<h4 id="anchor-${h2Index}-${h3Index}-${h4Index}"`;
-      }
-      return match;
-    });
-  };
-
   useEffect(() => {
     // hljs.registerLanguage("typescript", typescript);
     // hljs.registerLanguage("python", python);
@@ -56,10 +34,10 @@ const PublicationContent = ({
       <PublicationContentAnchorTracker bodyId={slug} content={content} />
       <div
         dangerouslySetInnerHTML={{
-          __html: returnBodyWithAnchorHeading(content),
+          __html: generateHeadersId(content),
         }}
         id={slug}
-        className="w-full blog-center-content mb-20 blog-heading blog-text blog-blockquote blog-code blog-lists blog-todo-list blog-table blog-hr"
+        className="w-full mb-20 blog blog-center-content blog-heading blog-text blog-blockquote blog-code blog-lists blog-todo-list blog-table blog-hr"
       />
     </div>
   );

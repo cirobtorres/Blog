@@ -6,11 +6,11 @@
   --ck-border-radius: 0px;
   --ck-spacing-unit: 0.6em;
   --ck-spacing-standard: var(--ck-spacing-unit);
-  --ck-spacing-large: calc(var(--ck-spacing-unit) * 1.5);
-  --ck-spacing-medium: calc(var(--ck-spacing-unit) * 0.8);
-  --ck-spacing-small: calc(var(--ck-spacing-unit) * 0.5);
-  --ck-spacing-tiny: calc(var(--ck-spacing-unit) * 0.3);
-  --ck-spacing-extra-tiny: calc(var(--ck-spacing-unit) * 0.16);
+  /* --ck-spacing-large: calc(var(--ck-spacing-unit) * 1.5); */
+  /* --ck-spacing-medium: calc(var(--ck-spacing-unit) * 0.8); */
+  /* --ck-spacing-small: calc(var(--ck-spacing-unit) * 0.5); */
+  /* --ck-spacing-tiny: calc(var(--ck-spacing-unit) * 0.3); */
+  /* --ck-spacing-extra-tiny: calc(var(--ck-spacing-unit) * 0.16); */
   --ck-inner-shadow: 2px 2px 3px var(--ck-color-shadow-inner) inset;
   --ck-drop-shadow: 0 1px 2px 1px var(--ck-color-shadow-drop);
   --ck-drop-shadow-active: 0 3px 6px 1px var(--ck-color-shadow-drop-active);
@@ -85,8 +85,6 @@
 .ck-content {
   max-width: 1280px;
   word-break: break-word;
-  word-wrap: break-word;
-  text-wrap: wrap;
 }
 
 /*------------------------------Editor-Dimensions------------------------------*/
