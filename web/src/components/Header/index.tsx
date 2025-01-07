@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef } from "react";
+import DarkModeToggle from "../DarkModeToggle";
 
 const Header = () => {
   const headerRef = useRef<HTMLElement>(null);
@@ -64,12 +65,13 @@ const Header = () => {
               </li>
             </ul>
           </div>
-          {/* <ul className="h-full flex items-center justify-between gap-2 smartphone:gap-4 tablet:gap-8">
-              <HiddenDashboard user={user} privileges={privileges} />
-              <li className="flex justify-center items-center h-full">
-                <NightThemeSwitcher theme={theme} />
-              </li>
-            </ul> */}
+
+          <ul className="h-full flex items-center justify-between gap-2 smartphone:gap-4 tablet:gap-8">
+            {/* <HiddenDashboard user={user} privileges={privileges} /> */}
+            <li className="flex justify-center items-center h-full">
+              <DarkModeToggle />
+            </li>
+          </ul>
         </nav>
       </div>
       {/* <ProgressBar /> */}

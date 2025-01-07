@@ -86,6 +86,7 @@ export default {
             height: "0",
           },
         },
+        // BackToTopButton==========-----------------------------------
         "bouncing-arrow-up": {
           "0%, 100%": {
             top: "50%",
@@ -99,7 +100,8 @@ export default {
             transform: "translate(-50%, -35%)",
             "animation-timing-function": "cubic-bezier(0.8,0,1,1)",
           },
-        }, // BackToTopButton
+        },
+        // ==========--------------------------------------------------
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",

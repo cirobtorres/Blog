@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { Open_Sans } from "next/font/google";
-import "../styles/ckeditor.css";
-// import "../styles/shadcnui.css";
 import "../styles/globals.css";
+import "../styles/ckeditor.css";
+import "../styles/shadcnui.css";
+import { ThemeProvider } from "../providers/themeProvider";
 
 const openSans = Open_Sans({
   variable: "--font-open-sans",
@@ -22,9 +23,16 @@ export default function RootLayout({
   return (
     <html lang="pt" className="h-full">
       <body
-        className={`${openSans.variable} h-full min-h-svh scrollbar antialiased`}
+        className={`${openSans.variable} text-foreground h-full min-h-svh scrollbar antialiased`}
       >
-        {children}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );
