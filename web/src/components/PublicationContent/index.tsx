@@ -19,7 +19,7 @@ const PublicationContent = ({
   });
 
   return (
-    <div className="relative flex gap-8 mx-auto max-w-screen-2xl">
+    <div className="relative flex gap-8 pb-12 mx-auto max-w-screen-2xl">
       <AnchorTracker bodyId={slug} content={content} />
       <Publication slug={slug} content={content} />
       <BackToTopButton bodyId={slug} />

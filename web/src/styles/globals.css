@@ -8,6 +8,7 @@
 :root {
   --blog-dark-background: hsl(285, 11%, 7%);
   --blog-dark-widgets: hsl(300, 7%, 5%);
+  --blog-dark-widgets-80: hsl(300, 7%, 5%, 0.8);
   --blog-publication-hero: hsl(320, 14%, 8%);
   --blog-light-purple: hsl(251, 100%, 68%);
   --blog-dark-purple: hsl(251, 34%, 45%);
@@ -79,14 +80,17 @@ body {
     h2 {
       font-size: 2.5rem;
       font-weight: 900;
-      margin-bottom: 1rem;
     }
     h3 {
       font-size: 2rem;
-      margin-bottom: 1rem;
     }
     h4 {
       font-size: 1.5rem;
+    }
+    h2,
+    h3,
+    h4 {
+      padding-top: 3rem; /* To align the top of each heading with the bottom of the header when navigating with anchors */
       margin-bottom: 1rem;
     }
     p {

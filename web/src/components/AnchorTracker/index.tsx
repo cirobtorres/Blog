@@ -85,7 +85,7 @@ const AnchorTracker = ({
       type="single"
       collapsible
       defaultValue="item-1"
-      className="self-start w-full max-w-72 sticky top-3 mt-3"
+      className="self-start w-full max-w-72 sticky top-3 pt-14"
     >
       <AccordionItem value="item-1">
         <AccordionTrigger>Conteúdo</AccordionTrigger>

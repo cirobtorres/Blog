@@ -1,3 +1,5 @@
+import Header from "../Header";
+
 export default function BodyComponent({
   children,
 }: {
@@ -5,9 +7,9 @@ export default function BodyComponent({
 }) {
   return (
     <div className="h-full min-h-screen flex flex-col justify-between">
-      <header className="mt-0 mb-auto h-14 bg-blog-dark-widgets" />
-      {children}
-      <footer className="mt-auto mb-0 h-60 bg-blog-dark-widgets" />
+      <Header />
+      <div className="h-full mt-12">{children}</div>
+      {/* <footer className="shrink-0 mt-auto mb-0 h-60 bg-blog-dark-widgets" /> */}
     </div>
   );
 }

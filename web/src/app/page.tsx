@@ -15,7 +15,7 @@ export default async function HomePage() {
 
   return (
     <BodyComponent>
-      <main>
+      <main className="h-full flex items-center">
         <div className="w-full blog-center-content">
           {publications && (
             <ul>

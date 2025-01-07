@@ -21,6 +21,7 @@ export default {
         "blog-placeholder": "var(--blog-placeholder)",
         "blog-dark-background": "var(--blog-dark-background)",
         "blog-dark-widgets": "var(--blog-dark-widgets)",
+        "blog-dark-widgets/80": "var(--blog-dark-widgets-80)",
         "blog-publication-hero": "var(--blog-publication-hero)",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
