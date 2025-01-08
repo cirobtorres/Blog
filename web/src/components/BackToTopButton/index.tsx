@@ -10,11 +10,11 @@ import {
 } from "../shadcnui/tooltip";
 
 export default function BackToTopButton({
-  bodyId,
+  contentId,
   diameter = 75,
   strokeWidth = 7,
 }: {
-  bodyId: string;
+  contentId: string;
   diameter?: number;
   strokeWidth?: number;
 }) {
@@ -23,12 +23,17 @@ export default function BackToTopButton({
   const circunference = useRef(2 * Math.PI * innerRadius);
 
   const returnToTopListener = () => {
-    const elementHeight = document.getElementById(bodyId)?.scrollHeight;
-    const progressCircle = document.getElementById("progress-circle");
+    const headerHeight = 400 + 480 + 80;
     const scrollTop = window.scrollY;
+    const correctedScrollTop =
+      scrollTop - headerHeight < 0 ? 0 : scrollTop - headerHeight;
+    const elementHeight = document.getElementById(contentId)?.scrollHeight;
+    const progressCircle = document.getElementById("progress-circle");
     if (elementHeight && progressCircle) {
       const percentage =
-        scrollTop < elementHeight ? (scrollTop / elementHeight) * 100 : 100;
+        correctedScrollTop < elementHeight
+          ? (correctedScrollTop / elementHeight) * 100
+          : 100;
       progressCircle.style.strokeDashoffset = `${
         circunference.current - (circunference.current * percentage) / 100
       }`;
