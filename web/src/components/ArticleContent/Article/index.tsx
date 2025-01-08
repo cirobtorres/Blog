@@ -2,7 +2,7 @@
 
 import { remark } from "remark";
 import html from "remark-html";
-import { generateHeadersId } from "../../../functions/anchors";
+import { addIdsToHeadings } from "../../../functions/anchors";
 import Image from "next/image";
 import highlightPreBlocks from "../../../functions/highlight";
 
@@ -19,11 +19,11 @@ const Article = async ({
         const processedContent = await remark().use(html).process(block.body);
         const contentHtml = processedContent.toString();
         const processedHtml = highlightPreBlocks(contentHtml);
-        generateHeadersId(processedHtml);
+        const htmlToRender = addIdsToHeadings(processedHtml);
         return (
           <div
             key={block.id}
-            dangerouslySetInnerHTML={{ __html: processedHtml }}
+            dangerouslySetInnerHTML={{ __html: htmlToRender }}
             className="w-full blog blog-center-content blog-heading blog-text blog-blockquote blog-code blog-lists blog-todo-list blog-table blog-hr"
           />
         );

@@ -1,74 +1,33 @@
-const generateHeadersId = (content: string) => {
-  try {
-    let h2Index = 0;
-    let h3Index = 0;
-    let h4Index = 0;
+const extractAnchors = (htmlString: string): { [key: string]: string }[] => {
+  const anchorList: { [key: string]: string }[] = [];
+  const regex = /<(h[1-4])([^>]*)>(.*?)<\/\1>/gi;
 
-    return content.replace(/<h([2-4])/g, (match, level) => {
-      if (level === "2") {
-        h2Index++;
-        h3Index = 0;
-        h4Index = 0;
-        return `<h2 id="anchor-${h2Index}-${h3Index}-${h4Index}"`;
-      } else if (level === "3") {
-        h3Index++;
-        h4Index = 0;
-        return `<h3 id="anchor-${h2Index}-${h3Index}-${h4Index}"`;
-      } else if (level === "4") {
-        h4Index++;
-        return `<h4 id="anchor-${h2Index}-${h3Index}-${h4Index}"`;
-      }
-      return match;
-    });
-  } catch (e) {
-    // TypeError: in case content has no h2, h3 or h4
-    console.error(e);
+  let match;
+  while ((match = regex.exec(htmlString)) !== null) {
+    const [, tag, attributes, content] = match;
+    const idMatch = attributes.match(/id="([^"]*)"/);
+    const id = idMatch
+      ? idMatch[1]
+      : content
+          .trim()
+          .toLowerCase()
+          .replace(/\s+/g, "-")
+          .replace(/[^\w\-]/g, "");
+    anchorList.push({ [id]: `<${tag}>${content}</${tag}>` });
   }
+
+  return anchorList;
 };
 
-const generateAnchors = (html: string) => {
-  const regex = /<h[2-4][^>]*>(.*?)<\/h[2-4]>/gi;
-
-  try {
-    // Captures only the headers h2, h3 and h4
-    const matches = html.match(regex);
-    if (!matches) return [];
-    let h2Index = 0;
-    let h3Index = 0;
-    let h4Index = 0;
-
-    /*
-  Returns an array of objects like:
-  const imExample = [
-    { 'anchor-1-0-0': '<h2>Main Session 1</h2>' },
-    { 'anchor-1-1-0': '<h3>Subsession 1 level deep</h3>' },
-    { 'anchor-1-1-1': '<h4>Subsession 2 levels deep</h4>' },
-    { 'anchor-2-0-0': '<h2>Main Session 2</h2>' },
-    // ...
-  ]
-  */
-    return matches.map((match) => {
-      const levelMatch = match.match(/<h([2-4])/i);
-      const level = levelMatch ? levelMatch[1] : null;
-
-      if (level === "2") {
-        h2Index++;
-        h3Index = 0;
-        h4Index = 0;
-      } else if (level === "3") {
-        h3Index++;
-        h4Index = 0;
-      } else if (level === "4") {
-        h4Index++;
-      }
-
-      const anchor = `anchor-${h2Index}-${h3Index}-${h4Index}`;
-      return { [anchor]: match.trim() };
-    });
-  } catch (e) {
-    // TypeError: in case content has no h2, h3 or h4
-    console.error(e);
-  }
+const addIdsToHeadings = (htmlString: string) => {
+  return htmlString.replace(/<(h[1-6])>(.*?)<\/\1>/g, (match, tag, content) => {
+    const id = content
+      .trim()
+      .toLowerCase()
+      .replace(/\s+/g, "-") // replace whitespaces for "-"
+      .replace(/[^\w\-]/g, ""); // Remove special characters
+    return `<${tag} id="${id}">${content}</${tag}>`;
+  });
 };
 
-export { generateHeadersId, generateAnchors };
+export { addIdsToHeadings, extractAnchors };

@@ -1,4 +1,4 @@
-// import AnchorTracker from "../AnchorTracker";
+import AnchorTracker from "../AnchorTracker";
 // import BackToTopButton from "../BackToTopButton";
 import Article from "./Article";
 
@@ -12,7 +12,7 @@ const ArticleContent = ({
 }) => {
   return (
     <div className="relative flex gap-8 pb-12 mx-auto max-w-screen-2xl">
-      {/* <AnchorTracker contentId={id} content={content} /> */}
+      <AnchorTracker contentId={id} />
       <Article id={id} content={content} />
       {/* <BackToTopButton id={id} /> */}
     </div>

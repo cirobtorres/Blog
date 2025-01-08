@@ -1,39 +1,17 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect } from "react";
-import { generateAnchors } from "../../functions/anchors";
+import { useEffect, useState } from "react";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "../shadcnui/accordion";
-// import { remark } from "remark";
-// import html from "remark-html";
+import { extractAnchors } from "../../functions/anchors";
 
-// const sanitize = async (
-//   content: { __component: string; id: number; title?: string; body?: string }[]
-// ) => {
-//   const onlyRichText = content
-//     .filter((block) => block.__component === "shared.rich-text" && block.body)
-//     .map((block) => block.body)
-//     .join("\n");
-//   const processedContent = await remark().use(html).process(onlyRichText);
-//   const contentHtml = processedContent.toString();
-//   return contentHtml;
-// };
-
-const AnchorTracker = ({
-  contentId,
-  content,
-}: {
-  contentId: string;
-  content: { __component: string; id: number; title?: string; body?: string }[];
-}) => {
-  generateAnchors(
-    content.filter((block) => block.__component === "shared.rich-text")
-  );
+const AnchorTracker = ({ contentId }: { contentId: string }) => {
+  const [anchorList, setAnchorList] = useState<{ [key: string]: string }[]>([]);
 
   const linkAnchorsListener = () => {
     const sections: NodeListOf<HTMLHeadingElement> | undefined = document
@@ -57,7 +35,7 @@ const AnchorTracker = ({
         // An anchor-link redirects to the exact section top
         // With offsetTop lower by 1 pixel we make sure the section is actually lower than it really is
         // With that the link redirects to within the actual section, not to the top of it
-        const headerHeight = 80 * 3 + 136 - 1;
+        const headerHeight = 48 + 400 + 480 + 80 - 1;
 
         // Update currentSectionIndex when changing sections
         // Every index is a heading of any type
@@ -95,6 +73,14 @@ const AnchorTracker = ({
       window.removeEventListener("scroll", linkAnchorsListener);
     };
   }, []);
+
+  useEffect(() => {
+    const contentElement = document.getElementById(contentId);
+    if (contentElement) {
+      const anchors = extractAnchors(contentElement.innerHTML);
+      setAnchorList(anchors);
+    }
+  }, [contentId]);
 
   return (
     <Accordion
