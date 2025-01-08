@@ -9,7 +9,7 @@ const Header = () => {
 
   const hideNavbarListener = () => {
     let prevScrollPos = window.scrollY;
-    const threshold = 500; // threshold to maintain header on top, beyond which it is allowed to hide
+    const threshold = 400 + 480 + 80; // threshold to maintain header on top, beyond which it is allowed to hide
 
     const handleScroll = () => {
       const currScrollPos = window.scrollY;

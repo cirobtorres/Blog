@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import { Open_Sans } from "next/font/google";
-import "../styles/globals.css";
-import "../styles/ckeditor.css";
-import "../styles/shadcnui.css";
 import { ThemeProvider } from "../providers/themeProvider";
+import "../styles/globals.css";
+import "../styles/shadcnui.css";
 
 const openSans = Open_Sans({
   variable: "--font-open-sans",
@@ -20,10 +19,11 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // suppressHydrationWarning is a prerequisite from shadcn/ui
   return (
-    <html lang="pt" className="h-full">
+    <html lang="pt" className="h-full" suppressHydrationWarning>
       <body
-        className={`${openSans.variable} text-foreground h-full min-h-svh scrollbar antialiased`}
+        className={`${openSans.variable} dark:bg-blog-dark-background h-full min-h-svh scrollbar antialiased`}
       >
         <ThemeProvider
           attribute="class"

@@ -9,20 +9,36 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "../shadcnui/accordion";
+// import { remark } from "remark";
+// import html from "remark-html";
+
+// const sanitize = async (
+//   content: { __component: string; id: number; title?: string; body?: string }[]
+// ) => {
+//   const onlyRichText = content
+//     .filter((block) => block.__component === "shared.rich-text" && block.body)
+//     .map((block) => block.body)
+//     .join("\n");
+//   const processedContent = await remark().use(html).process(onlyRichText);
+//   const contentHtml = processedContent.toString();
+//   return contentHtml;
+// };
 
 const AnchorTracker = ({
-  bodyId,
+  contentId,
   content,
 }: {
-  bodyId: string;
-  content: string;
+  contentId: string;
+  content: { __component: string; id: number; title?: string; body?: string }[];
 }) => {
-  const anchorList = generateAnchors(content);
+  generateAnchors(
+    content.filter((block) => block.__component === "shared.rich-text")
+  );
 
   const linkAnchorsListener = () => {
     const sections: NodeListOf<HTMLHeadingElement> | undefined = document
-      .getElementById(bodyId)
-      ?.querySelectorAll("h2, h3, h4");
+      .getElementById(contentId)
+      ?.querySelectorAll("h1, h2, h3, h4");
 
     let currentSectionIndex = 0;
 

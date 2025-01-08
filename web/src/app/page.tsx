@@ -2,34 +2,22 @@
 
 import Link from "next/link";
 import BodyComponent from "../components/Body";
-import { createClient } from "../utils/supabase/server";
+import { getArticles } from "../lib/articles";
 
 export default async function HomePage() {
-  const supabase = await createClient();
-  const { data: publications } = await supabase
-    .from("publication")
-    .select("*")
-    .neq("private", true)
-    .order("created_at", { ascending: false })
-    .returns<Publication[]>();
-
+  const { data: articles } = await getArticles();
+  const article = articles[0];
   return (
     <BodyComponent>
       <main className="h-full flex items-center">
         <div className="w-full blog-center-content">
-          {publications && (
-            <ul>
-              {publications.map((publication) => (
-                <li key={publication.id}>
-                  <Link
-                    href={`publicacoes/${publication.id}/${publication.slug}`}
-                  >
-                    {publication.title}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          )}
+          <ul>
+            <li>
+              <Link href={`artigos/${article.documentId}/${article.slug}`}>
+                {article.title}
+              </Link>
+            </li>
+          </ul>
         </div>
       </main>
     </BodyComponent>
