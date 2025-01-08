@@ -22,7 +22,6 @@ const getArticle = async (id: string) => {
   );
   if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
   const data = await res.json();
-  console.log(data);
   return data;
 };
 
