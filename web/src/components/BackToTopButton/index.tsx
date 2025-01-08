@@ -49,7 +49,7 @@ export default function BackToTopButton({
   }, []);
 
   return (
-    <div className="self-start sticky top-1/2 -translate-y-1/2 mt-10">
+    <div className="self-start sticky top-1/2 -translate-y-1/2 mt-10 mx-auto">
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>

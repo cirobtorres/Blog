@@ -11,7 +11,7 @@ const ArticleContent = ({
   content: { __component: string; id: number; title?: string; body?: string }[];
 }) => {
   return (
-    <div className="relative flex gap-8 pb-12 mx-auto max-w-screen-2xl">
+    <div className="relative grid grid-cols-article gap-8 pb-12 mx-auto max-w-screen-2xl">
       <AnchorTracker contentId={id} />
       <Article id={id} content={content} />
       <BackToTopButton contentId={id} />
