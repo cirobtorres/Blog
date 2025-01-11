@@ -6,10 +6,6 @@
 @tailwind utilities;
 
 :root {
-  --scrollbar-track: transparent;
-  --scrollbar-thumb: 266 4% 35%;
-  --scrollbar-thumb-hover: 270 3% 39%;
-
   --blog-black: 300 3% 6%;
   --blog-chrome-silver: 278 8% 80%;
   --blog-matrix-green: 81 93% 56%;
@@ -18,6 +14,11 @@
   --blog-tron-cyan: 184 100% 73%;
   --blog-void-purple: 252 96% 78%;
   --blog-hall9000-red: 350 81% 58%;
+
+  /*------------------------------=====Light=====------------------------------*/
+  --scrollbar-track: 0 0% 91%;
+  --scrollbar-thumb: 300 3% 6%;
+  --scrollbar-thumb-hover: 300 2% 19%;
 
   --blog-background-1: hsl(0, 0%, 95%);
   --blog-background-2: hsl(0, 0%, 87%);
@@ -32,6 +33,11 @@
 }
 
 .dark {
+  /*------------------------------=====Dark=====------------------------------*/
+  --scrollbar-track: 0 0% 0%;
+  --scrollbar-thumb: 266 4% 35%;
+  --scrollbar-thumb-hover: 270 3% 39%;
+
   --blog-background-1: hsl(0, 0%, 11%);
   --blog-background-2: hsl(0, 0%, 7%);
   --blog-background-3: hsl(0, 0%, 0%);
@@ -239,7 +245,6 @@ body {
     }
 
     .hljs-string {
-      /* color: hsl(30, 81%, 72%); */
       color: hsl(101, 29%, 47%);
     }
 
