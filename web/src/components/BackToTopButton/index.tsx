@@ -70,7 +70,7 @@ export default function BackToTopButton({
                     r={`${innerRadius}px`}
                     strokeWidth={`${strokeWidth}px`}
                     strokeDasharray={circunference.current}
-                    className="w-fit h-fit fill-none stroke-slate-600"
+                    className="w-fit h-fit fill-none stroke-blog-background-2"
                     style={{ strokeDashoffset: 0 }}
                   />
                   <circle
@@ -81,7 +81,7 @@ export default function BackToTopButton({
                     strokeWidth={`${strokeWidth}px`}
                     strokeDasharray={circunference.current}
                     style={{ strokeDashoffset: circunference.current }}
-                    className="w-fit h-fit fill-none stroke-blog-toxic-green"
+                    className="w-fit h-fit fill-none stroke-blog-foreground-highlight"
                   />
                 </svg>
                 <FaArrowUp className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 text-xl group-hover:animate-bouncing-arrow-up" />

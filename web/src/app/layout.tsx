@@ -23,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="pt" className="h-full" suppressHydrationWarning>
       <body
-        className={`${openSans.variable} dark:bg-blog-dark-background h-full min-h-svh scrollbar antialiased`}
+        className={`${openSans.variable} h-full min-h-svh scrollbar antialiased text-blog-foreground-readable bg-blog-background-1`}
       >
         <ThemeProvider
           attribute="class"

@@ -6,6 +6,7 @@ function decodeHtmlEntities(str: string) {
   // Highlight.js escapes some HTML tag characters and replace it with its unicode format.
   // This code format it back
   return str.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&");
+  // return decodeURIComponent(str);
 }
 
 function highlightPreBlocks(htmlContent: string) {
@@ -16,6 +17,9 @@ function highlightPreBlocks(htmlContent: string) {
   const processedHtml = htmlContent.replace(
     preCodeRegex,
     (match, language, codeContent) => {
+      // Example: match = <pre><code class="language-typescript">"use client"; export default function ...</code></pre>
+      // Example: language = typescript
+      // Example: language = "use client"; export default function ...
       try {
         const highlightedCode = hljs.highlight(codeContent.trim(), {
           language,

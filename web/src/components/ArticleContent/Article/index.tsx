@@ -1,10 +1,9 @@
 "use server";
 
-import { remark } from "remark";
-import html from "remark-html";
 import { addIdsToHeadings } from "../../../functions/anchors";
 import Image from "next/image";
 import highlightPreBlocks from "../../../functions/highlight";
+import { convertMarkdowToHtmlString } from "../../../lib/utils";
 
 const Article = async ({
   id,
@@ -16,8 +15,7 @@ const Article = async ({
   const toRender = content.map(async (block) => {
     switch (block.__component) {
       case "shared.rich-text":
-        const processedContent = await remark().use(html).process(block.body);
-        const contentHtml = processedContent.toString();
+        const contentHtml = await convertMarkdowToHtmlString(block.body);
         const processedHtml = highlightPreBlocks(contentHtml);
         const htmlToRender = addIdsToHeadings(processedHtml);
         return (
@@ -63,19 +61,20 @@ const Article = async ({
           />
         );
       case "shared.slider":
-        const sharedSliderResponse = await fetch(
-          `http://127.0.0.1:1337/api/upload/files/${block.id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_TOKEN}`,
-            },
-          }
-        );
-        if (!sharedSliderResponse.ok)
-          throw new Error(
-            `${sharedSliderResponse.status} ${sharedSliderResponse.statusText}`
-          );
+        // const sharedSliderResponse = await fetch(
+        //   `http://127.0.0.1:1337/api/shared-sliders/${block.id}`,
+        //   {
+        //     headers: {
+        //       Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_TOKEN}`,
+        //     },
+        //   }
+        // );
+        // if (!sharedSliderResponse.ok)
+        //   throw new Error(
+        //     `${sharedSliderResponse.status} ${sharedSliderResponse.statusText}`
+        //   );
         // const sharedSlider = await sharedSliderResponse.json();
+        // console.log(sharedSlider);
         return (
           <div key={block.id}>
             <p>Slider Component (ID: {block.id})</p>

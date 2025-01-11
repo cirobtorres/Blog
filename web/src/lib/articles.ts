@@ -1,11 +1,14 @@
 const getArticles = async () => {
-  const res = await fetch("http://127.0.0.1:1337/api/articles", {
+  const res = await fetch("http://127.0.0.1:1337/api/articles?populate=cover", {
     method: "GET",
     headers: {
       Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_TOKEN}`,
     },
   });
-  if (!res.ok) throw new Error("Failed to fetch");
+  if (!res.ok) {
+    console.error(`${res.status} ${res.statusText}`);
+    throw new Error("Failed to fetch articles");
+  }
   const data = await res.json();
   return data;
 };
@@ -20,7 +23,10 @@ const getArticle = async (id: string) => {
       },
     }
   );
-  if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
+  if (!res.ok) {
+    console.error(`${res.status} ${res.statusText}`);
+    throw new Error("Failed to fetch article");
+  }
   const data = await res.json();
   return data;
 };
@@ -32,7 +38,10 @@ const getCover = async (id: string) => {
       Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_TOKEN}`,
     },
   });
-  if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
+  if (!res.ok) {
+    console.error(`${res.status} ${res.statusText}`);
+    throw new Error("Failed to fetch cover");
+  }
   const data = await res.json();
   return data;
 };

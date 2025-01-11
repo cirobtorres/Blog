@@ -4,10 +4,11 @@ import {
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
+  BreadcrumbPage,
   BreadcrumbSeparator,
 } from "../shadcnui/breadcrumb";
 
-const BreadCrumb = ({ slug }: { slug: string }) => {
+const BreadCrumb = ({ title }: { title: string }) => {
   return (
     <BreadcrumbRoot>
       <BreadcrumbList>
@@ -24,7 +25,7 @@ const BreadCrumb = ({ slug }: { slug: string }) => {
           <Slash />
         </BreadcrumbSeparator>
         <BreadcrumbItem>
-          <BreadcrumbLink href="/components">{slug}</BreadcrumbLink>
+          <BreadcrumbPage>{title}</BreadcrumbPage>
         </BreadcrumbItem>
       </BreadcrumbList>
     </BreadcrumbRoot>

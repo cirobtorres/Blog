@@ -5,7 +5,6 @@ import BreadCrumb from "../BreadCrumb";
 export default function ArticleHero({
   title,
   description,
-  slug,
   updatedAt,
   publishedAt,
   author: { name },
@@ -13,7 +12,6 @@ export default function ArticleHero({
 }: {
   title: string;
   description: string;
-  slug: string;
   updatedAt: string;
   publishedAt: string;
   author: { id: string; name: string };
@@ -21,17 +19,19 @@ export default function ArticleHero({
 }) {
   return (
     <>
-      <div className="h-[30rem] bg-blog-publication-hero">
+      <div className="h-[30rem] bg-blog-background-2 mb-4">
         <div className="h-full grid grid-cols-article mx-auto items-center max-w-screen-2xl">
           <div className="col-start-2 mx-8">
-            <BreadCrumb slug={slug} />
+            <BreadCrumb title={title} />
             <div className="blog-center-content flex flex-col gap-4">
               <h1 className="text-5xl leading-[4rem] font-extrabold break-words line-clamp-2">
                 {title}
               </h1>
               <p className="text-2xl break-words line-clamp-3">{description}</p>
               <div className="flex gap-8">
-                <p>{name}</p>
+                <p className="text-blog-foreground-highlight">
+                  <strong>{name}</strong>
+                </p>
                 {updatedAt && updatedAt > publishedAt ? (
                   <time>{formatDateToCustomFormat(updatedAt)}</time>
                 ) : null}

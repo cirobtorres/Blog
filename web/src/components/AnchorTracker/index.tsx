@@ -59,11 +59,17 @@ const AnchorTracker = ({ contentId }: { contentId: string }) => {
   };
 
   const generatePaddingForSessions = (text: { [x: string]: string }) => {
-    return Object.values(text)[0].match(/<h[2][^>]*>(.*?)<\/h[2]>/gi)
+    return Object.values(text)[0].match(/<h[1][^>]*>(.*?)<\/h[1]>/gi)
+      ? "pl-0"
+      : Object.values(text)[0].match(/<h[2][^>]*>(.*?)<\/h[2]>/gi)
       ? "pl-3"
       : Object.values(text)[0].match(/<h[3][^>]*>(.*?)<\/h[3]>/gi)
       ? "pl-6"
-      : "pl-9";
+      : Object.values(text)[0].match(/<h[4][^>]*>(.*?)<\/h[4]>/gi)
+      ? "pl-9"
+      : Object.values(text)[0].match(/<h[5][^>]*>(.*?)<\/h[5]>/gi)
+      ? "pl-12"
+      : "pl-15";
   };
 
   useEffect(() => {
@@ -98,14 +104,14 @@ const AnchorTracker = ({ contentId }: { contentId: string }) => {
                 href={`#${Object.keys(text)}`}
                 aria-current={index === 0 ? "page" : "false"} // When pages load, the first anchor is supposed to be the colored one
                 className={
-                  `flex text-sm transition-all duration-150 aria-current:text-blog-toxic-green break-words` +
+                  `flex text-sm transition-colors duration-500 aria-current:text-blog-foreground-highlight hover:text-blog-foreground-readable-hover break-words` +
                   ` ${generatePaddingForSessions(text)}`
                 }
               >
                 {/* 
                 Replaces <h2>Example Title</h2> to Example Title
               */}
-                {Object.values(text)[0].replace(/<\/?h[2-4][^>]*>/gi, "")}
+                {Object.values(text)[0].replace(/<\/?h[1-4][^>]*>/gi, "")}
               </Link>
             </li>
           ))}

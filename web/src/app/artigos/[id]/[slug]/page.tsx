@@ -1,7 +1,7 @@
 "use server";
 
-import ArticleContent from "../../../../components/ArticleContent";
 import { getArticle } from "../../../../lib/articles";
+import ArticleContent from "../../../../components/ArticleContent";
 import ArticleHero from "../../../../components/ArticleHero";
 
 interface Params {
@@ -20,8 +20,12 @@ export default async function ArticlesPage({ params }: Params) {
       <main>
         <ArticleHero {...article} />
         <ArticleContent id={id} content={article.blocks} />
-        <div className="h-40 bg-blog-dark-background" />
+        <ArticlesRelated />
       </main>
     );
   }
 }
+
+const ArticlesRelated = () => {
+  return <div className="h-40 bg-blog-background-2" />;
+};

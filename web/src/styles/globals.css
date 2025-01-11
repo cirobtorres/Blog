@@ -6,20 +6,42 @@
 @tailwind utilities;
 
 :root {
-  --blog-dark-background: hsl(285, 11%, 7%);
-  --blog-dark-widgets: hsl(300, 7%, 5%);
-  --blog-dark-widgets-80: hsl(300, 7%, 5%, 0.8);
-  --blog-publication-hero: hsl(300, 7%, 5%);
-  --blog-light-purple: hsl(251, 100%, 68%);
-  --blog-dark-purple: hsl(251, 34%, 45%);
-  --blog-silver: hsl(278, 8%, 80%);
-  --blog-toxic-green: hsl(81, 93%, 56%);
-  --blog-error: hsl(350, 81%, 58%);
-  --blog-placeholder: #707070;
-
   --scrollbar-track: transparent;
-  --scrollbar-thumb: #59565d;
-  --scrollbar-thumb-hover: #636066;
+  --scrollbar-thumb: 266 4% 35%;
+  --scrollbar-thumb-hover: 270 3% 39%;
+
+  --blog-black: 300 3% 6%;
+  --blog-chrome-silver: 278 8% 80%;
+  --blog-matrix-green: 81 93% 56%;
+  --blog-blender-orange: 30 85% 64%;
+  --blog-cyberpunk-yellow: 46 96% 79%;
+  --blog-tron-cyan: 184 100% 73%;
+  --blog-void-purple: 252 96% 78%;
+  --blog-hall9000-red: 350 81% 58%;
+
+  --blog-background-1: hsl(0, 0%, 95%);
+  --blog-background-2: hsl(0, 0%, 87%);
+  --blog-background-3: hsl(0, 0%, 91%);
+  --blog-background-backdrop: hsla(0, 0%, 87%, 0.25);
+
+  --blog-foreground-readable: hsl(var(--blog-black));
+  --blog-foreground-readable-hover: hsl(0, 0%, 15%);
+  --blog-foreground-highlight: hsl(var(--blog-blender-orange));
+
+  --blog-border: hsl(0, 0%, 88%);
+}
+
+.dark {
+  --blog-background-1: hsl(0, 0%, 11%);
+  --blog-background-2: hsl(0, 0%, 7%);
+  --blog-background-3: hsl(0, 0%, 0%);
+  --blog-background-backdrop: hsla(0, 0%, 7%, 0.25);
+
+  --blog-foreground-readable: hsl(var(--blog-chrome-silver));
+  --blog-foreground-readable-hover: white;
+  --blog-foreground-highlight: hsl(var(--blog-blender-orange));
+
+  --blog-border: hsl(0, 0%, 15%);
 }
 
 * {
@@ -29,9 +51,7 @@
 }
 
 body {
-  color: var(--blog-silver);
   font-family: "Open Sans" !important;
-  background: var(--blog-dark-background);
 
   /* 
   Some browsers has "vertical-align: baseline" as default for <textarea>, 
@@ -50,33 +70,21 @@ body {
   }
 
   .scrollbar::-webkit-scrollbar-track {
-    background: var(--scrollbar-track);
+    background: hsl(var(--scrollbar-track));
     /* border-radius: 6px; */
   }
 
   .scrollbar::-webkit-scrollbar-thumb {
-    background: var(--scrollbar-thumb);
+    background: hsl(var(--scrollbar-thumb));
     /* border-radius: 6px; */
   }
 
   .scrollbar::-webkit-scrollbar-thumb:hover {
-    background: var(--scrollbar-thumb-hover);
-  }
-
-  /*  */
-  .blog-center-content {
-    max-width: 1280px;
-    margin: 0 auto;
-  }
-
-  /*  */
-  .blog {
-    word-break: break-word;
+    background: hsl(var(--scrollbar-thumb-hover));
   }
 
   /*------------------------------Heading-Paragraph------------------------------*/
-  .blog-heading,
-  .ck-content {
+  .blog-heading {
     h2 {
       font-size: 2.5rem;
       font-weight: 900;
@@ -98,9 +106,8 @@ body {
     } */
   }
 
-  /*------------------------------Texts------------------------------*/
-  .blog-text,
-  .ck-content {
+  /*------------------------------Colors------------------------------*/
+  .blog-text {
     line-height: 1.6;
     i,
     s,
@@ -111,27 +118,23 @@ body {
     strong {
       color: inherit;
     }
-    a {
-      color: var(--blog-toxic-green);
-      text-decoration: underline;
-    }
-    a:visited {
-      color: var(--blog-toxic-green);
-      color: var(--blog-dark-purple);
-    }
   }
 
+  a {
+    color: hsl(var(--blog-foreground-highlight));
+    text-decoration: underline;
+  }
+  /* a:visited {
+    color: hsl(var(--blog-foreground-highlight));
+  } */
+
   /*------------------------------Lists------------------------------*/
-  .blog-lists,
-  .ck-content {
+  .blog-lists {
     ul,
     ol {
-      margin-left: 1.5rem;
       margin-bottom: 1rem;
       list-style-position: inside;
       li {
-        padding-left: 2rem;
-        margin-left: 1.5rem;
         margin-bottom: 1rem;
       }
     }
@@ -153,8 +156,7 @@ body {
   }
 
   /*------------------------------Blockquote------------------------------*/
-  .blog-blockquote blockquote,
-  .ck-content blockquote {
+  .blog-blockquote blockquote {
     position: relative;
     border-left: transparent;
     font-style: italic;
@@ -166,25 +168,22 @@ body {
     margin-bottom: 1rem;
   }
 
-  .blog-blockquote blockquote p,
-  .ck-content blockquote p {
+  .blog-blockquote blockquote p {
     text-indent: 0rem;
     word-break: keep-all;
     margin-bottom: 0;
   }
 
-  .blog-blockquote blockquote p:first-child::before,
-  .ck-content blockquote p:first-child::before {
+  .blog-blockquote blockquote p:first-child::before {
     content: "“";
     position: absolute;
     font-family: Georgia, "Times New Roman", Times, serif;
     top: -0.5rem;
     left: 0.75rem;
     font-size: 2.5rem;
-    color: var(--blog-silver);
+    color: var(--blog-chrome-silver);
   }
-  .blog-blockquote blockquote p:last-child::after,
-  .ck-content blockquote p:last-child::after {
+  .blog-blockquote blockquote p:last-child::after {
     content: "”";
     position: absolute;
     font-family: Georgia, "Times New Roman", Times, serif;
@@ -192,18 +191,17 @@ body {
     font-size: 2.5rem;
     text-indent: 0.5rem;
     line-height: 0.25rem;
-    color: var(--blog-silver);
+    color: var(--blog-chrome-silver);
   }
 
-  .blog-blockquote blockquote p strong,
-  .ck-content blockquote p strong {
+  .blog-blockquote blockquote p strong {
     color: inherit;
   }
 
   /*------------------------------Code------------------------------*/
   .blog-code pre {
-    background: black;
-    color: var(--blog-silver);
+    background: hsl(var(--blog-black));
+    color: hsl(var(--blog-chrome-silver));
     border: 1px solid transparent;
     border-radius: 8px;
     margin: 1rem 0;
@@ -215,5 +213,68 @@ body {
     white-space: pre-wrap;
     font-style: normal;
     tab-size: 4;
+
+    .hljs-variable.language_ {
+      color: inherit;
+    }
+
+    .hljs-title.class_ {
+      color: hsl(var(--blog-void-purple));
+    }
+
+    .hljs-title.function_ {
+      color: hsl(var(--blog-tron-cyan));
+    }
+
+    .hljs-literal {
+      color: inherit;
+    }
+
+    .hljs-params {
+      color: inherit;
+    }
+
+    .hljs-keyword {
+      color: hsl(var(--blog-hall9000-red));
+    }
+
+    .hljs-string {
+      /* color: hsl(30, 81%, 72%); */
+      color: hsl(101, 29%, 47%);
+    }
+
+    .hljs-subst .hljs-built_in {
+      color: inherit;
+    }
+
+    .hljs-regexp {
+      color: hsl(11, 61%, 54%);
+    }
+
+    .hljs-number {
+      color: inherit;
+    }
+
+    .hljs-built_in {
+      color: inherit;
+    }
+
+    .hljs-attr {
+      color: inherit;
+    }
+
+    .hljs-comment {
+      color: hsl(0, 0%, 51%);
+    }
+  }
+
+  /*------------------------------Others------------------------------*/
+  .blog-center-content {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .blog {
+    word-break: break-word;
   }
 }

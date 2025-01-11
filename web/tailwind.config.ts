@@ -1,5 +1,5 @@
 import type { Config } from "tailwindcss";
-import * as tailwindAnimate from "tailwindcss-animate";
+import tailwindAnimate from "tailwindcss-animate";
 
 export default {
   darkMode: ["class"],
@@ -14,15 +14,18 @@ export default {
         current: "current=page",
       },
       colors: {
-        "blog-silver": "var(--blog-silver)",
-        "blog-toxic-green": "var(--blog-toxic-green)",
-        "blog-error": "var(--blog-error)",
-        "blog-light-purple": "var(--blog-light-purple)",
-        "blog-placeholder": "var(--blog-placeholder)",
-        "blog-dark-background": "var(--blog-dark-background)",
-        "blog-dark-widgets": "var(--blog-dark-widgets)",
-        "blog-dark-widgets/80": "var(--blog-dark-widgets-80)",
-        "blog-publication-hero": "var(--blog-publication-hero)",
+        // BLOG==========-----------------------------------
+        "blog-background-1": "var(--blog-background-1)",
+        "blog-background-2": "var(--blog-background-2)",
+        "blog-background-3": "var(--blog-background-3)",
+        "blog-border": "var(--blog-border)",
+        "blog-background-backdrop": "var(--blog-background-backdrop)",
+        "blog-foreground-readable": "var(--blog-foreground-readable)",
+        "blog-foreground-readable-hover":
+          "var(--blog-foreground-readable-hover)",
+        "blog-foreground-highlight": "var(--blog-foreground-highlight)",
+
+        // SHADCN/UI==========--------------------------------------------------
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {
@@ -65,14 +68,33 @@ export default {
         },
       },
       gridTemplateColumns: {
+        // SHADCN/UI==========--------------------------------------------------
         article: "300px 1fr 100px",
       },
       borderRadius: {
+        // SHADCN/UI==========--------------------------------------------------
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
       keyframes: {
+        // BLOG-BackToTopButton==========-----------------------------------
+        "bouncing-arrow-up": {
+          "0%, 100%": {
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -65%)",
+            "animation-timing-function": "cubic-bezier(0,0,0.2,1)",
+          },
+          "50%": {
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -35%)",
+            "animation-timing-function": "cubic-bezier(0.8,0,1,1)",
+          },
+        },
+
+        // SHADCN/UI==========--------------------------------------------------
         "accordion-down": {
           from: {
             height: "0",
@@ -89,27 +111,14 @@ export default {
             height: "0",
           },
         },
-        // BackToTopButton==========-----------------------------------
-        "bouncing-arrow-up": {
-          "0%, 100%": {
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -65%)",
-            "animation-timing-function": "cubic-bezier(0,0,0.2,1)",
-          },
-          "50%": {
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -35%)",
-            "animation-timing-function": "cubic-bezier(0.8,0,1,1)",
-          },
-        },
-        // ==========--------------------------------------------------
       },
       animation: {
+        // BLOG-BackToTopButton==========--------------------------------------------------
+        "bouncing-arrow-up": "bouncing-arrow-up 1s infinite",
+
+        // SHADCN/UI==========--------------------------------------------------
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "bouncing-arrow-up": "bouncing-arrow-up 1s infinite", // BackToTopButton
       },
     },
   },
