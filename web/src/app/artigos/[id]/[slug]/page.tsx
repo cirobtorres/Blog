@@ -13,7 +13,7 @@ interface Params {
 
 export default async function ArticlesPage({ params }: Params) {
   const { id } = await params;
-  const { data: article } = await getArticle(id);
+  const { data: article }: { data: Article } = await getArticle(id);
 
   if (article) {
     return (

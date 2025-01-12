@@ -101,15 +101,18 @@ body {
     h4 {
       font-size: 1.5rem;
     }
+    h1,
     h2,
     h3,
-    h4 {
+    h4,
+    h5,
+    h6 {
       padding-top: 3rem; /* To align the top of each heading with the bottom of the header when navigating with anchors */
-      /* margin-bottom: 1rem; */
-    }
-    /* p {
       margin-bottom: 1rem;
-    } */
+    }
+    p {
+      margin-bottom: 1rem;
+    }
   }
 
   /*------------------------------Colors------------------------------*/

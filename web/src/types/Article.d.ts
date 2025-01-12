@@ -1,5 +1,5 @@
 type Article = {
-  id: string;
+  id: number;
   documentId: string;
   title: string;
   slug: string;
@@ -8,7 +8,7 @@ type Article = {
   updatedAt: string;
   publishedAt: string;
   cover: {
-    id: string;
+    id: number;
     documentId: string;
     name: string;
     alternativeText: string;
@@ -33,4 +33,24 @@ type Article = {
     updatedAt: string;
     publishedAt: string;
   };
+  author: {
+    id: number;
+    documentId: string;
+    name: string;
+    email: string;
+    createdAt: string;
+    updatedAt: string;
+    publishedAt: string;
+  };
+  category: {
+    id: number;
+    documentId: string;
+    name: string;
+    slug: string;
+    description: null;
+    createdAt: string;
+    updatedAt: string;
+    publishedAt: string;
+  };
+  blocks: [];
 };

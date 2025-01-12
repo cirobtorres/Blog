@@ -29,7 +29,7 @@ const Cards = async () => {
                   //    Bottom Padding (0.5rem)
                   " transition-all ease-in-out duration-200" +
                   " focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-blog-foreground-highlight" +
-                  " focus-within:scale-[1.015] rounded-xl overflow-hidden [&_p]:hover:underline bg-[#1f1f1f] shadow-lg hover:scale-[1.015]"
+                  " focus-within:scale-[1.015] rounded-xl overflow-hidden [&_p]:hover:underline bg-[#1f1f1f] shadow-lg"
                 }
               >
                 <ArticleCard article={article} />

@@ -16,7 +16,7 @@ const AnchorTracker = ({ contentId }: { contentId: string }) => {
   const linkAnchorsListener = () => {
     const sections: NodeListOf<HTMLHeadingElement> | undefined = document
       .getElementById(contentId)
-      ?.querySelectorAll("h1, h2, h3, h4");
+      ?.querySelectorAll("h1, h2, h3, h4, h5, h6");
 
     let currentSectionIndex = 0;
 
@@ -93,7 +93,7 @@ const AnchorTracker = ({ contentId }: { contentId: string }) => {
       type="single"
       collapsible
       defaultValue="item-1"
-      className="self-start w-full max-w-72 sticky top-3 pt-14"
+      className="self-start w-full max-w-72 sticky top-3 pt-12"
     >
       <AccordionItem value="item-1">
         <AccordionTrigger>Conteúdo</AccordionTrigger>

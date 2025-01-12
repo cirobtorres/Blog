@@ -16,9 +16,9 @@ const getArticles = async () => {
   return data;
 };
 
-const getArticle = async (id: string) => {
+const getArticle = async (documentId: string) => {
   const res = await fetch(
-    `http://127.0.0.1:1337/api/articles/${id}?populate=*`,
+    `http://127.0.0.1:1337/api/articles/${documentId}?populate=*`,
     {
       method: "GET",
       headers: {
@@ -34,13 +34,16 @@ const getArticle = async (id: string) => {
   return data;
 };
 
-const getCover = async (id: string) => {
-  const res = await fetch(`http://127.0.0.1:1337/api/upload/files/${id}`, {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_TOKEN}`,
-    },
-  });
+const getCover = async (documentId: string) => {
+  const res = await fetch(
+    `http://127.0.0.1:1337/api/upload/files/${documentId}`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_TOKEN}`,
+      },
+    }
+  );
   if (!res.ok) {
     console.error(`${res.status} ${res.statusText}`);
     throw new Error("Failed to fetch cover");

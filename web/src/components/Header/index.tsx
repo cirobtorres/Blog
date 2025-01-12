@@ -59,9 +59,6 @@ const Header = () => {
               }
             >
               <li>
-                <Link href="/contato">Contato</Link>
-              </li>
-              <li>
                 <Link href="/sobre-mim">Sobre mim</Link>
               </li>
             </ul>
