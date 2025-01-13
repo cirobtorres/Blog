@@ -12,15 +12,17 @@ export default async function ArticleHero(article: Article) {
   const { data: author } = await getAuthor(article.author.documentId);
   return (
     <>
-      <div className="h-[30rem] bg-blog-background-2 mb-4">
-        <div className="h-full grid grid-cols-article mx-auto items-center max-w-screen-2xl">
-          <div className="col-start-2 mx-8">
+      <div className="min-h-[30rem] py-8 mb-4 flex items-center bg-blog-background-2">
+        <div className="h-full grid grid-cols-article max-lg:grid-cols-article-1024 max-[800px]:grid-cols-article-800 mx-auto items-center max-w-screen-2xl">
+          <div className="col-start-2 ml-8 mr-4 max-[800px]:ml-4">
             <BreadCrumb title={article.title} />
             <div className="blog-center-content flex flex-col gap-4">
-              <h1 className="text-5xl leading-[4rem] font-extrabold break-words line-clamp-2">
+              <h1 className="text-5xl max-lg:text-4xl leading-[4rem] font-extrabold break-words">
+                {/* line-clamp-3 */}
                 {article.title}
               </h1>
-              <p className="text-2xl break-words line-clamp-3">
+              <p className="text-2xl max-lg:text-xl break-words text-[hsl(0,0%,55%)]">
+                {/* line-clamp-3 */}
                 {article.description}
               </p>
               <div className="flex gap-8">
@@ -45,14 +47,20 @@ export default async function ArticleHero(article: Article) {
                   </p>
                 </div>
                 <div className="flex flex-col justify-center">
-                  <p className="text-sm">
-                    Criado:{" "}
-                    <time>{formatDateToCustomFormat(article.createdAt)}</time>
+                  <p className="text-base">
+                    <small>
+                      Criado:{" "}
+                      <time>{formatDateToCustomFormat(article.createdAt)}</time>
+                    </small>
                   </p>
                   {article.updatedAt && (
-                    <p className="text-sm">
-                      Atualizado:{" "}
-                      <time>{formatDateToCustomFormat(article.updatedAt)}</time>
+                    <p className="text-base leading-3">
+                      <small>
+                        Atualizado:{" "}
+                        <time>
+                          {formatDateToCustomFormat(article.updatedAt)}
+                        </time>
+                      </small>
                     </p>
                   )}
                 </div>
@@ -61,8 +69,20 @@ export default async function ArticleHero(article: Article) {
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-article mx-auto max-w-screen-2xl mb-20">
-        <figure className="flex flex-col gap-3 col-start-2 mx-8 h-[25rem]">
+      <div
+        className={
+          "grid grid-cols-article" +
+          " max-lg:grid-cols-article-1024 max-[800px]:grid-cols-article-800" +
+          " max-w-screen-2xl mx-auto mb-20"
+        }
+      >
+        <figure
+          className={
+            "flex flex-col gap-3 h-[25rem]" +
+            " col-start-2 max-[800px]:col-start-1" +
+            " ml-4 mr-4 pl-4 max-[800px]:pl-0"
+          }
+        >
           <div className="shrink-0 relative h-full">
             <Image
               src={`http://127.0.0.1:1337${article.cover.url}`}

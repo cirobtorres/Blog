@@ -39,7 +39,7 @@ const Header = () => {
       id="floating-header"
       className="fixed h-12 w-full backdrop-blur-sm shrink-0 [z-index:10] top-0 transition-[top] duration-300 bg-blog-background-backdrop"
     >
-      <div className="h-full pl-4 pr-6 max-w-screen-2xl mx-auto">
+      <div className="h-full max-w-screen-2xl px-4 mx-auto">
         <nav className="w-full h-full flex items-center justify-between">
           <div className="h-full flex items-center justify-center gap-4">
             <div className="flex items-center justify-between">
@@ -52,7 +52,7 @@ const Header = () => {
             </div>
             <ul
               className={
-                "flex gap-4 items-center justify-between mx-20" +
+                "flex gap-4 items-center justify-between" +
                 " [&_li]:flex [&_li]:items-center [&_li]:justify-between" +
                 " [&_li_a]:transition-colors [&_li_a]:duration-500 [&_li_a]:text-sm" +
                 " [&_li_a]:text-blog-foreground-readable [&_li_a]:font-[500] hover:[&_li_a]:text-blog-foreground-readable-hover"

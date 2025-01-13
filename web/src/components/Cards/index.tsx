@@ -12,8 +12,8 @@ const Cards = async () => {
     <>
       <ArticleCardLastPublished article={lastArticlePublished} />
       {articles.length > 0 && (
-        <div className="max-w-screen-2xl mx-auto flex items-center mb-10">
-          <ul className="w-full grid grid-cols-3 gap-4">
+        <div className="max-w-screen-2xl mx-auto px-4 flex items-center mb-10">
+          <ul className="w-full grid grid-cols-3 max-[800px]:grid-cols-2 max-[500px]:grid-cols-1 gap-4">
             {articles.map((article: Article) => (
               <li
                 key={article.documentId}
@@ -29,7 +29,7 @@ const Cards = async () => {
                   //    Bottom Padding (0.5rem)
                   " transition-all ease-in-out duration-200" +
                   " focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-blog-foreground-highlight" +
-                  " focus-within:scale-[1.015] rounded-xl overflow-hidden [&_p]:hover:underline bg-[#1f1f1f] shadow-lg"
+                  " rounded-xl overflow-hidden [&_p]:hover:underline bg-blog-background-2 shadow-lg"
                 }
               >
                 <ArticleCard article={article} />
@@ -63,14 +63,31 @@ const ArticleCardLastPublished = ({ article }: { article: Article }) => {
               fill
               className="absolute object-cover"
             />
-            <div className="w-full absolute bottom-0 px-20 py-4 backdrop-blur-xl backdrop-brightness-150">
-              <p className="text-white text-4xl font-extrabold">
+            <div className="flex flex-col gap-2 w-full absolute bottom-0 px-20 max-[800px]:px-12 max-[500px]:px-4 py-4 backdrop-blur-xl backdrop-brightness-150">
+              <p
+                className={
+                  "text-white font-extrabold" +
+                  " text-4xl max-[800px]:text-3xl max-[500px]:text-2xl"
+                }
+              >
                 {article.title}
               </p>
-              <p className="text-white text-xl">{article.description}</p>
-              <time className="flex justify-center text-white text-xs">
-                {formatDateToCustomFormat(article.createdAt)}
-              </time>
+              <p
+                className={
+                  "text-white" +
+                  " text-xl max-[800px]:text-lg max-[500px]:text-base" +
+                  " max-h-[calc(1.75rem_*_3)] line-clamp-3" +
+                  // " max-[800px]:max-h-[calc(1.75rem_*_3)] max-[800px]:line-clamp-3" +
+                  " max-[500px]:max-h-[calc(1.5rem_*_2)] max-[500px]:line-clamp-2"
+                }
+              >
+                {article.description}
+              </p>
+              <p className="flex justify-center text-white text-xs">
+                <small>
+                  <time>{formatDateToCustomFormat(article.createdAt)}</time>
+                </small>
+              </p>
             </div>
           </div>
         </Link>
@@ -94,15 +111,29 @@ const ArticleCard = ({ article }: { article: Article }) => {
         />
       </div>
       <div className="h-full flex flex-col gap-2 px-2 pb-2">
-        <p className="max-h-[calc(1.5rem_*_3)] line-clamp-3 font-extrabold">
+        <p
+          className={
+            "max-h-[calc(1.5rem_*_3)] line-clamp-3" + // max text height before ellipsis (3-lines)
+            " font-extrabold text-blog-foreground-readable" +
+            " text-base"
+          }
+        >
           {article.title}
         </p>
-        <p className="max-h-[calc(1.25rem_*_3)] line-clamp-3 text-sm text-[hsl(0,0%,65%)] dark:text-[hsl(0,0%,35%)]">
+        <p
+          className={
+            "max-h-[calc(1.25rem_*_3)] line-clamp-3" + // max text height before ellipsis (3-lines)
+            " text-[hsl(0,0%,55%)]" +
+            " text-sm"
+          }
+        >
           {article.description}
         </p>
-        <time className="mt-auto text-xs">
-          {formatDateToCustomFormat(article.createdAt)}
-        </time>
+        <p className="mt-auto text-xs">
+          <small>
+            <time>{formatDateToCustomFormat(article.createdAt)}</time>
+          </small>
+        </p>
       </div>
     </Link>
   );
@@ -115,7 +146,7 @@ const LoadingCards = () => {
         <Skeleton className="w-full h-full rounded" />
       </div>
       <div className="max-w-screen-2xl mx-auto flex items-center mb-10">
-        <ul className="w-full grid grid-cols-3 gap-4">
+        <ul className="w-full grid grid-cols-3 max-[800px]:grid-cols-2 max-[500px]:grid-cols-1 gap-4">
           {Array.from({ length: 3 }, (_, key) => key).map((_, key: number) => (
             <li key={key}>
               <Skeleton className="w-full h-[200px] mb-2 rounded" />

@@ -70,6 +70,8 @@ export default {
       gridTemplateColumns: {
         // SHADCN/UI==========--------------------------------------------------
         article: "300px 1fr 100px",
+        "article-1024": "300px 1fr",
+        "article-800": "1fr",
       },
       borderRadius: {
         // SHADCN/UI==========--------------------------------------------------
