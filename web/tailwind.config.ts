@@ -69,9 +69,9 @@ export default {
       },
       gridTemplateColumns: {
         // SHADCN/UI==========--------------------------------------------------
-        article: "300px 1fr 100px",
-        "article-1024": "300px 1fr",
-        "article-800": "1fr",
+        article: "300px minmax(0px,1fr) 100px",
+        "article-1024": "300px minmax(0px,1fr)",
+        "article-800": "minmax(0px,1fr)",
       },
       borderRadius: {
         // SHADCN/UI==========--------------------------------------------------

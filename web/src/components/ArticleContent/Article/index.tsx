@@ -22,7 +22,7 @@ const Article = async ({
           <div
             key={block.id}
             dangerouslySetInnerHTML={{ __html: htmlToRender }}
-            className="w-full blog blog-center-content blog-heading blog-text blog-blockquote blog-code blog-lists blog-todo-list blog-table blog-hr"
+            className="w-full blog blog-center-content blog-heading blog-text blog-blockquote blog-code blog-lists blog-todo-list blog-table blog-hr [&_*]:scrollbar"
           />
         );
       case "shared.quote":
