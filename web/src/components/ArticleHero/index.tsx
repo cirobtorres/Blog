@@ -69,24 +69,21 @@ const Author = async ({ documentId }: { documentId: string }) => {
   const { data: author }: { data: Author } = await getAuthor(documentId);
   return (
     <div className="flex gap-4 items-center">
-      <div className="relative flex w-10 h-10 shrink-0 overflow-hidden rounded-full">
-        <Image
-          src={`http://127.0.0.1:1337${author.avatar.url}`}
-          alt={author.avatar.alternativeText}
-          fill
-          className="absolute object-cover"
-        />
-      </div>
-      <p className="text-blog-foreground-highlight">
-        <strong>
-          <Link
-            href="/sobre-mim"
-            className="transition-colors duration-500 hover:text-blog-foreground-readable-hover"
-          >
-            {author.name}
-          </Link>
-        </strong>
-      </p>
+      <Link href="/sobre-mim" className="group">
+        <div className="relative flex w-10 h-10 shrink-0 overflow-hidden rounded-full">
+          <Image
+            src={`http://127.0.0.1:1337${author.avatar.url}`}
+            alt={author.avatar.alternativeText}
+            fill
+            className="transition-all duration-500 absolute object-cover group-hover:brightness-50"
+          />
+        </div>
+      </Link>
+      <Link href="/sobre-mim">
+        <p className="transition-colors duration-500 hover:text-blog-foreground-readable-hover text-blog-foreground-highlight">
+          <strong>{author.name}</strong>
+        </p>
+      </Link>
     </div>
   );
 };

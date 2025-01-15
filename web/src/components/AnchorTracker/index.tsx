@@ -108,14 +108,16 @@ const AnchorTracker = ({ contentId }: { contentId: string }) => {
                 href={`#${Object.keys(text)}`}
                 aria-current={index === 0 ? "page" : "false"} // When pages load, the first anchor is supposed to be the colored one
                 className={
-                  `flex text-sm transition-colors duration-500 aria-current:text-blog-foreground-highlight hover:text-blog-foreground-readable-hover break-words` +
-                  ` ${generatePaddingForSessions(text)}`
+                  `flex text-sm transition-colors duration-500 break-words aria-current:text-blog-foreground-highlight` +
+                  ` aria-current:hover:text-blog-foreground-readable-hover hover:text-blog-foreground-readable-hover ${generatePaddingForSessions(
+                    text
+                  )}`
                 }
               >
-                {/* 
-                Replaces <h2>Example Title</h2> to Example Title
-              */}
-                {Object.values(text)[0].replace(/<\/?h[1-4][^>]*>/gi, "")}
+                {
+                  Object.values(text)[0].replace(/<\/?h[1-4][^>]*>/gi, "")
+                  // Replaces <h2>Example Title</h2> to Example Title
+                }
               </Link>
             </li>
           ))}

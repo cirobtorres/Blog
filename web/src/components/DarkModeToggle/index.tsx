@@ -1,7 +1,8 @@
 "use client";
 
-import { IoMoon, IoSunny } from "react-icons/io5";
 import { useTheme } from "next-themes";
+import { FaMoon } from "react-icons/fa6";
+import { IoSunny } from "react-icons/io5";
 import {
   Tooltip,
   TooltipContent,
@@ -23,13 +24,12 @@ export default function DarkModeToggle() {
                 onClick={() => setTheme("light")}
                 className="absolute opacity-0 scale-0 dark:opacity-100 dark:scale-100"
               >
-                <IoMoon className="text-xl text-[#40b88c]" />
+                <FaMoon className="text-xl text-[#40b88c]" />
               </button>
               <button
                 type="button"
                 onClick={() => setTheme("dark")}
-                className="absolute opacity-100 scale-100 dark:opacity-0 dark:scale-0
-                "
+                className="absolute opacity-100 scale-100 dark:opacity-0 dark:scale-0"
               >
                 <IoSunny className="text-xl text-[#fbbf24]" />
               </button>

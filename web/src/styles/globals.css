@@ -131,8 +131,14 @@ body {
     }
 
     a {
+      transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+      transition-duration: 500ms;
       color: var(--blog-foreground-highlight);
       text-decoration: underline;
+    }
+
+    a:hover {
+      color: var(--blog-foreground-readable-hover);
     }
   }
 

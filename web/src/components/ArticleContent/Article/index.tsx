@@ -20,7 +20,7 @@ const Article = async ({
           const contentHtml = await convertMarkdowToHtmlString(block.body);
           const processedHtml = highlightPreBlocks(contentHtml);
           const htmlToRender = addIdsToHeadings(processedHtml);
-          return <ParseHtmlBlocks html={htmlToRender} />;
+          return <ParseHtmlBlocks key={block.id} html={htmlToRender} />;
         case "shared.quote":
           return (
             <div
