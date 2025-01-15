@@ -1,7 +1,7 @@
 "use server";
 
+import convertMarkdowToHtmlString from "../../functions/markdown";
 import { getGlobal } from "../../lib/global";
-import { convertMarkdowToHtmlString } from "../../lib/utils";
 import Footer from "../Footer";
 import Header from "../Header";
 

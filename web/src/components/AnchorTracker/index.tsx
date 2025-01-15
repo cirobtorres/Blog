@@ -95,8 +95,8 @@ const AnchorTracker = ({ contentId }: { contentId: string }) => {
       defaultValue="item-1"
       className={
         "w-full" +
-        " self-start max-w-72 sticky top-3 pt-12" +
-        " max-[800px]:self-auto max-[800px]:max-w-full max-[800px]:static max-[800px]:top-0 max-[800px]:pt-0"
+        " self-start max-w-72 sticky top-12" +
+        " max-[800px]:self-auto max-[800px]:max-w-full max-[800px]:static max-[800px]:pt-0"
       }
     >
       <AccordionItem value="item-1">

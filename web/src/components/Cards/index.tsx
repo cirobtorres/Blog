@@ -29,7 +29,7 @@ const Cards = async () => {
                   //    Bottom Padding (0.5rem)
                   " transition-all ease-in-out duration-200" +
                   " focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-blog-foreground-highlight" +
-                  " rounded-xl overflow-hidden [&_p]:hover:underline bg-blog-background-2 shadow-lg"
+                  " rounded-xl overflow-hidden bg-blog-background-2 shadow-lg group"
                 }
               >
                 <ArticleCard article={article} />
@@ -83,8 +83,8 @@ const ArticleCardLastPublished = ({ article }: { article: Article }) => {
               >
                 {article.description}
               </p>
-              <p className="flex justify-center text-white text-xs">
-                <small>
+              <p>
+                <small className="flex justify-center text-white text-xs">
                   <time>{formatDateToCustomFormat(article.createdAt)}</time>
                 </small>
               </p>
@@ -115,7 +115,7 @@ const ArticleCard = ({ article }: { article: Article }) => {
           className={
             "max-h-[calc(1.5rem_*_3)] line-clamp-3" + // max text height before ellipsis (3-lines)
             " font-extrabold text-blog-foreground-readable" +
-            " text-base"
+            " text-base group-hover:underline"
           }
         >
           {article.title}
@@ -124,7 +124,7 @@ const ArticleCard = ({ article }: { article: Article }) => {
           className={
             "max-h-[calc(1.25rem_*_3)] line-clamp-3" + // max text height before ellipsis (3-lines)
             " text-[hsl(0,0%,55%)]" +
-            " text-sm"
+            " text-sm group-hover:underline"
           }
         >
           {article.description}

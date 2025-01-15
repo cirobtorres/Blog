@@ -95,6 +95,11 @@ export default {
             "animation-timing-function": "cubic-bezier(0.8,0,1,1)",
           },
         },
+        "clip-pop-up-and-bounce": {
+          "0": { top: "8px" },
+          "30%": { top: "-4px" },
+          "40%": { top: "0px" },
+        },
 
         // SHADCN/UI==========--------------------------------------------------
         "accordion-down": {
@@ -117,6 +122,7 @@ export default {
       animation: {
         // BLOG-BackToTopButton==========--------------------------------------------------
         "bouncing-arrow-up": "bouncing-arrow-up 1s infinite",
+        "clip-pop-up-and-bounce": "clip-pop-up-and-bounce 0.2s ease-out",
 
         // SHADCN/UI==========--------------------------------------------------
         "accordion-down": "accordion-down 0.2s ease-out",

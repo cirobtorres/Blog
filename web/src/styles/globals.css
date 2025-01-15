@@ -30,6 +30,7 @@
   --blog-foreground-highlight: hsl(var(--blog-blender-orange));
 
   --blog-border: hsl(0, 0%, 88%);
+  --blog-pre: var(--blog-background-3);
 }
 
 .dark {
@@ -48,6 +49,7 @@
   --blog-foreground-highlight: hsl(var(--blog-blender-orange));
 
   --blog-border: hsl(0, 0%, 15%);
+  --blog-pre: hsl(var(--blog-black));
 }
 
 * {
@@ -127,15 +129,12 @@ body {
     strong {
       color: inherit;
     }
-  }
 
-  a {
-    color: hsl(var(--blog-foreground-highlight));
-    text-decoration: underline;
+    a {
+      color: var(--blog-foreground-highlight);
+      text-decoration: underline;
+    }
   }
-  /* a:visited {
-    color: hsl(var(--blog-foreground-highlight));
-  } */
 
   /*------------------------------Lists------------------------------*/
   .blog-lists {
@@ -209,7 +208,7 @@ body {
 
   /*------------------------------Code------------------------------*/
   .blog-code pre {
-    background: hsl(var(--blog-black));
+    background: var(--blog-pre);
     color: hsl(var(--blog-chrome-silver));
     border: 1px solid transparent;
     border-radius: 8px;
