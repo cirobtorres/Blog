@@ -4,13 +4,18 @@ import { useEffect } from "react";
 
 const ProgressBar = ({ documentId }: { documentId: string }) => {
   const linearProgressBarOnScroll = () => {
+    const headerHeight = 400 + 480 + 80;
     const elementHeight = document.getElementById(documentId)?.scrollHeight;
     const progressBar = document.getElementById("progress-bar-blur");
     const progressBarBlur = document.getElementById("progress-bar");
     const scrollTop = window.scrollY;
+    const correctedScrollTop =
+      scrollTop - headerHeight < 0 ? 0 : scrollTop - headerHeight;
     if (elementHeight && progressBar && progressBarBlur) {
       const percentage =
-        scrollTop < elementHeight ? (scrollTop / elementHeight) * 100 : 100;
+        correctedScrollTop < elementHeight
+          ? (correctedScrollTop / elementHeight) * 100
+          : 100;
       progressBarBlur.style.width = `${percentage}%`;
       progressBar.style.width = `${percentage}%`;
     }

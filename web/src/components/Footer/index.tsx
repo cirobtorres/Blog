@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { getGlobal } from "../../lib/global";
 import { Skeleton } from "../shadcnui/skeleton";
-import convertMarkdowToHtmlString from "../../functions/markdown";
+import convertMarkdowToHtmlString from "../../utils/markdown";
 
 const Footer = async () => {
   const {

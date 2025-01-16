@@ -8,7 +8,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "../shadcnui/accordion";
-import { extractAnchors } from "../../functions/anchors";
+import { extractAnchors } from "../../utils/anchors";
 
 const AnchorTracker = ({ contentId }: { contentId: string }) => {
   const [anchorList, setAnchorList] = useState<{ [key: string]: string }[]>([]);
@@ -115,7 +115,7 @@ const AnchorTracker = ({ contentId }: { contentId: string }) => {
                 }
               >
                 {
-                  Object.values(text)[0].replace(/<\/?h[1-4][^>]*>/gi, "")
+                  Object.values(text)[0].replace(/<\/?h[1-6][^>]*>/gi, "")
                   // Replaces <h2>Example Title</h2> to Example Title
                 }
               </Link>

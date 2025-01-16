@@ -1,7 +1,7 @@
 "use server";
 
 import Image from "next/image";
-import { formatDateToCustomFormat } from "../../functions/dates";
+import { formatDateToCustomFormat } from "../../utils/dates";
 import BreadCrumb from "../BreadCrumb";
 import { getAuthor } from "../../lib/author";
 import { Skeleton } from "../shadcnui/skeleton";

@@ -38,9 +38,8 @@ const BackToTopButton = ({
       progressCircle.style.strokeDashoffset = `${
         circunference.current - (circunference.current * percentage) / 100
       }`;
-      progressCircleBlur.style.strokeDashoffset = `${
-        circunference.current - (circunference.current * percentage) / 100
-      }`;
+      progressCircleBlur.style.strokeDashoffset =
+        progressCircle.style.strokeDashoffset;
     }
   };
 

@@ -1,7 +1,9 @@
+"use server";
+
 import Link from "next/link";
 import { getArticles } from "../../lib/articles";
 import Image from "next/image";
-import { formatDateToCustomFormat } from "../../functions/dates";
+import { formatDateToCustomFormat } from "../../utils/dates";
 import { Skeleton } from "../shadcnui/skeleton";
 
 const Cards = async () => {
