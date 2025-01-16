@@ -1,28 +1,32 @@
 "use server";
 
-import convertMarkdowToHtmlString from "../../functions/markdown";
-import { getGlobal } from "../../lib/global";
 import Footer from "../Footer";
-import Header from "../Header";
+import { FloatingHeader, StaticHeader } from "../Header";
 
-export default async function BodyComponent({
+const ArticleBody = async ({
+  documentId,
   children,
 }: {
+  documentId: string;
   children: React.ReactNode;
-}) {
-  const {
-    data: { footer },
-  } = await getGlobal();
-  const footerHtml = (await convertMarkdowToHtmlString(footer)).replace(
-    /<a(?![^>]*\btarget=)([^>]*)>/gi,
-    '<a target="_blank"$1>'
-  );
-
+}) => {
   return (
     <div className="h-full min-h-screen flex flex-col justify-between">
-      <Header />
-      <div className="flex-1 mt-12">{children}</div>
-      {global && <Footer footerData={footerHtml} />}
+      <FloatingHeader documentId={documentId} />
+      <main className="flex-1 mt-12">{children}</main>
+      <Footer />
     </div>
   );
-}
+};
+
+const HomeBody = async ({ children }: { children: React.ReactNode }) => {
+  return (
+    <div className="h-full min-h-screen flex flex-col justify-between">
+      <StaticHeader />
+      <main className="h-full flex-1 mb-20">{children}</main>
+      <Footer />
+    </div>
+  );
+};
+
+export { ArticleBody, HomeBody };

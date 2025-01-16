@@ -1,7 +1,7 @@
 "use client";
 
 import * as cheerio from "cheerio";
-import { CheckCheck, Copy } from "lucide-react";
+import { Check, Copy } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
@@ -46,7 +46,7 @@ const ParseHtmlBlocks = ({ html }: { html: string }) => {
       <div key={finalBlock.id} className="w-full relative">
         <div
           dangerouslySetInnerHTML={{ __html: finalBlock.htmlToRender }}
-          className="w-full blog blog-center-content blog-heading blog-text blog-blockquote blog-code blog-lists blog-todo-list blog-table blog-hr [&_*]:scrollbar"
+          className="blog blog-center-content blog-heading blog-text blog-blockquote blog-code blog-lists blog-todo-list blog-table blog-hr [&_*]:scrollbar"
         />
         <CopyButton htmlToRender={finalBlock.htmlToRender} />
       </div>
@@ -87,7 +87,7 @@ const CopyButton = ({ htmlToRender }: { htmlToRender: string }) => {
       <Tooltip>
         <TooltipTrigger asChild>
           <button
-            className={`absolute right-4 top-8 size-10 rounded-xl transition-colors duration-500 text-blog-foreground-readable ${
+            className={`absolute right-4 top-8 size-10 rounded-xl transition-colors duration-500 dark text-blog-foreground-readable ${
               !copied
                 ? "hover:bg-blog-border hover:text-blog-foreground-readable-hover"
                 : "bg-blog-border"
@@ -105,7 +105,7 @@ const CopyButton = ({ htmlToRender }: { htmlToRender: string }) => {
               <p>Copiado!</p>
             </div>
             <div className="relative w-full">
-              <CheckCheck
+              <Check
                 className={`absolute size-5 left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 ${
                   copied
                     ? " visible animate-clip-pop-up-and-bounce"

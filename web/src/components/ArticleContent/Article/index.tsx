@@ -5,6 +5,7 @@ import Image from "next/image";
 import highlightPreBlocks from "../../../functions/highlight";
 import convertMarkdowToHtmlString from "../../../functions/markdown";
 import ParseHtmlBlocks from "./ParseHtmlBlocks";
+// import { BackToTopButtonSmallScreens } from "../../BackToTopButton";
 
 const Article = async ({
   id,
@@ -83,7 +84,11 @@ const Article = async ({
   );
 
   return (
-    <div id={id} className="flex flex-col">
+    <div
+      id={id}
+      className="flex flex-col" // relative
+    >
+      {/* <BackToTopButtonSmallScreens /> */}
       {toRender}
     </div>
   );

@@ -18,17 +18,23 @@ export default function DarkModeToggle() {
       <Tooltip>
         <TooltipTrigger asChild>
           <div className="relative">
-            <div className="flex shrink-0 justify-center items-center rounded-full size-8 duration-700 cursor-pointer bg-blog-background-3">
+            <div className="flex shrink-0 justify-center items-center rounded-full size-8 duration-700 cursor-pointer bg-blog-background-1">
               <button
                 type="button"
-                onClick={() => setTheme("light")}
+                onClick={(event) => {
+                  event?.preventDefault();
+                  setTheme("light");
+                }}
                 className="absolute opacity-0 scale-0 dark:opacity-100 dark:scale-100"
               >
                 <FaMoon className="text-xl text-[#40b88c]" />
               </button>
               <button
                 type="button"
-                onClick={() => setTheme("dark")}
+                onClick={(event) => {
+                  event?.preventDefault();
+                  setTheme("dark");
+                }}
                 className="absolute opacity-100 scale-100 dark:opacity-0 dark:scale-0"
               >
                 <IoSunny className="text-xl text-[#fbbf24]" />

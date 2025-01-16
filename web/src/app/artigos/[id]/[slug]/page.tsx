@@ -3,6 +3,7 @@
 import { getArticle } from "../../../../lib/articles";
 import ArticleContent from "../../../../components/ArticleContent";
 import ArticleHero from "../../../../components/ArticleHero";
+import { ArticleBody } from "../../../../components/Body";
 
 interface Params {
   params: {
@@ -17,11 +18,11 @@ export default async function ArticlesPage({ params }: Params) {
 
   if (article) {
     return (
-      <main>
+      <ArticleBody documentId={id}>
         <ArticleHero {...article} />
         <ArticleContent id={id} content={article.blocks} />
         <ArticlesRelated />
-      </main>
+      </ArticleBody>
     );
   }
 }
