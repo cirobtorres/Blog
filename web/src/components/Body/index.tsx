@@ -3,7 +3,7 @@
 import Footer from "../Footer";
 import { FloatingHeader, StaticHeader } from "../Header";
 
-const ArticleBody = async ({
+const DynamicBody = async ({
   documentId,
   children,
 }: {
@@ -19,7 +19,7 @@ const ArticleBody = async ({
   );
 };
 
-const HomeBody = async ({ children }: { children: React.ReactNode }) => {
+const StaticBody = async ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="h-full min-h-screen flex flex-col justify-between">
       <StaticHeader />
@@ -29,4 +29,4 @@ const HomeBody = async ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export { ArticleBody, HomeBody };
+export { DynamicBody, StaticBody as HomeBody };

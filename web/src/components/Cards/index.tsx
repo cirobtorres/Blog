@@ -7,8 +7,8 @@ import { formatDateToCustomFormat } from "../../utils/dates";
 import { Skeleton } from "../shadcnui/skeleton";
 
 const Cards = async () => {
-  const { data: articles }: { data: Article[] } = await getArticles();
-  const lastArticlePublished = articles.shift();
+  const { data: articles } = await getArticles();
+  const lastArticlePublished = articles.shift() as ArticleCard | undefined;
 
   return lastArticlePublished !== undefined ? (
     <>
@@ -16,7 +16,7 @@ const Cards = async () => {
       {articles.length > 0 && (
         <div className="max-w-screen-2xl mx-auto px-4 flex items-center mb-10">
           <ul className="w-full grid grid-cols-3 max-[800px]:grid-cols-2 max-[500px]:grid-cols-1 gap-4">
-            {articles.map((article: Article) => (
+            {articles.map((article) => (
               <li
                 key={article.documentId}
                 className={
@@ -50,7 +50,7 @@ const Cards = async () => {
   );
 };
 
-const ArticleCardLastPublished = ({ article }: { article: Article }) => {
+const ArticleCardLastPublished = ({ article }: { article: ArticleCard }) => {
   return (
     <div className="w-full py-4 bg-blog-background-2 mb-10">
       <div className="max-w-screen-2xl mx-auto flex items-center">
@@ -98,7 +98,7 @@ const ArticleCardLastPublished = ({ article }: { article: Article }) => {
   );
 };
 
-const ArticleCard = ({ article }: { article: Article }) => {
+const ArticleCard = ({ article }: { article: ArticleCard }) => {
   return (
     <Link
       href={`artigos/${article.documentId}/${article.slug}`}

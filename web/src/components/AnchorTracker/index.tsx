@@ -10,12 +10,12 @@ import {
 } from "../shadcnui/accordion";
 import { extractAnchors } from "../../utils/anchors";
 
-const AnchorTracker = ({ contentId }: { contentId: string }) => {
+const AnchorTracker = ({ documentId }: { documentId: string }) => {
   const [anchorList, setAnchorList] = useState<{ [key: string]: string }[]>([]);
 
   const linkAnchorsListener = () => {
     const sections: NodeListOf<HTMLHeadingElement> | undefined = document
-      .getElementById(contentId)
+      .getElementById(documentId)
       ?.querySelectorAll("h1, h2, h3, h4, h5, h6");
 
     let currentSectionIndex = 0;
@@ -81,12 +81,12 @@ const AnchorTracker = ({ contentId }: { contentId: string }) => {
   }, []);
 
   useEffect(() => {
-    const contentElement = document.getElementById(contentId);
+    const contentElement = document.getElementById(documentId);
     if (contentElement) {
       const anchors = extractAnchors(contentElement.innerHTML);
       setAnchorList(anchors);
     }
-  }, [contentId]);
+  }, [documentId]);
 
   return (
     <Accordion

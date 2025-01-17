@@ -11,6 +11,7 @@ const Footer = async () => {
     /<a(?![^>]*\btarget=)([^>]*)>/gi,
     '<a target="_blank"$1>'
   );
+
   return (
     <footer className="shrink-0 h-60 bg-blog-background-2">
       <Suspense fallback={<FooterSkeleton />}>

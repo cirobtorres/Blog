@@ -1,74 +1,8 @@
-type Cover = {
-  id: number;
-  documentId: string;
-  name: string;
-  alternativeText: string;
-  caption: string;
-  width: number;
-  height: number;
-  formats: {
-    large: object;
-    small: object;
-    medium: object;
-    thumbnail: object;
-  };
-  hash: string;
-  ext: string;
-  mime: string;
-  size: number;
-  url: string;
-  previewUrl: string | null;
-  provider: string;
-  provider_metadata: string | null;
-  createdAt: string;
-  updatedAt: string;
-  publishedAt: string;
-};
+// -----
+// Props for homepage cards
+type ArticleCards = ArticleCard[];
 
-type Author = {
-  id: number;
-  documentId: string;
-  name: string;
-  email: string;
-  createdAt: string;
-  updatedAt: string;
-  publishedAt: string;
-  avatar: {
-    id: number;
-    documentId: string;
-    name: string;
-    alternativeText: string;
-    caption: string;
-    width: number;
-    height: number;
-    formats: { thumbnail: [object] };
-    hash: string;
-    ext: string;
-    mime: string;
-    size: number;
-    url: string;
-    previewUrl: string | null;
-    provider: string;
-    provider_metadata: string | null;
-    createdAt: string;
-    updatedAt: string;
-    publishedAt: string;
-  };
-};
-
-type Category = {
-  id: number;
-  documentId: string;
-  name: string;
-  slug: string;
-  description: null;
-  createdAt: string;
-  updatedAt: string;
-  publishedAt: string;
-};
-
-type Article = {
-  id: number;
+type ArticleCard = {
   documentId: string;
   title: string;
   slug: string;
@@ -76,8 +10,89 @@ type Article = {
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
-  cover: Cover;
-  author: Author;
-  category: Category;
-  blocks: [];
+  cover: {
+    documentId: string;
+    url: string;
+    alternativeText: string;
+  };
+  category: { name: string; slug: string };
+  author: {
+    name: string;
+    avatar: { documentId: string; url: string; alternativeText: string };
+  };
+};
+
+// -----
+// Props for article page, which includes ArticleHero and ArticleContent
+type Article = {
+  documentId: string;
+  title: string;
+  slug: string;
+  description: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  cover: {
+    url: string;
+    alternativeText: string;
+    caption: string;
+  };
+  author: {
+    name: string;
+    avatar: {
+      url: string;
+      alternativeText: string;
+    };
+  };
+  category: { name: string };
+  tags: [{ name: string; slug: string }, { name: string; slug: string }];
+  blocks: ArticleBlocks[];
+};
+
+// -----
+// Props for article blocks
+type ArticleContent = {
+  documentId: string;
+  content: ArticleBlocks[];
+};
+
+type ArticleBlocks = SharedRichText | SharedQuote | SharedMedia | SharedSlider;
+
+type SharedRichText = {
+  __typename: "ComponentSharedRichText";
+  id: string;
+  body: string;
+};
+
+type SharedQuote = {
+  __typename: "ComponentSharedQuote";
+  id: string;
+  body: string;
+  title: string;
+};
+
+type SharedMedia = {
+  __typename: "ComponentSharedMedia";
+  id: string;
+  file: {
+    documentId: string;
+    url: string;
+    alternativeText: string;
+    caption: string;
+    width: number;
+    height: number;
+  };
+};
+
+type SharedSlider = {
+  __typename: "ComponentSharedSlider";
+  id: string;
+  files: {
+    documentId: string;
+    url: string;
+    alternativeText: string;
+    caption: string;
+    width: number;
+    height: number;
+  }[];
 };

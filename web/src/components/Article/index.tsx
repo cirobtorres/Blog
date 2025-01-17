@@ -2,16 +2,10 @@
 
 import AnchorTracker from "../AnchorTracker";
 import { BackToTopButton } from "../BackToTopButton";
-import Article from "./Article";
+import ArticleContent from "./ArticleContent";
 
 // Format article content to highlight code blocks with Highlight.js and creates anchor ids for page navigation
-const ArticleContent = ({
-  id,
-  content,
-}: {
-  id: string;
-  content: { __component: string; id: number; title?: string; body?: string }[];
-}) => {
+const Article = ({ documentId, content }: ArticleContent) => {
   return (
     <div
       className={
@@ -19,13 +13,13 @@ const ArticleContent = ({
         " grid gap-4 grid-cols-article max-lg:grid-cols-article-1024 max-[800px]:grid-cols-article-800"
       }
     >
-      <AnchorTracker contentId={id} />
-      <Article id={id} content={content} />
+      <AnchorTracker documentId={documentId} />
+      <ArticleContent documentId={documentId} content={content} />
       <div className="max-lg:hidden">
-        <BackToTopButton contentId={id} />
+        <BackToTopButton contentId={documentId} />
       </div>
     </div>
   );
 };
 
-export default ArticleContent;
+export default Article;

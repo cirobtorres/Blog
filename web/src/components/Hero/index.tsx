@@ -3,21 +3,18 @@
 import Image from "next/image";
 import { formatDateToCustomFormat } from "../../utils/dates";
 import BreadCrumb from "../BreadCrumb";
-import { getAuthor } from "../../lib/author";
-import { Skeleton } from "../shadcnui/skeleton";
 import Link from "next/link";
-import { Suspense } from "react";
 
-export default async function ArticleHero(article: Article) {
+const Hero = async (article: Article) => {
   return (
     <>
-      <Hero article={article} />
+      <ArticleTitle article={article} />
       <ArticleImage cover={article.cover} />
     </>
   );
-}
+};
 
-const Hero = ({ article }: { article: Article }) => {
+const ArticleTitle = ({ article }: { article: Article }) => {
   return (
     <div className="min-h-[30rem] py-8 mb-4 flex items-center bg-blog-background-2">
       <div className="h-full grid grid-cols-article max-lg:grid-cols-article-800 mx-auto items-center max-w-screen-2xl">
@@ -31,16 +28,7 @@ const Hero = ({ article }: { article: Article }) => {
               {article.description}
             </p>
             <div className="flex gap-8">
-              <Suspense
-                fallback={
-                  <div className="flex gap-4 items-center">
-                    <Skeleton className="w-10 h-10 shrink-0 overflow-hidden rounded-full" />
-                    <Skeleton className="w-24 h-4 rounded-full" />
-                  </div>
-                }
-              >
-                <Author documentId={article.author.documentId} />
-              </Suspense>
+              <Author author={article.author} />
               <div className="flex flex-col justify-center">
                 <p className="text-base">
                   <small>
@@ -65,8 +53,11 @@ const Hero = ({ article }: { article: Article }) => {
   );
 };
 
-const Author = async ({ documentId }: { documentId: string }) => {
-  const { data: author }: { data: Author } = await getAuthor(documentId);
+const Author = async ({
+  author,
+}: {
+  author: { name: string; avatar: { url: string; alternativeText: string } };
+}) => {
   return (
     <div className="flex gap-4 items-center">
       <Link href="/sobre-mim" className="group">
@@ -88,7 +79,15 @@ const Author = async ({ documentId }: { documentId: string }) => {
   );
 };
 
-const ArticleImage = ({ cover }: { cover: Cover }) => {
+const ArticleImage = ({
+  cover,
+}: {
+  cover: {
+    url: string;
+    alternativeText: string;
+    caption: string;
+  };
+}) => {
   return (
     <div
       className={
@@ -117,3 +116,5 @@ const ArticleImage = ({ cover }: { cover: Cover }) => {
     </div>
   );
 };
+
+export default Hero;
