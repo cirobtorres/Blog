@@ -16,7 +16,7 @@ const Hero = async (article: Article) => {
 
 const ArticleTitle = ({ article }: { article: Article }) => {
   return (
-    <div className="min-h-[30rem] py-8 mb-4 flex items-center bg-blog-background-2">
+    <section className="min-h-[30rem] py-8 mb-4 flex items-center bg-blog-background-2">
       <div className="h-full grid grid-cols-article max-lg:grid-cols-article-800 mx-auto items-center max-w-screen-2xl">
         <div className="col-start-2 max-lg:col-start-1 ml-8 mr-4 max-lg:ml-4">
           <BreadCrumb title={article.title} />
@@ -49,7 +49,7 @@ const ArticleTitle = ({ article }: { article: Article }) => {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
@@ -89,7 +89,7 @@ const ArticleImage = ({
   };
 }) => {
   return (
-    <div
+    <section
       className={
         "grid grid-cols-article" +
         " max-lg:grid-cols-article-800" +
@@ -113,7 +113,7 @@ const ArticleImage = ({
         </div>
         <figcaption className="text-xs">{cover.caption}</figcaption>
       </figure>
-    </div>
+    </section>
   );
 };
 

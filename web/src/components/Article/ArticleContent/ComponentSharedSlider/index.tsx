@@ -2,7 +2,10 @@ import Image from "next/image";
 
 const ComponentSharedSlider = ({ block }: { block: SharedSlider }) => {
   return (
-    <section key={`shared.slider-${block.id}`} className="grid grid-cols-8">
+    <article
+      key={`shared.slider-${block.id}`}
+      className="grid grid-cols-8 mb-6"
+    >
       {block.files.map((nestedImage) => (
         <div key={nestedImage.documentId} className="relative aspect-square">
           <Image
@@ -15,7 +18,7 @@ const ComponentSharedSlider = ({ block }: { block: SharedSlider }) => {
           />
         </div>
       ))}
-    </section>
+    </article>
   );
 };
 

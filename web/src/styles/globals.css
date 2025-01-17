@@ -123,6 +123,10 @@ body {
 
   /*------------------------------Heading-Paragraph------------------------------*/
   .blog-heading {
+    h1 {
+      font-size: 3rem;
+      font-weight: 900;
+    }
     h2 {
       font-size: 2.5rem;
       font-weight: 900;
@@ -200,6 +204,10 @@ body {
   }
 
   /*------------------------------Blockquote------------------------------*/
+  .blog-blockquote {
+    margin-bottom: 1rem;
+  }
+
   .blog-blockquote blockquote {
     position: relative;
     border-left: transparent;

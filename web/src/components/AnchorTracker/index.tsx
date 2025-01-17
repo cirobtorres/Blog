@@ -89,41 +89,43 @@ const AnchorTracker = ({ documentId }: { documentId: string }) => {
   }, [documentId]);
 
   return (
-    <Accordion
-      type="single"
-      collapsible
-      defaultValue="item-1"
-      className={
-        "w-full" +
-        " self-start max-w-72 sticky top-12" +
-        " max-[800px]:self-auto max-[800px]:max-w-full max-[800px]:static max-[800px]:pt-0"
-      }
-    >
-      <AccordionItem value="item-1">
-        <AccordionTrigger>Conteúdo</AccordionTrigger>
-        <AccordionContent>
-          {anchorList?.map((text, index) => (
-            <li key={index} className="mb-1">
-              <Link
-                href={`#${Object.keys(text)}`}
-                aria-current={index === 0 ? "page" : "false"} // When pages load, the first anchor is supposed to be the colored one
-                className={
-                  `flex text-sm transition-colors duration-500 break-words aria-current:text-blog-foreground-highlight` +
-                  ` aria-current:hover:text-blog-foreground-readable-hover hover:text-blog-foreground-readable-hover ${generatePaddingForSessions(
-                    text
-                  )}`
-                }
-              >
-                {
-                  Object.values(text)[0].replace(/<\/?h[1-6][^>]*>/gi, "")
-                  // Replaces <h2>Example Title</h2> to Example Title
-                }
-              </Link>
-            </li>
-          ))}
-        </AccordionContent>
-      </AccordionItem>
-    </Accordion>
+    <nav>
+      <Accordion
+        type="single"
+        collapsible
+        defaultValue="item-1"
+        className={
+          "w-full" +
+          " self-start max-w-72 sticky top-12" +
+          " max-[800px]:self-auto max-[800px]:max-w-full max-[800px]:static max-[800px]:pt-0"
+        }
+      >
+        <AccordionItem value="item-1">
+          <AccordionTrigger>Conteúdo</AccordionTrigger>
+          <AccordionContent>
+            {anchorList?.map((text, index) => (
+              <li key={index} className="mb-1">
+                <Link
+                  href={`#${Object.keys(text)}`}
+                  aria-current={index === 0 ? "page" : "false"} // When pages load, the first anchor is supposed to be the colored one
+                  className={
+                    `flex text-sm transition-colors duration-500 break-words aria-current:text-blog-foreground-highlight` +
+                    ` aria-current:hover:text-blog-foreground-readable-hover hover:text-blog-foreground-readable-hover ${generatePaddingForSessions(
+                      text
+                    )}`
+                  }
+                >
+                  {
+                    Object.values(text)[0].replace(/<\/?h[1-6][^>]*>/gi, "")
+                    // Replaces <h2>Example Title</h2> to Example Title
+                  }
+                </Link>
+              </li>
+            ))}
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
+    </nav>
   );
 };
 

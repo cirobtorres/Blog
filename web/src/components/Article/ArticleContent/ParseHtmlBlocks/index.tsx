@@ -20,7 +20,18 @@ const ParseHtmlBlocks = ({ html }: { html: string }) => {
     }
   });
 
-  const allowedTags = ["H1", "H2", "H3", "H4", "H5", "H6", "P", "PRE"];
+  const allowedTags = [
+    // "H1", // It is not allowed heading 1 on article content since its already presented on Hero
+    "H2",
+    "H3",
+    "H4",
+    "H5",
+    "H6",
+    "P",
+    "PRE",
+    "UL",
+    "OL",
+  ];
   const blocks: { id: string; htmlToRender: string; isPre?: boolean }[] = [];
   let index = 0;
 
@@ -43,18 +54,18 @@ const ParseHtmlBlocks = ({ html }: { html: string }) => {
 
   return blocks.map((finalBlock) =>
     finalBlock.isPre ? (
-      <div key={finalBlock.id} className="w-full relative">
+      <article key={finalBlock.id} className="w-full relative">
         <div
           dangerouslySetInnerHTML={{ __html: finalBlock.htmlToRender }}
-          className="blog blog-center-content blog-heading blog-text blog-blockquote blog-code blog-lists blog-todo-list blog-table blog-hr [&_*]:scrollbar"
+          className="blog blog-center-content blog-heading blog-text blog-code [&_*]:scrollbar"
         />
         <CopyButton htmlToRender={finalBlock.htmlToRender} />
-      </div>
+      </article>
     ) : (
-      <div
+      <article
         key={finalBlock.id}
         dangerouslySetInnerHTML={{ __html: finalBlock.htmlToRender }}
-        className="w-full blog blog-center-content blog-heading blog-text blog-blockquote blog-code blog-lists blog-todo-list blog-table blog-hr [&_*]:scrollbar"
+        className="w-full blog blog-center-content blog-heading blog-text blog-lists [&_*]:scrollbar"
       />
     )
   );

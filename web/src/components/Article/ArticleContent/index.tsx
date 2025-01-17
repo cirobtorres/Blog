@@ -23,33 +23,32 @@ const ArticleContent = async ({ documentId, content }: ArticleContent) => {
           );
         case "ComponentSharedQuote":
           return (
-            <div
+            <article
               key={`shared.quote-${block.id}`}
-              className="w-full blog blog-center-content blog-heading blog-text blog-blockquote blog-code blog-lists blog-todo-list blog-table blog-hr"
+              className="w-full blog blog-text blog-blockquote" // blog-center-content
             >
               <blockquote>
                 <p>{block.body}</p>
               </blockquote>
               <strong>— {block.title}</strong>
-            </div>
+            </article>
           );
         case "ComponentSharedMedia":
           if (block.file) {
             return (
-              <figure
-                key={`shared.media-${block.id}`}
-                className={"flex flex-col gap-3"}
-              >
-                <Image
-                  src={`http://127.0.0.1:1337${block.file.url}`}
-                  alt={block.file.alternativeText}
-                  width={block.file.width}
-                  height={block.file.height}
-                />
-                <figcaption className="text-xs">
-                  {block.file.caption}
-                </figcaption>
-              </figure>
+              <article key={`shared.media-${block.id}`}>
+                <figure className={"flex flex-col gap-3"}>
+                  <Image
+                    src={`http://127.0.0.1:1337${block.file.url}`}
+                    alt={block.file.alternativeText}
+                    width={block.file.width}
+                    height={block.file.height}
+                  />
+                  <figcaption className="text-xs">
+                    {block.file.caption}
+                  </figcaption>
+                </figure>
+              </article>
             );
           }
         case "ComponentSharedSlider":

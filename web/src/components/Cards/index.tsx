@@ -13,33 +13,7 @@ const Cards = async () => {
   return lastArticlePublished !== undefined ? (
     <>
       <ArticleCardLastPublished article={lastArticlePublished} />
-      {articles.length > 0 && (
-        <div className="max-w-screen-2xl mx-auto px-4 flex items-center mb-10">
-          <ul className="w-full grid grid-cols-3 max-[800px]:grid-cols-2 max-[500px]:grid-cols-1 gap-4">
-            {articles.map((article) => (
-              <li
-                key={article.documentId}
-                className={
-                  "w-full max-h-[calc(200px_+_0.5rem_+_1.5rem_*_3_+_1.25rem_*_3_+_1rem_+_0.5rem_*_2_+_0.5rem)]" +
-                  // calc:
-                  //    Image Height (200px) +
-                  //    Image Bottom Margin (0.5rem) +
-                  //    Title Max Line Height (1.5rem * 3) +
-                  //    SubTitle Max Line Height (1.25rem * 3) +
-                  //    CreatedAt Line Height (1rem) +
-                  //    Flex Col Gap (0.5rem * 2) +
-                  //    Bottom Padding (0.5rem)
-                  " transition-all ease-in-out duration-200" +
-                  " focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-blog-foreground-highlight" +
-                  " rounded-xl overflow-hidden bg-blog-background-2 shadow-lg group"
-                }
-              >
-                <ArticleCard article={article} />
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+      <ArticleList articles={articles} />
     </>
   ) : (
     <div className="h-full flex justify-center items-center">
@@ -95,6 +69,38 @@ const ArticleCardLastPublished = ({ article }: { article: ArticleCard }) => {
         </Link>
       </div>
     </div>
+  );
+};
+
+const ArticleList = ({ articles }: { articles: ArticleCards }) => {
+  return (
+    articles.length > 0 && (
+      <div className="max-w-screen-2xl mx-auto px-4 flex items-center mb-10">
+        <ul className="w-full grid grid-cols-3 max-[800px]:grid-cols-2 max-[500px]:grid-cols-1 gap-4">
+          {articles.map((article) => (
+            <li
+              key={article.documentId}
+              className={
+                "w-full max-h-[calc(200px_+_0.5rem_+_1.5rem_*_3_+_1.25rem_*_3_+_1rem_+_0.5rem_*_2_+_0.5rem)]" +
+                // calc:
+                //    Image Height (200px) +
+                //    Image Bottom Margin (0.5rem) +
+                //    Title Max Line Height (1.5rem * 3) +
+                //    SubTitle Max Line Height (1.25rem * 3) +
+                //    CreatedAt Line Height (1rem) +
+                //    Flex Col Gap (0.5rem * 2) +
+                //    Bottom Padding (0.5rem)
+                " transition-all ease-in-out duration-200" +
+                " focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-blog-foreground-highlight" +
+                " rounded-xl overflow-hidden bg-blog-background-2 shadow-lg group"
+              }
+            >
+              <ArticleCard article={article} />
+            </li>
+          ))}
+        </ul>
+      </div>
+    )
   );
 };
 
