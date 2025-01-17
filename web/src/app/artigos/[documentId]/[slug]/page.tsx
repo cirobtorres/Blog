@@ -5,6 +5,11 @@ import Article from "../../../../components/Article";
 import Hero from "../../../../components/Hero";
 import { DynamicBody } from "../../../../components/Body";
 import { ArticleCard } from "../../../../components/Cards";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from "../../../../components/shadcnui/carousel";
 
 interface Params {
   params: {
@@ -22,39 +27,37 @@ export default async function ArticlesPage({ params }: Params) {
       <DynamicBody documentId={documentId}>
         <Hero {...article} />
         <Article documentId={documentId} content={article.blocks} />
-        <Relateds />
+        <Related />
       </DynamicBody>
     );
   }
 }
 
-const Relateds = async () => {
+const Related = async () => {
   const { data: articles } = await getArticles();
   return (
-    <section className="px-4 flex items-center bg-blog-background-2">
-      <ul className="py-10 w-full max-w-screen-2xl mx-auto grid grid-cols-3 max-[800px]:grid-cols-2 max-[500px]:grid-cols-1 gap-4">
-        {articles.map((article) => (
-          <li
-            key={article.documentId}
-            className={
-              "w-full max-h-[calc(200px_+_0.5rem_+_1.5rem_*_3_+_1.25rem_*_3_+_1rem_+_0.5rem_*_2_+_0.5rem)]" +
-              // calc:
-              //    Image Height (200px) +
-              //    Image Bottom Margin (0.5rem) +
-              //    Title Max Line Height (1.5rem * 3) +
-              //    SubTitle Max Line Height (1.25rem * 3) +
-              //    CreatedAt Line Height (1rem) +
-              //    Flex Col Gap (0.5rem * 2) +
-              //    Bottom Padding (0.5rem)
-              " transition-all ease-in-out duration-200" +
-              " focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-blog-foreground-highlight" +
-              " overflow-hidden bg-blog-background-2 group"
-            }
-          >
-            <ArticleCard article={article} />
-          </li>
-        ))}
-      </ul>
+    <section className="bg-blog-background-2 py-8 flex flex-col justify-center">
+      <div className="w-full grid grid-cols-article max-lg:grid-cols-article-800 items-center max-w-screen-2xl mx-auto">
+        <div className="blog-heading col-start-2 max-lg:col-start-1 px-8 max-lg:px-4">
+          <h2>Artigos relacionados</h2>
+        </div>
+      </div>
+      <div className="grid grid-cols-article max-lg:grid-cols-article-800 items-center max-w-screen-2xl mx-auto">
+        <div className="col-start-2 max-lg:col-start-1 mx-8 max-lg:mx-4">
+          <Carousel opts={{ loop: true, dragFree: true }}>
+            <CarouselContent>
+              {articles.map((article) => (
+                <CarouselItem
+                  key={article.documentId}
+                  className="max-w-96 group"
+                >
+                  <ArticleCard article={article} />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+          </Carousel>
+        </div>
+      </div>
     </section>
   );
 };

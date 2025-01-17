@@ -23,7 +23,7 @@ const StaticBody = async ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="h-full min-h-screen flex flex-col justify-between">
       <StaticHeader />
-      <main className="h-full flex-1 mb-20">{children}</main>
+      <main className="flex-1 mb-4">{children}</main>
       <Footer />
     </div>
   );

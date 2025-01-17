@@ -10,16 +10,9 @@ type ArticleCard = {
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
-  cover: {
-    documentId: string;
-    url: string;
-    alternativeText: string;
-  };
-  category: { name: string; slug: string };
-  author: {
-    name: string;
-    avatar: { documentId: string; url: string; alternativeText: string };
-  };
+  cover: Cover;
+  category: Category;
+  author: Author;
 };
 
 // -----
@@ -32,22 +25,32 @@ type Article = {
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
-  cover: {
-    url: string;
-    alternativeText: string;
-    caption: string;
-  };
-  author: {
-    name: string;
-    avatar: {
-      url: string;
-      alternativeText: string;
-    };
-  };
-  category: { name: string };
-  tags: [{ name: string; slug: string }, { name: string; slug: string }];
+  cover: Cover;
+  author: Author;
+  category: Category;
+  tags: Tag[];
   blocks: ArticleBlocks[];
 };
+
+type Cover = {
+  url: string;
+  alternativeText: string;
+  caption: string;
+};
+
+type Author = {
+  name: string;
+  avatar: Avatar;
+};
+
+type Avatar = {
+  url: string;
+  alternativeText: string;
+};
+
+type Category = { name: string; slug: string };
+
+type Tag = { name: string; slug: string };
 
 // -----
 // Props for article blocks
@@ -74,25 +77,20 @@ type SharedQuote = {
 type SharedMedia = {
   __typename: "ComponentSharedMedia";
   id: string;
-  file: {
-    documentId: string;
-    url: string;
-    alternativeText: string;
-    caption: string;
-    width: number;
-    height: number;
-  };
+  file: SharedMediaFile;
 };
 
 type SharedSlider = {
   __typename: "ComponentSharedSlider";
   id: string;
-  files: {
-    documentId: string;
-    url: string;
-    alternativeText: string;
-    caption: string;
-    width: number;
-    height: number;
-  }[];
+  files: SharedMediaFile[];
+};
+
+type SharedMediaFile = {
+  documentId: string;
+  url: string;
+  alternativeText: string;
+  caption: string;
+  width: number;
+  height: number;
 };
