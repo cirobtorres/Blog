@@ -8,7 +8,7 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "../shadcnui/tooltip";
+} from "../Shadcnui/tooltip";
 
 export default function DarkModeToggle() {
   const { setTheme } = useTheme();

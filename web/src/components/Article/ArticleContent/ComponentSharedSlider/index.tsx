@@ -1,6 +1,6 @@
 "use client";
 
-import SliderCarousel from "../../../shadcnui/thumbCarousel";
+import SliderCarousel from "../../../Shadcnui/thumbCarousel";
 
 const ComponentSharedSlider = ({ block }: { block: SharedSlider }) => {
   return (

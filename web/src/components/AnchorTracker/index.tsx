@@ -7,7 +7,7 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "../shadcnui/accordion";
+} from "../Shadcnui/accordion";
 import { extractAnchors } from "../../utils/anchors";
 
 const AnchorTracker = ({ documentId }: { documentId: string }) => {

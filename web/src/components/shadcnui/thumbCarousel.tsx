@@ -20,12 +20,15 @@ const Thumb = (props: {
         key={file.documentId}
         onClick={onClick}
         type="button"
-        className="relative w-full h-full flex-[0_0_100%] flex justify-center items-center shadow-xl border-0 p-0 m-0 cursor-pointer appearance-none [-webkit-appearance:none] touch-manipulation bg-transparent"
+        className="relative w-full h-full flex-[0_0_100%] flex justify-center items-center border-0 p-0 m-0 cursor-pointer appearance-none [-webkit-appearance:none] touch-manipulation bg-transparent"
       >
         <Image
           src={`http://127.0.0.1:1337${file.url}`}
           alt={file.alternativeText}
           fill
+          sizes={`(max-width: ${file.width}) 100vw, (max-width: ${
+            file.width / 2
+          }) 50vw, 33vw`}
           className="absolute object-cover select-none"
         />
       </button>
@@ -70,7 +73,7 @@ const SliderCarousel = ({
 
   return (
     <div className="max-w-full m-auto">
-      <div className="shadow-xl overflow-hidden" ref={emblaMainRef}>
+      <div className="overflow-hidden" ref={emblaMainRef}>
         <div className="flex ml-[calc(1rem_*_-1)] touch-pan-y">
           {files.map((file) => (
             <figure
@@ -82,32 +85,21 @@ const SliderCarousel = ({
                   src={`http://127.0.0.1:1337${file.url}`}
                   alt={file.alternativeText}
                   fill
+                  sizes={`(max-width: ${file.width}) 100vw, (max-width: ${
+                    file.width / 2
+                  }) 50vw, 33vw`}
                   className="absolute object-cover select-none"
                 />
               </div>
-              <figcaption className="text-xs line-clamp-3 my-3 h-12">
-                {file.caption} Lorem ipsum dolor sit amet consectetur
-                adipisicing elit. Dolorum voluptate sit, eius, repellendus
-                consequatur rerum facilis, atque tempora porro iste quia
-                eveniet. Dolore molestias similique sint deleniti autem rem
-                soluta. Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Dolorum voluptate sit, eius, repellendus consequatur rerum
-                facilis, atque tempora porro iste quia eveniet. Dolore molestias
-                similique sint deleniti autem rem soluta.Lorem ipsum dolor sit
-                amet consectetur adipisicing elit. Dolorum voluptate sit, eius,
-                repellendus consequatur rerum facilis, atque tempora porro iste
-                quia eveniet. Dolore molestias similique sint deleniti autem rem
-                soluta. Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Dolorum voluptate sit, eius, repellendus consequatur rerum
-                facilis, atque tempora porro iste quia eveniet. Dolore molestias
-                similique sint deleniti autem rem soluta.
+              <figcaption className="text-xs line-clamp-2 my-1 h-8">
+                {file.caption}
               </figcaption>
             </figure>
           ))}
         </div>
       </div>
       <div className="overflow-hidden" ref={emblaThumbsRef}>
-        <div className="flex my-1">
+        <div className="flex">
           {files.map((file, index: number) => (
             <Thumb
               key={file.documentId}

@@ -9,7 +9,7 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-} from "../../../../components/shadcnui/carousel";
+} from "../../../../components/Shadcnui/carousel";
 
 interface Params {
   params: {

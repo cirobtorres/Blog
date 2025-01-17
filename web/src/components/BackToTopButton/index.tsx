@@ -7,7 +7,7 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "../shadcnui/tooltip";
+} from "../Shadcnui/tooltip";
 
 const BackToTopButton = ({
   contentId,

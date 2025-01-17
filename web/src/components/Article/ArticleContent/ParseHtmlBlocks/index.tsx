@@ -7,7 +7,7 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "../../../shadcnui/tooltip";
+} from "../../../Shadcnui/tooltip";
 import { useState } from "react";
 
 const ParseHtmlBlocks = ({ html }: { html: string }) => {

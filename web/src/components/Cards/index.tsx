@@ -4,7 +4,7 @@ import Link from "next/link";
 import { getArticles } from "../../lib/articles";
 import Image from "next/image";
 import { formatDateToCustomFormat } from "../../utils/dates";
-import { Skeleton } from "../shadcnui/skeleton";
+import { Skeleton } from "../Shadcnui/skeleton";
 
 const Cards = async () => {
   const { data: articles } = await getArticles();
