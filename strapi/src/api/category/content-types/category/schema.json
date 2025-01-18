@@ -27,6 +27,12 @@
     },
     "description": {
       "type": "text"
+    },
+    "tag": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::tag.tag",
+      "inversedBy": "categories"
     }
   }
 }

@@ -1,15 +1,15 @@
 "use server";
 
-import { HomeBody } from "../components/Body";
+import { StaticBody } from "../components/Body";
 import Cards, { LoadingCards } from "../components/Cards";
 import { Suspense } from "react";
 
 export default async function HomePage() {
   return (
-    <HomeBody>
+    <StaticBody>
       <Suspense fallback={<LoadingCards />}>
         <Cards />
       </Suspense>
-    </HomeBody>
+    </StaticBody>
   );
 }

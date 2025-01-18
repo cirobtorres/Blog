@@ -67,7 +67,7 @@ const ArticleContent = async ({ documentId, content }: ArticleContent) => {
   return (
     <div
       id={documentId}
-      className="flex flex-col" // relative
+      className="flex flex-col col-start-2 max-[800px]:col-start-auto" // relative
     >
       {toRender}
     </div>

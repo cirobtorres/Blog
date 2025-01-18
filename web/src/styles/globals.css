@@ -50,6 +50,9 @@
   --blog-code-number: 160 66% 55%;
   --blog-code-comment: 0 0% 50%;
   --blog-code-regexp: 350 80% 58%;
+
+  --dotSize: 0.1rem;
+  --halftone-dot-color: #e6e6e6;
 }
 
 .dark {
@@ -82,6 +85,8 @@
   --blog-code-number: 160 66% 55%;
   --blog-code-comment: 0 0% 50%;
   --blog-code-regexp: 350 80% 58%;
+
+  --halftone-dot-color: #1f1f1f;
 }
 
 * {
@@ -92,6 +97,7 @@
 
 body {
   font-family: "Open Sans" !important;
+  background-clip: padding-box;
 
   /* 
   Some browsers has "vertical-align: baseline" as default for <textarea>, 
@@ -330,5 +336,25 @@ body {
 
   .blog {
     word-break: break-word;
+  }
+
+  /*------------------------------Halftone-Dotted-Background------------------------------*/
+  .halftone::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+
+    background-image: radial-gradient(
+      circle at center,
+      var(--halftone-dot-color) var(--dotSize),
+      transparent 0
+    );
+    background-size: 0.5rem 0.5rem;
+    background-position: 0 0, 0.65rem 0.65rem;
+  }
+
+  .halftone::after {
+    mask-image: linear-gradient(rgb(0, 0, 0), rgb(0 0 0 / 0));
   }
 }

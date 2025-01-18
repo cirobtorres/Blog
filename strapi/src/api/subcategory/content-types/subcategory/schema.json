@@ -1,10 +1,10 @@
 {
   "kind": "collectionType",
-  "collectionName": "tags",
+  "collectionName": "subcategories",
   "info": {
-    "singularName": "tag",
-    "pluralName": "tags",
-    "displayName": "Tag",
+    "singularName": "subcategory",
+    "pluralName": "subcategories",
+    "displayName": "SubCategory",
     "description": ""
   },
   "options": {
@@ -19,20 +19,25 @@
     },
     "slug": {
       "type": "uid",
-      "required": true,
-      "targetField": "name"
+      "targetField": "name",
+      "required": true
     },
-    "categories": {
+    "category": {
       "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::category.category",
-      "mappedBy": "tag"
+      "relation": "oneToOne",
+      "target": "api::category.category"
+    },
+    "link": {
+      "type": "string"
+    },
+    "svg": {
+      "type": "text"
     },
     "articles": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::article.article",
-      "mappedBy": "tags"
+      "mappedBy": "subCategories"
     }
   }
 }

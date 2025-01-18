@@ -13,7 +13,7 @@ const DynamicBody = async ({
   return (
     <div className="h-full min-h-screen flex flex-col justify-between">
       <FloatingHeader documentId={documentId} />
-      <main className="flex-1 mt-12">{children}</main>
+      <main className="flex-1 mt-12 halftone">{children}</main>
       <Footer />
     </div>
   );
@@ -29,4 +29,4 @@ const StaticBody = async ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export { DynamicBody, StaticBody as HomeBody };
+export { DynamicBody, StaticBody };

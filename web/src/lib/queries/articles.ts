@@ -14,8 +14,8 @@ query Articles($sort: [String], $pagination: PaginationArg) {
       alternativeText
     }
     category {
+      documentId
       name
-      slug
     }
     author {
       name
@@ -51,14 +51,18 @@ query Blocks($documentId: ID!) {
       }
     }
     category {
+      documentId
       name
+    }
+    subCategories {
+      documentId
+      name
+      link
+      svg
     }
     tags {
       documentId
       name
-      slug
-      link
-      svg
     }
     blocks {
       ... on ComponentSharedRichText {

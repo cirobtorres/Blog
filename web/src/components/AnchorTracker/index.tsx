@@ -20,7 +20,7 @@ const AnchorTracker = ({ documentId }: { documentId: string }) => {
 
     let currentSectionIndex = 0;
 
-    if (sections) {
+    if (sections && sections.length > 0) {
       sections.forEach((section, index) => {
         // Collects offsetTop of each header, if exists
         const sectionTop = section.offsetTop;
@@ -89,43 +89,48 @@ const AnchorTracker = ({ documentId }: { documentId: string }) => {
   }, [documentId]);
 
   return (
-    <nav>
-      <Accordion
-        type="single"
-        collapsible
-        defaultValue="item-1"
-        className={
-          "w-full" +
-          " self-start max-w-72 sticky top-12" +
-          " max-[800px]:self-auto max-[800px]:max-w-full max-[800px]:static max-[800px]:pt-0"
-        }
-      >
-        <AccordionItem value="item-1">
-          <AccordionTrigger>Conteúdo</AccordionTrigger>
-          <AccordionContent>
-            {anchorList?.map((text, index) => (
-              <li key={index} className="mb-1">
-                <Link
-                  href={`#${Object.keys(text)}`}
-                  aria-current={index === 0 ? "page" : "false"} // When pages load, the first anchor is supposed to be the colored one
-                  className={
-                    `flex text-sm transition-colors duration-500 break-words aria-current:text-blog-foreground-highlight` +
-                    ` aria-current:hover:text-blog-foreground-readable-hover hover:text-blog-foreground-readable-hover ${generatePaddingForSessions(
-                      text
-                    )}`
-                  }
-                >
-                  {
-                    Object.values(text)[0].replace(/<\/?h[1-6][^>]*>/gi, "")
-                    // Replaces <h2>Example Title</h2> to Example Title
-                  }
-                </Link>
-              </li>
-            ))}
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
-    </nav>
+    anchorList &&
+    anchorList.length > 0 && (
+      <nav>
+        <Accordion
+          type="single"
+          collapsible
+          defaultValue="item-1"
+          className={
+            "w-full" +
+            " self-start max-w-72 sticky top-12 mb-[calc(100vh_/_4)] col-start-1 max-[800px]:col-start-auto" +
+            " max-[800px]:self-auto max-[800px]:max-w-full max-[800px]:static max-[800px]:pt-0"
+          }
+          // mb-[calc(100vh_/_4)] is safe to remove (design approach)
+          // The idea behind it is that it should not move till the bottom end of the ArticleContent height
+        >
+          <AccordionItem value="item-1">
+            <AccordionTrigger>Conteúdo</AccordionTrigger>
+            <AccordionContent>
+              {anchorList.map((text, index) => (
+                <li key={index} className="mb-1">
+                  <Link
+                    href={`#${Object.keys(text)}`}
+                    aria-current={index === 0 ? "page" : "false"} // When pages load, the first anchor is supposed to be the colored one
+                    className={
+                      `flex text-sm transition-colors duration-500 break-words aria-current:text-blog-foreground-highlight` +
+                      ` aria-current:hover:text-blog-foreground-readable-hover hover:text-blog-foreground-readable-hover ${generatePaddingForSessions(
+                        text
+                      )}`
+                    }
+                  >
+                    {
+                      Object.values(text)[0].replace(/<\/?h[1-6][^>]*>/gi, "")
+                      // Replaces <h2>Example Title</h2> to Example Title
+                    }
+                  </Link>
+                </li>
+              ))}
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+      </nav>
+    )
   );
 };
 

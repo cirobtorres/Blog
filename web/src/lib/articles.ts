@@ -2,12 +2,12 @@ import graphqlClient from "./graphQlClient";
 import { GET_ARTICLE, GET_ARTICLES } from "./queries/articles";
 
 const getArticles = async (
-  sorting: string = "createdAt:desc",
+  sort?: string | null,
   pagination: {
-    page: string | null;
-    pageSize: string | null;
-    start: string | null;
-    limit: string | null;
+    page?: number | null;
+    pageSize?: number | null;
+    start?: number | null;
+    limit?: number | null;
   } = {
     page: null,
     pageSize: null,
@@ -18,7 +18,7 @@ const getArticles = async (
   try {
     const { articles }: { articles: ArticleCards } =
       await graphqlClient.request(GET_ARTICLES, {
-        sorting,
+        sort,
         pagination,
       });
     return { data: articles };

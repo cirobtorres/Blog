@@ -100,6 +100,10 @@ export default {
           "30%": { top: "-4px" },
           "40%": { top: "0px" },
         },
+        "expand-width": {
+          "0%": { width: "0%" },
+          "100%": { width: "100%" },
+        },
 
         // SHADCN/UI==========--------------------------------------------------
         "accordion-down": {
@@ -123,6 +127,7 @@ export default {
         // BLOG-BackToTopButton==========--------------------------------------------------
         "bouncing-arrow-up": "bouncing-arrow-up 1s infinite",
         "clip-pop-up-and-bounce": "clip-pop-up-and-bounce 0.2s ease-out",
+        "expand-width": "expand-width 0.2s ease-out forwards",
 
         // SHADCN/UI==========--------------------------------------------------
         "accordion-down": "accordion-down 0.2s ease-out",

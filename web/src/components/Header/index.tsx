@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useRef } from "react";
 import DarkModeToggle from "../DarkModeToggle";
 import ProgressBar from "./ProgressBar";
+import { usePathname } from "next/navigation";
 
 const FloatingHeader = ({ documentId }: { documentId: string }) => {
   const headerRef = useRef<HTMLElement>(null);
@@ -57,6 +58,7 @@ const StaticHeader = () => {
 };
 
 const HeaderContent = () => {
+  const pathname = usePathname();
   return (
     <div className="h-full max-w-screen-2xl px-4 mx-auto">
       <nav className="w-full h-full flex items-center justify-between">
@@ -71,15 +73,24 @@ const HeaderContent = () => {
           </div>
           <ul
             className={
-              "flex gap-4 items-center justify-between" +
-              " [&_li]:flex [&_li]:items-center [&_li]:justify-between" +
-              " [&_li_a]:transition-colors [&_li_a]:duration-500 [&_li_a]:text-sm" +
+              "h-full flex gap-4 items-center justify-between" +
+              " [&_li]:relative [&_li]:h-full [&_li]:w-32 [&_li]:text-sm [&_li]:flex [&_li]:items-center [&_li]:justify-center" +
+              " [&_li_a]:transition-colors [&_li_a]:duration-500" +
               " [&_li_a]:text-blog-foreground-readable [&_li_a]:font-[500] hover:[&_li_a]:text-blog-foreground-readable-hover"
             }
           >
             <li>
-              <Link href="/sobre-mim">Sobre mim</Link>
+              <Link href="/sobre">Sobre</Link>
+              <div
+                className={`${
+                  pathname.endsWith("sobre") ? "visible" : "invisible"
+                } w-0 h-1 inline-grid absolute left-0 top-[calc(100%_+_2px)] animate-expand-width`}
+              >
+                <div className="h-full col-start-1 row-start-1 bg-gradient-to-r from-transparent to-blog-foreground-highlight blur-xl" />
+                <div className="h-full col-start-1 row-start-1 bg-gradient-to-r from-transparent to-blog-foreground-highlight" />
+              </div>
             </li>
+            <li>Teste</li>
           </ul>
         </div>
         <ul className="h-full flex items-center justify-between gap-2">

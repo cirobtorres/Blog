@@ -60,6 +60,12 @@
       "relation": "manyToMany",
       "target": "api::tag.tag",
       "inversedBy": "articles"
+    },
+    "subCategories": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::subcategory.subcategory",
+      "inversedBy": "articles"
     }
   }
 }

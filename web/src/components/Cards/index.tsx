@@ -5,15 +5,40 @@ import { getArticles } from "../../lib/articles";
 import Image from "next/image";
 import { formatDateToCustomFormat } from "../../utils/dates";
 import { Skeleton } from "../Shadcnui/skeleton";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "../Shadcnui/pagination";
 
 const Cards = async () => {
-  const { data: articles } = await getArticles();
+  const { data: articles } = await getArticles("createdAt:desc");
   const lastArticlePublished = articles.shift() as ArticleCard | undefined;
 
   return lastArticlePublished !== undefined ? (
     <>
       <ArticleCardLastPublished article={lastArticlePublished} />
       <ArticleList articles={articles} />
+      <Pagination>
+        <PaginationContent>
+          <PaginationItem>
+            <PaginationPrevious href="#" />
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationLink href="#">1</PaginationLink>
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationEllipsis />
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationNext href="#" />
+          </PaginationItem>
+        </PaginationContent>
+      </Pagination>
     </>
   ) : (
     <div className="h-full flex justify-center items-center">

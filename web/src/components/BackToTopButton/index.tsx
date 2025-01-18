@@ -52,7 +52,19 @@ const BackToTopButton = ({
   }, []);
 
   return (
-    <div className="self-start sticky top-1/2 -translate-y-1/2 mt-10 mx-auto">
+    <div
+      className={`self-start sticky mx-auto`}
+      style={{
+        top: `calc(50% - ${diameter}px)`,
+        transform: `translateY(calc(50% + ${diameter}px * -1))`,
+        marginTop: `calc(50vh - ${diameter}px)`,
+        marginBottom: `calc(50vh - ${diameter}px)`,
+      }}
+      // Previous setup: top-1/2 -translate-y-1/2 mt-10
+      // Top and transform calc are intended to keep the center of the button exatly in the middle of the screen so they must take into account the diameter
+      // marginTop and marginBottom calc may be safely removed since they're simply design choices.
+      // The button stops in the middle of the viewport once ArticleContent bottom or top limit height has been reached
+    >
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>
