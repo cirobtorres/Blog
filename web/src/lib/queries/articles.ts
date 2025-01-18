@@ -54,8 +54,11 @@ query Blocks($documentId: ID!) {
       name
     }
     tags {
+      documentId
       name
       slug
+      link
+      svg
     }
     blocks {
       ... on ComponentSharedRichText {

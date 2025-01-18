@@ -13,10 +13,13 @@
   "pluginOptions": {},
   "attributes": {
     "name": {
-      "type": "string"
+      "type": "string",
+      "required": true,
+      "unique": true
     },
     "slug": {
       "type": "uid",
+      "required": true,
       "targetField": "name"
     },
     "category": {
@@ -29,6 +32,12 @@
       "relation": "manyToMany",
       "target": "api::article.article",
       "mappedBy": "tags"
+    },
+    "link": {
+      "type": "string"
+    },
+    "svg": {
+      "type": "text"
     }
   }
 }

@@ -87,7 +87,7 @@ const SliderCarousel = ({
                   fill
                   sizes={`(max-width: ${file.width}) 100vw, (max-width: ${
                     file.width / 2
-                  }) 50vw, 33vw`}
+                  }) 33vw`}
                   className="absolute object-cover select-none"
                 />
               </div>

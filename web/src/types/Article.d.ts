@@ -50,7 +50,13 @@ type Avatar = {
 
 type Category = { name: string; slug: string };
 
-type Tag = { name: string; slug: string };
+type Tag = {
+  documentId: string;
+  name: string;
+  slug: string;
+  link?: string;
+  svg?: string;
+};
 
 // -----
 // Props for article blocks
