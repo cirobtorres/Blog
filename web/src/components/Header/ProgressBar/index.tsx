@@ -33,11 +33,11 @@ const ProgressBar = ({ documentId }: { documentId: string }) => {
     <div className="fixed top-[calc(100%_+_1px)] left-0 h-1 w-full inline-grid">
       <div
         id="progress-bar-blur"
-        className="w-0 h-full col-start-1 row-start-1 bg-gradient-to-r from-transparent to-blog-foreground-highlight blur-xl hidden max-lg:block"
+        className="w-0 h-full col-start-1 row-start-1 bg-gradient-to-r from-transparent to-blog-foreground-highlight blur-xl rounded-full hidden max-lg:block"
       />
       <div
         id="progress-bar"
-        className="w-0 h-full col-start-1 row-start-1 bg-gradient-to-r from-transparent to-blog-foreground-highlight hidden max-lg:block"
+        className="w-0 h-full col-start-1 row-start-1 bg-gradient-to-r from-transparent to-blog-foreground-highlight rounded-full hidden max-lg:block"
       />
     </div>
   );

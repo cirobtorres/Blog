@@ -1,5 +1,3 @@
-type ArticleCards = ArticleCard[];
-
 type ArticleCard = {
   documentId: string;
   title: string;
@@ -9,8 +7,10 @@ type ArticleCard = {
   updatedAt: string;
   publishedAt: string;
   cover: Cover;
-  category: Category;
   author: Author;
+  category: Category;
+  subCategories: SubCategory[];
+  tags: Tag[];
 };
 
 type Article = {
@@ -30,9 +30,12 @@ type Article = {
 };
 
 type Cover = {
+  documentId: string;
   url: string;
   alternativeText: string;
   caption: string;
+  width: number;
+  height: number;
 };
 
 type ArticleContent = {

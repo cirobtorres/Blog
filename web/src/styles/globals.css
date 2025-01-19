@@ -95,6 +95,12 @@
   box-sizing: border-box;
 }
 
+@property --angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
 body {
   font-family: "Open Sans" !important;
   background-clip: padding-box;
@@ -339,9 +345,13 @@ body {
   }
 
   /*------------------------------Halftone-Dotted-Background------------------------------*/
+  .halftone {
+    position: relative; /* Torna o pai um contexto de posicionamento */
+  }
+
   .halftone::after {
     content: "";
-    position: fixed;
+    position: absolute;
     inset: 0;
     z-index: -1;
 
@@ -352,9 +362,47 @@ body {
     );
     background-size: 0.5rem 0.5rem;
     background-position: 0 0, 0.65rem 0.65rem;
-  }
 
-  .halftone::after {
     mask-image: linear-gradient(rgb(0, 0, 0), rgb(0 0 0 / 0));
   }
+
+  /* 
+  .halftone::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+
+    background-image: radial-gradient(
+      circle at center,
+      var(--halftone-dot-color) var(--dotSize),
+      transparent 0
+    );
+    background-size: 0.5rem 0.5rem;
+    background-position: 0 0, 0.65rem 0.65rem;
+
+    mask-image: linear-gradient(rgb(0, 0, 0), rgb(0 0 0 / 0));
+  } */
+
+  /* .halftone::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+
+    background-image: radial-gradient(
+        circle,
+        transparent 50%,
+        rgba(0, 0, 0, 0.125) 100%
+      ),
+      radial-gradient(
+        circle at center,
+        var(--halftone-dot-color) var(--dotSize),
+        transparent 0
+      );
+    background-size: 0.5rem 0.5rem;
+    background-position: 0 0, 0.65rem 0.65rem;
+
+    mask-image: linear-gradient(rgb(0, 0, 0), rgb(0 0 0 / 0));
+  } */
 }

@@ -12,8 +12,21 @@ query Articles($sort: [String], $pagination: PaginationArg) {
       documentId
       url
       alternativeText
+      caption
+      width
+      height
     }
     category {
+      documentId
+      name
+    }
+    subCategories {
+      documentId
+      name
+      link
+      svg
+    }
+    tags {
       documentId
       name
     }
@@ -39,9 +52,12 @@ query Blocks($documentId: ID!) {
     updatedAt
     publishedAt
     cover {
+      documentId
       url
       alternativeText
       caption
+      width
+      height
     }
     author {
       name

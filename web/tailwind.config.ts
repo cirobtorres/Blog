@@ -67,6 +67,10 @@ export default {
           "5": "hsl(var(--chart-5))",
         },
       },
+      backgroundImage: {
+        "blog-moving-gradient":
+          "conic-gradient(from var(--angle), transparent, var(--blog-foreground-highlight))",
+      },
       gridTemplateColumns: {
         // SHADCN/UI==========--------------------------------------------------
         article: "300px minmax(0px,1fr) 100px",
@@ -104,6 +108,18 @@ export default {
           "0%": { width: "0%" },
           "100%": { width: "100%" },
         },
+        "profile-border-spin": {
+          from: {
+            "--angle": "0deg",
+          },
+          to: {
+            "--angle": "360deg",
+          },
+        },
+        "slide-mask": {
+          from: { x: "-100%" },
+          to: { x: "100%" },
+        },
 
         // SHADCN/UI==========--------------------------------------------------
         "accordion-down": {
@@ -128,6 +144,8 @@ export default {
         "bouncing-arrow-up": "bouncing-arrow-up 1s infinite",
         "clip-pop-up-and-bounce": "clip-pop-up-and-bounce 0.2s ease-out",
         "expand-width": "expand-width 0.2s ease-out forwards",
+        "border-spin": "profile-border-spin 3s linear infinite",
+        "mask-rect": "slide-mask 5s ease-out infinite",
 
         // SHADCN/UI==========--------------------------------------------------
         "accordion-down": "accordion-down 0.2s ease-out",

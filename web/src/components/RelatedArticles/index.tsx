@@ -1,5 +1,5 @@
 import { getArticles } from "../../lib/articles";
-import { ArticleCard } from "../Cards";
+import { ArticleCard } from "../Cards/ArticleCardList";
 import { Carousel, CarouselContent, CarouselItem } from "../Shadcnui/carousel";
 
 const RelatedArticles = async () => {

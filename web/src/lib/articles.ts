@@ -16,7 +16,7 @@ const getArticles = async (
   }
 ) => {
   try {
-    const { articles }: { articles: ArticleCards } =
+    const { articles }: { articles: ArticleCard[] } =
       await graphqlClient.request(GET_ARTICLES, {
         sort,
         pagination,

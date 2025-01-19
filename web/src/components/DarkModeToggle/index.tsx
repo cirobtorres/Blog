@@ -18,7 +18,7 @@ export default function DarkModeToggle() {
       <Tooltip>
         <TooltipTrigger asChild>
           <div className="relative">
-            <div className="flex shrink-0 justify-center items-center rounded-full size-8 duration-700 cursor-pointer bg-blog-background-1">
+            <div className="flex shrink-0 justify-center items-center rounded-full size-8 duration-700 cursor-pointer bg-blog-background-1 dark:bg-[hsl(0,0%,14.9%,0.75)]">
               <button
                 type="button"
                 onClick={(event) => {

@@ -4,7 +4,6 @@ query Global {
     documentId
     siteName
     siteDescription
-    footer
     createdAt
     updatedAt
     publishedAt

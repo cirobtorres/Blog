@@ -1,0 +1,43 @@
+"use server";
+
+import Link from "next/link";
+import { Skeleton } from "../Shadcnui/skeleton";
+import Image from "next/image";
+
+const Author = async ({
+  author,
+}: {
+  author: { name: string; avatar: { url: string; alternativeText: string } };
+}) => {
+  return (
+    <div className="flex gap-4 items-center">
+      <Link href="/sobre" className="group">
+        <div className="relative flex size-10 shrink-0 overflow-hidden rounded-full">
+          <Image
+            src={`http://127.0.0.1:1337${author.avatar.url}`}
+            alt={author.avatar.alternativeText}
+            fill
+            className="transition-all duration-500 absolute object-cover group-hover:brightness-50"
+          />
+        </div>
+      </Link>
+      <Link href="/sobre">
+        <p className="transition-colors duration-500 hover:text-blog-foreground-readable-hover text-blog-foreground-highlight">
+          <strong>{author.name}</strong>
+        </p>
+      </Link>
+    </div>
+  );
+};
+
+const AuthorSkeleton = () => {
+  return (
+    <div className="flex gap-4 items-center">
+      <Skeleton className="size-10 shrink-0 rounded-full" />
+      <Skeleton className="w-20 h-4 shrink-0 rounded-full" />
+    </div>
+  );
+};
+
+export default Author;
+export { AuthorSkeleton };
