@@ -98,11 +98,9 @@ const AnchorTracker = ({ documentId }: { documentId: string }) => {
           defaultValue="item-1"
           className={
             "w-full" +
-            " self-start max-w-72 sticky top-12 mb-[calc(100vh_/_4)] col-start-1 max-[800px]:col-start-auto" +
+            " self-start max-w-72 sticky top-12 mb-4 col-start-1 max-[800px]:col-start-auto" +
             " max-[800px]:self-auto max-[800px]:max-w-full max-[800px]:static max-[800px]:pt-0"
           }
-          // mb-[calc(100vh_/_4)] is safe to remove (design approach)
-          // The idea behind it is that it should not move till the bottom end of the ArticleContent height
         >
           <AccordionItem value="item-1">
             <AccordionTrigger>Conteúdo</AccordionTrigger>

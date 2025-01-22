@@ -1,5 +1,5 @@
 import graphqlClient from "./graphQlClient";
-import { GET_ARTICLE, GET_ARTICLES } from "./queries/articles";
+import { COUNT_ARTICLES, GET_ARTICLE, GET_ARTICLES } from "./queries/articles";
 
 const getArticles = async (
   sort?: string | null,
@@ -28,6 +28,29 @@ const getArticles = async (
   }
 };
 
+const countArticles = async () => {
+  try {
+    const {
+      articles_connection: { pageInfo },
+    }: {
+      articles_connection: {
+        __typename: string;
+        pageInfo: {
+          __typename: string;
+          page: number;
+          pageCount: number;
+          pageSize: number;
+          total: number;
+        };
+      };
+    } = await graphqlClient.request(COUNT_ARTICLES);
+    return { data: pageInfo };
+  } catch (error) {
+    console.error("Failed to fetch count articles:", error);
+    throw new Error("Failed to fetch count articles");
+  }
+};
+
 const getArticle = async (documentId: string) => {
   try {
     const { article }: { article: Article } = await graphqlClient.request(
@@ -43,4 +66,4 @@ const getArticle = async (documentId: string) => {
   }
 };
 
-export { getArticles, getArticle };
+export { getArticles, countArticles, getArticle };

@@ -120,4 +120,18 @@ query Blocks($documentId: ID!) {
   }
 }`;
 
-export { GET_ARTICLES, GET_ARTICLE };
+const COUNT_ARTICLES = `
+query {
+  articles_connection {
+    __typename
+    pageInfo {
+      __typename
+      page
+      pageCount
+      pageSize
+      total
+    }
+  }
+}`;
+
+export { GET_ARTICLES, GET_ARTICLE, COUNT_ARTICLES };

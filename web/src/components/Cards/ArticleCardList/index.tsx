@@ -20,9 +20,8 @@ const ArticleCardList = ({ articles }: { articles: ArticleCard[] }) => {
                 //    CreatedAt Line Height (1rem) +
                 //    Flex Col Gap (0.5rem * 2) +
                 //    Bottom Padding (0.5rem)
-                " transition-all ease-in-out duration-200" +
-                " focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-blog-foreground-highlight" +
-                " rounded-xl overflow-hidden bg-blog-background-2 shadow-lg group"
+                " rounded-xl transition-all duration-500 overflow-hidden bg-blog-background-2 hover:shadow-blog-highlight group" +
+                " focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-blog-foreground-highlight"
               }
             >
               <ArticleCard article={article} />
@@ -58,7 +57,7 @@ const ArticleCard = ({ article }: { article: ArticleCard }) => {
           className={
             "max-h-[calc(1.5rem_*_3)] line-clamp-3" + // max text height before ellipsis (3-lines)
             " font-extrabold text-blog-foreground-readable" +
-            " text-base group-hover:underline"
+            " text-base transition-all duration-500 group-hover:text-blog-foreground-highlight"
           }
         >
           {article.title}

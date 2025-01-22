@@ -76,28 +76,28 @@ export function NavigationMenuDemo() {
                     className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
                     href="/"
                   >
-                    <LogOut className="h-6 w-6" />
-                    <div className="mb-2 mt-4 text-lg font-medium">
-                      shadcn/ui
+                    <div className="flex items-center gap-4 mb-2 mt-4 text-lg font-medium">
+                      <LogOut className="h-6 w-6" />
+                      PolyCode
                     </div>
                     <p className="text-sm leading-tight text-muted-foreground">
-                      Beautifully designed components built with Radix UI and
-                      Tailwind CSS.
+                      Fique por dentro das últimas novidades!
                     </p>
                   </Link>
                 </NavigationMenuLink>
               </li>
-              <ListItem href="/artigos" title="Últimos Artigos">
+              {/* <ListItem href="/artigos" title="Últimos Artigos">
                 Re-usable components built using Radix UI and Tailwind CSS.
-              </ListItem>
+              </ListItem> */}
               <ListItem
                 href="/artigos?category=tecnologia-da-informação"
                 title="Tecnologia da Informação"
               >
-                How to install dependencies and structure your app.
+                Área reservada para Ciências da Computação.
               </ListItem>
               <ListItem href="/artigos?category=blender" title="Modelagem 3D">
-                Styles for headings, paragraphs, lists...etc
+                Topologia, UV Wrapping, texturing, rendering, composition e
+                mais!
               </ListItem>
             </ul>
           </NavigationMenuContent>

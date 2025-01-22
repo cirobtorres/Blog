@@ -57,8 +57,8 @@ const BackToTopButton = ({
       style={{
         top: `calc(50% - ${diameter}px)`,
         transform: `translateY(calc(50% + ${diameter}px * -1))`,
-        marginTop: `calc(50vh - ${diameter}px)`,
-        marginBottom: `calc(50vh - ${diameter}px)`,
+        // marginTop: `calc(50vh - ${diameter}px)`,
+        // marginBottom: `calc(50vh - ${diameter}px)`,
       }}
       // Previous setup: top-1/2 -translate-y-1/2 mt-10
       // Top and transform calc are intended to keep the center of the button exatly in the middle of the screen so they must take into account the diameter

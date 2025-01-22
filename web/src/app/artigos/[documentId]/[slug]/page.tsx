@@ -23,11 +23,13 @@ export default async function ArticlesPage({ params }: Params) {
       <DynamicBody documentId={documentId}>
         <Hero {...article} />
         <Article documentId={documentId} content={article.blocks} />
-        <Categories
-          category={article.category}
-          subCategories={article.subCategories}
-          tags={article.tags}
-        />
+        {article.category && (
+          <Categories
+            category={article.category}
+            subCategories={article.subCategories}
+            tags={article.tags}
+          />
+        )}
         <RelatedArticles />
       </DynamicBody>
     );

@@ -71,6 +71,10 @@ export default {
         "blog-moving-gradient":
           "conic-gradient(from var(--angle), transparent, var(--blog-foreground-highlight))",
       },
+      boxShadow: {
+        "blog-highlight":
+          "rgba(0, 0, 0, 0.05) 0px 0px 0px 2px, var(--blog-foreground-highlight) 0px 0px 0px 2px;",
+      },
       gridTemplateColumns: {
         // SHADCN/UI==========--------------------------------------------------
         article: "300px minmax(0px,1fr) 100px",
