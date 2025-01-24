@@ -25,7 +25,7 @@ const ArticleContent = async ({ documentId, content }: ArticleContent) => {
           return (
             <article
               key={`shared.quote-${block.id}`}
-              className="w-full blog blog-text blog-blockquote" // blog-center-content
+              className="w-full blog blog-margin blog-text blog-blockquote" // blog-center-content
             >
               <blockquote>
                 <p>{block.body}</p>

@@ -134,4 +134,18 @@ query {
   }
 }`;
 
-export { GET_ARTICLES, GET_ARTICLE, COUNT_ARTICLES };
+const QUERY_ARTICLES = `
+query Articles($filters: ArticleFiltersInput) {
+  articles(filters: $filters) {
+    documentId
+    title
+    slug
+    cover {
+      documentId
+      url
+      alternativeText
+    }
+  }
+}`;
+
+export { GET_ARTICLES, GET_ARTICLE, COUNT_ARTICLES, QUERY_ARTICLES };

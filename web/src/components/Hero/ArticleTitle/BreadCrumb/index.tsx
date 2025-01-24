@@ -6,7 +6,7 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "../Shadcnui/breadcrumb";
+} from "../../../Shadcnui/breadcrumb";
 
 const BreadCrumb = ({
   title,

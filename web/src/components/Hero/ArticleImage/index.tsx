@@ -2,15 +2,7 @@
 
 import Image from "next/image";
 
-const ArticleImage = ({
-  cover,
-}: {
-  cover: {
-    url: string;
-    alternativeText: string;
-    caption: string;
-  };
-}) => {
+const ArticleImage = ({ cover }: { cover: Cover }) => {
   return (
     <section
       className={
@@ -31,6 +23,11 @@ const ArticleImage = ({
             src={`http://127.0.0.1:1337${cover.url}`}
             alt={cover.alternativeText}
             fill
+            sizes={
+              `(max-width: ${cover.width}) 100vw` +
+              `, (max-width: ${cover.width / 2}) 50vw`
+              // `, 33vw`
+            }
             className="absolute object-cover"
           />
         </div>

@@ -8,7 +8,7 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "../Shadcnui/tooltip";
+} from "../../../Shadcnui/tooltip";
 
 export default function DarkModeToggle() {
   const { setTheme } = useTheme();
@@ -25,7 +25,7 @@ export default function DarkModeToggle() {
                   event?.preventDefault();
                   setTheme("light");
                 }}
-                className="absolute opacity-0 scale-0 dark:opacity-100 dark:scale-100"
+                className="absolute opacity-0 scale-0 dark:opacity-100 dark:scale-100 p-1"
               >
                 <FaMoon className="text-xl text-[#40b88c]" />
               </button>
@@ -35,7 +35,7 @@ export default function DarkModeToggle() {
                   event?.preventDefault();
                   setTheme("dark");
                 }}
-                className="absolute opacity-100 scale-100 dark:opacity-0 dark:scale-0"
+                className="absolute opacity-100 scale-100 dark:opacity-0 dark:scale-0 p-1"
               >
                 <IoSunny className="text-xl text-[#fbbf24]" />
               </button>

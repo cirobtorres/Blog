@@ -7,7 +7,7 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "../Shadcnui/tooltip";
+} from "../../Shadcnui/tooltip";
 
 const BackToTopButton = ({
   contentId,
@@ -22,34 +22,36 @@ const BackToTopButton = ({
   const innerRadius = diameter / 2 - strokeWidth * 2;
   const circunference = useRef(2 * Math.PI * innerRadius);
 
-  const returnToTopListener = () => {
-    const headerHeight = 400 + 480 + 80;
-    const scrollTop = window.scrollY;
-    const correctedScrollTop =
-      scrollTop - headerHeight < 0 ? 0 : scrollTop - headerHeight;
-    const elementHeight = document.getElementById(contentId)?.scrollHeight;
-    const progressCircle = document.getElementById("progress-circle");
-    const progressCircleBlur = document.getElementById("progress-circle-blur");
-    if (elementHeight && progressCircle && progressCircleBlur) {
-      const percentage =
-        correctedScrollTop < elementHeight
-          ? (correctedScrollTop / elementHeight) * 100
-          : 100;
-      progressCircle.style.strokeDashoffset = `${
-        circunference.current - (circunference.current * percentage) / 100
-      }`;
-      progressCircleBlur.style.strokeDashoffset =
-        progressCircle.style.strokeDashoffset;
-    }
-  };
-
   useEffect(() => {
+    const returnToTopListener = () => {
+      const headerHeight = 400 + 480 + 80 + 16;
+      const scrollTop = window.scrollY;
+      const correctedScrollTop =
+        scrollTop - headerHeight < 0 ? 0 : scrollTop - headerHeight;
+      const elementHeight = document.getElementById(contentId)?.scrollHeight;
+      const progressCircle = document.getElementById("progress-circle");
+      const progressCircleBlur = document.getElementById(
+        "progress-circle-blur"
+      );
+      if (elementHeight && progressCircle && progressCircleBlur) {
+        const percentage =
+          correctedScrollTop < elementHeight
+            ? (correctedScrollTop / elementHeight) * 100
+            : 100;
+        progressCircle.style.strokeDashoffset = `${
+          circunference.current - (circunference.current * percentage) / 100
+        }`;
+        progressCircleBlur.style.strokeDashoffset =
+          progressCircle.style.strokeDashoffset;
+      }
+    };
+
     window.addEventListener("scroll", returnToTopListener);
     // cleanup function
     return () => {
       window.removeEventListener("scroll", returnToTopListener);
     };
-  }, []);
+  }, [contentId]);
 
   return (
     <div

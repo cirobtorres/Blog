@@ -57,7 +57,7 @@ const ParseHtmlBlocks = ({ html }: { html: string }) => {
       <article key={finalBlock.id} className="w-full relative">
         <div
           dangerouslySetInnerHTML={{ __html: finalBlock.htmlToRender }}
-          className="blog blog-center-content blog-heading blog-text blog-code [&_*]:scrollbar"
+          className="blog blog-center-content blog-heading blog-margin blog-text blog-code [&_*]:scrollbar"
         />
         <CopyButton htmlToRender={finalBlock.htmlToRender} />
       </article>
@@ -65,7 +65,7 @@ const ParseHtmlBlocks = ({ html }: { html: string }) => {
       <article
         key={finalBlock.id}
         dangerouslySetInnerHTML={{ __html: finalBlock.htmlToRender }}
-        className="w-full blog blog-center-content blog-heading blog-text blog-lists [&_*]:scrollbar"
+        className="w-full blog blog-center-content blog-heading blog-margin blog-text blog-lists [&_*]:scrollbar"
       />
     )
   );

@@ -1,5 +1,10 @@
 import graphqlClient from "./graphQlClient";
-import { COUNT_ARTICLES, GET_ARTICLE, GET_ARTICLES } from "./queries/articles";
+import {
+  COUNT_ARTICLES,
+  GET_ARTICLE,
+  GET_ARTICLES,
+  QUERY_ARTICLES,
+} from "./queries/articles";
 
 const getArticles = async (
   sort?: string | null,
@@ -66,4 +71,43 @@ const getArticle = async (documentId: string) => {
   }
 };
 
-export { getArticles, countArticles, getArticle };
+const queryArticles = async (sortBy: string | null) => {
+  try {
+    if (!sortBy) return { data: [] };
+
+    const searchTerms = sortBy.split("-").filter((term) => term.trim() !== "");
+
+    const filters = {
+      and: searchTerms.map((term) => ({
+        or: [
+          { slug: { contains: term } },
+          { category: { slug: { contains: term } } },
+          { subCategories: { slug: { contains: term } } },
+          { tags: { slug: { contains: term } } },
+        ],
+      })),
+    };
+
+    const {
+      articles,
+    }: {
+      articles: {
+        documentId: string;
+        title: string;
+        slug: string;
+        cover: {
+          documentId: string;
+          url: string;
+          alternativeText: string;
+        };
+      }[];
+    } = await graphqlClient.request(QUERY_ARTICLES, { filters });
+
+    return { data: articles };
+  } catch (error) {
+    console.error("Failed to fetch query articles:", error);
+    throw new Error("Failed to fetch query articles");
+  }
+};
+
+export { getArticles, countArticles, getArticle, queryArticles };

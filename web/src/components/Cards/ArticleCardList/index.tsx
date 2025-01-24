@@ -20,7 +20,7 @@ const ArticleCardList = ({ articles }: { articles: ArticleCard[] }) => {
                 //    CreatedAt Line Height (1rem) +
                 //    Flex Col Gap (0.5rem * 2) +
                 //    Bottom Padding (0.5rem)
-                " rounded-xl transition-all duration-500 overflow-hidden bg-blog-background-2 hover:shadow-blog-highlight group" +
+                " border border-blog-border rounded-xl transition-all duration-500 overflow-hidden bg-blog-background-2 hover:shadow-blog-highlight group" +
                 " focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-blog-foreground-highlight"
               }
             >
@@ -36,7 +36,8 @@ const ArticleCardList = ({ articles }: { articles: ArticleCard[] }) => {
 const ArticleCard = ({ article }: { article: ArticleCard }) => {
   return (
     <Link
-      href={`/artigos/${article.documentId}/${article.slug}`}
+      href={`/artigos/[documentId]/[slug]`}
+      as={`/artigos/${article.documentId}/${article.slug}`}
       className="h-full w-full flex flex-col"
     >
       <div className="shrink-0 relative h-[200px] mb-2">
@@ -57,7 +58,7 @@ const ArticleCard = ({ article }: { article: ArticleCard }) => {
           className={
             "max-h-[calc(1.5rem_*_3)] line-clamp-3" + // max text height before ellipsis (3-lines)
             " font-extrabold text-blog-foreground-readable" +
-            " text-base transition-all duration-500 group-hover:text-blog-foreground-highlight"
+            " text-base transition-all duration-500"
           }
         >
           {article.title}

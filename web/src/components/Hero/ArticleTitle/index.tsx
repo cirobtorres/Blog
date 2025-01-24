@@ -3,19 +3,19 @@
 import { formatDateToCustomFormat } from "../../../utils/dates";
 import { Clock, MessageCircle, ThumbsUp } from "lucide-react";
 import Author from "../../Author";
-import BreadCrumb from "../../BreadCrumb";
+import BreadCrumb from "./BreadCrumb";
 import Link from "next/link";
 
 const ArticleTitle = ({ article }: { article: Article }) => {
   return (
-    <section className="min-h-[30rem] py-8 mb-4 flex items-center bg-blog-background-2">
+    <section className="min-h-[30rem] py-8 mb-4 flex items-center border-b border-blog-border bg-blog-background-2">
       <div className="h-full grid grid-cols-article max-lg:grid-cols-article-800 mx-auto items-center max-w-screen-2xl">
         <div className="col-start-2 max-lg:col-start-1 ml-8 mr-4 max-lg:ml-4">
           {article.category && (
             <BreadCrumb title={article.title} category={article.category} />
           )}
-          <div className="blog-center-content flex flex-col gap-4">
-            <h1 className="text-5xl leading-[4rem] font-extrabold break-words">
+          <div className="blog-heading blog-center-content flex flex-col gap-4">
+            <h1 className="leading-[4rem] font-extrabold break-words">
               {article.title}
             </h1>
             <p className="text-2xl break-words text-[#808080]">
