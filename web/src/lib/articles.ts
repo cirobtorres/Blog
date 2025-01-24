@@ -1,13 +1,9 @@
 import graphqlClient from "./graphQlClient";
-import {
-  COUNT_ARTICLES,
-  GET_ARTICLE,
-  GET_ARTICLES,
-  QUERY_ARTICLES,
-} from "./queries/articles";
+import { COUNT_ARTICLES, GET_ARTICLE, GET_ARTICLES } from "./queries/articles";
 
 const getArticles = async (
   sort?: string | null,
+  sortBy?: string | null,
   pagination: {
     page?: number | null;
     pageSize?: number | null;
@@ -21,38 +17,31 @@ const getArticles = async (
   }
 ) => {
   try {
+    const searchTerms = sortBy
+      ? sortBy.split("-").filter((term) => term.trim() !== "")
+      : null;
+
+    const filters = {
+      and: searchTerms?.map((term) => ({
+        or: [
+          { slug: { contains: term } },
+          { category: { slug: { contains: term } } },
+          { subCategories: { slug: { contains: term } } },
+          { tags: { slug: { contains: term } } },
+        ],
+      })),
+    };
+
     const { articles }: { articles: ArticleCard[] } =
       await graphqlClient.request(GET_ARTICLES, {
         sort,
+        filters,
         pagination,
       });
     return { data: articles };
   } catch (error) {
     console.error("Failed to fetch articles:", error);
     throw new Error("Failed to fetch articles");
-  }
-};
-
-const countArticles = async () => {
-  try {
-    const {
-      articles_connection: { pageInfo },
-    }: {
-      articles_connection: {
-        __typename: string;
-        pageInfo: {
-          __typename: string;
-          page: number;
-          pageCount: number;
-          pageSize: number;
-          total: number;
-        };
-      };
-    } = await graphqlClient.request(COUNT_ARTICLES);
-    return { data: pageInfo };
-  } catch (error) {
-    console.error("Failed to fetch count articles:", error);
-    throw new Error("Failed to fetch count articles");
   }
 };
 
@@ -71,14 +60,14 @@ const getArticle = async (documentId: string) => {
   }
 };
 
-const queryArticles = async (sortBy: string | null) => {
+const countArticles = async (sortBy?: string | null) => {
   try {
-    if (!sortBy) return { data: [] };
-
-    const searchTerms = sortBy.split("-").filter((term) => term.trim() !== "");
+    const searchTerms = sortBy
+      ? sortBy.split("-").filter((term) => term.trim() !== "")
+      : null;
 
     const filters = {
-      and: searchTerms.map((term) => ({
+      and: searchTerms?.map((term) => ({
         or: [
           { slug: { contains: term } },
           { category: { slug: { contains: term } } },
@@ -89,25 +78,26 @@ const queryArticles = async (sortBy: string | null) => {
     };
 
     const {
-      articles,
+      articles_connection: { pageInfo },
     }: {
-      articles: {
-        documentId: string;
-        title: string;
-        slug: string;
-        cover: {
-          documentId: string;
-          url: string;
-          alternativeText: string;
+      articles_connection: {
+        __typename: string;
+        pageInfo: {
+          __typename: string;
+          page: number;
+          pageCount: number;
+          pageSize: number;
+          total: number;
         };
-      }[];
-    } = await graphqlClient.request(QUERY_ARTICLES, { filters });
-
-    return { data: articles };
+      };
+    } = await graphqlClient.request(COUNT_ARTICLES, {
+      filters,
+    });
+    return { data: pageInfo };
   } catch (error) {
-    console.error("Failed to fetch query articles:", error);
-    throw new Error("Failed to fetch query articles");
+    console.error("Failed to fetch count articles:", error);
+    throw new Error("Failed to fetch count articles");
   }
 };
 
-export { getArticles, countArticles, getArticle, queryArticles };
+export { getArticles, getArticle, countArticles };

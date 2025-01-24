@@ -1,6 +1,6 @@
 const GET_ARTICLES = `
-query Articles($sort: [String], $pagination: PaginationArg) {
-  articles(sort: $sort, pagination: $pagination) {
+query Articles($sort: [String], $filters: ArticleFiltersInput, $pagination: PaginationArg) {
+  articles(sort: $sort, filters: $filters, pagination: $pagination) {
     documentId
     title
     slug
@@ -121,8 +121,8 @@ query Blocks($documentId: ID!) {
 }`;
 
 const COUNT_ARTICLES = `
-query {
-  articles_connection {
+query($filters: ArticleFiltersInput) {
+  articles_connection(filters: $filters) {
     __typename
     pageInfo {
       __typename
@@ -134,18 +134,4 @@ query {
   }
 }`;
 
-const QUERY_ARTICLES = `
-query Articles($filters: ArticleFiltersInput) {
-  articles(filters: $filters) {
-    documentId
-    title
-    slug
-    cover {
-      documentId
-      url
-      alternativeText
-    }
-  }
-}`;
-
-export { GET_ARTICLES, GET_ARTICLE, COUNT_ARTICLES, QUERY_ARTICLES };
+export { GET_ARTICLES, GET_ARTICLE, COUNT_ARTICLES };

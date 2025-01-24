@@ -2,12 +2,21 @@
 
 import { Search } from "lucide-react";
 import { useDebouncedCallback } from "use-debounce";
-import { useSearchParams } from "next/navigation";
-import { useRef, useState } from "react";
+import { ReadonlyURLSearchParams, useSearchParams } from "next/navigation";
+import { useState } from "react";
 import slugify from "../../../utils/slugify";
-import { queryArticles } from "../../../lib/articles";
+import { getArticles } from "../../../lib/articles";
 import Link from "next/link";
 import Image from "next/image";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "../../Shadcnui/dialog";
 
 type ArticleList = {
   documentId: string;
@@ -21,12 +30,10 @@ type ArticleList = {
 }[];
 
 const SearchBar = () => {
-  const inputRef = useRef<HTMLInputElement>(null);
   const searchParams = useSearchParams();
   const [sortedList, setSortedList] = useState<ArticleList | null>(null);
 
   const handleSearch = useDebouncedCallback(async (queryText: string) => {
-    // https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams
     const params = new URLSearchParams(searchParams);
 
     // Delete user's input if it is empty
@@ -37,65 +44,101 @@ const SearchBar = () => {
     }
 
     const sortBySlugfied = slugify(params.get("query") || "");
-    const { data: articleList } = await queryArticles(sortBySlugfied);
-    setSortedList(articleList);
+    if (sortBySlugfied !== "") {
+      const { data: articleList } = await getArticles(
+        "createdAt:desc",
+        sortBySlugfied
+      );
+
+      setSortedList(articleList.length === 0 ? [] : articleList.slice(0, 7));
+    } else {
+      setSortedList(null);
+    }
   }, 500);
 
   return (
-    <form
-      action="/artigos"
-      className="min-h-10 w-full relative rounded-t-3xl border border-blog-border bg-blog-background-1"
-      style={{
-        marginBottom: sortedList ? (sortedList.length > 0 ? "1px" : "") : "", // To avoid button movements when bottom border is set to zero
-        borderBottom: sortedList
-          ? sortedList.length > 0
-            ? "0px none"
-            : ""
-          : "",
-        borderBottomLeftRadius: sortedList
-          ? sortedList.length > 0
-            ? "0px"
-            : "24px"
-          : "24px",
-        borderBottomRightRadius: sortedList
-          ? sortedList.length > 0
-            ? "0px"
-            : "24px"
-          : "24px",
-      }}
-    >
-      <label htmlFor="search" className="sr-only">
-        Buscador de artigos
-      </label>
-      <button
-        type="submit"
-        className="absolute left-3 top-1/2 -translate-y-1/2"
+    <Dialog>
+      <DialogTrigger
+        className="rounded-3xl flex-1" // outline-none
       >
-        <Search className="size-4 transition-all duration-500 text-blog-foreground-readable hover:text-blog-foreground-readable-hover" />
-      </button>
-      <input
-        ref={inputRef}
-        id="search"
-        type="search"
-        name="search"
-        autoComplete="off"
-        placeholder="Pesquisar artigos..."
-        onChange={(e) => {
-          handleSearch(e.target.value);
-        }}
-        // value vs defaultValue (controlled vs uncontrolled)
-        defaultValue={searchParams.get("query")?.toString()}
-        className="h-full text-sm w-full border-transparent border-none border-0 outline-none outline-0 px-10 bg-transparent"
-      />
+        <Trigger />
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle className="sr-only">Buscador de artigos</DialogTitle>
+        </DialogHeader>
+        <form action="/artigos" className="overflow-x-hidden">
+          <InputQuery handleSearch={handleSearch} searchParams={searchParams} />
+          <ResultQuery sortedList={sortedList} />
+        </form>
+      </DialogContent>
+    </Dialog>
+  );
+};
+
+const Trigger = () => {
+  return (
+    <div className="min-h-10 w-full relative flex items-center rounded-3xl border border-blog-border bg-blog-background-1 transition-all duration-500 hover:bg-blog-background-2 group">
+      <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 transition-all duration-500 text-blog-foreground-readable group-hover:text-blog-foreground-readable-hover" />
+      <p className="pl-12 w-full text-sm text-start transition-all duration-500 group-hover:text-blog-foreground-readable-hover">
+        Buscar artigos...
+      </p>
+    </div>
+  );
+};
+
+const InputQuery = ({
+  searchParams,
+  handleSearch,
+}: {
+  searchParams: ReadonlyURLSearchParams;
+  handleSearch: (queryString: string) => void;
+}) => {
+  return (
+    <div className="min-h-10 w-full relative py-4">
+      <div className="flex flex-col justify-center">
+        <button
+          type="submit"
+          className="absolute left-4 top-1/2 -translate-y-1/2"
+        >
+          <Search className="size-4 transition-all duration-500 text-blog-foreground-readable hover:text-blog-foreground-readable-hover" />
+        </button>
+        <input
+          id="query"
+          type="query"
+          name="query"
+          autoComplete="off"
+          placeholder="Pesquisar artigos..."
+          onChange={(event) => {
+            handleSearch(event.target.value);
+          }}
+          defaultValue={searchParams.get("query")?.toString()}
+          className="text-sm w-full border-transparent border-none border-0 outline-none outline-0 pl-12 pr-16 bg-transparent"
+        />
+      </div>
+      <DialogClose className="absolute right-4 top-1/2 -translate-y-1/2 px-2 py-0.5 text-xs font-extrabold rounded border border-blog-border transition-all duration-500 bg-blog-background-2 hover:text-blog-foreground-readable-hover hover:bg-blog-background-1">
+        <DialogDescription className="sr-only">
+          Fechar buscador
+        </DialogDescription>
+        ESC
+      </DialogClose>
+    </div>
+  );
+};
+
+const ResultQuery = ({ sortedList }: { sortedList: ArticleList | null }) => {
+  return (
+    <>
       {sortedList && sortedList.length > 0 && (
-        <div className="absolute -left-[1px] -right-[1px] overflow-y-hidden border-b border-x border-blog-border bg-blog-background-1 rounded-b-3xl pt-1 pb-4">
-          <ul className="flex flex-col">
-            {sortedList.slice(0, 7).map((article) => (
+        <>
+          <hr />
+          <ul className="flex flex-col py-4">
+            {sortedList.map((article) => (
               <li key={article.documentId}>
                 <Link
                   href={`/artigos/[documentId]/[slug]`}
                   as={`/artigos/${article.documentId}/${article.slug}`}
-                  className="flex items-center gap-3 py-1.5 px-5 rounded transition-all duration-500 hover:bg-blog-background-2 group"
+                  className="flex items-center gap-3 py-1.5 px-5"
                 >
                   <div className="shrink-0 relative size-8">
                     <Image
@@ -106,16 +149,27 @@ const SearchBar = () => {
                       className="absolute object-cover"
                     />
                   </div>
-                  <p className="text-sm truncate text-blog-foreground-readable group-hover:text-blog-foreground-readable-hover">
+                  <p className="text-sm truncate text-blog-foreground-readable">
                     {article.title}
                   </p>
                 </Link>
               </li>
             ))}
           </ul>
-        </div>
+        </>
       )}
-    </form>
+      {sortedList && sortedList.length === 0 && (
+        <>
+          <hr />
+          <div className="py-4">
+            <span className="sr-only">Nenhum artigo encontrado</span>
+            <p className="text-center text-sm text-blog-foreground-readable">
+              Nenhum artigo encontrado
+            </p>
+          </div>
+        </>
+      )}
+    </>
   );
 };
 

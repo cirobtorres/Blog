@@ -13,6 +13,7 @@ import { countArticles, getArticles } from "../../lib/articles";
 import Link from "next/link";
 import Image from "next/image";
 import { formatDateToCustomFormat } from "../../utils/dates";
+import slugify from "../../utils/slugify";
 
 export default async function ArticlesPage({
   searchParams,
@@ -20,22 +21,33 @@ export default async function ArticlesPage({
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
   const resolvedSearchParams = await searchParams;
+  const query = resolvedSearchParams?.query || null;
   const page = Number(resolvedSearchParams?.page) || 1;
+
+  const filter = query
+    ? typeof query === "string"
+      ? slugify(query)
+      : slugify(query.join(" "))
+    : null;
+
   const {
     data: { total: articlesCount },
-  } = await countArticles();
-  const pageSize = 10;
+  } = await countArticles(filter);
+
+  const pageSize = 2;
   const lastPage = Math.ceil(articlesCount / pageSize);
-  const { data: articles } = await getArticles("createdAt:desc", {
+
+  const { data: articleList } = await getArticles("createdAt:desc", filter, {
     page: page,
     pageSize,
   });
+
   return (
     <>
       <StaticBody>
         <section className="w-full flex-1 flex flex-col gap-4 justify-between my-4 max-w-screen-2xl mx-auto">
           <Suspense fallback={""}>
-            <ArticlesList articles={articles} />
+            <ArticlesList articles={articleList} />
           </Suspense>
           {lastPage > 1 && (
             <ArticlesPages page={Number(page)} articlesCount={lastPage} />
@@ -46,6 +58,7 @@ export default async function ArticlesPage({
   );
 }
 
+// const ArticlesList = ({ articles }: { articles: ArticleCard[] }) => {
 const ArticlesList = ({ articles }: { articles: ArticleCard[] }) => {
   return (
     articles && (
@@ -61,6 +74,7 @@ const ArticlesList = ({ articles }: { articles: ArticleCard[] }) => {
                   src={`http://127.0.0.1:1337${article.cover.url}`}
                   alt={article.cover.alternativeText}
                   fill
+                  priority
                   sizes={
                     `(max-width: ${article.cover.width}) 100vw` +
                     `, (max-width: ${article.cover.width / 2}) 50vw`
@@ -69,8 +83,6 @@ const ArticlesList = ({ articles }: { articles: ArticleCard[] }) => {
                 />
               </div>
               <div className="w-full flex-1 flex flex-col gap-2 justify-center h-[212px] py-2 px-3 overflow-hidden">
-                {/* gaps: 24px */}
-                {/* 24px */}
                 {article.category && (
                   <div className="shrink-0 h-6 flex items-center gap-4">
                     <p className="text-base truncate flex-[0_0_auto]">
@@ -95,15 +107,12 @@ const ArticlesList = ({ articles }: { articles: ArticleCard[] }) => {
                   </div>
                 )}
                 <h2 className="shrink-0 h-14 text-xl font-bold line-clamp-2 transition-all duration-500 group-hover:text-blog-foreground-highlight">
-                  {/* 56px */}
                   {article.title}
                 </h2>
                 <p className="shrink-0 h-[60px] text-sm text-[#808080] line-clamp-3">
-                  {/* 60px */}
                   {article.description}
                 </p>
                 <div className="h-8 shrink-0 flex flex-col items-end">
-                  {/* 32px */}
                   {article.updatedAt > article.createdAt ? (
                     <>
                       <p className="h-4 mt-auto text-xs">
