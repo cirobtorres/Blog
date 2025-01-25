@@ -34,6 +34,12 @@ const convertMarkdowToHtmlString = async (rawHtml: string | undefined) => {
     (match, content) => `<strike>${content}</strike>`
   );
 
+  // Unwrap <a> and <img> from <p> tags
+  stringHtml = stringHtml.replace(
+    /<p>(\s*(<a [^>]*>.*?<\/a>|<img [^>]*>)\s*)<\/p>/g,
+    "$2"
+  );
+
   return stringHtml;
 };
 

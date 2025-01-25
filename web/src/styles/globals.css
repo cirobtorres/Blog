@@ -6,24 +6,16 @@
 @tailwind utilities;
 
 :root {
-  --blog-black: 300 3% 6%;
+  --blog-black: 300 0% 0%;
   --blog-black-lighter: 300 3% 12%;
   --blog-silver: 278 8% 80%;
   --blog-orange: 30 85% 65%;
   --blog-orange-darker: 30 55% 45%;
   --blog-orange-lighter: 30 90% 70%;
-  /* --blog-green: 81 93% 56%; */
-  /* --blog-yellow: 46 96% 79%; */
-  /* --blog-cyan: 184 100% 73%; */
-  /* --blog-purple: 252 96% 78%; */
-  /* --blog-red: 350 80% 58%; */
 
   /*------------------------------=====Light=====------------------------------*/
-  /* --scrollbar-track: transparent; */
   --scrollbar-track: 0 0% 0%;
-  /* --scrollbar-thumb: var(--blog-orange); */
   --scrollbar-thumb: 266 4% 35%;
-  /* --scrollbar-thumb-hover: var(--blog-orange-lighter); */
   --scrollbar-thumb-hover: 270 3% 39%;
 
   --blog-background-1: hsl(278, 21%, 93%);
@@ -50,9 +42,6 @@
   --blog-code-number: 160 66% 55%;
   --blog-code-comment: 0 0% 50%;
   --blog-code-regexp: 350 80% 58%;
-
-  --dotSize: 0.1rem;
-  --halftone-dot-color: #e6e6e6;
 }
 
 .dark {
@@ -85,8 +74,6 @@
   --blog-code-number: 160 66% 55%;
   --blog-code-comment: 0 0% 50%;
   --blog-code-regexp: 350 80% 58%;
-
-  --halftone-dot-color: #1f1f1f;
 }
 
 * {
@@ -192,6 +179,11 @@ input[type="search"]::-webkit-search-results-decoration {
   }
 
   /*------------------------------Margins------------------------------*/
+  .blog-center-content {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
   .blog-margin {
     h1,
     h2,
@@ -216,13 +208,13 @@ input[type="search"]::-webkit-search-results-decoration {
     code,
     strong {
       color: inherit;
+      word-break: break-word;
     }
 
     a {
+      color: var(--blog-foreground-highlight);
       transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
       transition-duration: 500ms;
-      color: var(--blog-foreground-highlight);
-      text-decoration: underline;
     }
 
     a:hover {
@@ -255,6 +247,14 @@ input[type="search"]::-webkit-search-results-decoration {
         margin-left: 0.5rem;
       }
     }
+  }
+
+  /*------------------------------Featured------------------------------*/
+  .blog-featured {
+    padding: 1rem 2rem;
+    background: var(--blog-background-2);
+    border-radius: 8px;
+    border: 1px solid var(--blog-border);
   }
 
   /*------------------------------Blockquote------------------------------*/
@@ -304,20 +304,27 @@ input[type="search"]::-webkit-search-results-decoration {
     color: inherit;
   }
 
+  @media (min-width: 500px) {
+    .blog-blockquote blockquote {
+      padding-left: 7.5rem;
+    }
+
+    .blog-blockquote blockquote p:first-child::before {
+      left: 5.75rem;
+    }
+  }
+
   /*------------------------------Code------------------------------*/
   .blog-code pre {
     background: var(--blog-pre);
     color: var(--blog-code-text);
     border: 1px solid transparent;
-    /* border-radius: 8px; */
-    margin: 1rem 0;
+    margin: 0 0 1rem 0;
     padding: 1rem 1.5rem;
     line-height: 1.5rem;
     direction: ltr;
     text-align: left;
     overflow: auto hidden;
-    /* white-space: pre-wrap; */
-    /* tab-size: 4; */
 
     code {
       overflow-x: scroll;
@@ -375,76 +382,4 @@ input[type="search"]::-webkit-search-results-decoration {
       color: hsl(var(--blog-code-comment));
     }
   }
-
-  /*------------------------------Others------------------------------*/
-  .blog-center-content {
-    max-width: 1280px;
-    margin: 0 auto;
-  }
-
-  .blog {
-    word-break: break-word;
-  }
-
-  /*------------------------------Halftone-Dotted-Background------------------------------*/
-  .halftone {
-    position: relative; /* Torna o pai um contexto de posicionamento */
-  }
-
-  .halftone::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-
-    background-image: radial-gradient(
-      circle at center,
-      var(--halftone-dot-color) var(--dotSize),
-      transparent 0
-    );
-    background-size: 0.5rem 0.5rem;
-    background-position: 0 0, 0.65rem 0.65rem;
-
-    mask-image: linear-gradient(rgb(0, 0, 0), rgb(0 0 0 / 0));
-  }
-
-  /* 
-  .halftone::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-
-    background-image: radial-gradient(
-      circle at center,
-      var(--halftone-dot-color) var(--dotSize),
-      transparent 0
-    );
-    background-size: 0.5rem 0.5rem;
-    background-position: 0 0, 0.65rem 0.65rem;
-
-    mask-image: linear-gradient(rgb(0, 0, 0), rgb(0 0 0 / 0));
-  } */
-
-  /* .halftone::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-
-    background-image: radial-gradient(
-        circle,
-        transparent 50%,
-        rgba(0, 0, 0, 0.125) 100%
-      ),
-      radial-gradient(
-        circle at center,
-        var(--halftone-dot-color) var(--dotSize),
-        transparent 0
-      );
-    background-size: 0.5rem 0.5rem;
-    background-position: 0 0, 0.65rem 0.65rem;
-
-    mask-image: linear-gradient(rgb(0, 0, 0), rgb(0 0 0 / 0));
-  } */
 }

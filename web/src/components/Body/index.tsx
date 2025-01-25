@@ -13,7 +13,7 @@ const DynamicBody = async ({
   return (
     <div className="h-full min-h-screen flex flex-col justify-between">
       <FloatingHeader documentId={documentId} />
-      <main className="flex-1 mt-12 halftone">{children}</main>
+      <main className="flex-1 mt-12">{children}</main>
       <Footer />
     </div>
   );

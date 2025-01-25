@@ -1,75 +1,13 @@
 "use client";
 
-import * as cheerio from "cheerio";
-import { Check, Copy } from "lucide-react";
+import { useState } from "react";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "../../../Shadcnui/tooltip";
-import { useState } from "react";
-
-const ParseHtmlBlocks = ({ html }: { html: string }) => {
-  const $ = cheerio.load(html);
-
-  // Modify <a> tags to include target="_blank" if not already present
-  $("a").each((_, element) => {
-    if (!$(element).attr("target")) {
-      $(element).attr("target", "_blank");
-    }
-  });
-
-  const allowedTags = [
-    // "H1", // It is not allowed heading 1 on article content since its already presented on Hero
-    "H2",
-    "H3",
-    "H4",
-    "H5",
-    "H6",
-    "P",
-    "PRE",
-    "UL",
-    "OL",
-  ];
-  const blocks: { id: string; htmlToRender: string; isPre?: boolean }[] = [];
-  let index = 0;
-
-  $("body")
-    .children()
-    .each((_, element) => {
-      // Check if element is a node of type `Element`.
-      if (
-        element.type === "tag" &&
-        allowedTags.includes(element.tagName.toUpperCase())
-      ) {
-        blocks.push({
-          id: `block-${index}`,
-          htmlToRender: $.html(element),
-          isPre: element.tagName.toUpperCase() === "PRE",
-        });
-        index++;
-      }
-    });
-
-  return blocks.map((finalBlock) =>
-    finalBlock.isPre ? (
-      <article key={finalBlock.id} className="w-full relative">
-        <div
-          dangerouslySetInnerHTML={{ __html: finalBlock.htmlToRender }}
-          className="blog blog-center-content blog-heading blog-margin blog-text blog-code [&_*]:scrollbar"
-        />
-        <CopyButton htmlToRender={finalBlock.htmlToRender} />
-      </article>
-    ) : (
-      <article
-        key={finalBlock.id}
-        dangerouslySetInnerHTML={{ __html: finalBlock.htmlToRender }}
-        className="w-full blog blog-center-content blog-heading blog-margin blog-text blog-lists [&_*]:scrollbar"
-      />
-    )
-  );
-};
+} from "../../../../Shadcnui/tooltip";
+import { Check, Copy } from "lucide-react";
 
 const CopyButton = ({ htmlToRender }: { htmlToRender: string }) => {
   const [copied, setCopied] = useState(false);
@@ -98,7 +36,7 @@ const CopyButton = ({ htmlToRender }: { htmlToRender: string }) => {
       <Tooltip>
         <TooltipTrigger asChild>
           <button
-            className={`absolute right-4 top-8 size-10 rounded-xl transition-colors duration-500 dark text-blog-foreground-readable ${
+            className={`absolute right-2 top-2 size-10 rounded-xl transition-colors duration-500 dark text-blog-foreground-readable ${
               !copied
                 ? "hover:bg-blog-border hover:text-blog-foreground-readable-hover"
                 : "bg-blog-border"
@@ -141,4 +79,4 @@ const CopyButton = ({ htmlToRender }: { htmlToRender: string }) => {
   );
 };
 
-export default ParseHtmlBlocks;
+export default CopyButton;

@@ -1,5 +1,17 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
+export interface SharedFeatured extends Struct.ComponentSchema {
+  collectionName: 'components_shared_featureds';
+  info: {
+    description: '';
+    displayName: 'Featured';
+    icon: 'message';
+  };
+  attributes: {
+    featured: Schema.Attribute.RichText;
+  };
+}
+
 export interface SharedMedia extends Struct.ComponentSchema {
   collectionName: 'components_shared_media';
   info: {
@@ -65,6 +77,7 @@ export interface SharedSlider extends Struct.ComponentSchema {
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
+      'shared.featured': SharedFeatured;
       'shared.media': SharedMedia;
       'shared.quote': SharedQuote;
       'shared.rich-text': SharedRichText;

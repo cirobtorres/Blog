@@ -16,7 +16,7 @@ const FloatingHeader = ({ documentId }: { documentId: string }) => {
       if (currScrollPos < threshold || currScrollPos < prevScrollPos) {
         if (headerRef.current) headerRef.current.style.top = "0";
       } else {
-        if (headerRef.current) headerRef.current.style.top = "-48px"; // 48px = header height
+        if (headerRef.current) headerRef.current.style.top = "-49px"; // 48px header height + 1px border width
       }
       prevScrollPos = currScrollPos;
     };

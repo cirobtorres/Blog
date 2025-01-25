@@ -1,31 +1,47 @@
 "use server";
 
 import Image from "next/image";
+import {
+  ParseRichTextBlocks,
+  ParseFeaturedBlocks,
+  ComponentSharedSlider,
+} from "./ParseBlocks";
 import highlightPreBlocks from "../../../utils/highlight";
-import { addIdsToHeadings } from "../../../utils/anchors";
 import convertMarkdowToHtmlString from "../../../utils/markdown";
-import ParseHtmlBlocks from "./ParseHtmlBlocks";
-import ComponentSharedSlider from "./ComponentSharedSlider";
+import { addIdsToHeadings } from "../../../utils/anchors";
+
+const convertToHTML = async (blocks: string) => {
+  const contentHtml = await convertMarkdowToHtmlString(blocks);
+  const processedHtml = highlightPreBlocks(contentHtml);
+  const htmlToRender = addIdsToHeadings(processedHtml);
+  return htmlToRender;
+};
 
 const ArticleContent = async ({ documentId, content }: ArticleContent) => {
   const toRender = await Promise.all(
     content.map(async (block) => {
       switch (block.__typename) {
         case "ComponentSharedRichText":
-          const contentHtml = await convertMarkdowToHtmlString(block.body);
-          const processedHtml = highlightPreBlocks(contentHtml);
-          const htmlToRender = addIdsToHeadings(processedHtml);
+          const richTextToRender = await convertToHTML(block.body);
           return (
-            <ParseHtmlBlocks
+            <ParseRichTextBlocks
               key={`shared.rich-text-${block.id}`}
-              html={htmlToRender}
+              html={richTextToRender}
+            />
+          );
+        case "ComponentSharedFeatured":
+          const featuredToRender = await convertToHTML(block.featured);
+          return (
+            <ParseFeaturedBlocks
+              key={`shared.featured-${block.id}`}
+              html={featuredToRender}
             />
           );
         case "ComponentSharedQuote":
           return (
             <article
               key={`shared.quote-${block.id}`}
-              className="w-full blog blog-margin blog-text blog-blockquote" // blog-center-content
+              className="w-full blog-margin blog-text blog-blockquote [&_strong]:ml-24 max-[500px]:[&_strong]:ml-4" // blog-center-content
             >
               <blockquote>
                 <p>{block.body}</p>
@@ -36,7 +52,7 @@ const ArticleContent = async ({ documentId, content }: ArticleContent) => {
         case "ComponentSharedMedia":
           if (block.file) {
             return (
-              <article key={`shared.media-${block.id}`}>
+              <article key={`shared.media-${block.id}`} className="mb-4">
                 <figure className={"flex flex-col gap-3"}>
                   <Image
                     src={`http://127.0.0.1:1337${block.file.url}`}

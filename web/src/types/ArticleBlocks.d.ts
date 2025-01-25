@@ -1,4 +1,9 @@
-type ArticleBlocks = SharedRichText | SharedQuote | SharedMedia | SharedSlider;
+type ArticleBlocks =
+  | SharedRichText
+  | SharedQuote
+  | SharedMedia
+  | SharedSlider
+  | SharedFeatured;
 
 type SharedRichText = {
   __typename: "ComponentSharedRichText";
@@ -23,6 +28,12 @@ type SharedSlider = {
   __typename: "ComponentSharedSlider";
   id: string;
   files: SharedMediaFile[];
+};
+
+type SharedFeatured = {
+  __typename: "ComponentSharedFeatured";
+  id: string;
+  featured: string;
 };
 
 type SharedMediaFile = {

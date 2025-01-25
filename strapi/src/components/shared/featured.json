@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_shared_featureds",
+  "info": {
+    "displayName": "Featured",
+    "icon": "message",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "featured": {
+      "type": "richtext"
+    }
+  }
+}

@@ -9,7 +9,7 @@ const RelatedArticles = async () => {
       <div
         className="w-full max-w-screen-lg mx-auto mb-8 grid grid-cols-1" // grid grid-cols-article max-lg:grid-cols-article-800 items-center
       >
-        <div className="text-center blog-heading col-start-2 max-lg:col-start-1 px-8 max-lg:px-4">
+        <div className="text-center blog-heading col-start-1 px-8 max-lg:px-4">
           <h2>Artigos relacionados</h2>
         </div>
       </div>
