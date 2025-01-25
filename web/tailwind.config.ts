@@ -108,10 +108,6 @@ export default {
           "30%": { top: "-4px" },
           "40%": { top: "0px" },
         },
-        "expand-width": {
-          "0%": { width: "0%" },
-          "100%": { width: "100%" },
-        },
         "profile-border-spin": {
           from: {
             "--angle": "0deg",
@@ -120,11 +116,19 @@ export default {
             "--angle": "360deg",
           },
         },
-        "slide-mask": {
-          from: { x: "-100%" },
-          to: { x: "100%" },
+        "blog-pulse": {
+          "0%": {
+            transform: "scale(0.8)",
+            "box-shadow": "0 0 0 0 rgba(242, 166, 90, 1)",
+          },
+          "70%": {
+            transform: "scale(1)",
+            "box-shadow": "0 0 0 60px rgba(229, 62, 62, 0)",
+          },
+          "100%": {
+            transform: "scale(0.8)",
+          },
         },
-
         // SHADCN/UI==========--------------------------------------------------
         "accordion-down": {
           from: {
@@ -147,9 +151,8 @@ export default {
         // BLOG-BackToTopButton==========--------------------------------------------------
         "bouncing-arrow-up": "bouncing-arrow-up 1s infinite",
         "clip-pop-up-and-bounce": "clip-pop-up-and-bounce 0.2s ease-out",
-        "expand-width": "expand-width 0.2s ease-out forwards",
         "border-spin": "profile-border-spin 3s linear infinite",
-        "mask-rect": "slide-mask 5s ease-out infinite",
+        "blog-pulse": "blog-pulse 2s infinite",
 
         // SHADCN/UI==========--------------------------------------------------
         "accordion-down": "accordion-down 0.2s ease-out",

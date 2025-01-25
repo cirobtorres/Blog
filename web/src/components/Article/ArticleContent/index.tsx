@@ -3,10 +3,10 @@
 import {
   ParseRichTextBlocks,
   ParseFeaturedBlocks,
-  ParseQuizBlocks,
   ParseQuoteBlocks,
   ParseSliderBlocks,
   ParseMediaBlocks,
+  ParseQuizBlocks,
 } from "./ParseBlocks";
 import highlightPreBlocks from "../../../utils/highlight";
 import convertMarkdowToHtmlString from "../../../utils/markdown";

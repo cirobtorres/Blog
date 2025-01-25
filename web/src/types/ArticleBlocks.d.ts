@@ -40,10 +40,13 @@ type SharedFeatured = {
 type SharedQuiz = {
   __typename: "ComponentSharedQuiz";
   id: string;
-  json: {
-    opts: { alt: [key: string, boolean] }[];
-    quiz: string;
-  };
+  json: Record<string, Quiz>; // Dynamic keys
+};
+
+type Quiz = {
+  key: string;
+  opts: { alt: [string, boolean] }[];
+  quiz: string;
 };
 
 type SharedMediaFile = {

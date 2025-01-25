@@ -18,7 +18,9 @@ const Categories = ({
   return (
     <section className="mb-10">
       <Category category={category} />
-      <Subcategories subCategories={subCategories} />
+      {subCategories.length > 0 && (
+        <Subcategories subCategories={subCategories} />
+      )}
       <Tags tags={tags} />
     </section>
   );
@@ -49,9 +51,9 @@ const Subcategories = ({ subCategories }: { subCategories: SubCategory[] }) => {
     <article
       className="max-w-screen-2xl mx-auto mb-10" // grid grid-cols-article max-lg:grid-cols-article-800 items-center
     >
-      <div className="flex justify-center flex-wrap gap-6 col-start-2 max-lg:col-start-1 px-4">
+      <ul className="flex justify-center flex-wrap gap-6 col-start-2 max-lg:col-start-1 px-40">
         {subCategories.map((subCategory) => (
-          <div
+          <li
             key={subCategory.documentId}
             className="flex items-center gap-2 h-6"
           >
@@ -72,9 +74,9 @@ const Subcategories = ({ subCategories }: { subCategories: SubCategory[] }) => {
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
-          </div>
+          </li>
         ))}
-      </div>
+      </ul>
     </article>
   );
 };

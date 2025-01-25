@@ -1,8 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
-import { FaQuestion, FaCheck } from "react-icons/fa";
+import { useEffect, useState } from "react";
+import { FaCheck, FaQuestion } from "react-icons/fa";
 import * as cheerio from "cheerio";
 import CopyButton from "./CopyButton";
 import SliderCarousel from "../../../Shadcnui/thumbCarousel";
@@ -115,26 +115,9 @@ const ParseSliderBlocks = ({ block }: { block: SharedSlider }) => {
 };
 
 const ParseQuizBlocks = ({ block }: { block: SharedQuiz }) => {
-  const [checked, setChecked] = useState<[number, boolean] | []>([]); // Option is clicked (selected) but not yet confirmed with a button click
-  const [selected, setSelected] = useState<boolean>(false); // Option is confirmed
-  const [isCorrect, setIsCorrect] = useState<boolean | null>(null); // If the correct option was chosen
-  const [choosedWrong, setChoosedWrong] = useState<number | null>(null); // Index of the correct option
-  const chars = ["A", "B", "C", "D"];
-
-  const handleSelect = () => {
-    if (checked.length > 0) {
-      setSelected(true);
-      setIsCorrect(checked[1] || null);
-      const indexOfCorrectOption = block.json.opts
-        .map((opt) => opt.alt[1])
-        .indexOf(true);
-      setChoosedWrong(indexOfCorrectOption);
-    }
-  };
-
   return (
-    <div className="relative max-w-[700px] mx-auto mt-20">
-      <FaQuestion className="size-12 p-2 rounded-full outline outline-offset-4 outline-blog-foreground-highlight absolute -top-6 left-1/2 -translate-x-1/2 bg-blog-foreground-highlight text-blog-foreground-readable-hover" />
+    <article className="relative max-w-[700px] mx-auto mt-20">
+      <FaQuestion className="absolute -top-6 left-1/2 -translate-x-1/2 size-12 p-2 rounded-full outline outline-2 outline-offset-4 outline-blog-foreground-highlight ring-2 ring-offset-[16px] ring-offset-blog-background-1 ring-blog-foreground-highlight bg-blog-foreground-highlight text-blog-foreground-readable-hover" />
       <div className="blog-heading mb-4">
         <h2 id={`shared.quiz-${block.id}`} className="pt-12 text-center">
           Momento Quiz!
@@ -146,96 +129,155 @@ const ParseQuizBlocks = ({ block }: { block: SharedQuiz }) => {
           até agora.
         </p>
       </div>
-      <div className="flex flex-col items-center gap-8 border border-blog-border rounded-3xl p-8 bg-blog-background-2 shadow-lg">
-        <p className="">{block.json.quiz}</p>
-        <ul className="w-full grid grid-cols-1 gap-1">
-          {block.json.opts.map((opt, index: number) => (
-            <li key={index}>
-              <button
-                onClick={() => setChecked([index, opt.alt[1]])}
-                className={`w-full flex items-center gap-4 px-3 py-2 text-sm border transition-all duration-500 bg-blog-background-2 group${
-                  !selected && " hover:bg-blog-background-1"
-                }`}
-                disabled={selected}
+      {Object.values(block.json).map((bl, index: number) => (
+        <QuizObjects key={index} block={bl} />
+      ))}
+    </article>
+  );
+};
+
+const QuizObjects = ({ block }: { block: Quiz }) => {
+  const [checked, setChecked] = useState<[number, boolean] | []>([]); // Option is clicked (selected) but not yet confirmed with a button click
+  const [selected, setSelected] = useState<boolean>(false); // Option is confirmed
+  const [isCorrect, setIsCorrect] = useState<boolean | null>(null); // If the correct option was chosen
+  const [choosedWrong, setChoosedWrong] = useState<number | null>(null); // Index of the correct option
+  const chars = ["A", "B", "C", "D"];
+
+  const handleSelect = () => {
+    if (checked.length > 0) {
+      setSelected(true);
+      setIsCorrect(checked[1] || null);
+      const indexOfCorrectOption = block.opts
+        .map((opt) => opt.alt[1])
+        .indexOf(true);
+      setChoosedWrong(indexOfCorrectOption);
+
+      const quizKey = `quiz-${block.key}`;
+      sessionStorage.setItem(`${quizKey}-checked`, JSON.stringify(checked));
+      sessionStorage.setItem(`${quizKey}-selected`, JSON.stringify(true));
+      sessionStorage.setItem(
+        `${quizKey}-isCorrect`,
+        JSON.stringify(checked[1] || null)
+      );
+      sessionStorage.setItem(
+        `${quizKey}-indexOfCorrectOption`,
+        JSON.stringify(indexOfCorrectOption)
+      );
+    }
+  };
+
+  useEffect(() => {
+    const quizKey = `quiz-${block.key}`;
+    const sessionChecked = sessionStorage.getItem(`${quizKey}-checked`);
+    const sessionSelected = sessionStorage.getItem(`${quizKey}-selected`);
+    const sessionIsCorrect = sessionStorage.getItem(`${quizKey}-isCorrect`);
+    const sessionIndexOfCorrectOption = sessionStorage.getItem(
+      `${quizKey}-indexOfCorrectOption`
+    );
+
+    if (
+      sessionChecked &&
+      sessionSelected &&
+      sessionIsCorrect &&
+      sessionIndexOfCorrectOption
+    ) {
+      setChecked(JSON.parse(sessionChecked));
+      setSelected(JSON.parse(sessionSelected));
+      setIsCorrect(JSON.parse(sessionIsCorrect));
+      setChoosedWrong(JSON.parse(sessionIndexOfCorrectOption));
+    }
+  }, [block.key]);
+
+  return (
+    <div className="flex flex-col items-center gap-8 border border-blog-border rounded-3xl p-8 bg-blog-background-2 shadow-lg mb-10">
+      <p className="">{block.quiz}</p>
+      <ul className="w-full grid grid-cols-1 gap-1">
+        {block.opts.map((opt, index: number) => (
+          <li key={index}>
+            <button
+              onClick={() => setChecked([index, opt.alt[1]])}
+              className={`w-full flex items-center gap-4 px-3 py-2 text-sm border transition-all duration-500 bg-blog-background-2 group${
+                !selected && " hover:bg-blog-background-1"
+              }`}
+              disabled={selected}
+              style={{
+                borderColor:
+                  selected && isCorrect && checked[0] === index // Correctly chosen
+                    ? "var(--blog-border-green)"
+                    : selected && !isCorrect && checked[0] === index // Wrongly chosen
+                    ? "var(--blog-border-red)"
+                    : selected && !isCorrect && choosedWrong === index // Wrongly chosen (highlight correct option)
+                    ? "var(--blog-border-green)"
+                    : !selected && checked[0] === index // Highlight borders before confirm
+                    ? "var(--blog-foreground-highlight)"
+                    : "var(--blog-border)",
+                backgroundColor:
+                  selected && isCorrect && checked[0] === index
+                    ? "var(--blog-green)"
+                    : selected && !isCorrect && checked[0] === index
+                    ? "#450a0a"
+                    : choosedWrong === index
+                    ? "var(--blog-green)"
+                    : checked[0] === index
+                    ? "var(--blog-background-1)"
+                    : "",
+              }}
+            >
+              <p className="flex items-center justify-center shrink-0 rounded-full size-8 font-extrabold text-blog-foreground-readable-hover bg-blog-foreground-highlight">
+                {chars[index]}
+              </p>
+              <p
+                className="truncate transition-all duration-500 group-hover:text-blog-foreground-readable-hover"
                 style={{
-                  borderColor:
-                    selected && isCorrect && checked[0] === index // Correctly chosen
-                      ? "var(--blog-border-green)"
-                      : selected && !isCorrect && checked[0] === index // Wrongly chosen
-                      ? "var(--blog-border-red)"
-                      : selected && !isCorrect && choosedWrong === index // Wrongly chosen (highlight correct option)
-                      ? "var(--blog-border-green)"
-                      : !selected && checked[0] === index // Highlight borders before confirm
-                      ? "var(--blog-foreground-highlight)"
-                      : "var(--blog-border)",
-                  backgroundColor:
-                    selected && isCorrect && checked[0] === index
-                      ? "var(--blog-green)"
-                      : selected && !isCorrect && checked[0] === index
-                      ? "#450a0a"
-                      : choosedWrong === index
-                      ? "var(--blog-green)"
-                      : checked[0] === index
-                      ? "var(--blog-background-1)"
+                  color:
+                    checked[0] === index
+                      ? "var(--blog-foreground-readable-hover)"
                       : "",
                 }}
               >
-                <p className="flex items-center justify-center shrink-0 rounded-full size-8 font-extrabold text-blog-foreground-readable-hover bg-blog-foreground-highlight">
-                  {chars[index]}
-                </p>
-                <p
-                  className="truncate transition-all duration-500 group-hover:text-blog-foreground-readable-hover"
-                  style={{
-                    color:
-                      checked[0] === index
-                        ? "var(--blog-foreground-readable-hover)"
-                        : "",
-                  }}
-                >
-                  {opt.alt[0]}
-                </p>
-              </button>
-            </li>
-          ))}
-        </ul>
-        <button
-          className="w-[205px] flex items-center gap-2 border px-8 py-[9px] transition-all duration-500 bg-blog-background-2 hover:bg-blog-background-1"
-          onClick={handleSelect}
-          disabled={selected}
-          style={{
-            borderColor: selected
-              ? isCorrect
-                ? "var(--blog-border-green)"
-                : "var(--blog-border-red)"
-              : "var(--blog-border)",
-            backgroundColor: selected
-              ? isCorrect
-                ? "var(--blog-green)"
-                : "#450a0a"
-              : "",
-          }}
-        >
-          {!selected ? (
-            <p className="w-full transition-all duration-500 text-sm hover:text-blog-foreground-readable-hover">
-              Responder
+                {opt.alt[0]}
+              </p>
+            </button>
+          </li>
+        ))}
+      </ul>
+      <button
+        className="w-[205px] flex items-center gap-2 border px-8 py-[9px] transition-all duration-500 bg-blog-background-2 hover:bg-blog-background-1"
+        onClick={handleSelect}
+        disabled={selected}
+        style={{
+          borderColor: selected
+            ? isCorrect
+              ? "var(--blog-border-green)"
+              : "var(--blog-border-red)"
+            : "var(--blog-border)",
+          backgroundColor: selected
+            ? isCorrect
+              ? "var(--blog-green)"
+              : "#450a0a"
+            : "",
+        }}
+      >
+        {!selected ? (
+          <p className="w-full transition-all duration-500 text-sm hover:text-blog-foreground-readable-hover">
+            Responder
+          </p>
+        ) : isCorrect ? (
+          <>
+            <FaCheck className="text-green-500" />
+            <p className="text-sm text-blog-foreground-readable-hover">
+              Resposta correta!
             </p>
-          ) : isCorrect ? (
-            <>
-              <FaCheck className="text-green-500" />
-              <p className="text-sm text-blog-foreground-readable-hover">
-                Resposta correta!
-              </p>
-            </>
-          ) : (
-            <>
-              <FaCheck className="text-red-500" />
-              <p className="text-sm text-blog-foreground-readable-hover">
-                Resposta errada
-              </p>
-            </>
-          )}
-        </button>
-      </div>
+          </>
+        ) : (
+          <>
+            <FaCheck className="text-red-500" />
+            <p className="text-sm text-blog-foreground-readable-hover">
+              Resposta errada
+            </p>
+          </>
+        )}
+      </button>
     </div>
   );
 };
