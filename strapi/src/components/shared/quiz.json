@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_shared_quizzes",
+  "info": {
+    "displayName": "quiz",
+    "icon": "bulletList",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "json": {
+      "type": "json",
+      "required": true
+    }
+  }
+}

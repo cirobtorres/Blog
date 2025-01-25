@@ -23,6 +23,18 @@ export interface SharedMedia extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedQuiz extends Struct.ComponentSchema {
+  collectionName: 'components_shared_quizzes';
+  info: {
+    description: '';
+    displayName: 'quiz';
+    icon: 'bulletList';
+  };
+  attributes: {
+    json: Schema.Attribute.JSON & Schema.Attribute.Required;
+  };
+}
+
 export interface SharedQuote extends Struct.ComponentSchema {
   collectionName: 'components_shared_quotes';
   info: {
@@ -79,6 +91,7 @@ declare module '@strapi/strapi' {
     export interface ComponentSchemas {
       'shared.featured': SharedFeatured;
       'shared.media': SharedMedia;
+      'shared.quiz': SharedQuiz;
       'shared.quote': SharedQuote;
       'shared.rich-text': SharedRichText;
       'shared.seo': SharedSeo;

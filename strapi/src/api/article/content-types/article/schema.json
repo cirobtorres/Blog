@@ -53,7 +53,8 @@
         "shared.quote",
         "shared.rich-text",
         "shared.slider",
-        "shared.featured"
+        "shared.featured",
+        "shared.quiz"
       ]
     },
     "tags": {

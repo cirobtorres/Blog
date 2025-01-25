@@ -1,10 +1,12 @@
 "use server";
 
-import Image from "next/image";
 import {
   ParseRichTextBlocks,
   ParseFeaturedBlocks,
-  ComponentSharedSlider,
+  ParseQuizBlocks,
+  ParseQuoteBlocks,
+  ParseSliderBlocks,
+  ParseMediaBlocks,
 } from "./ParseBlocks";
 import highlightPreBlocks from "../../../utils/highlight";
 import convertMarkdowToHtmlString from "../../../utils/markdown";
@@ -39,40 +41,22 @@ const ArticleContent = async ({ documentId, content }: ArticleContent) => {
           );
         case "ComponentSharedQuote":
           return (
-            <article
-              key={`shared.quote-${block.id}`}
-              className="w-full blog-margin blog-text blog-blockquote [&_strong]:ml-24 max-[500px]:[&_strong]:ml-4" // blog-center-content
-            >
-              <blockquote>
-                <p>{block.body}</p>
-              </blockquote>
-              <strong>— {block.title}</strong>
-            </article>
+            <ParseQuoteBlocks key={`shared.quote-${block.id}`} block={block} />
           );
         case "ComponentSharedMedia":
-          if (block.file) {
-            return (
-              <article key={`shared.media-${block.id}`} className="mb-4">
-                <figure className={"flex flex-col gap-3"}>
-                  <Image
-                    src={`http://127.0.0.1:1337${block.file.url}`}
-                    alt={block.file.alternativeText}
-                    width={block.file.width}
-                    height={block.file.height}
-                  />
-                  <figcaption className="text-xs">
-                    {block.file.caption}
-                  </figcaption>
-                </figure>
-              </article>
-            );
-          }
+          return (
+            <ParseMediaBlocks key={`shared.media-${block.id}`} block={block} />
+          );
         case "ComponentSharedSlider":
           return (
-            <ComponentSharedSlider
+            <ParseSliderBlocks
               key={`shared.slider-${block.id}`}
               block={block as SharedSlider}
             />
+          );
+        case "ComponentSharedQuiz":
+          return (
+            <ParseQuizBlocks key={`shared.quiz-${block.id}`} block={block} />
           );
         default:
           return null;

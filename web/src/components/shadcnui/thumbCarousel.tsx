@@ -12,7 +12,7 @@ const Thumb = (props: {
   const { selected, file, onClick } = props;
   return (
     <div
-      className={"transition-all duration-300 flex-[0_0_22%] aspect-square md:flex-[0_0_15%] border-[3px]".concat(
+      className={"transition-all duration-300 aspect-square flex-[0_0_22%] md:flex-[0_0_12%] size-20 border-[3px]".concat(
         selected ? " border-blog-foreground-highlight" : " border-transparent"
       )}
     >
@@ -72,8 +72,8 @@ const SliderCarousel = ({
   }, [emblaMainApi, onSelect]);
 
   return (
-    <div className="max-w-full m-auto">
-      <div className="overflow-hidden" ref={emblaMainRef}>
+    <div className="flex-1 max-w-full m-auto">
+      <div className="mb-1 overflow-hidden" ref={emblaMainRef}>
         <div className="flex ml-[calc(1rem_*_-1)] touch-pan-y">
           {files.map((file) => (
             <figure
@@ -91,9 +91,6 @@ const SliderCarousel = ({
                   className="absolute object-cover select-none"
                 />
               </div>
-              <figcaption className="text-xs line-clamp-2 my-1 h-8">
-                {file.caption}
-              </figcaption>
             </figure>
           ))}
         </div>

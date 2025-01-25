@@ -10,8 +10,8 @@
   --blog-black-lighter: 300 3% 12%;
   --blog-silver: 278 8% 80%;
   --blog-orange: 30 85% 65%;
+  --blog-orange-lighter: 30 90% 85%;
   --blog-orange-darker: 30 55% 45%;
-  --blog-orange-lighter: 30 90% 70%;
 
   /*------------------------------=====Light=====------------------------------*/
   --scrollbar-track: 0 0% 0%;
@@ -24,10 +24,15 @@
   --blog-background-backdrop: hsla(0, 0%, 87%, 0.25);
 
   --blog-foreground-readable: hsl(var(--blog-black));
-  --blog-foreground-readable-hover: hsl(var(--blog-orange));
+  --blog-foreground-readable-hover: hsl(var(--blog-black));
   --blog-foreground-highlight: hsl(var(--blog-orange));
+  --blog-foreground-highlight-lighter: hsl(var(--blog-orange-lighter));
+
+  --blog-green: hsl(144, 61%, 20%);
 
   --blog-border: hsl(0, 0%, 88%);
+  --blog-border-green: var(--blog-black);
+  --blog-border-red: var(--blog-black);
 
   --blog-pre: hsl(var(--blog-black));
   --blog-code-text: hsl(var(--blog-silver));
@@ -59,7 +64,11 @@
   --blog-foreground-readable-hover: hsl(0, 0%, 100%);
   --blog-foreground-highlight: hsl(var(--blog-orange));
 
+  --blog-green: hsl(145, 80%, 10%);
+
   --blog-border: hsl(0, 0%, 15%);
+  --blog-border-green: hsl(142, 71%, 45%);
+  --blog-border-red: hsl(0, 84%, 60%);
 
   --blog-pre: hsl(var(--blog-black));
   --blog-code-text: hsl(var(--blog-silver));

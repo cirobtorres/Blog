@@ -121,6 +121,11 @@ query Blocks($documentId: ID!) {
           height
         }
       }
+      ... on ComponentSharedQuiz {
+        __typename
+        id
+        json
+      }
     }
   }
 }`;

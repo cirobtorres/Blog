@@ -3,7 +3,8 @@ type ArticleBlocks =
   | SharedQuote
   | SharedMedia
   | SharedSlider
-  | SharedFeatured;
+  | SharedFeatured
+  | SharedQuiz;
 
 type SharedRichText = {
   __typename: "ComponentSharedRichText";
@@ -34,6 +35,15 @@ type SharedFeatured = {
   __typename: "ComponentSharedFeatured";
   id: string;
   featured: string;
+};
+
+type SharedQuiz = {
+  __typename: "ComponentSharedQuiz";
+  id: string;
+  json: {
+    opts: { alt: [key: string, boolean] }[];
+    quiz: string;
+  };
 };
 
 type SharedMediaFile = {
