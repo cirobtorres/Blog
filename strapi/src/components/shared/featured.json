@@ -9,6 +9,14 @@
   "attributes": {
     "featured": {
       "type": "richtext"
+    },
+    "title": {
+      "type": "string"
+    },
+    "codeblock": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.codeblock"
     }
   }
 }

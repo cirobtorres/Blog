@@ -3,7 +3,9 @@ import { ArticleCard } from "../Cards/ArticleCardList";
 import { Carousel, CarouselContent, CarouselItem } from "../Shadcnui/carousel";
 
 const RelatedArticles = async () => {
-  const { data: articles } = await getArticles();
+  const { data: articles } = await getArticles("createdAt:desc", null, {
+    pageSize: 5,
+  });
   return (
     <section className="border-t border-blog-border bg-blog-background-3 py-8 flex flex-col justify-center">
       <div

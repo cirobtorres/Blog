@@ -1,5 +1,19 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
+export interface SharedCodeblock extends Struct.ComponentSchema {
+  collectionName: 'components_shared_codeblocks';
+  info: {
+    description: '';
+    displayName: 'codeblock';
+    icon: 'code';
+  };
+  attributes: {
+    code: Schema.Attribute.Text & Schema.Attribute.Required;
+    filename: Schema.Attribute.String & Schema.Attribute.Required;
+    language: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 export interface SharedFeatured extends Struct.ComponentSchema {
   collectionName: 'components_shared_featureds';
   info: {
@@ -8,7 +22,9 @@ export interface SharedFeatured extends Struct.ComponentSchema {
     icon: 'message';
   };
   attributes: {
+    codeblock: Schema.Attribute.Component<'shared.codeblock', true>;
     featured: Schema.Attribute.RichText;
+    title: Schema.Attribute.String;
   };
 }
 
@@ -89,6 +105,7 @@ export interface SharedSlider extends Struct.ComponentSchema {
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
+      'shared.codeblock': SharedCodeblock;
       'shared.featured': SharedFeatured;
       'shared.media': SharedMedia;
       'shared.quiz': SharedQuiz;

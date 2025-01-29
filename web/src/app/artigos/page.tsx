@@ -24,7 +24,7 @@ export default async function ArticlesPage({
   const query = resolvedSearchParams?.query || null;
   const page = Number(resolvedSearchParams?.page) || 1;
 
-  const filter = query
+  const filters = query
     ? typeof query === "string"
       ? slugify(query)
       : slugify(query.join(" "))
@@ -32,12 +32,12 @@ export default async function ArticlesPage({
 
   const {
     data: { total: articlesCount },
-  } = await countArticles(filter);
+  } = await countArticles(filters);
 
   const pageSize = 2;
   const lastPage = Math.ceil(articlesCount / pageSize);
 
-  const { data: articleList } = await getArticles("createdAt:desc", filter, {
+  const { data: articleList } = await getArticles("createdAt:desc", filters, {
     page: page,
     pageSize,
   });
@@ -58,7 +58,6 @@ export default async function ArticlesPage({
   );
 }
 
-// const ArticlesList = ({ articles }: { articles: ArticleCard[] }) => {
 const ArticlesList = ({ articles }: { articles: ArticleCard[] }) => {
   return (
     articles && (

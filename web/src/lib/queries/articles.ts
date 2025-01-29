@@ -89,6 +89,7 @@ query Blocks($documentId: ID!) {
       ... on ComponentSharedFeatured {
         __typename
         id
+        title
         featured
       }
       ... on ComponentSharedQuote {
@@ -125,6 +126,13 @@ query Blocks($documentId: ID!) {
         __typename
         id
         json
+      }
+      ... on ComponentSharedCodeblock {
+        __typename
+        id
+        filename
+        language
+        code
       }
     }
   }

@@ -54,7 +54,8 @@
         "shared.rich-text",
         "shared.slider",
         "shared.featured",
-        "shared.quiz"
+        "shared.quiz",
+        "shared.codeblock"
       ]
     },
     "tags": {

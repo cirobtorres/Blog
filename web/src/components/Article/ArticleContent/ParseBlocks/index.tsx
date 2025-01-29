@@ -1,11 +1,13 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
-import { FaCheck, FaQuestion } from "react-icons/fa";
+import { FaQuestion } from "react-icons/fa";
 import * as cheerio from "cheerio";
 import CopyButton from "./CopyButton";
 import SliderCarousel from "../../../Shadcnui/thumbCarousel";
+import QuizObjects from "./QuizObject";
+import hljs from "highlight.js";
+import { PencilLine } from "lucide-react";
 
 const ParseRichTextBlocks = ({ html }: { html: string }) => {
   const $ = cheerio.load(html);
@@ -76,11 +78,14 @@ const ParseRichTextBlocks = ({ html }: { html: string }) => {
 
     return finalBlock.tagType === "PRE" ? (
       <article key={finalBlock.id} className="w-full relative">
+        <div className="flex items-center relative h-12 w-full px-6 border-t border-x border-blog-border bg-[var(--blog-pre)]">
+          <span className="text-sm text-[#808080]">Hello World</span>
+          <CopyButton htmlToRender={finalBlock.htmlToRender} />
+        </div>
         <div
           dangerouslySetInnerHTML={{ __html: finalBlock.htmlToRender }}
           className="blog-center-content blog-margin blog-text blog-code [&_*]:scrollbar"
         />
-        <CopyButton htmlToRender={finalBlock.htmlToRender} />
       </article>
     ) : (
       <article
@@ -98,9 +103,56 @@ const ParseRichTextBlocks = ({ html }: { html: string }) => {
   });
 };
 
-const ParseFeaturedBlocks = ({ html }: { html: string }) => {
+const ParseCodeBlocks = ({
+  block: { id, filename, language, code },
+}: {
+  block: CodeBlock;
+}) => {
+  const highlightedCode = hljs.highlight(code.trim(), {
+    language,
+  }).value;
+
+  const lines = highlightedCode.split("\n");
+
+  const numberedLines = lines
+    .map((_, index) => {
+      return `<span className="w-full">${index + 1}</span>`;
+    })
+    .join("");
+
+  return (
+    <article key={id} className="w-full relative">
+      <div className="flex items-center relative h-12 w-full px-6 border-t border-x border-blog-border bg-[var(--blog-pre)]">
+        <span className="text-sm text-[#808080]">{filename}</span>
+        <CopyButton htmlToRender={highlightedCode} />
+      </div>
+      <pre className="flex flex-row blog-center-content blog-code scrollbar">
+        <div
+          dangerouslySetInnerHTML={{ __html: numberedLines }}
+          className="flex flex-col [&_span]:w-8 py-2 px-4 text-sm text-[#808080] [&_span]:select-none [&_span]:text-right border-r border-blog-border pointer-events-auto"
+        />
+        <code
+          className={`language-${language} w-full text-sm py-2 px-6`}
+          dangerouslySetInnerHTML={{ __html: highlightedCode }}
+        />
+      </pre>
+    </article>
+  );
+};
+
+const ParseFeaturedBlocks = ({
+  html,
+  title,
+}: {
+  html: string;
+  title: string;
+}) => {
   return (
     <article className="blog-featured">
+      <p className="flex items-center gap-3 text-2xl font-extrabold text-blog-foreground-highlight mb-4">
+        <PencilLine />
+        {title}
+      </p>
       <ParseRichTextBlocks html={html} />
     </article>
   );
@@ -118,10 +170,13 @@ const ParseQuizBlocks = ({ block }: { block: SharedQuiz }) => {
   return (
     <article className="relative max-w-[700px] mx-auto mt-20">
       <FaQuestion className="absolute -top-6 left-1/2 -translate-x-1/2 size-12 p-2 rounded-full outline outline-2 outline-offset-4 outline-blog-foreground-highlight ring-2 ring-offset-[16px] ring-offset-blog-background-1 ring-blog-foreground-highlight bg-blog-foreground-highlight text-blog-foreground-readable-hover" />
-      <div className="blog-heading mb-4">
-        <h2 id={`shared.quiz-${block.id}`} className="pt-12 text-center">
+      <div className="mb-4">
+        <p
+          id={`momento-quiz-${block.id}`}
+          className="text-4xl font-extrabold pt-12 text-center"
+        >
           Momento Quiz!
-        </h2>
+        </p>
       </div>
       <div className="text-sm text-[#808080] mx-20 mb-4">
         <p>
@@ -133,152 +188,6 @@ const ParseQuizBlocks = ({ block }: { block: SharedQuiz }) => {
         <QuizObjects key={index} block={bl} />
       ))}
     </article>
-  );
-};
-
-const QuizObjects = ({ block }: { block: Quiz }) => {
-  const [checked, setChecked] = useState<[number, boolean] | []>([]); // Option is clicked (selected) but not yet confirmed with a button click
-  const [selected, setSelected] = useState<boolean>(false); // Option is confirmed
-  const [isCorrect, setIsCorrect] = useState<boolean | null>(null); // If the correct option was chosen
-  const [choosedWrong, setChoosedWrong] = useState<number | null>(null); // Index of the correct option
-  const chars = ["A", "B", "C", "D"];
-
-  const handleSelect = () => {
-    if (checked.length > 0) {
-      setSelected(true);
-      setIsCorrect(checked[1] || null);
-      const indexOfCorrectOption = block.opts
-        .map((opt) => opt.alt[1])
-        .indexOf(true);
-      setChoosedWrong(indexOfCorrectOption);
-
-      const quizKey = `quiz-${block.key}`;
-      sessionStorage.setItem(`${quizKey}-checked`, JSON.stringify(checked));
-      sessionStorage.setItem(`${quizKey}-selected`, JSON.stringify(true));
-      sessionStorage.setItem(
-        `${quizKey}-isCorrect`,
-        JSON.stringify(checked[1] || null)
-      );
-      sessionStorage.setItem(
-        `${quizKey}-indexOfCorrectOption`,
-        JSON.stringify(indexOfCorrectOption)
-      );
-    }
-  };
-
-  useEffect(() => {
-    const quizKey = `quiz-${block.key}`;
-    const sessionChecked = sessionStorage.getItem(`${quizKey}-checked`);
-    const sessionSelected = sessionStorage.getItem(`${quizKey}-selected`);
-    const sessionIsCorrect = sessionStorage.getItem(`${quizKey}-isCorrect`);
-    const sessionIndexOfCorrectOption = sessionStorage.getItem(
-      `${quizKey}-indexOfCorrectOption`
-    );
-
-    if (
-      sessionChecked &&
-      sessionSelected &&
-      sessionIsCorrect &&
-      sessionIndexOfCorrectOption
-    ) {
-      setChecked(JSON.parse(sessionChecked));
-      setSelected(JSON.parse(sessionSelected));
-      setIsCorrect(JSON.parse(sessionIsCorrect));
-      setChoosedWrong(JSON.parse(sessionIndexOfCorrectOption));
-    }
-  }, [block.key]);
-
-  return (
-    <div className="flex flex-col items-center gap-8 border border-blog-border rounded-3xl p-8 bg-blog-background-2 shadow-lg mb-10">
-      <p className="">{block.quiz}</p>
-      <ul className="w-full grid grid-cols-1 gap-1">
-        {block.opts.map((opt, index: number) => (
-          <li key={index}>
-            <button
-              onClick={() => setChecked([index, opt.alt[1]])}
-              className={`w-full flex items-center gap-4 px-3 py-2 text-sm border transition-all duration-500 bg-blog-background-2 group${
-                !selected && " hover:bg-blog-background-1"
-              }`}
-              disabled={selected}
-              style={{
-                borderColor:
-                  selected && isCorrect && checked[0] === index // Correctly chosen
-                    ? "var(--blog-border-green)"
-                    : selected && !isCorrect && checked[0] === index // Wrongly chosen
-                    ? "var(--blog-border-red)"
-                    : selected && !isCorrect && choosedWrong === index // Wrongly chosen (highlight correct option)
-                    ? "var(--blog-border-green)"
-                    : !selected && checked[0] === index // Highlight borders before confirm
-                    ? "var(--blog-foreground-highlight)"
-                    : "var(--blog-border)",
-                backgroundColor:
-                  selected && isCorrect && checked[0] === index
-                    ? "var(--blog-green)"
-                    : selected && !isCorrect && checked[0] === index
-                    ? "#450a0a"
-                    : choosedWrong === index
-                    ? "var(--blog-green)"
-                    : checked[0] === index
-                    ? "var(--blog-background-1)"
-                    : "",
-              }}
-            >
-              <p className="flex items-center justify-center shrink-0 rounded-full size-8 font-extrabold text-blog-foreground-readable-hover bg-blog-foreground-highlight">
-                {chars[index]}
-              </p>
-              <p
-                className="truncate transition-all duration-500 group-hover:text-blog-foreground-readable-hover"
-                style={{
-                  color:
-                    checked[0] === index
-                      ? "var(--blog-foreground-readable-hover)"
-                      : "",
-                }}
-              >
-                {opt.alt[0]}
-              </p>
-            </button>
-          </li>
-        ))}
-      </ul>
-      <button
-        className="w-[205px] flex items-center gap-2 border px-8 py-[9px] transition-all duration-500 bg-blog-background-2 hover:bg-blog-background-1"
-        onClick={handleSelect}
-        disabled={selected}
-        style={{
-          borderColor: selected
-            ? isCorrect
-              ? "var(--blog-border-green)"
-              : "var(--blog-border-red)"
-            : "var(--blog-border)",
-          backgroundColor: selected
-            ? isCorrect
-              ? "var(--blog-green)"
-              : "#450a0a"
-            : "",
-        }}
-      >
-        {!selected ? (
-          <p className="w-full transition-all duration-500 text-sm hover:text-blog-foreground-readable-hover">
-            Responder
-          </p>
-        ) : isCorrect ? (
-          <>
-            <FaCheck className="text-green-500" />
-            <p className="text-sm text-blog-foreground-readable-hover">
-              Resposta correta!
-            </p>
-          </>
-        ) : (
-          <>
-            <FaCheck className="text-red-500" />
-            <p className="text-sm text-blog-foreground-readable-hover">
-              Resposta errada
-            </p>
-          </>
-        )}
-      </button>
-    </div>
   );
 };
 
@@ -315,6 +224,7 @@ const ParseMediaBlocks = ({ block }: { block: SharedMedia }) => {
 
 export {
   ParseRichTextBlocks,
+  ParseCodeBlocks,
   ParseFeaturedBlocks,
   ParseSliderBlocks,
   ParseQuizBlocks,

@@ -77,7 +77,7 @@ export default {
       },
       gridTemplateColumns: {
         // SHADCN/UI==========--------------------------------------------------
-        article: "300px minmax(0px,1fr) 300px",
+        article: "minmax(0,300px) minmax(500px,1fr) minmax(0,300px)",
         "article-1024": "300px minmax(0px,1fr)",
         "article-800": "minmax(0px,1fr)",
       },

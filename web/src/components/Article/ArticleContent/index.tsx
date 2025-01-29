@@ -7,6 +7,7 @@ import {
   ParseSliderBlocks,
   ParseMediaBlocks,
   ParseQuizBlocks,
+  ParseCodeBlocks,
 } from "./ParseBlocks";
 import highlightPreBlocks from "../../../utils/highlight";
 import convertMarkdowToHtmlString from "../../../utils/markdown";
@@ -31,11 +32,19 @@ const ArticleContent = async ({ documentId, content }: ArticleContent) => {
               html={richTextToRender}
             />
           );
+        case "ComponentSharedCodeblock":
+          return (
+            <ParseCodeBlocks
+              key={`shared.codeblock-${block.id}`}
+              block={block}
+            />
+          );
         case "ComponentSharedFeatured":
           const featuredToRender = await convertToHTML(block.featured);
           return (
             <ParseFeaturedBlocks
               key={`shared.featured-${block.id}`}
+              title={block.title}
               html={featuredToRender}
             />
           );

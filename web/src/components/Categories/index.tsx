@@ -51,7 +51,7 @@ const Subcategories = ({ subCategories }: { subCategories: SubCategory[] }) => {
     <article
       className="max-w-screen-2xl mx-auto mb-10" // grid grid-cols-article max-lg:grid-cols-article-800 items-center
     >
-      <ul className="flex justify-center flex-wrap gap-6 col-start-2 max-lg:col-start-1 px-40">
+      <ul className="max-w-[500px] mx-auto flex flex-wrap gap-6 justify-center items-center px-4">
         {subCategories.map((subCategory) => (
           <li
             key={subCategory.documentId}

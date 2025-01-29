@@ -17,15 +17,26 @@ function highlightPreBlocks(htmlContent: string) {
   const processedHtml = htmlContent.replace(
     preCodeRegex,
     (match, language, codeContent) => {
-      // Example: match = <pre><code class="language-typescript">"use client"; export default function ...</code></pre>
-      // Example: language = typescript
-      // Example: language = "use client"; export default function ...
       try {
         const highlightedCode = hljs.highlight(codeContent.trim(), {
           language,
         }).value;
+
         const decodedCode = decodeHtmlEntities(highlightedCode);
-        return `<pre><code class="language-${language}">${decodedCode}</code></pre>`;
+
+        const lines = decodedCode.split("\n");
+
+        const numberedLines = lines
+          .map((_, index) => {
+            return `<div class="line">${index + 1}</div>`;
+          })
+          .join("");
+
+        const lineWrapper = `<div class="line-wrapper">${numberedLines}</div>`;
+
+        const content = `<code class="language-${language}">${decodedCode}</code>`;
+
+        return `<pre><div class="code-content">${lineWrapper}${content}</div></pre>`;
       } catch (error) {
         // Returns original non formated codeblock in case there is an error
         console.error(

@@ -14,9 +14,10 @@ const CopyButton = ({ htmlToRender }: { htmlToRender: string }) => {
   const [disable, setDisable] = useState(false);
 
   const handleCopy = () => {
-    const codeContent = new DOMParser()
-      .parseFromString(htmlToRender, "text/html")
-      .querySelector("code")?.textContent;
+    const codeContent = new DOMParser().parseFromString(
+      htmlToRender,
+      "text/html"
+    ).body.innerText;
 
     if (codeContent) {
       navigator.clipboard.writeText(codeContent);
@@ -36,7 +37,7 @@ const CopyButton = ({ htmlToRender }: { htmlToRender: string }) => {
       <Tooltip>
         <TooltipTrigger asChild>
           <button
-            className={`absolute right-2 top-2 size-10 rounded-xl transition-colors duration-500 dark text-blog-foreground-readable ${
+            className={`absolute right-2 top-1/2 -translate-y-1/2 size-8 rounded-lg transition-colors duration-500 dark text-blog-foreground-readable ${
               !copied
                 ? "hover:bg-blog-border hover:text-blog-foreground-readable-hover"
                 : "bg-blog-border"
@@ -51,18 +52,18 @@ const CopyButton = ({ htmlToRender }: { htmlToRender: string }) => {
                   : "invisible scale-100 opacity-0"
               }`}
             >
-              <p>Copiado!</p>
+              <p className="text-xs">Copiado!</p>
             </div>
             <div className="relative w-full">
               <Check
-                className={`absolute size-5 left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 ${
+                className={`absolute size-4 left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 ${
                   copied
                     ? " visible animate-clip-pop-up-and-bounce"
                     : " invisible"
                 }`}
               />
               <Copy
-                className={`absolute size-5 left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 ${
+                className={`absolute size-4 left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 ${
                   !copied ? "visible" : "invisible"
                 }`}
               />

@@ -4,7 +4,8 @@ type ArticleBlocks =
   | SharedMedia
   | SharedSlider
   | SharedFeatured
-  | SharedQuiz;
+  | SharedQuiz
+  | CodeBlock;
 
 type SharedRichText = {
   __typename: "ComponentSharedRichText";
@@ -34,6 +35,7 @@ type SharedSlider = {
 type SharedFeatured = {
   __typename: "ComponentSharedFeatured";
   id: string;
+  title: string;
   featured: string;
 };
 
@@ -41,6 +43,14 @@ type SharedQuiz = {
   __typename: "ComponentSharedQuiz";
   id: string;
   json: Record<string, Quiz>; // Dynamic keys
+};
+
+type CodeBlock = {
+  __typename: "ComponentSharedCodeblock";
+  id: string;
+  code: string;
+  language: string;
+  filename: string;
 };
 
 type Quiz = {
