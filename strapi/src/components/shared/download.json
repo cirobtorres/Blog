@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_shared_downloads",
+  "info": {
+    "displayName": "Download",
+    "icon": "attachment"
+  },
+  "options": {},
+  "attributes": {
+    "uuid": {
+      "type": "customField",
+      "required": true,
+      "customField": "plugin::strapi-advanced-uuid.uuid"
+    },
+    "files": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": true
+    }
+  }
+}

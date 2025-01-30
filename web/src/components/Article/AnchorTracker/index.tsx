@@ -24,7 +24,7 @@ const AnchorTracker = ({ documentId }: { documentId: string }) => {
       ? "pl-9"
       : Object.values(text)[0].match(/<h[5][^>]*>(.*?)<\/h[5]>/gi)
       ? "pl-12"
-      : "pl-15";
+      : "pl-[3.75rem]";
   };
 
   useEffect(() => {

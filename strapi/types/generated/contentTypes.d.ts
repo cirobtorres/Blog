@@ -382,7 +382,7 @@ export interface ApiAboutAbout extends Struct.SingleTypeSchema {
   };
   attributes: {
     blocks: Schema.Attribute.DynamicZone<
-      ['shared.media', 'shared.quote', 'shared.rich-text', 'shared.slider']
+      ['shared.media', 'shared.rich-text', 'shared.slider']
     >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -413,13 +413,11 @@ export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
     author: Schema.Attribute.Relation<'manyToOne', 'api::author.author'>;
     blocks: Schema.Attribute.DynamicZone<
       [
-        'shared.media',
-        'shared.quote',
         'shared.rich-text',
         'shared.slider',
-        'shared.featured',
         'shared.quiz',
-        'shared.codeblock',
+        'shared.details',
+        'shared.download',
       ]
     >;
     category: Schema.Attribute.Relation<'manyToOne', 'api::category.category'>;

@@ -1,23 +1,14 @@
 type ArticleBlocks =
   | SharedRichText
-  | SharedQuote
   | SharedMedia
   | SharedSlider
-  | SharedFeatured
   | SharedQuiz
-  | CodeBlock;
+  | SharedDetails;
 
 type SharedRichText = {
   __typename: "ComponentSharedRichText";
   id: string;
   body: string;
-};
-
-type SharedQuote = {
-  __typename: "ComponentSharedQuote";
-  id: string;
-  body: string;
-  title: string;
 };
 
 type SharedMedia = {
@@ -32,25 +23,18 @@ type SharedSlider = {
   files: SharedMediaFile[];
 };
 
-type SharedFeatured = {
-  __typename: "ComponentSharedFeatured";
-  id: string;
-  title: string;
-  featured: string;
-};
-
 type SharedQuiz = {
   __typename: "ComponentSharedQuiz";
   id: string;
   json: Record<string, Quiz>; // Dynamic keys
 };
 
-type CodeBlock = {
-  __typename: "ComponentSharedCodeblock";
+type SharedDetails = {
+  __typename: "ComponentSharedDetails";
   id: string;
-  code: string;
-  language: string;
-  filename: string;
+  collapsible: boolean;
+  title: string;
+  body: string;
 };
 
 type Quiz = {

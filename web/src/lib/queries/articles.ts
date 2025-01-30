@@ -86,29 +86,18 @@ query Blocks($documentId: ID!) {
         id
         body
       }
-      ... on ComponentSharedFeatured {
+      ... on ComponentSharedDetails {
         __typename
         id
+        collapsible
         title
-        featured
-      }
-      ... on ComponentSharedQuote {
-        __typename
-        id
+        svg
         body
-        title
       }
-      ... on ComponentSharedMedia {
+      ... on ComponentSharedQuiz {
         __typename
         id
-        file {
-          documentId
-          url
-          alternativeText
-          caption
-          width
-          height
-        }
+        json
       }
       ... on ComponentSharedSlider {
         __typename
@@ -121,18 +110,6 @@ query Blocks($documentId: ID!) {
           width
           height
         }
-      }
-      ... on ComponentSharedQuiz {
-        __typename
-        id
-        json
-      }
-      ... on ComponentSharedCodeblock {
-        __typename
-        id
-        filename
-        language
-        code
       }
     }
   }

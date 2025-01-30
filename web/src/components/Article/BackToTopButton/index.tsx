@@ -10,11 +10,11 @@ import {
 } from "../../Shadcnui/tooltip";
 
 const BackToTopButton = ({
-  contentId,
+  documentId,
   diameter = 75,
   strokeWidth = 7,
 }: {
-  contentId: string;
+  documentId?: string;
   diameter?: number;
   strokeWidth?: number;
 }) => {
@@ -24,11 +24,13 @@ const BackToTopButton = ({
 
   useEffect(() => {
     const returnToTopListener = () => {
-      const headerHeight = 400 + 480 + 80 + 16;
+      const headerHeight = documentId ? 400 + 480 + 80 + 16 : 0;
       const scrollTop = window.scrollY;
       const correctedScrollTop =
         scrollTop - headerHeight < 0 ? 0 : scrollTop - headerHeight;
-      const elementHeight = document.getElementById(contentId)?.scrollHeight;
+      const elementHeight = document.getElementById(
+        documentId || "body"
+      )?.scrollHeight;
       const progressCircle = document.getElementById("progress-circle");
       const progressCircleBlur = document.getElementById(
         "progress-circle-blur"
@@ -51,7 +53,7 @@ const BackToTopButton = ({
     return () => {
       window.removeEventListener("scroll", returnToTopListener);
     };
-  }, [contentId]);
+  }, [documentId]);
 
   return (
     <div

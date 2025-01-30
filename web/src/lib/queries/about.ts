@@ -22,11 +22,6 @@ query About {
           height
         }
       }
-      ... on ComponentSharedQuote {
-        id
-        body
-        title
-      }
       ... on ComponentSharedSlider {
         id
         files {

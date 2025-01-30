@@ -37,7 +37,7 @@ const CopyButton = ({ htmlToRender }: { htmlToRender: string }) => {
       <Tooltip>
         <TooltipTrigger asChild>
           <button
-            className={`absolute right-2 top-1/2 -translate-y-1/2 size-8 rounded-lg transition-colors duration-500 dark text-blog-foreground-readable ${
+            className={`absolute right-2 top-1/2 -translate-y-1/2 size-8 rounded-lg transition-colors duration-500 dark text-blog-foreground-readable border border-blog-border ${
               !copied
                 ? "hover:bg-blog-border hover:text-blog-foreground-readable-hover"
                 : "bg-blog-border"

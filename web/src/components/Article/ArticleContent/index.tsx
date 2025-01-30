@@ -2,20 +2,17 @@
 
 import {
   ParseRichTextBlocks,
-  ParseFeaturedBlocks,
-  ParseQuoteBlocks,
   ParseSliderBlocks,
-  ParseMediaBlocks,
   ParseQuizBlocks,
-  ParseCodeBlocks,
+  ParseDetails,
 } from "./ParseBlocks";
-import highlightPreBlocks from "../../../utils/highlight";
 import convertMarkdowToHtmlString from "../../../utils/markdown";
+import highlightPreBlocks from "../../../utils/highlight";
 import { addIdsToHeadings } from "../../../utils/anchors";
 
 const convertToHTML = async (blocks: string) => {
   const contentHtml = await convertMarkdowToHtmlString(blocks);
-  const processedHtml = highlightPreBlocks(contentHtml);
+  const processedHtml = await highlightPreBlocks(contentHtml);
   const htmlToRender = addIdsToHeadings(processedHtml);
   return htmlToRender;
 };
@@ -25,36 +22,28 @@ const ArticleContent = async ({ documentId, content }: ArticleContent) => {
     content.map(async (block) => {
       switch (block.__typename) {
         case "ComponentSharedRichText":
-          const richTextToRender = await convertToHTML(block.body);
+          const richTextToRenderA = await convertToHTML(block.body);
           return (
             <ParseRichTextBlocks
               key={`shared.rich-text-${block.id}`}
-              html={richTextToRender}
+              body={richTextToRenderA}
             />
           );
-        case "ComponentSharedCodeblock":
+        case "ComponentSharedDetails":
+          const { id, title, collapsible, body } = block;
+          const richTextToRenderB = await convertToHTML(body);
           return (
-            <ParseCodeBlocks
-              key={`shared.codeblock-${block.id}`}
-              block={block}
+            <ParseDetails
+              key={`shared.details-${id}`}
+              id={id}
+              collapsible={collapsible}
+              title={title}
+              body={richTextToRenderB}
             />
           );
-        case "ComponentSharedFeatured":
-          const featuredToRender = await convertToHTML(block.featured);
+        case "ComponentSharedQuiz":
           return (
-            <ParseFeaturedBlocks
-              key={`shared.featured-${block.id}`}
-              title={block.title}
-              html={featuredToRender}
-            />
-          );
-        case "ComponentSharedQuote":
-          return (
-            <ParseQuoteBlocks key={`shared.quote-${block.id}`} block={block} />
-          );
-        case "ComponentSharedMedia":
-          return (
-            <ParseMediaBlocks key={`shared.media-${block.id}`} block={block} />
+            <ParseQuizBlocks key={`shared.quiz-${block.id}`} block={block} />
           );
         case "ComponentSharedSlider":
           return (
@@ -62,10 +51,6 @@ const ArticleContent = async ({ documentId, content }: ArticleContent) => {
               key={`shared.slider-${block.id}`}
               block={block as SharedSlider}
             />
-          );
-        case "ComponentSharedQuiz":
-          return (
-            <ParseQuizBlocks key={`shared.quiz-${block.id}`} block={block} />
           );
         default:
           return null;

@@ -1,0 +1,50 @@
+{
+  "collectionName": "components_shared_quiz_questions",
+  "info": {
+    "displayName": "QuizQuestions",
+    "icon": "bulletList",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "uuid": {
+      "type": "customField",
+      "required": true,
+      "customField": "plugin::strapi-advanced-uuid.uuid"
+    },
+    "question": {
+      "type": "string"
+    },
+    "optionA": {
+      "type": "string",
+      "required": true
+    },
+    "isCorrectOptionA": {
+      "type": "boolean",
+      "default": true
+    },
+    "optionB": {
+      "type": "string",
+      "required": true
+    },
+    "isCorrectOptionB": {
+      "type": "boolean"
+    },
+    "optionC": {
+      "type": "string",
+      "required": true
+    },
+    "isCorrectOptionC": {
+      "type": "boolean",
+      "default": false
+    },
+    "optionD": {
+      "type": "string",
+      "required": true
+    },
+    "isCorrectOptionD": {
+      "type": "boolean",
+      "default": false
+    }
+  }
+}

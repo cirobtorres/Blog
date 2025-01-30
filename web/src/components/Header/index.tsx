@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import ProgressBar from "./ProgressBar";
 import HeaderContent from "./HeaderContent";
 
-const FloatingHeader = ({ documentId }: { documentId: string }) => {
+const FloatingHeader = ({ documentId }: { documentId?: string }) => {
   const headerRef = useRef<HTMLElement>(null);
 
   const hideNavbarListener = () => {

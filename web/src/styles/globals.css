@@ -1,5 +1,4 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
-@import "highlight.js/styles/github-dark.css";
 
 @tailwind base;
 @tailwind components;
@@ -34,19 +33,22 @@
   --blog-border-green: var(--blog-black);
   --blog-border-red: var(--blog-black);
 
-  --blog-pre: hsl(var(--blog-black));
+  /* --blog-pre: hsl(240, 6%, 7%); */
+  --blog-pre: hsl(0, 0%, 12%);
   --blog-code-text: hsl(var(--blog-silver));
-
   --blog-code-keyword: var(--blog-orange);
-  --blog-code-title-class_: var(--blog-orange-darker);
-  --blog-code-title-function_: 250 60% 80%;
+  --blog-code-class: var(--blog-orange-darker);
+  /* --blog-code-function: 250 60% 80%; */
+  --blog-code-tag-css: 60 42% 76%;
+  /* --blog-code-tag-css: 41 53% 67%; */
+  --blog-code-function: 190 100% 80%;
+  --blog-code-readable: 278 8% 80%;
   --blog-code-literal: 160 66% 55%;
-  --blog-code-built-in: 160 66% 55%;
-  --blog-code-params: 190 100% 80%;
-  --blog-code-string: 190 100% 80%;
-  --blog-code-number: 160 66% 55%;
+  --blog-code-type: 160 66% 55%;
+  --blog-code-string: 101 29% 47%;
   --blog-code-comment: 0 0% 50%;
   --blog-code-regexp: 350 80% 58%;
+  --blog-code-regexp-lighter: 330 65% 57%;
 }
 
 .dark {
@@ -69,20 +71,6 @@
   --blog-border: hsl(0, 0%, 15%);
   --blog-border-green: hsl(142, 71%, 45%);
   --blog-border-red: hsl(0, 84%, 60%);
-
-  --blog-pre: hsl(var(--blog-black));
-  --blog-code-text: hsl(var(--blog-silver));
-
-  --blog-code-keyword: var(--blog-orange);
-  --blog-code-title-class_: var(--blog-orange-darker);
-  --blog-code-title-function_: 250 60% 80%;
-  --blog-code-literal: 160 66% 55%;
-  --blog-code-built-in: 160 66% 55%;
-  --blog-code-params: 190 100% 80%;
-  --blog-code-string: 190 100% 80%;
-  --blog-code-number: 160 66% 55%;
-  --blog-code-comment: 0 0% 50%;
-  --blog-code-regexp: 350 80% 58%;
 }
 
 * {
@@ -127,14 +115,20 @@ input[type="search"]::-webkit-search-results-decoration {
 
   .scrollbar::-webkit-scrollbar-track {
     background: hsl(var(--scrollbar-track));
+    border-radius: 3px;
   }
 
   .scrollbar::-webkit-scrollbar-thumb {
     background: hsl(var(--scrollbar-thumb));
+    border-radius: 3px;
   }
 
   .scrollbar::-webkit-scrollbar-thumb:hover {
     background: hsl(var(--scrollbar-thumb-hover));
+  }
+
+  .scrollbar::-webkit-scrollbar-corner {
+    background: var(--blog-pre);
   }
 
   /*------------------------------Hide-Scrollbar------------------------------*/
@@ -184,6 +178,10 @@ input[type="search"]::-webkit-search-results-decoration {
       h4 {
         font-size: 1.5rem;
       }
+      h5,
+      h6 {
+        font-size: 1rem;
+      }
     }
   }
 
@@ -197,11 +195,16 @@ input[type="search"]::-webkit-search-results-decoration {
     h1,
     h2,
     h3,
-    h4 {
+    h4,
+    h5,
+    h6 {
       padding-top: 3rem; /* To align the top of each heading with the bottom of the header when navigating with anchors */
       margin-bottom: 1rem;
     }
     p {
+      margin-bottom: 1rem;
+    }
+    img {
       margin-bottom: 1rem;
     }
   }
@@ -280,7 +283,6 @@ input[type="search"]::-webkit-search-results-decoration {
     overflow: hidden;
     padding-left: 2.5rem;
     padding-right: 1.5em;
-    margin-bottom: 1rem;
   }
 
   .blog-blockquote blockquote p {
@@ -313,16 +315,6 @@ input[type="search"]::-webkit-search-results-decoration {
     color: inherit;
   }
 
-  @media (min-width: 500px) {
-    .blog-blockquote blockquote {
-      padding-left: 7.5rem;
-    }
-
-    .blog-blockquote blockquote p:first-child::before {
-      left: 5.75rem;
-    }
-  }
-
   /*------------------------------Code------------------------------*/
   .blog-code {
     display: flex;
@@ -331,14 +323,12 @@ input[type="search"]::-webkit-search-results-decoration {
     color: var(--blog-code-text);
     border: 1px solid transparent;
     margin: 0 0 1rem 0;
-    /* padding: 1rem 1.5rem; */
     line-height: 1.5rem;
     direction: ltr;
     text-align: left;
     overflow: auto hidden;
     border: 1px solid var(--blog-border);
 
-    /**/
     .line-wrapper {
       pointer-events: auto;
       padding: 0.5rem 1.5rem;
@@ -347,64 +337,13 @@ input[type="search"]::-webkit-search-results-decoration {
     }
 
     .line {
-      -webkit-user-select: none;
-      user-select: none;
+      /* -webkit-user-select: none; */
+      /* user-select: none; */
+      position: relative;
       text-align: right;
       width: 1rem;
       font-size: 12px;
       color: hsl(0, 0%, 50%);
-    }
-    /**/
-    .hljs-variable.language_ {
-      color: hsl(var(--blog-code-string));
-    }
-
-    .hljs-title.class_ {
-      color: hsl(var(--blog-code-title-class_));
-    }
-
-    .hljs-title.function_ {
-      color: hsl(var(--blog-code-title-function_));
-    }
-
-    .hljs-literal {
-      color: hsl(var(--blog-code-literal));
-    }
-
-    .hljs-params {
-      color: hsl(var(--blog-code-params));
-    }
-
-    .hljs-keyword {
-      color: hsl(var(--blog-code-keyword));
-    }
-
-    .hljs-string {
-      color: hsl(var(--blog-code-string));
-    }
-
-    .hljs-subst .hljs-built_in {
-      color: inherit;
-    }
-
-    .hljs-regexp {
-      color: hsl(var(--blog-code-regexp));
-    }
-
-    .hljs-number {
-      color: hsl(var(--blog-code-number));
-    }
-
-    .hljs-built_in {
-      color: hsl(var(--blog-code-built-in));
-    }
-
-    .hljs-attr {
-      color: inherit;
-    }
-
-    .hljs-comment {
-      color: hsl(var(--blog-code-comment));
     }
   }
 }

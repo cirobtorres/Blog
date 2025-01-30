@@ -10,6 +10,12 @@
     "json": {
       "type": "json",
       "required": true
+    },
+    "QuizBlocks": {
+      "displayName": "QuizBlocks",
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.quiz-blocks"
     }
   }
 }

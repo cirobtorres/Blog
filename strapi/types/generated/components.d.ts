@@ -1,30 +1,34 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
-export interface SharedCodeblock extends Struct.ComponentSchema {
-  collectionName: 'components_shared_codeblocks';
+export interface SharedDetails extends Struct.ComponentSchema {
+  collectionName: 'components_shared_details';
   info: {
     description: '';
-    displayName: 'codeblock';
-    icon: 'code';
+    displayName: 'Details';
+    icon: 'plus';
   };
   attributes: {
-    code: Schema.Attribute.Text & Schema.Attribute.Required;
-    filename: Schema.Attribute.String & Schema.Attribute.Required;
-    language: Schema.Attribute.String & Schema.Attribute.Required;
+    body: Schema.Attribute.RichText;
+    collapsible: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    svg: Schema.Attribute.Text;
+    title: Schema.Attribute.String;
   };
 }
 
-export interface SharedFeatured extends Struct.ComponentSchema {
-  collectionName: 'components_shared_featureds';
+export interface SharedDownload extends Struct.ComponentSchema {
+  collectionName: 'components_shared_downloads';
   info: {
-    description: '';
-    displayName: 'Featured';
-    icon: 'message';
+    displayName: 'Download';
+    icon: 'attachment';
   };
   attributes: {
-    codeblock: Schema.Attribute.Component<'shared.codeblock', true>;
-    featured: Schema.Attribute.RichText;
-    title: Schema.Attribute.String;
+    files: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    >;
+    uuid: Schema.Attribute.UID &
+      Schema.Attribute.Required &
+      Schema.Attribute.CustomField<'plugin::strapi-advanced-uuid.uuid'>;
   };
 }
 
@@ -48,18 +52,44 @@ export interface SharedQuiz extends Struct.ComponentSchema {
   };
   attributes: {
     json: Schema.Attribute.JSON & Schema.Attribute.Required;
+    QuizBlocks: Schema.Attribute.Component<'shared.quiz-blocks', true>;
   };
 }
 
-export interface SharedQuote extends Struct.ComponentSchema {
-  collectionName: 'components_shared_quotes';
+export interface SharedQuizBlocks extends Struct.ComponentSchema {
+  collectionName: 'components_shared_quiz_blocks';
   info: {
-    displayName: 'Quote';
-    icon: 'indent';
+    displayName: 'QuizBlocks';
+    icon: 'dashboard';
   };
   attributes: {
-    body: Schema.Attribute.Text;
-    title: Schema.Attribute.String;
+    QuizQuestions: Schema.Attribute.Component<'shared.quiz-questions', true>;
+  };
+}
+
+export interface SharedQuizQuestions extends Struct.ComponentSchema {
+  collectionName: 'components_shared_quiz_questions';
+  info: {
+    description: '';
+    displayName: 'QuizQuestions';
+    icon: 'bulletList';
+  };
+  attributes: {
+    isCorrectOptionA: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<true>;
+    isCorrectOptionB: Schema.Attribute.Boolean;
+    isCorrectOptionC: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<false>;
+    isCorrectOptionD: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<false>;
+    optionA: Schema.Attribute.String & Schema.Attribute.Required;
+    optionB: Schema.Attribute.String & Schema.Attribute.Required;
+    optionC: Schema.Attribute.String & Schema.Attribute.Required;
+    optionD: Schema.Attribute.String & Schema.Attribute.Required;
+    question: Schema.Attribute.String;
+    uuid: Schema.Attribute.UID &
+      Schema.Attribute.Required &
+      Schema.Attribute.CustomField<'plugin::strapi-advanced-uuid.uuid'>;
   };
 }
 
@@ -68,7 +98,7 @@ export interface SharedRichText extends Struct.ComponentSchema {
   info: {
     description: '';
     displayName: 'Rich text';
-    icon: 'align-justify';
+    icon: 'pencil';
   };
   attributes: {
     body: Schema.Attribute.RichText;
@@ -105,11 +135,12 @@ export interface SharedSlider extends Struct.ComponentSchema {
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
-      'shared.codeblock': SharedCodeblock;
-      'shared.featured': SharedFeatured;
+      'shared.details': SharedDetails;
+      'shared.download': SharedDownload;
       'shared.media': SharedMedia;
       'shared.quiz': SharedQuiz;
-      'shared.quote': SharedQuote;
+      'shared.quiz-blocks': SharedQuizBlocks;
+      'shared.quiz-questions': SharedQuizQuestions;
       'shared.rich-text': SharedRichText;
       'shared.seo': SharedSeo;
       'shared.slider': SharedSlider;

@@ -49,13 +49,11 @@
     "blocks": {
       "type": "dynamiczone",
       "components": [
-        "shared.media",
-        "shared.quote",
         "shared.rich-text",
         "shared.slider",
-        "shared.featured",
         "shared.quiz",
-        "shared.codeblock"
+        "shared.details",
+        "shared.download"
       ]
     },
     "tags": {

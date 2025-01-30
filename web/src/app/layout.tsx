@@ -26,6 +26,7 @@ export default async function RootLayout({
   return (
     <html lang="pt" className="h-full" suppressHydrationWarning>
       <body
+        id="body"
         className={`${openSans.variable} h-full min-h-svh scrollbar antialiased text-blog-foreground-readable bg-blog-background-1`}
       >
         <ThemeProvider

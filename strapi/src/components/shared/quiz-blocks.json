@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_shared_quiz_blocks",
+  "info": {
+    "displayName": "QuizBlocks",
+    "icon": "dashboard"
+  },
+  "options": {},
+  "attributes": {
+    "QuizQuestions": {
+      "displayName": "QuizQuestions",
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.quiz-questions"
+    }
+  }
+}

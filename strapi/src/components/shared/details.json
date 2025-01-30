@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_shared_details",
+  "info": {
+    "displayName": "Details",
+    "icon": "plus",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "collapsible": {
+      "type": "boolean",
+      "default": false,
+      "required": false
+    },
+    "title": {
+      "type": "string"
+    },
+    "svg": {
+      "type": "text"
+    },
+    "body": {
+      "type": "richtext"
+    }
+  }
+}

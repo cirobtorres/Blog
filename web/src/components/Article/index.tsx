@@ -12,7 +12,7 @@ const Article = ({ documentId, content }: ArticleContent) => {
         <AnchorTracker documentId={documentId} />
         <ArticleContent documentId={documentId} content={content} />
         <div className="max-lg:hidden mx-auto col-start-3 max-lg:col-start-auto">
-          <BackToTopButton contentId={documentId} />
+          <BackToTopButton documentId={documentId} />
         </div>
       </div>
     </section>
