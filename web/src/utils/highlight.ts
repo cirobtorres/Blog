@@ -1,12 +1,8 @@
 "use server";
 
 import he from "he";
-import {
-  BundledLanguage,
-  BundledTheme,
-  createHighlighter,
-  HighlighterGeneric,
-} from "shiki";
+import React from "react";
+import { createHighlighter } from "shiki";
 
 // https://github.com/shikijs/textmate-grammars-themes/blob/main/packages/tm-themes/themes/dark-plus.json
 const blogTheme = {
@@ -191,20 +187,29 @@ const blogTheme = {
   ],
 };
 
-let highlighter: HighlighterGeneric<BundledLanguage, BundledTheme> | null;
+let highlighter: Awaited<ReturnType<typeof createHighlighter>> | null = null;
+
+const getCachedHighlighter = React.cache(async () => {
+  if (highlighter === null) {
+    highlighter = await await createHighlighter({
+      themes: [blogTheme],
+      langs: [
+        "html",
+        "css",
+        "java",
+        "javascript",
+        "typescript",
+        "python",
+        "plaintext",
+      ],
+    });
+  }
+
+  return highlighter;
+});
 
 function decodeHtmlEntities(str: string) {
   return he.decode(str);
-}
-
-async function getHighlighter(language: string) {
-  if (!highlighter) {
-    highlighter = await createHighlighter({
-      themes: [blogTheme],
-      langs: [language || "plaintext"], // Inclua as principais linguagens
-    });
-  }
-  return highlighter;
 }
 
 async function highlightPreBlocks(htmlContent: string) {
@@ -212,10 +217,7 @@ async function highlightPreBlocks(htmlContent: string) {
   const preCodeRegex =
     /<pre>\s*<code\s+class="language-([\w-]+)">([\s\S]*?)<\/code>\s*<\/pre>/gi;
 
-  const language =
-    [...htmlContent.matchAll(preCodeRegex)].map((m) => m[1])[0] || "plaintext";
-
-  const highlighter = await getHighlighter(language);
+  const highlighter = await getCachedHighlighter();
 
   const processedHtml = htmlContent.replace(
     preCodeRegex,

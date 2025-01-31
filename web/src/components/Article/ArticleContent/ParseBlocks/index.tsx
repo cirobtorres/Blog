@@ -233,7 +233,7 @@ const ParseDetails = ({
                 </p>
               )}
             </AccordionTrigger>
-            <AccordionContent className="overflow-hidden">
+            <AccordionContent>
               <ParseRichTextBlocks
                 key={`shared.rich-text-details-${id}`}
                 body={body}

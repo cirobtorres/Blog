@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Accordion,
   AccordionContent,
@@ -12,6 +12,7 @@ import { extractAnchors } from "../../../utils/anchors";
 
 const AnchorTracker = ({ documentId }: { documentId: string }) => {
   const [anchorList, setAnchorList] = useState<{ [key: string]: string }[]>([]);
+  const anchorListRef = useRef<HTMLDivElement>(null);
 
   const generatePaddingForSessions = (text: { [x: string]: string }) => {
     return Object.values(text)[0].match(/<h[1][^>]*>(.*?)<\/h[1]>/gi)
@@ -29,41 +30,33 @@ const AnchorTracker = ({ documentId }: { documentId: string }) => {
 
   useEffect(() => {
     const linkAnchorsListener = () => {
-      const sections: NodeListOf<HTMLHeadingElement> | undefined = document
-        .getElementById(documentId)
-        ?.querySelectorAll("h1, h2, h3, h4, h5, h6");
+      // Select article content
+      const contentElement = document.getElementById(documentId);
+      if (!contentElement) return;
+
+      // Retrieve all sections
+      const allSections: NodeListOf<HTMLHeadingElement> =
+        contentElement.querySelectorAll("h1, h2, h3, h4, h5, h6");
+
+      // Get rid of sections with children, like shadcn/ui accordion buttons nested within h3 tags. These are not supposed to be anchors
+      const sections = Array.from(allSections).filter(
+        (section) => !section.querySelector("*")
+      );
 
       let currentSectionIndex = 0;
 
       if (sections && sections.length > 0) {
         sections.forEach((section, index) => {
-          // Collects offsetTop of each header, if exists
-          const sectionTop = section.offsetTop;
-
-          // headerHeight = measurement from blog article content to the top of the page
-          // 80 pixels top padding
-          // 80 pixels bottom padding
-          // 80 pixels bottom margin
-          // 136 pixels blog-content-hero
-
-          // Minus 1 because we want the anchor color to update even when we click on it
-          // An anchor-link redirects to the exact section top
-          // With offsetTop lower by 1 pixel we make sure the section is actually lower than it really is
-          // With that the link redirects to within the actual section, not to the top of it
-          const headerHeight = 48 + 400 + 480 + 80 - 1;
-
-          // Update currentSectionIndex when changing sections
-          // Every index is a heading of any type
-          if (window.scrollY >= sectionTop + headerHeight) {
+          const sectionRect = section.getBoundingClientRect();
+          const sectionTop = sectionRect.top + window.scrollY;
+          if (window.scrollY >= sectionTop - 1) {
             currentSectionIndex = index;
           }
         });
-
-        const links = document
-          .getElementById("link-anchor-tracker")
-          ?.querySelectorAll("li a");
+        const links = anchorListRef.current?.querySelectorAll("li a");
 
         links?.forEach((link, index) => {
+          console.log(index, currentSectionIndex);
           if (index === currentSectionIndex) {
             link.setAttribute("aria-current", "page");
           } else {
@@ -74,7 +67,6 @@ const AnchorTracker = ({ documentId }: { documentId: string }) => {
     };
 
     window.addEventListener("scroll", linkAnchorsListener);
-    // cleanup function
     return () => {
       window.removeEventListener("scroll", linkAnchorsListener);
     };
@@ -104,17 +96,21 @@ const AnchorTracker = ({ documentId }: { documentId: string }) => {
         >
           <AccordionItem value="item-1">
             <AccordionTrigger>Conteúdo</AccordionTrigger>
-            <AccordionContent className="max-h-[50vh] overflow-y-auto">
+            <AccordionContent
+              ref={anchorListRef}
+              className="relative max-h-[50vh] pb-0 pt-0 before:absolute before:top-0 before:bottom-0 before:w-0.5 before:bg-blog-border"
+            >
               {anchorList.map((text, index) => (
                 <li key={index} className="mb-1">
                   <Link
                     href={`#${Object.keys(text)}`}
+                    aria-label={`Ir para ${Object.values(text)[0]}`}
                     aria-current={index === 0 ? "page" : "false"} // When pages load, the first anchor is supposed to be the colored one
                     className={
                       `flex text-sm transition-colors duration-500 break-words aria-current:text-blog-foreground-highlight` +
                       ` aria-current:hover:text-blog-foreground-readable-hover hover:text-blog-foreground-readable-hover ${generatePaddingForSessions(
                         text
-                      )}`
+                      )} after:w-0.5 after:h-6 after:bg-transparent after:transition-all after:duration-500 after:absolute after:left-0 aria-current:after:bg-blog-foreground-highlight`
                     }
                   >
                     {

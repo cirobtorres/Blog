@@ -6,10 +6,10 @@ const extractAnchors = (htmlString: string): { [key: string]: string }[] => {
   while ((match = regex.exec(htmlString)) !== null) {
     const [, tag, attributes, content] = match;
 
-    // Verifica se o conteúdo do heading contém APENAS texto, sem tags HTML internas
+    // Skip if content has HTML tags
     if (/<[^>]+>/.test(content)) continue;
 
-    // Obtém o ID do heading ou gera um baseado no texto
+    // Get id or generate one
     const idMatch = attributes.match(/id="([^"]*)"/);
     const id = idMatch
       ? idMatch[1]

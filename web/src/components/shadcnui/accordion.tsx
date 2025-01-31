@@ -46,9 +46,8 @@ const AccordionContent = React.forwardRef<
     {...props}
   >
     <ul
-      id="link-anchor-tracker"
       className={cn(
-        "pb-4 pt-0 transition-colors duration-300 overflow-auto scrollbar",
+        "pb-4 pt-0 transition-colors duration-300 overflow-x-hidden overflow-y-auto scrollbar",
         className
       )}
     >
