@@ -56,7 +56,6 @@ const AnchorTracker = ({ documentId }: { documentId: string }) => {
         const links = anchorListRef.current?.querySelectorAll("li a");
 
         links?.forEach((link, index) => {
-          console.log(index, currentSectionIndex);
           if (index === currentSectionIndex) {
             link.setAttribute("aria-current", "page");
           } else {

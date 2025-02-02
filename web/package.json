@@ -37,6 +37,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@shikijs/transformers": "^2.2.0",
     "@types/he": "^1.2.3",
     "@types/node": "^20",
     "@types/react": "^19",

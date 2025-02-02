@@ -26,6 +26,7 @@
   --blog-foreground-readable-hover: hsl(var(--blog-black));
   --blog-foreground-highlight: hsl(var(--blog-orange));
   --blog-foreground-highlight-lighter: hsl(var(--blog-orange-lighter));
+  --blog-foreground-highlight-backdrop: hsl(30, 90%, 75%, 0.3);
 
   --blog-green: hsl(144, 61%, 20%);
 
@@ -40,7 +41,7 @@
   --blog-code-class: var(--blog-orange-darker);
   /* --blog-code-function: 250 60% 80%; */
   --blog-code-tag-css: 60 42% 76%;
-  /* --blog-code-tag-css: 41 53% 67%; */
+  --blog-code-parameter: 41 53% 67%;
   --blog-code-function: 190 100% 80%;
   --blog-code-readable: 278 8% 80%;
   --blog-code-literal: 160 66% 55%;
@@ -48,7 +49,8 @@
   --blog-code-string: 101 29% 47%;
   --blog-code-comment: 0 0% 50%;
   --blog-code-regexp: 350 80% 58%;
-  --blog-code-regexp-lighter: 330 65% 57%;
+  --blog-code-regexp-lighter: 330 70% 65%;
+  --blog-code-regexp-darker: 295 65% 47%;
 }
 
 .dark {
@@ -57,7 +59,7 @@
   --scrollbar-thumb: 266 4% 35%;
   --scrollbar-thumb-hover: 270 3% 39%;
 
-  --blog-background-1: hsl(0, 0%, 11%);
+  --blog-background-1: hsl(0, 0%, 9%);
   --blog-background-2: hsl(0, 0%, 7%);
   --blog-background-3: hsl(0, 0%, 0%);
   --blog-background-backdrop: hsla(0, 0%, 7%, 0.25);
@@ -115,12 +117,12 @@ input[type="search"]::-webkit-search-results-decoration {
 
   .scrollbar::-webkit-scrollbar-track {
     background: hsl(var(--scrollbar-track));
-    border-radius: 3px;
+    /* border-radius: 3px; */
   }
 
   .scrollbar::-webkit-scrollbar-thumb {
     background: hsl(var(--scrollbar-thumb));
-    border-radius: 3px;
+    /* border-radius: 3px; */
   }
 
   .scrollbar::-webkit-scrollbar-thumb:hover {
@@ -317,33 +319,55 @@ input[type="search"]::-webkit-search-results-decoration {
 
   /*------------------------------Code------------------------------*/
   .blog-code {
-    display: flex;
-    flex-direction: column;
+    margin-bottom: 1rem;
     background: var(--blog-pre);
     color: var(--blog-code-text);
-    border: 1px solid transparent;
-    margin: 0 0 1rem 0;
-    line-height: 1.5rem;
-    direction: ltr;
-    text-align: left;
-    overflow: auto hidden;
     border: 1px solid var(--blog-border);
+  }
 
-    .line-wrapper {
-      pointer-events: auto;
-      padding: 0.5rem 1.5rem;
-      border-right: 1px solid var(--blog-border);
-      text-align: right;
-    }
+  .blog-code pre code {
+    display: grid;
+    grid-template-columns: 1fr;
+    overflow-x: auto;
+    white-space: pre-wrap; /* Overflow x (scrollbar): comment this */
+    word-break: break-word; /* Overflow x (scrollbar): comment this */
+  }
 
-    .line {
-      /* -webkit-user-select: none; */
-      /* user-select: none; */
-      position: relative;
-      text-align: right;
-      width: 1rem;
-      font-size: 12px;
-      color: hsl(0, 0%, 50%);
-    }
+  .blog-code .line {
+    counter-increment: line-number;
+    position: relative;
+    padding: 0 1rem 0 4rem;
+    font-size: 12px;
+    height: auto; /* Overflow x (scrollbar): set this to 20px */
+    min-height: 20px; /* Overflow x (scrollbar): comment this */
+    color: hsl(0, 0%, 50%);
+  }
+
+  .blog-code .line::before {
+    content: counter(line-number);
+    position: absolute;
+    left: 0;
+    top: 0px;
+    width: 2rem;
+    text-align: right;
+    color: hsl(0, 0%, 50%);
+    font-family: monospace;
+  }
+
+  .blog-code .line.diff.add::after,
+  .blog-code .line.highlighted::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0px;
+    width: 2px;
+    height: auto; /* Overflow x (scrollbar): set this to 20px */
+    min-height: 20px; /* Overflow x (scrollbar): comment this */
+    background: var(--blog-foreground-highlight);
+  }
+
+  .blog-code .line.diff.add,
+  .blog-code .line.highlighted {
+    background: var(--blog-foreground-highlight-backdrop);
   }
 }

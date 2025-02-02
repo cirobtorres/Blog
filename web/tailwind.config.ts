@@ -70,6 +70,8 @@ export default {
       backgroundImage: {
         "blog-moving-gradient":
           "conic-gradient(from var(--angle), transparent, var(--blog-foreground-highlight))",
+        "blog-collapsible-code":
+          "linear-gradient(180deg, #0000, hsl(0, 0%, 12%) 70%)",
       },
       boxShadow: {
         "blog-highlight":

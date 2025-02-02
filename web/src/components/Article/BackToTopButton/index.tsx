@@ -57,17 +57,11 @@ const BackToTopButton = ({
 
   return (
     <div
-      className={`self-start sticky mx-auto`}
+      className={`self-start sticky mx-auto top-1/2 -translate-y-1/2`}
       style={{
-        top: `calc(50% - ${diameter}px)`,
-        transform: `translateY(calc(50% + ${diameter}px * -1))`,
-        // marginTop: `calc(50vh - ${diameter}px)`,
-        // marginBottom: `calc(50vh - ${diameter}px)`,
+        marginTop: `calc(50vh - ${diameter}px)`,
+        marginBottom: `calc(50vh - ${diameter}px)`,
       }}
-      // Previous setup: top-1/2 -translate-y-1/2 mt-10
-      // Top and transform calc are intended to keep the center of the button exatly in the middle of the screen so they must take into account the diameter
-      // marginTop and marginBottom calc may be safely removed since they're simply design choices.
-      // The button stops in the middle of the viewport once ArticleContent bottom or top limit height has been reached
     >
       <TooltipProvider>
         <Tooltip>
@@ -126,25 +120,4 @@ const BackToTopButton = ({
   );
 };
 
-const BackToTopButtonSmallScreens = () => {
-  return (
-    <div className="z-50 sticky top-20 left-1/2 -translate-y-1/2 -translate-x-1/2 mx-auto">
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <div className="relative">
-              <button onClick={() => window.scrollTo(0, 0)}>
-                <FaArrowUp className="absolute size-8 p-2 rounded-full bg-blog-border hover:text-blog-foreground-readable-hover animate-bouncing-arrow-up transition-colors duration-700" />
-              </button>
-            </div>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>Voltar ao topo</p>
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
-    </div>
-  );
-};
-
-export { BackToTopButton, BackToTopButtonSmallScreens };
+export { BackToTopButton };

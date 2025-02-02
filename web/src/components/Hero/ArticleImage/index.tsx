@@ -7,15 +7,13 @@ const ArticleImage = ({ cover }: { cover: Cover }) => {
     <section
       className={
         "grid grid-cols-article" +
-        " max-lg:grid-cols-article-800" +
+        " max-lg:grid-cols-article-1024" +
         " max-w-screen-2xl mx-auto mb-20"
       }
     >
       <figure
         className={
-          "flex flex-col gap-3 h-[25rem]" +
-          " col-start-2 max-lg:col-start-1" +
-          " ml-4 mr-4 pl-4 max-lg:pl-0"
+          "flex flex-col h-[25rem] col-start-2 max-[800px]:col-start-1 max-[800px]:col-span-2 max-lg:mx-4 px-4 max-lg:pl-4 max-[800px]:pl-0"
         }
       >
         <div className="shrink-0 relative h-full">

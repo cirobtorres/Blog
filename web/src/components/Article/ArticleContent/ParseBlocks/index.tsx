@@ -1,5 +1,3 @@
-"use client";
-
 import Image from "next/image";
 import { FaQuestion } from "react-icons/fa";
 import * as cheerio from "cheerio";
@@ -12,6 +10,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "../../../Shadcnui/accordion";
+import CodeBlock from "./ControlCodeGrid";
 
 const ParseRichTextBlocks = ({ body }: { body: string }) => {
   const $ = cheerio.load(body);
@@ -82,33 +81,16 @@ const ParseRichTextBlocks = ({ body }: { body: string }) => {
     finalBlock.htmlToRender = blockHtml.html();
 
     if (finalBlock.tagType === "PRE") {
-      const lines = finalBlock.htmlToRender.split("\n");
-
-      const numberedLines = lines
-        .map((_, index) => {
-          return `<span>${index + 1}</span>`;
-        })
-        .join("");
-
       return (
         <article key={finalBlock.id} className="w-full relative">
           <div className="flex items-center relative h-12 w-full px-6 border-t border-x border-blog-border bg-blog-background-2">
             <span className="text-sm text-[#808080]">nome\do\arquivo.tsx</span>
             <CopyButton htmlToRender={finalBlock.htmlToRender} />
           </div>
-          <div className="max-h-[600px] flex flex-row blog-center-content blog-code overflow-y-auto scrollbar">
-            <div
-              dangerouslySetInnerHTML={{ __html: numberedLines }}
-              className={
-                `flex flex-col py-2 px-4 pointer-events-auto` +
-                ` [&_span]:text-xs [&_span]:leading-[1.25rem] [&_span]:text-[#808080] [&_span]:w-8 [&_span]:select-none [&_span]:text-right`
-              }
-            />
-            <div
-              className={`text-sm py-2 px-6`}
-              dangerouslySetInnerHTML={{ __html: finalBlock.htmlToRender }}
-            />
-          </div>
+          <CodeBlock
+            id={finalBlock.id}
+            htmlToRender={finalBlock.htmlToRender}
+          />
         </article>
       );
     }
@@ -133,12 +115,22 @@ const ParseRichTextBlocks = ({ body }: { body: string }) => {
       );
     }
 
-    if (finalBlock.tagType?.match(/H[2-6]/g)) {
+    if (finalBlock.tagType?.match(/H[1-3]/g)) {
       return (
         <article
           key={finalBlock.id}
           dangerouslySetInnerHTML={{ __html: finalBlock.htmlToRender }}
           className="w-full blog-center-content blog-heading blog-margin blog-text border-t border-blog-border"
+        />
+      );
+    }
+
+    if (finalBlock.tagType?.match(/H[4-6]/g)) {
+      return (
+        <article
+          key={finalBlock.id}
+          dangerouslySetInnerHTML={{ __html: finalBlock.htmlToRender }}
+          className="w-full blog-center-content blog-heading blog-margin blog-text"
         />
       );
     }
@@ -219,9 +211,9 @@ const ParseDetails = ({
   body: string;
 }) => {
   return (
-    <article className="w-full blog-center-content blog-heading blog-margin blog-text blog-lists bg-blog-background-2 p-4">
+    <article className="w-full blog-center-content blog-heading blog-margin blog-text blog-lists bg-blog-background-2 p-4 mb-4">
       {collapsible ? (
-        <Accordion type="single" collapsible defaultValue="item-1">
+        <Accordion type="single" collapsible defaultValue="">
           <AccordionItem
             value="item-1"
             className="[&_h3]:pt-0 [&_h3]:mb-0 [&_h3_button_p]:mb-0"

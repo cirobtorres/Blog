@@ -7,13 +7,11 @@ import {
   ParseDetails,
 } from "./ParseBlocks";
 import convertMarkdowToHtmlString from "../../../utils/markdown";
-import highlightPreBlocks from "../../../utils/highlight";
 import { addIdsToHeadings } from "../../../utils/anchors";
 
 const convertToHTML = async (blocks: string) => {
   const contentHtml = await convertMarkdowToHtmlString(blocks);
-  const processedHtml = await highlightPreBlocks(contentHtml);
-  const htmlToRender = addIdsToHeadings(processedHtml);
+  const htmlToRender = addIdsToHeadings(contentHtml);
   return htmlToRender;
 };
 
@@ -61,7 +59,7 @@ const ArticleContent = async ({ documentId, content }: ArticleContent) => {
   return (
     <div
       id={documentId}
-      className="flex flex-col col-start-2 max-[800px]:col-start-auto" // relative
+      className="mt-4 pb-12 flex flex-col col-start-2 max-[800px]:col-start-auto" // relative
     >
       {toRender}
     </div>
