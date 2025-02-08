@@ -1,11 +1,13 @@
 "use server";
 
-import { getArticle } from "../../../../lib/articles";
-import { DynamicBody } from "../../../../components/Body";
-import Article from "../../../../components/Article";
-import Hero from "../../../../components/Hero";
-import Categories from "../../../../components/Categories";
-import RelatedArticles from "../../../../components/RelatedArticles";
+import { Suspense } from "react";
+import { getArticle } from "../../../lib/articles";
+import { DynamicBody } from "../../../components/Body";
+import Hero from "../../../components/Hero";
+import Article from "../../../components/Article";
+import Categories from "../../../components/Categories";
+import RelatedArticles from "../../../components/RelatedArticles";
+import CommentSection from "@/app/components/CommentSection";
 
 interface Params {
   params: {
@@ -30,6 +32,9 @@ export default async function ArticlesPage({ params }: Params) {
             tags={article.tags}
           />
         )}
+        <Suspense fallback={<p>Loading...</p>}>
+          <CommentSection articleDocumentId={article.documentId} />
+        </Suspense>
         <RelatedArticles />
       </DynamicBody>
     );

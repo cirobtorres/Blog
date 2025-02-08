@@ -14,15 +14,18 @@
   "attributes": {
     "title": {
       "type": "string",
-      "maxLength": 125
+      "maxLength": 125,
+      "required": true
     },
     "description": {
       "type": "text",
-      "maxLength": 255
+      "maxLength": 255,
+      "required": true
     },
     "slug": {
       "type": "uid",
-      "targetField": "title"
+      "targetField": "title",
+      "required": true
     },
     "cover": {
       "type": "media",
@@ -67,6 +70,12 @@
       "relation": "manyToMany",
       "target": "api::subcategory.subcategory",
       "inversedBy": "articles"
+    },
+    "comments": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::comment.comment",
+      "mappedBy": "article"
     }
   }
 }

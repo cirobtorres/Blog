@@ -13,12 +13,14 @@
   "pluginOptions": {},
   "attributes": {
     "name": {
-      "type": "string"
+      "type": "string",
+      "required": true,
+      "minLength": 3
     },
     "avatar": {
       "type": "media",
       "multiple": false,
-      "required": false,
+      "required": true,
       "allowedTypes": [
         "images",
         "files",
@@ -26,7 +28,10 @@
       ]
     },
     "email": {
-      "type": "string"
+      "type": "string",
+      "private": true,
+      "required": true,
+      "unique": true
     },
     "articles": {
       "type": "relation",
