@@ -1,13 +1,13 @@
 "use server";
 
 import { Suspense } from "react";
-import { getArticle } from "../../../lib/articles";
-import { DynamicBody } from "../../../components/Body";
-import Hero from "../../../components/Hero";
-import Article from "../../../components/Article";
-import Categories from "../../../components/Categories";
-import RelatedArticles from "../../../components/RelatedArticles";
-import CommentSection from "@/app/components/CommentSection";
+import { getArticle } from "../../../../lib/articles";
+import { DynamicBody } from "../../../../components/Body";
+import Hero from "../../../../components/Hero";
+import Article from "../../../../components/Article";
+import Categories from "../../../../components/Categories";
+import RelatedArticles from "../../../../components/RelatedArticles";
+import CommentSection from "@/components/CommentSection";
 
 interface Params {
   params: {

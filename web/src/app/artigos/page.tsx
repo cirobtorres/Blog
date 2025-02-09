@@ -1,13 +1,13 @@
 "use server";
 
 import { Suspense } from "react";
-import { StaticBody } from "./../components/Body";
-import { countArticles, getArticles } from "./../lib/articles";
+import { StaticBody } from "../../components/Body";
+import { countArticles, getArticles } from "../../lib/articles";
 import Link from "next/link";
 import Image from "next/image";
-import { formatDateToCustomFormat } from "./../utils/dates";
-import slugify from "./../utils/slugify";
-import ArticlesPages from "../components/Pagination";
+import { formatDateToCustomFormat } from "../../utils/dates";
+import slugify from "../../utils/slugify";
+import ArticlesPages from "../../components/Pagination";
 
 export default async function ArticlesPage({
   searchParams,

@@ -1,9 +1,9 @@
 "use server";
 
-import { StaticBody } from "./components/Body";
-import Cards from "./components/Cards";
+import { StaticBody } from "../components/Body";
+import Cards from "../components/Cards";
 import { Suspense } from "react";
-import { Skeleton } from "./components/Shadcnui/skeleton";
+import { Skeleton } from "../components/Shadcnui/skeleton";
 
 export default async function HomePage() {
   return (

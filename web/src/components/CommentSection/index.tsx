@@ -1,5 +1,5 @@
 // import Author from "../Author";
-import { getComments } from "@/app/lib/comments";
+import { getComments } from "@/lib/comments";
 import CommentRow from "./CommentRow";
 import ComentCreate from "./CommentCreate";
 

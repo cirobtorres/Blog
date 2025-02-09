@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Open_Sans } from "next/font/google";
-import { ThemeProvider } from "./providers/themeProvider";
-import { getGlobal } from "./lib/global";
-import "./styles/globals.css";
-import "./styles/shadcnui.css";
+import { ThemeProvider } from "../providers/themeProvider";
+import { getGlobal } from "../lib/global";
+import "../styles/globals.css";
+import "../styles/shadcnui.css";
 
 const { data: global } = await getGlobal();
 
