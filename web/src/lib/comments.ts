@@ -13,13 +13,6 @@ const saveComment = async (
     const content = formData.get("tiptap-editor-content") as string;
     const articleId = formData.get("tiptap-article-id");
     const userId = formData.get("tiptap-user-id");
-    // {
-    //   "data": {
-    //      "createComment": {
-    //        "documentId": "..."
-    //     }
-    //   }
-    // }
     if (articleId && articleId !== "" && userId && userId !== "") {
       const sanitizedBody = sanitizer(content);
       await graphqlCommentClient.request(POST_COMMENT, {
@@ -33,7 +26,7 @@ const saveComment = async (
       return { message: "success" };
     }
   } catch (error) {
-    console.error("Failed to post comment", error);
+    console.error("Failed to save comment", error);
     // return { message: "error" };
   }
   return { message: "error" };
@@ -45,12 +38,21 @@ const getComments = async (documentId: string) => {
       await graphqlClient.request(GET_COMMENTS, {
         documentId,
       });
-
     return { data: article };
   } catch (error) {
-    console.error("Failed to fetch comments:", error);
-    throw new Error("Failed to fetch comments");
+    console.error("Failed to fetch get comments:", error);
+    // throw new Error("Failed to fetch get comments");
+  }
+  return { data: { comments: [] } };
+};
+
+const likeComment = async () => {
+  try {
+    // const
+  } catch (error) {
+    console.error("Failed to fetch like comments:", error);
+    // throw new Error("Failed to fetch like comments");
   }
 };
 
-export { saveComment, getComments };
+export { saveComment, getComments, likeComment };

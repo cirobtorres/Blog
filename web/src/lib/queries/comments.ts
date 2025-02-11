@@ -13,14 +13,40 @@ query Article($documentId: ID!) {
       body
       createdAt
       updatedAt
+      likedBy {
+        documentId
+      }
       users_permissions_user {
         documentId
         confirmed
         blocked
         username
       }
+      comments {
+        documentId
+        body
+        createdAt
+        updatedAt
+        likedBy {
+          documentId
+        }
+        users_permissions_user {
+          documentId
+          confirmed
+          blocked
+          username
+        }
+      }
     }
   }
 }`;
 
-export { POST_COMMENT, GET_COMMENTS };
+const LIKE_COMMENT = `
+mutation UpdateComment($documentId: ID!, $data: CommentInput!) {
+  updateComment(documentId: $documentId, data: $data) {
+    documentId
+    like
+  }
+}`;
+
+export { POST_COMMENT, GET_COMMENTS, LIKE_COMMENT };

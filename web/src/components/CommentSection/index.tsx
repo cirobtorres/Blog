@@ -1,4 +1,3 @@
-// import Author from "../Author";
 import { getComments } from "@/lib/comments";
 import CommentRow from "./CommentRow";
 import ComentCreate from "./CommentCreate";
@@ -10,9 +9,8 @@ const CommentSection = async ({
 }) => {
   const {
     data: { comments },
-  }: { data: { comments: CommentProps[] } } = await getComments(
-    articleDocumentId
-  );
+  }: { data: { comments: CommentProps[] } } | { data: { comments: never[] } } =
+    await getComments(articleDocumentId);
   return (
     <section className="max-w-screen-2xl mx-auto mb-20">
       <CommentHeader />

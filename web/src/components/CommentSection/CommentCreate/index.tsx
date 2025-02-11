@@ -20,8 +20,6 @@ const ComentCreate = async ({
           </div>
           <Editor
             articleDocumentId={articleDocumentId}
-            // userDocumentId="l093asnt7pt0lqgm0sqiy9ds"
-            // userDocumentId="lyfhxhlrpoaz1h4q3yycenhb"
             userDocumentId={user.data.documentId}
           />
         </>
