@@ -5,6 +5,13 @@ mutation CreateComment($data: CommentInput!) {
   }
 }`;
 
+const POST_REPLY = `
+mutation CreateComment($data: CommentInput!) {
+  createComment(data: $data) {
+    documentId
+  }
+}`;
+
 const GET_COMMENTS = `
 query Article($documentId: ID!) {
   article(documentId: $documentId) {
@@ -13,21 +20,18 @@ query Article($documentId: ID!) {
       body
       createdAt
       updatedAt
-      likedBy {
+      parent_id {
         documentId
       }
-      users_permissions_user {
+      liked_by {
         documentId
-        confirmed
-        blocked
-        username
       }
       comments {
         documentId
         body
         createdAt
         updatedAt
-        likedBy {
+        liked_by {
           documentId
         }
         users_permissions_user {
@@ -37,7 +41,13 @@ query Article($documentId: ID!) {
           username
         }
       }
-    }
+      users_permissions_user {
+        documentId
+        confirmed
+        blocked
+        username
+      }
+    }  
   }
 }`;
 
@@ -49,4 +59,4 @@ mutation UpdateComment($documentId: ID!, $data: CommentInput!) {
   }
 }`;
 
-export { POST_COMMENT, GET_COMMENTS, LIKE_COMMENT };
+export { POST_COMMENT, POST_REPLY, GET_COMMENTS, LIKE_COMMENT };

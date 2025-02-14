@@ -8,13 +8,13 @@ export default function ProviderLogin() {
   const githubPath = "http://localhost:1337/api/connect/github";
 
   return (
-    <form className="flex justify-center gap-4 [&_a]:transition-colors [&_a]:duration-500 [&_a]:flex [&_a]:items-center [&_a]:gap-2 hover:[&_a]:text-blog-foreground-readable-hover">
+    <div className="flex justify-center gap-4 [&_a]:transition-colors [&_a]:duration-500 [&_a]:flex [&_a]:items-center [&_a]:gap-2 hover:[&_a]:text-blog-foreground-readable-hover">
       <Link href={new URL(googlePath).href}>
         <FaGoogle /> Google
       </Link>
       <Link href={new URL(githubPath).href}>
         <FaGithub /> Github
       </Link>
-    </form>
+    </div>
   );
 }

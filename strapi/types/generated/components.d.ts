@@ -43,6 +43,20 @@ export interface SharedMedia extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedOptions extends Struct.ComponentSchema {
+  collectionName: 'components_shared_options';
+  info: {
+    displayName: 'options';
+    icon: 'check';
+  };
+  attributes: {
+    isCorrect: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<false>;
+    option: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 export interface SharedQuiz extends Struct.ComponentSchema {
   collectionName: 'components_shared_quizzes';
   info: {
@@ -51,19 +65,7 @@ export interface SharedQuiz extends Struct.ComponentSchema {
     icon: 'bulletList';
   };
   attributes: {
-    json: Schema.Attribute.JSON & Schema.Attribute.Required;
-    QuizBlocks: Schema.Attribute.Component<'shared.quiz-blocks', true>;
-  };
-}
-
-export interface SharedQuizBlocks extends Struct.ComponentSchema {
-  collectionName: 'components_shared_quiz_blocks';
-  info: {
-    displayName: 'QuizBlocks';
-    icon: 'dashboard';
-  };
-  attributes: {
-    QuizQuestions: Schema.Attribute.Component<'shared.quiz-questions', true>;
+    questions: Schema.Attribute.Component<'shared.quiz-questions', true>;
   };
 }
 
@@ -75,17 +77,7 @@ export interface SharedQuizQuestions extends Struct.ComponentSchema {
     icon: 'bulletList';
   };
   attributes: {
-    isCorrectOptionA: Schema.Attribute.Boolean &
-      Schema.Attribute.DefaultTo<true>;
-    isCorrectOptionB: Schema.Attribute.Boolean;
-    isCorrectOptionC: Schema.Attribute.Boolean &
-      Schema.Attribute.DefaultTo<false>;
-    isCorrectOptionD: Schema.Attribute.Boolean &
-      Schema.Attribute.DefaultTo<false>;
-    optionA: Schema.Attribute.String & Schema.Attribute.Required;
-    optionB: Schema.Attribute.String & Schema.Attribute.Required;
-    optionC: Schema.Attribute.String & Schema.Attribute.Required;
-    optionD: Schema.Attribute.String & Schema.Attribute.Required;
+    options: Schema.Attribute.Component<'shared.options', true>;
     question: Schema.Attribute.String;
     uuid: Schema.Attribute.UID &
       Schema.Attribute.Required &
@@ -138,8 +130,8 @@ declare module '@strapi/strapi' {
       'shared.details': SharedDetails;
       'shared.download': SharedDownload;
       'shared.media': SharedMedia;
+      'shared.options': SharedOptions;
       'shared.quiz': SharedQuiz;
-      'shared.quiz-blocks': SharedQuizBlocks;
       'shared.quiz-questions': SharedQuizQuestions;
       'shared.rich-text': SharedRichText;
       'shared.seo': SharedSeo;

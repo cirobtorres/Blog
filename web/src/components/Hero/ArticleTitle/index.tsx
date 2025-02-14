@@ -6,7 +6,13 @@ import Author from "../../Author";
 import BreadCrumb from "./BreadCrumb";
 import Link from "next/link";
 
-const ArticleTitle = ({ article }: { article: Article }) => {
+const ArticleTitle = ({
+  article,
+  commentLength,
+}: {
+  article: Article;
+  commentLength: number;
+}) => {
   return (
     <section className="min-h-[30rem] py-8 mb-4 flex items-center border-b border-blog-border bg-blog-background-2">
       <div className="h-full grid grid-cols-article max-lg:grid-cols-article-800 mx-auto items-center max-w-screen-2xl">
@@ -32,7 +38,9 @@ const ArticleTitle = ({ article }: { article: Article }) => {
                       <time>{formatDateToCustomFormat(article.createdAt)}</time>
                     </small>
                   </p>
-                  {article.updatedAt && (
+                  {new Date(article.updatedAt).getTime() -
+                    new Date(article.createdAt).getTime() >
+                    10000 && ( // 10 seconds
                     <p className="text-base leading-3">
                       <small>
                         Atualizado:{" "}
@@ -45,10 +53,14 @@ const ArticleTitle = ({ article }: { article: Article }) => {
                 </div>
               </div>
               <div className="flex items-center gap-4">
-                <Link href="#">
+                <Link href="#comment-session">
                   <MessageCircle className="size-6" />
                 </Link>
-                <p>8 comentários</p>
+                <p>
+                  {commentLength <= 1
+                    ? `${commentLength} comentário`
+                    : `${commentLength} comentários`}
+                </p>
               </div>
               <div className="flex items-center gap-4">
                 <button type="button">

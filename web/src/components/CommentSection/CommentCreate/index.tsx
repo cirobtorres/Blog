@@ -1,32 +1,24 @@
-import { getUserMeLoader } from "../../../service/user-me-loader";
-import ProviderLogin from "../../Authentication/Logins";
 import LogoutButton from "../../Authentication/Logout";
 import Editor from "./Editor";
 
-const ComentCreate = async ({
+const CommentCreate = async ({
   articleDocumentId,
+  user,
 }: {
   articleDocumentId: string;
+  user: User;
 }) => {
-  const user = await getUserMeLoader();
-
   return (
     <div className="w-full max-w-3xl mx-auto">
-      {user.ok === true && (
-        <>
-          <div className="flex justify-between items-center mb-3">
-            <p>{user.data.username}</p>
-            <LogoutButton />
-          </div>
-          <Editor
-            articleDocumentId={articleDocumentId}
-            userDocumentId={user.data.documentId}
-          />
-        </>
+      {user.ok && (
+        <div className="flex justify-between items-center mb-3">
+          <p>{user.data?.username}</p>
+          <LogoutButton />
+        </div>
       )}
-      {user.ok === false && <ProviderLogin />}
+      <Editor user={user} articleDocumentId={articleDocumentId} />
     </div>
   );
 };
 
-export default ComentCreate;
+export default CommentCreate;

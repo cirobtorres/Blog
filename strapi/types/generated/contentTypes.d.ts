@@ -469,8 +469,7 @@ export interface ApiAuthorAuthor extends Struct.CollectionTypeSchema {
   };
   attributes: {
     articles: Schema.Attribute.Relation<'oneToMany', 'api::article.article'>;
-    avatar: Schema.Attribute.Media<'images' | 'files' | 'videos'> &
-      Schema.Attribute.Required;
+    avatar: Schema.Attribute.Media<'images' | 'files' | 'videos'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -551,7 +550,7 @@ export interface ApiCommentComment extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    likedBy: Schema.Attribute.Relation<
+    liked_by: Schema.Attribute.Relation<
       'manyToMany',
       'plugin::users-permissions.user'
     >;
@@ -561,6 +560,7 @@ export interface ApiCommentComment extends Struct.CollectionTypeSchema {
       'api::comment.comment'
     > &
       Schema.Attribute.Private;
+    parent_id: Schema.Attribute.Relation<'manyToOne', 'api::comment.comment'>;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -1165,7 +1165,7 @@ export interface PluginUsersPermissionsUser
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    userLike: Schema.Attribute.Relation<'manyToMany', 'api::comment.comment'>;
+    user_like: Schema.Attribute.Relation<'manyToMany', 'api::comment.comment'>;
     username: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.Unique &

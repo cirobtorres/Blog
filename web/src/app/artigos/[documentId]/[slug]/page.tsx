@@ -1,6 +1,5 @@
 "use server";
 
-import { Suspense } from "react";
 import { getArticle } from "../../../../lib/articles";
 import { DynamicBody } from "../../../../components/Body";
 import Hero from "../../../../components/Hero";
@@ -8,6 +7,8 @@ import Article from "../../../../components/Article";
 import Categories from "../../../../components/Categories";
 import RelatedArticles from "../../../../components/RelatedArticles";
 import CommentSection from "@/components/CommentSection";
+import { getComments } from "@/lib/comments";
+import { getUserMeLoader } from "@/service/user-me-loader";
 
 interface Params {
   params: {
@@ -19,11 +20,16 @@ interface Params {
 export default async function ArticlesPage({ params }: Params) {
   const { documentId } = await params;
   const { data: article } = await getArticle(documentId);
+  const {
+    data: { comments },
+  }: { data: { comments: CommentProps[] } } | { data: { comments: never[] } } =
+    await getComments(documentId);
+  const user = await getUserMeLoader();
 
   if (article) {
     return (
       <DynamicBody documentId={documentId}>
-        <Hero {...article} />
+        <Hero commentLength={comments.length} article={article} />
         <Article documentId={documentId} content={article.blocks} />
         {article.category && (
           <Categories
@@ -32,9 +38,11 @@ export default async function ArticlesPage({ params }: Params) {
             tags={article.tags}
           />
         )}
-        <Suspense fallback={<p>Loading...</p>}>
-          <CommentSection articleDocumentId={article.documentId} />
-        </Suspense>
+        <CommentSection
+          articleDocumentId={article.documentId}
+          comments={comments}
+          loggedUser={user}
+        />
         <RelatedArticles />
       </DynamicBody>
     );

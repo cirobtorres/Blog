@@ -87,8 +87,8 @@ const ParseRichTextBlocks = ({ body }: { body: string }) => {
       const cleanHtmlToRender = finalBlock.htmlToRender.replace(fileRegex, "");
 
       return (
-        <article key={finalBlock.id} className="w-full relative">
-          <div className="flex items-center relative h-12 w-full px-6 border-t border-x border-blog-border bg-blog-background-2">
+        <article key={finalBlock.id} className="w-full relative mb-4">
+          <div className="flex items-center relative w-full h-12 px-6 border-t border-x border-blog-border bg-blog-background-2">
             {fileName && (
               <span className="text-sm text-[#808080]">{fileName}</span>
             )}
@@ -178,8 +178,8 @@ const ParseQuizBlocks = ({ block }: { block: SharedQuiz }) => {
           até agora.
         </p>
       </div>
-      {Object.values(block.json).map((bl, index: number) => (
-        <QuizObjects key={index} block={bl} />
+      {Object.values(block.questions).map((quiz: Question) => (
+        <QuizObjects key={quiz.uuid} quiz={quiz} />
       ))}
     </article>
   );

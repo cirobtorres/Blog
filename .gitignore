@@ -127,5 +127,6 @@ next-env.d.ts
 # My project
 ############################
 
-todo.txt
-router.http
+/*.txt
+/*.jpg
+/*.png

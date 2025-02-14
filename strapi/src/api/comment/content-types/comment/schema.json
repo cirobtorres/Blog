@@ -29,16 +29,23 @@
       "target": "api::article.article",
       "inversedBy": "comments"
     },
-    "likedBy": {
+    "liked_by": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "plugin::users-permissions.user",
-      "inversedBy": "userLike"
+      "inversedBy": "user_like"
+    },
+    "parent_id": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::comment.comment",
+      "inversedBy": "comments"
     },
     "comments": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::comment.comment"
+      "target": "api::comment.comment",
+      "mappedBy": "parent_id"
     }
   }
 }

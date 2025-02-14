@@ -11,7 +11,7 @@ import Document from "@tiptap/extension-document";
 import Paragraph from "@tiptap/extension-paragraph";
 import Text from "@tiptap/extension-text";
 import CharacterCount from "@tiptap/extension-character-count";
-import { saveComment } from "../../../../lib/comments";
+import { saveReply } from "../../../../lib/comments";
 
 const limit = 255;
 
@@ -21,20 +21,28 @@ const initialState = {
 
 const initialContent = "";
 
-const Editor = ({
+const ReplyEditor = ({
   articleDocumentId,
+  userRepliedTo,
   user,
+  close,
 }: {
   articleDocumentId: string;
+  userRepliedTo: string;
   user: User;
+  close: (value: boolean) => void;
 }) => {
   const [content, setContent] = useState(initialContent);
   const [submitCount, setSubmitCount] = useState(0); // Novo estado para contar envios
 
   const [, formAction] = useActionState<{ message: string | null }, FormData>(
     (prevState, formData) => {
-      const result = saveComment(prevState, formData);
+      formData.append("articleDocumentId", articleDocumentId);
+      formData.append("userDocumentId", userRepliedTo);
+      formData.append("userRepliedToId", user.data?.documentId || "");
+      const result = saveReply(prevState, formData);
       setSubmitCount((count) => count + 1); // Incrementa a contagem de submissões
+      close(false);
       return result;
     },
     initialState
@@ -71,8 +79,8 @@ const Editor = ({
       <div className="flex flex-col gap-1">
         <Skeleton className="w-full h-16 rounded-2xl" />
         <div className="flex items-center gap-1">
-          <Skeleton className="w-full h-6 rounded-2xl" />
-          <Skeleton className="max-w-28 w-full h-6 rounded-2xl" />
+          <Skeleton className="w-full h-4 rounded-2xl" />
+          <Skeleton className="max-w-28 w-full h-8 rounded-2xl" />
         </div>
       </div>
     );
@@ -80,9 +88,7 @@ const Editor = ({
 
   return (
     user.data && (
-      <EditableContent
-        articleDocumentId={articleDocumentId}
-        userDocumentId={user.data.documentId}
+      <EditableReplyContent
         formAction={formAction}
         editor={editor}
         content={content}
@@ -91,17 +97,13 @@ const Editor = ({
   );
 };
 
-export default Editor;
+export default ReplyEditor;
 
-const EditableContent = ({
-  articleDocumentId,
-  userDocumentId,
+const EditableReplyContent = ({
   formAction,
   editor,
   content,
 }: {
-  articleDocumentId: string;
-  userDocumentId: string;
   formAction: (payload: FormData) => void;
   editor: EditorProps;
   content: string;
@@ -119,18 +121,6 @@ const EditableContent = ({
         id="tiptap-editor-content"
         name="tiptap-editor-content"
         value={content}
-      />
-      <input
-        type="hidden"
-        id="tiptap-article-id"
-        name="tiptap-article-id"
-        value={articleDocumentId}
-      />
-      <input
-        type="hidden"
-        id="tiptap-user-id"
-        name="tiptap-user-id"
-        value={userDocumentId}
       />
       <div className="h-8 flex">
         <div className="flex-1 flex items-center gap-4 px-4">

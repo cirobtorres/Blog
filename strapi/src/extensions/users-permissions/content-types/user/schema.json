@@ -71,11 +71,11 @@
       "target": "api::comment.comment",
       "mappedBy": "users_permissions_user"
     },
-    "userLike": {
+    "user_like": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::comment.comment",
-      "mappedBy": "likedBy"
+      "mappedBy": "liked_by"
     }
   }
 }

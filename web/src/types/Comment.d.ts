@@ -1,30 +1,33 @@
 type CommentProps = {
-  documentId: string;
+  documentId: Key<string>;
   body: string;
   createdAt: string;
   updatedAt: string;
-  likedBy: {
-    documentId: string;
+  parent_id: {
+    documentId: Key<string>;
+  };
+  liked_by: {
+    documentId: Key<string>;
   }[];
+  comments: SubComments[];
   users_permissions_user: {
-    documentId: string;
+    documentId: Key<string>;
     confirmed: boolean;
     blocked: boolean;
     username: string;
   };
-  comments: SubComments[];
 };
 
 type SubComments = {
-  documentId: string;
+  documentId: Key<string>;
   body: string;
   createdAt: string;
   updatedAt: string;
-  likedBy: {
-    documentId: string;
+  liked_by: {
+    documentId: Key<string>;
   }[];
   users_permissions_user: {
-    documentId: string;
+    documentId: Key<string>;
     confirmed: boolean;
     blocked: boolean;
     username: string;

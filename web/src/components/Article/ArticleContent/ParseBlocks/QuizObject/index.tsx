@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { FaCheck } from "react-icons/fa";
 
-const QuizObjects = ({ block }: { block: Quiz }) => {
+const QuizObjects = ({ quiz }: { quiz: Question }) => {
   const [checked, setChecked] = useState<[number, boolean] | []>([]); // Option is clicked (selected) but not yet confirmed with a button click
   const [selected, setSelected] = useState<boolean>(false); // Option is confirmed
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null); // If the correct option was chosen
@@ -14,12 +14,12 @@ const QuizObjects = ({ block }: { block: Quiz }) => {
     if (checked.length > 0) {
       setSelected(true);
       setIsCorrect(checked[1] || null);
-      const indexOfCorrectOption = block.opts
-        .map((opt) => opt.alt[1])
+      const indexOfCorrectOption = quiz.options
+        .map((opt) => opt.isCorrect)
         .indexOf(true);
       setChoosedWrong(indexOfCorrectOption);
 
-      const quizKey = `quiz-${block.key}`;
+      const quizKey = `quiz-${quiz.uuid}`;
       sessionStorage.setItem(`${quizKey}-checked`, JSON.stringify(checked));
       sessionStorage.setItem(`${quizKey}-selected`, JSON.stringify(true));
       sessionStorage.setItem(
@@ -34,7 +34,7 @@ const QuizObjects = ({ block }: { block: Quiz }) => {
   };
 
   useEffect(() => {
-    const quizKey = `quiz-${block.key}`;
+    const quizKey = `quiz-${quiz.uuid}`;
     const sessionChecked = sessionStorage.getItem(`${quizKey}-checked`);
     const sessionSelected = sessionStorage.getItem(`${quizKey}-selected`);
     const sessionIsCorrect = sessionStorage.getItem(`${quizKey}-isCorrect`);
@@ -53,16 +53,16 @@ const QuizObjects = ({ block }: { block: Quiz }) => {
       setIsCorrect(JSON.parse(sessionIsCorrect));
       setChoosedWrong(JSON.parse(sessionIndexOfCorrectOption));
     }
-  }, [block.key]);
+  }, [quiz.uuid]);
 
   return (
     <div className="flex flex-col items-center gap-8 border border-blog-border rounded-3xl p-8 bg-blog-background-2 shadow-lg mb-10">
-      <p className="">{block.quiz}</p>
+      <p className="">{quiz.question}</p>
       <ul className="w-full grid grid-cols-1 gap-1">
-        {block.opts.map((opt, index: number) => (
+        {quiz.options.map((opt, index: number) => (
           <li key={index}>
             <button
-              onClick={() => setChecked([index, opt.alt[1]])}
+              onClick={() => setChecked([index, opt.isCorrect])}
               className={`w-full flex items-center gap-4 px-3 py-2 text-sm border transition-all duration-500 bg-blog-background-2 group${
                 !selected && " hover:bg-blog-background-1"
               }`}
@@ -102,7 +102,7 @@ const QuizObjects = ({ block }: { block: Quiz }) => {
                       : "",
                 }}
               >
-                {opt.alt[0]}
+                {opt.option}
               </p>
             </button>
           </li>

@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_shared_options",
+  "info": {
+    "displayName": "options",
+    "icon": "check"
+  },
+  "options": {},
+  "attributes": {
+    "option": {
+      "type": "string",
+      "required": true
+    },
+    "isCorrect": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    }
+  }
+}

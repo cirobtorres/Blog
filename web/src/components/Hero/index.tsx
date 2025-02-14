@@ -3,10 +3,16 @@
 import ArticleTitle from "./ArticleTitle";
 import ArticleImage from "./ArticleImage";
 
-const Hero = async (article: Article) => {
+interface HeroProps {
+  article: Article;
+  commentLength: number;
+}
+
+const Hero = async (props: HeroProps) => {
+  const { article, commentLength } = props;
   return (
     <>
-      <ArticleTitle article={article} />
+      <ArticleTitle article={article} commentLength={commentLength} />
       <ArticleImage cover={article.cover} />
     </>
   );

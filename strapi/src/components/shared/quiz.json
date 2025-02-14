@@ -7,15 +7,10 @@
   },
   "options": {},
   "attributes": {
-    "json": {
-      "type": "json",
-      "required": true
-    },
-    "QuizBlocks": {
-      "displayName": "QuizBlocks",
+    "questions": {
       "type": "component",
       "repeatable": true,
-      "component": "shared.quiz-blocks"
+      "component": "shared.quiz-questions"
     }
   }
 }

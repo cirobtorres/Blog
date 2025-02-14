@@ -1,54 +1,43 @@
-import { getComments } from "@/lib/comments";
 import CommentRow from "./CommentRow";
-import ComentCreate from "./CommentCreate";
+import CommentCreate from "./CommentCreate";
+import ProviderLogin from "../Authentication/Logins";
+import CommentHeader from "./CommentHeader";
 
-const CommentSection = async ({
+const CommentSection = ({
   articleDocumentId,
+  comments,
+  loggedUser,
 }: {
   articleDocumentId: string;
+  comments: CommentProps[];
+  loggedUser: User;
 }) => {
-  const {
-    data: { comments },
-  }: { data: { comments: CommentProps[] } } | { data: { comments: never[] } } =
-    await getComments(articleDocumentId);
   return (
-    <section className="max-w-screen-2xl mx-auto mb-20">
-      <CommentHeader />
-      <ComentCreate articleDocumentId={articleDocumentId} />
-      {comments.map((comment: CommentProps) => (
-        <CommentRow key={comment.documentId} {...comment} />
-      ))}
+    <section
+      id="comment-session"
+      className="max-w-screen-2xl mx-auto mb-20 pt-12 px-4"
+    >
+      <CommentHeader commentLength={comments.length} />
+      {loggedUser.ok === false && <ProviderLogin />}
+      <CommentCreate articleDocumentId={articleDocumentId} user={loggedUser} />
+      {comments.length > 0 ? (
+        comments.map(
+          (comment: CommentProps) =>
+            comment.parent_id === null && (
+              <CommentRow
+                key={comment.documentId}
+                articleDocumentId={articleDocumentId}
+                loggedUser={loggedUser}
+                comment={comment}
+              />
+            )
+        )
+      ) : (
+        <div className="text-center mt-12 mb-8">
+          <h3 className="text-xl">Nenhum comentário ainda!</h3>
+        </div>
+      )}
     </section>
-  );
-};
-
-const CommentHeader = () => {
-  return (
-    <div className="flex justify-center items-center gap-4 mb-12">
-      <h2 className="text-2xl font-extrabold">49 comentários</h2>
-      <button className="flex">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="lucide lucide-arrow-down-wide-narrow"
-        >
-          <path d="m3 16 4 4 4-4" />
-          <path d="M7 20V4" />
-          <path d="M11 4h10" />
-          <path d="M11 8h7" />
-          <path d="M11 12h4" />
-        </svg>
-        Ordenar por:
-      </button>
-      <span>mais recente</span>
-    </div>
   );
 };
 

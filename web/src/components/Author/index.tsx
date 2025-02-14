@@ -14,8 +14,16 @@ const Author = async ({
       <Link href="/sobre" className="group">
         <div className="relative flex size-10 shrink-0 overflow-hidden rounded-full">
           <Image
-            src={`http://127.0.0.1:1337${author.avatar.url}`}
-            alt={author.avatar.alternativeText}
+            src={
+              author.avatar
+                ? `http://127.0.0.1:1337${author.avatar.url}`
+                : "/images/not-authenticated.png"
+            }
+            alt={
+              author.avatar
+                ? author.avatar.alternativeText
+                : `Avatar de ${author.name}`
+            }
             fill
             sizes="(max-width: 40px) 100vw"
             className="transition-all duration-500 absolute object-cover group-hover:brightness-50"

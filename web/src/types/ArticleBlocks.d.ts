@@ -7,44 +7,47 @@ type ArticleBlocks =
 
 type SharedRichText = {
   __typename: "ComponentSharedRichText";
-  id: string;
+  id: Key<string>;
   body: string;
 };
 
 type SharedMedia = {
   __typename: "ComponentSharedMedia";
-  id: string;
+  id: Key<string>;
   file: SharedMediaFile;
 };
 
 type SharedSlider = {
   __typename: "ComponentSharedSlider";
-  id: string;
+  id: Key<string>;
   files: SharedMediaFile[];
 };
 
 type SharedQuiz = {
   __typename: "ComponentSharedQuiz";
-  id: string;
-  json: Record<string, Quiz>; // Dynamic keys
+  id: Key<string>;
+  questions: Question[];
+};
+
+type Question = {
+  uuid: Key;
+  question: string;
+  options: {
+    option: string;
+    isCorrect: boolean;
+  }[];
 };
 
 type SharedDetails = {
   __typename: "ComponentSharedDetails";
-  id: string;
+  id: Key<string>;
   collapsible: boolean;
   title: string;
   body: string;
 };
 
-type Quiz = {
-  key: string;
-  opts: { alt: [string, boolean] }[];
-  quiz: string;
-};
-
 type SharedMediaFile = {
-  documentId: string;
+  documentId: Key<string>;
   url: string;
   alternativeText: string;
   caption: string;

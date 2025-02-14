@@ -97,7 +97,14 @@ query Blocks($documentId: ID!) {
       ... on ComponentSharedQuiz {
         __typename
         id
-        json
+        questions {
+          uuid
+          question
+          options {
+            option
+            isCorrect
+          }
+        }
       }
       ... on ComponentSharedSlider {
         __typename
