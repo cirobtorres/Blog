@@ -5,14 +5,13 @@ import ArticleImage from "./ArticleImage";
 
 interface HeroProps {
   article: Article;
-  commentLength: number;
 }
 
 const Hero = async (props: HeroProps) => {
-  const { article, commentLength } = props;
+  const { article } = props;
   return (
     <>
-      <ArticleTitle article={article} commentLength={commentLength} />
+      <ArticleTitle article={article} />
       <ArticleImage cover={article.cover} />
     </>
   );

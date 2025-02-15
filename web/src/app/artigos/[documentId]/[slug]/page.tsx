@@ -29,7 +29,7 @@ export default async function ArticlesPage({ params }: Params) {
   if (article) {
     return (
       <DynamicBody documentId={documentId}>
-        <Hero commentLength={comments.length} article={article} />
+        <Hero article={article} />
         <Article documentId={documentId} content={article.blocks} />
         {article.category && (
           <Categories

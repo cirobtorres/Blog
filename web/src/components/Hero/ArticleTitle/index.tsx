@@ -5,14 +5,11 @@ import { Clock, MessageCircle, ThumbsUp } from "lucide-react";
 import Author from "../../Author";
 import BreadCrumb from "./BreadCrumb";
 import Link from "next/link";
+import { Suspense } from "react";
+import { Skeleton } from "../../Shadcnui/skeleton";
+import CountComments from "../../CommentSection/CountComments";
 
-const ArticleTitle = ({
-  article,
-  commentLength,
-}: {
-  article: Article;
-  commentLength: number;
-}) => {
+const ArticleTitle = async ({ article }: { article: Article }) => {
   return (
     <section className="min-h-[30rem] py-8 mb-4 flex items-center border-b border-blog-border bg-blog-background-2">
       <div className="h-full grid grid-cols-article max-lg:grid-cols-article-800 mx-auto items-center max-w-screen-2xl">
@@ -57,9 +54,9 @@ const ArticleTitle = ({
                   <MessageCircle className="size-6" />
                 </Link>
                 <p>
-                  {commentLength <= 1
-                    ? `${commentLength} comentário`
-                    : `${commentLength} comentários`}
+                  <Suspense fallback={<Skeleton className="h-6 w-28" />}>
+                    <CountComments articleId={article.documentId} />
+                  </Suspense>
                 </p>
               </div>
               <div className="flex items-center gap-4">

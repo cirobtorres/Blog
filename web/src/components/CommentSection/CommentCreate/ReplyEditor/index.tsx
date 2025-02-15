@@ -33,15 +33,15 @@ const ReplyEditor = ({
   close: (value: boolean) => void;
 }) => {
   const [content, setContent] = useState(initialContent);
-  const [submitCount, setSubmitCount] = useState(0); // Novo estado para contar envios
+  const [submitCount, setSubmitCount] = useState(0);
 
   const [, formAction] = useActionState<{ message: string | null }, FormData>(
     (prevState, formData) => {
-      formData.append("articleDocumentId", articleDocumentId);
-      formData.append("userDocumentId", userRepliedTo);
-      formData.append("userRepliedToId", user.data?.documentId || "");
+      formData.append("article-id", articleDocumentId);
+      formData.append("replied-user-id", userRepliedTo);
+      formData.append("user-id", user.data?.documentId || "");
       const result = saveReply(prevState, formData);
-      setSubmitCount((count) => count + 1); // Incrementa a contagem de submissões
+      setSubmitCount((count) => count + 1);
       close(false);
       return result;
     },
@@ -114,8 +114,11 @@ const EditableReplyContent = ({
         editor={editor}
         id="content"
         name="content"
-        className="w-full h-full [scrollbar-width:none] [-ms-overflow-style:none] rounded-2xl border-2 border-blog-border [&_div]:p-4 mb-0 bg-blog-background-2 overflow-y-auto transition-[border] duration-200 focus-within:border-blog-foreground-highlight"
-      />
+        className="relative w-full h-full [scrollbar-width:none] [-ms-overflow-style:none] pb-2 mb-0 overflow-y-auto group"
+      >
+        <div className="absolute top-[calc(100%_-_2px)] w-full h-[1px] bg-blog-border" />
+        <div className="absolute top-[calc(100%_-_2px)] left-1/2 -translate-x-1/2 w-0 h-[2px] bg-blog-foreground-highlight group-focus-within:w-full group-focus-within:duration-200" />
+      </EditorContent>
       <input
         type="hidden"
         id="tiptap-editor-content"

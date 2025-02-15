@@ -59,4 +59,13 @@ mutation UpdateComment($documentId: ID!, $data: CommentInput!) {
   }
 }`;
 
-export { POST_COMMENT, POST_REPLY, GET_COMMENTS, LIKE_COMMENT };
+const COUNT_COMMENTS = `
+query PageInfo($filters: CommentFiltersInput) {
+  comments_connection(filters: $filters) {
+    pageInfo {
+      total
+    }
+  }
+}`;
+
+export { POST_COMMENT, POST_REPLY, GET_COMMENTS, LIKE_COMMENT, COUNT_COMMENTS };

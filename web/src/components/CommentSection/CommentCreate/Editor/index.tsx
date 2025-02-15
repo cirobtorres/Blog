@@ -29,12 +29,15 @@ const Editor = ({
   user: User;
 }) => {
   const [content, setContent] = useState(initialContent);
-  const [submitCount, setSubmitCount] = useState(0); // Novo estado para contar envios
+  const [submitCount, setSubmitCount] = useState(0);
 
   const [, formAction] = useActionState<{ message: string | null }, FormData>(
     (prevState, formData) => {
+      formData.append("editor-content", content);
+      formData.append("article-id", articleDocumentId);
+      formData.append("user-id", user.data?.documentId || "");
       const result = saveComment(prevState, formData);
-      setSubmitCount((count) => count + 1); // Incrementa a contagem de submissões
+      setSubmitCount((count) => count + 1);
       return result;
     },
     initialState
@@ -79,59 +82,30 @@ const Editor = ({
   }
 
   return (
-    user.data && (
-      <EditableContent
-        articleDocumentId={articleDocumentId}
-        userDocumentId={user.data.documentId}
-        formAction={formAction}
-        editor={editor}
-        content={content}
-      />
-    )
+    user.data && <EditableContent formAction={formAction} editor={editor} />
   );
 };
 
 export default Editor;
 
 const EditableContent = ({
-  articleDocumentId,
-  userDocumentId,
   formAction,
   editor,
-  content,
 }: {
-  articleDocumentId: string;
-  userDocumentId: string;
   formAction: (payload: FormData) => void;
   editor: EditorProps;
-  content: string;
 }) => {
   return (
-    <form action={formAction} className="flex flex-col gap-1 max-h-72">
+    <form action={formAction} className="flex flex-col gap-1">
       <EditorContent
         editor={editor}
         id="content"
         name="content"
-        className="w-full h-full [scrollbar-width:none] [-ms-overflow-style:none] rounded-2xl border-2 border-blog-border [&_div]:p-4 mb-0 bg-blog-background-2 overflow-y-auto transition-[border] duration-200 focus-within:border-blog-foreground-highlight"
-      />
-      <input
-        type="hidden"
-        id="tiptap-editor-content"
-        name="tiptap-editor-content"
-        value={content}
-      />
-      <input
-        type="hidden"
-        id="tiptap-article-id"
-        name="tiptap-article-id"
-        value={articleDocumentId}
-      />
-      <input
-        type="hidden"
-        id="tiptap-user-id"
-        name="tiptap-user-id"
-        value={userDocumentId}
-      />
+        className="relative w-full h-full [scrollbar-width:none] [-ms-overflow-style:none] pb-2 mb-0 overflow-y-auto group"
+      >
+        <div className="absolute top-[calc(100%_-_2px)] w-full h-[1px] bg-blog-border" />
+        <div className="absolute top-[calc(100%_-_2px)] left-1/2 -translate-x-1/2 w-0 h-[2px] bg-blog-foreground-highlight group-focus-within:w-full group-focus-within:duration-200" />
+      </EditorContent>
       <div className="h-8 flex">
         <div className="flex-1 flex items-center gap-4 px-4">
           <p className="text-sm">

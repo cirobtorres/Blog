@@ -2,7 +2,12 @@
 
 import graphqlClient, { graphqlCommentClient } from "./graphQlClient";
 import { revalidatePath } from "next/cache";
-import { GET_COMMENTS, POST_COMMENT, POST_REPLY } from "./queries/comments";
+import {
+  COUNT_COMMENTS,
+  GET_COMMENTS,
+  POST_COMMENT,
+  POST_REPLY,
+} from "./queries/comments";
 import sanitizer from "../utils/sanitizer";
 
 const saveComment = async (
@@ -10,9 +15,9 @@ const saveComment = async (
   formData: FormData
 ): Promise<{ message: string | null }> => {
   try {
-    const content = formData.get("tiptap-editor-content") as string;
-    const articleId = formData.get("tiptap-article-id");
-    const userId = formData.get("tiptap-user-id");
+    const content = formData.get("editor-content") as string;
+    const articleId = formData.get("article-id");
+    const userId = formData.get("user-id");
     if (articleId && articleId !== "" && userId && userId !== "") {
       const sanitizedBody = sanitizer(content);
       await graphqlCommentClient.request(POST_COMMENT, {
@@ -38,24 +43,24 @@ const saveReply = async (
 ): Promise<{ message: string | null }> => {
   try {
     const content = formData.get("tiptap-editor-content") as string;
-    const articleId = formData.get("articleDocumentId");
-    const userToReplyId = formData.get("userRepliedToId");
-    const userId = formData.get("userDocumentId");
+    const articleId = formData.get("article-id");
+    const userId = formData.get("user-id");
+    const userParentId = formData.get("replied-user-id");
     if (
       articleId &&
       articleId !== "" &&
-      userToReplyId &&
-      userToReplyId !== "" &&
       userId &&
-      userId !== ""
+      userId !== "" &&
+      userParentId &&
+      userParentId !== ""
     ) {
       const sanitizedBody = sanitizer(content);
       await graphqlCommentClient.request(POST_REPLY, {
         data: {
           article: articleId,
           body: sanitizedBody,
-          parent_id: userId,
-          users_permissions_user: userToReplyId,
+          parent_id: userParentId,
+          users_permissions_user: userId,
         },
       });
       revalidatePath("/");
@@ -82,6 +87,28 @@ const getComments = async (documentId: string) => {
   return { data: { comments: [] } };
 };
 
+const countComments = async (documentId: string) => {
+  try {
+    const {
+      comments_connection,
+    }: { comments_connection: { pageInfo: { total: number } } } =
+      await graphqlClient.request(COUNT_COMMENTS, {
+        filters: {
+          article: {
+            documentId: {
+              eq: documentId,
+            },
+          },
+        },
+      });
+    return { data: comments_connection.pageInfo.total };
+  } catch (error) {
+    console.error("Failed to fetch count comments:", error);
+    // throw new Error("Failed to fetch get comments");
+  }
+  return { data: null };
+};
+
 const likeComment = async () => {
   try {
     // const
@@ -91,4 +118,4 @@ const likeComment = async () => {
   }
 };
 
-export { saveComment, saveReply, getComments, likeComment };
+export { saveComment, saveReply, getComments, likeComment, countComments };

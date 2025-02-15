@@ -1,10 +1,18 @@
-const CommentHeader = ({ commentLength }: { commentLength: number }) => {
+import { Suspense } from "react";
+import CountComments from "../CountComments";
+import { Skeleton } from "../../Shadcnui/skeleton";
+
+const CommentHeader = ({
+  articleDocumentId,
+}: {
+  articleDocumentId: string;
+}) => {
   return (
     <div className="flex justify-center items-center gap-4 mb-12">
       <h2 className="text-2xl font-extrabold">
-        {commentLength <= 1
-          ? `${commentLength} comentário`
-          : `${commentLength} comentários`}
+        <Suspense fallback={<Skeleton className="h-6 w-32" />}>
+          <CountComments articleId={articleDocumentId} />
+        </Suspense>
       </h2>
       <button className="flex">
         <svg

@@ -17,7 +17,7 @@ const CommentSection = ({
       id="comment-session"
       className="max-w-screen-2xl mx-auto mb-20 pt-12 px-4"
     >
-      <CommentHeader commentLength={comments.length} />
+      <CommentHeader articleDocumentId={articleDocumentId} />
       {loggedUser.ok === false && <ProviderLogin />}
       <CommentCreate articleDocumentId={articleDocumentId} user={loggedUser} />
       {comments.length > 0 ? (
