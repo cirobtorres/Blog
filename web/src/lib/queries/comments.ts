@@ -13,9 +13,9 @@ mutation CreateComment($data: CommentInput!) {
 }`;
 
 const GET_COMMENTS = `
-query Article($documentId: ID!) {
-  article(documentId: $documentId) {
-    comments {
+query Nodes($pagination: PaginationArg, $filters: CommentFiltersInput, $sort: [String]) {
+  comments_connection(pagination: $pagination, filters: $filters, sort: $sort) {
+    nodes {
       documentId
       body
       createdAt
@@ -26,20 +26,35 @@ query Article($documentId: ID!) {
       liked_by {
         documentId
       }
+      users_permissions_user {
+        documentId
+        confirmed
+        blocked
+        username
+      }
       comments {
         documentId
-        body
-        createdAt
-        updatedAt
-        liked_by {
-          documentId
-        }
-        users_permissions_user {
-          documentId
-          confirmed
-          blocked
-          username
-        }
+      }
+    }
+    pageInfo {
+      page
+      pageCount
+      pageSize
+      total
+    }
+  }
+}`;
+
+const GET_NESTED_COMMENTS = `
+query Nodes($filters: CommentFiltersInput, $pagination: PaginationArg) {
+  comments_connection(filters: $filters, pagination: $pagination) {
+    nodes {
+      documentId
+      body
+      createdAt
+      updatedAt
+      liked_by {
+        documentId
       }
       users_permissions_user {
         documentId
@@ -47,15 +62,22 @@ query Article($documentId: ID!) {
         blocked
         username
       }
-    }  
+    }
+    pageInfo {
+      page
+      pageCount
+      pageSize
+      total
+    }
   }
 }`;
 
 const LIKE_COMMENT = `
-mutation UpdateComment($documentId: ID!, $data: CommentInput!) {
+mutation Liked_by($documentId: ID!, $data: CommentInput!) {
   updateComment(documentId: $documentId, data: $data) {
-    documentId
-    like
+    liked_by {
+      documentId
+    }
   }
 }`;
 
@@ -68,4 +90,11 @@ query PageInfo($filters: CommentFiltersInput) {
   }
 }`;
 
-export { POST_COMMENT, POST_REPLY, GET_COMMENTS, LIKE_COMMENT, COUNT_COMMENTS };
+export {
+  POST_COMMENT,
+  POST_REPLY,
+  GET_COMMENTS,
+  GET_NESTED_COMMENTS,
+  LIKE_COMMENT,
+  COUNT_COMMENTS,
+};

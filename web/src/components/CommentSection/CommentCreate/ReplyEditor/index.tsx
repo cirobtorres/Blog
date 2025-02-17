@@ -9,6 +9,7 @@ import {
 import { Skeleton } from "../../../Shadcnui/skeleton";
 import Document from "@tiptap/extension-document";
 import Paragraph from "@tiptap/extension-paragraph";
+import Mention from "@tiptap/extension-mention";
 import Text from "@tiptap/extension-text";
 import CharacterCount from "@tiptap/extension-character-count";
 import { saveReply } from "../../../../lib/comments";
@@ -57,6 +58,11 @@ const ReplyEditor = ({
       CharacterCount.configure({
         limit,
       }),
+      Mention.configure({
+        HTMLAttributes: {
+          class: "mention",
+        },
+      }),
     ],
     editorProps: {
       attributes: {
@@ -92,6 +98,7 @@ const ReplyEditor = ({
         formAction={formAction}
         editor={editor}
         content={content}
+        close={close}
       />
     )
   );
@@ -103,13 +110,21 @@ const EditableReplyContent = ({
   formAction,
   editor,
   content,
+  close,
 }: {
   formAction: (payload: FormData) => void;
   editor: EditorProps;
   content: string;
+  close: (value: boolean) => void;
 }) => {
+  useEffect(() => {
+    if (editor) {
+      editor.commands.focus();
+    }
+  }, [editor]);
+
   return (
-    <form action={formAction} className="flex flex-col gap-1 max-h-72">
+    <form action={formAction} className="flex flex-col gap-1">
       <EditorContent
         editor={editor}
         id="content"
@@ -135,11 +150,18 @@ const EditableReplyContent = ({
           </p>
         </div>
         <button
+          type="button"
+          onClick={() => close(false)}
+          className="w-28 rounded-2xl px-3 border border-blog-border bg-blog-background-2 hover:bg-blog-border hover:text-blog-foreground-readable-hover"
+        >
+          Cancelar
+        </button>
+        <button
           type="submit"
-          className={`rounded-2xl px-3 border-2 ${
+          className={`w-28 rounded-2xl px-3 ${
             editor.getHTML() === "<p></p>"
-              ? "border-transparent bg-[#747474] text-[#b3b3b3]"
-              : "border-blog-border bg-blog-background-2 hover:bg-blog-border hover:text-blog-foreground-readable-hover"
+              ? "bg-[#747474] text-[#b3b3b3]"
+              : "bg-blog-foreground-highlight hover:bg-[hsl(30,93%,71%)] text-blog-background-3"
           }`}
           disabled={editor.getHTML() === "<p></p>"}
         >

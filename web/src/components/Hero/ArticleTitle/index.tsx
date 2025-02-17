@@ -53,11 +53,11 @@ const ArticleTitle = async ({ article }: { article: Article }) => {
                 <Link href="#comment-session">
                   <MessageCircle className="size-6" />
                 </Link>
-                <p>
-                  <Suspense fallback={<Skeleton className="h-6 w-28" />}>
+                <Suspense fallback={<Skeleton className="h-6 w-28" />}>
+                  <p>
                     <CountComments articleId={article.documentId} />
-                  </Suspense>
-                </p>
+                  </p>
+                </Suspense>
               </div>
               <div className="flex items-center gap-4">
                 <button type="button">

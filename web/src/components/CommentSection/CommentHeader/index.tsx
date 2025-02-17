@@ -9,11 +9,11 @@ const CommentHeader = ({
 }) => {
   return (
     <div className="flex justify-center items-center gap-4 mb-12">
-      <h2 className="text-2xl font-extrabold">
-        <Suspense fallback={<Skeleton className="h-6 w-32" />}>
+      <Suspense fallback={<Skeleton className="h-6 w-32" />}>
+        <h2 className="text-2xl font-extrabold">
           <CountComments articleId={articleDocumentId} />
-        </Suspense>
-      </h2>
+        </h2>
+      </Suspense>
       <button className="flex">
         <svg
           xmlns="http://www.w3.org/2000/svg"

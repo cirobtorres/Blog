@@ -1,17 +1,20 @@
-import CommentRow from "./CommentRow";
 import CommentCreate from "./CommentCreate";
 import ProviderLogin from "../Authentication/Logins";
 import CommentHeader from "./CommentHeader";
+import Comments from "./Comments";
+import { getComments } from "../../lib/comments";
 
-const CommentSection = ({
+const CommentSection = async ({
   articleDocumentId,
-  comments,
   loggedUser,
 }: {
   articleDocumentId: string;
-  comments: CommentProps[];
   loggedUser: User;
 }) => {
+  const firstPage = 1;
+  const {
+    data: { nodes },
+  } = await getComments(articleDocumentId, firstPage);
   return (
     <section
       id="comment-session"
@@ -20,23 +23,12 @@ const CommentSection = ({
       <CommentHeader articleDocumentId={articleDocumentId} />
       {loggedUser.ok === false && <ProviderLogin />}
       <CommentCreate articleDocumentId={articleDocumentId} user={loggedUser} />
-      {comments.length > 0 ? (
-        comments.map(
-          (comment: CommentProps) =>
-            comment.parent_id === null && (
-              <CommentRow
-                key={comment.documentId}
-                articleDocumentId={articleDocumentId}
-                loggedUser={loggedUser}
-                comment={comment}
-              />
-            )
-        )
-      ) : (
-        <div className="text-center mt-12 mb-8">
-          <h3 className="text-xl">Nenhum comentário ainda!</h3>
-        </div>
-      )}
+      <Comments
+        articleDocumentId={articleDocumentId}
+        firstComments={nodes}
+        firstPage={firstPage}
+        loggedUser={loggedUser}
+      />
     </section>
   );
 };

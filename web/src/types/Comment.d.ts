@@ -3,31 +3,27 @@ type CommentProps = {
   body: string;
   createdAt: string;
   updatedAt: string;
-  parent_id: {
-    documentId: Key<string>;
-  };
-  liked_by: {
-    documentId: Key<string>;
+  parent_id: string | null;
+  liked_by: string[] | [];
+  comments: {
+    documentId: string;
   }[];
-  comments: SubComments[];
   users_permissions_user: {
-    documentId: Key<string>;
+    documentId: string;
     confirmed: boolean;
     blocked: boolean;
     username: string;
   };
 };
 
-type SubComments = {
-  documentId: Key<string>;
+type SubComment = {
+  documentId: string;
   body: string;
   createdAt: string;
   updatedAt: string;
-  liked_by: {
-    documentId: Key<string>;
-  }[];
+  liked_by: string[] | [];
   users_permissions_user: {
-    documentId: Key<string>;
+    documentId: string;
     confirmed: boolean;
     blocked: boolean;
     username: string;

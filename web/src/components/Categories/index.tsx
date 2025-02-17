@@ -33,13 +33,13 @@ const Category = ({ category }: { category: Category }) => {
     >
       <div className="flex justify-center flex-wrap gap-6 col-start-2 max-lg:col-start-1 px-4">
         <div className="w-full grid grid-cols-[1fr_auto_1fr] max-[800px]:grid-cols-1 items-center">
-          <hr className="w-full border border-blog-border max-[800px]:hidden" />
+          <hr className="w-full h-[1px] bg-blog-border max-[800px]:hidden" />
           <div className="px-4">
             <h2 className="text-[2.5rem] font-extrabold text-center max-[800px]:text-[2rem]">
               {category.name}
             </h2>
           </div>
-          <hr className="w-full border border-blog-border max-[800px]:hidden" />
+          <hr className="w-full h-[1px] bg-blog-border max-[800px]:hidden" />
         </div>
       </div>
     </article>

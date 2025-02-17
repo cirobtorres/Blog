@@ -117,10 +117,10 @@ const EditableContent = ({
         </div>
         <button
           type="submit"
-          className={`rounded-2xl px-3 border-2 ${
+          className={`w-28 rounded-2xl px-3 ${
             editor.getHTML() === "<p></p>"
-              ? "border-transparent bg-[#747474] text-[#b3b3b3]"
-              : "border-blog-border bg-blog-background-2 hover:bg-blog-border hover:text-blog-foreground-readable-hover"
+              ? "bg-[#747474] text-[#b3b3b3]"
+              : "bg-blog-foreground-highlight hover:bg-[hsl(30,93%,71%)] text-blog-background-3"
           }`}
           disabled={editor.getHTML() === "<p></p>"}
         >

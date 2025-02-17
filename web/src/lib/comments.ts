@@ -5,6 +5,8 @@ import { revalidatePath } from "next/cache";
 import {
   COUNT_COMMENTS,
   GET_COMMENTS,
+  GET_NESTED_COMMENTS,
+  LIKE_COMMENT,
   POST_COMMENT,
   POST_REPLY,
 } from "./queries/comments";
@@ -73,18 +75,95 @@ const saveReply = async (
   return { message: "error" };
 };
 
-const getComments = async (documentId: string) => {
+const getComments = async (documentId: string, page: number) => {
   try {
-    const { article }: { article: { comments: CommentProps[] } } =
-      await graphqlClient.request(GET_COMMENTS, {
-        documentId,
-      });
-    return { data: article };
+    const {
+      comments_connection,
+    }: {
+      comments_connection: {
+        nodes: CommentProps[];
+        pageInfo: {
+          page: number;
+          pageCount: number;
+          pageSize: number;
+          total: number;
+        };
+      };
+    } = await graphqlClient.request(GET_COMMENTS, {
+      filters: {
+        article: {
+          documentId: {
+            eq: documentId,
+          },
+        },
+      },
+      pagination: {
+        page,
+        pageSize: 10,
+      },
+      sort: "createdAt:desc",
+    });
+    return { data: comments_connection };
   } catch (error) {
     console.error("Failed to fetch get comments:", error);
     // throw new Error("Failed to fetch get comments");
   }
-  return { data: { comments: [] } };
+  return {
+    data: {
+      nodes: [],
+      pageInfo: {
+        page: null,
+        pageCount: null,
+        pageSize: null,
+        total: null,
+      },
+    },
+  };
+};
+
+const getNestedComments = async (documentId: string | null, page: number) => {
+  try {
+    const {
+      comments_connection,
+    }: {
+      comments_connection: {
+        nodes: CommentProps[];
+        pageInfo: {
+          page: number;
+          pageCount: number;
+          pageSize: number;
+          total: number;
+        };
+      };
+    } = await graphqlClient.request(GET_NESTED_COMMENTS, {
+      filters: {
+        parent_id: {
+          documentId: {
+            eq: documentId,
+          },
+        },
+      },
+      pagination: {
+        page: page,
+        pageSize: 5,
+      },
+    });
+    return { data: comments_connection };
+  } catch (error) {
+    console.error("Failed to fetch get nested comments:", error);
+    // throw new Error("Failed to fetch get nested comments");
+  }
+  return {
+    data: {
+      nodes: [],
+      pageInfo: {
+        page: null,
+        pageCount: null,
+        pageSize: null,
+        total: null,
+      },
+    },
+  };
 };
 
 const countComments = async (documentId: string) => {
@@ -109,13 +188,32 @@ const countComments = async (documentId: string) => {
   return { data: null };
 };
 
-const likeComment = async () => {
+const likeComment = async (
+  prevState: { message: boolean | null },
+  formData: FormData
+): Promise<{ message: boolean | null }> => {
   try {
-    // const
+    const documentId = formData.get("liked-comment-document-id");
+    const liked_by = formData.get("user-like-document-id");
+    await graphqlClient.request(LIKE_COMMENT, {
+      documentId,
+      data: {
+        liked_by,
+      },
+    });
+    return { message: true };
   } catch (error) {
     console.error("Failed to fetch like comments:", error);
     // throw new Error("Failed to fetch like comments");
   }
+  return { message: null };
 };
 
-export { saveComment, saveReply, getComments, likeComment, countComments };
+export {
+  saveComment,
+  saveReply,
+  getComments,
+  getNestedComments,
+  likeComment,
+  countComments,
+};
