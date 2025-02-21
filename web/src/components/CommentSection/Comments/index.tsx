@@ -19,7 +19,7 @@ const Comments = ({
   const [comments, setComments] = useState<CommentProps[]>(firstComments);
   const [page, setPage] = useState(firstPage + 1);
   const [loading, setLoading] = useState(false);
-  const [hasMore, setHasMore] = useState(true);
+  const [hasMore, setHasMore] = useState(false);
 
   const handleClick = async () => {
     setLoading(true);
@@ -29,6 +29,8 @@ const Comments = ({
     if (nodes.length > 0) {
       setComments((prev) => [...prev, ...nodes]);
     }
+    console.log(pageInfo.page);
+    console.log(pageInfo.pageCount);
     if (pageInfo.page === pageInfo.pageCount) setHasMore(false);
     setLoading(false);
   };

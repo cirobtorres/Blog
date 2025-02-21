@@ -12,9 +12,7 @@ const CommentSection = async ({
   loggedUser: User;
 }) => {
   const firstPage = 1;
-  const {
-    data: { nodes },
-  } = await getComments(articleDocumentId, firstPage);
+  const { data } = await getComments(articleDocumentId, firstPage);
   return (
     <section
       id="comment-session"
@@ -25,7 +23,7 @@ const CommentSection = async ({
       <CommentCreate articleDocumentId={articleDocumentId} user={loggedUser} />
       <Comments
         articleDocumentId={articleDocumentId}
-        firstComments={nodes}
+        firstComments={data.nodes}
         firstPage={firstPage}
         loggedUser={loggedUser}
       />

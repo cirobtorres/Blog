@@ -5,6 +5,13 @@ mutation CreateComment($data: CommentInput!) {
   }
 }`;
 
+const DELETE_COMMENT = `
+mutation DeleteComment($documentId: ID!) {
+  deleteComment(documentId: $documentId) {
+    documentId
+  }
+}`;
+
 const POST_REPLY = `
 mutation CreateComment($data: CommentInput!) {
   createComment(data: $data) {
@@ -92,6 +99,7 @@ query PageInfo($filters: CommentFiltersInput) {
 
 export {
   POST_COMMENT,
+  DELETE_COMMENT,
   POST_REPLY,
   GET_COMMENTS,
   GET_NESTED_COMMENTS,

@@ -4,6 +4,7 @@ import graphqlClient, { graphqlCommentClient } from "./graphQlClient";
 import { revalidatePath } from "next/cache";
 import {
   COUNT_COMMENTS,
+  DELETE_COMMENT,
   GET_COMMENTS,
   GET_NESTED_COMMENTS,
   LIKE_COMMENT,
@@ -29,11 +30,25 @@ const saveComment = async (
           users_permissions_user: userId,
         },
       });
-      revalidatePath("/");
+      revalidatePath("/", "layout");
       return { message: "success" };
     }
   } catch (error) {
     console.error("Failed to save comment", error);
+    // return { message: "error" };
+  }
+  return { message: "error" };
+};
+
+const deleteComment = async (commentDocumentId: string) => {
+  try {
+    await graphqlCommentClient.request(DELETE_COMMENT, {
+      documentId: commentDocumentId,
+    });
+    revalidatePath("/", "layout");
+    return { message: "success" };
+  } catch (error) {
+    console.error("Failed do delete comment", error);
     // return { message: "error" };
   }
   return { message: "error" };
@@ -211,6 +226,7 @@ const likeComment = async (
 
 export {
   saveComment,
+  deleteComment,
   saveReply,
   getComments,
   getNestedComments,
