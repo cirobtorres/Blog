@@ -2,6 +2,49 @@ const POST_COMMENT = `
 mutation CreateComment($data: CommentInput!) {
   createComment(data: $data) {
     documentId
+    body
+    createdAt
+    updatedAt
+    parent_id {
+      documentId
+    }
+    liked_by {
+      documentId
+    }
+    users_permissions_user {
+      documentId
+      confirmed
+      blocked
+      username
+    }
+    comments {
+      documentId
+    }
+  }
+}`;
+
+const POST_EDIT_COMMENT = `
+mutation UpdateComment($documentId: ID!, $data: CommentInput!) {
+  updateComment(documentId: $documentId, data: $data) {
+    documentId
+    body
+    createdAt
+    updatedAt
+    parent_id {
+      documentId
+    }
+    liked_by {
+      documentId
+    }
+    users_permissions_user {
+      documentId
+      confirmed
+      blocked
+      username
+    }
+    comments {
+      documentId
+    }
   }
 }`;
 
@@ -99,6 +142,7 @@ query PageInfo($filters: CommentFiltersInput) {
 
 export {
   POST_COMMENT,
+  POST_EDIT_COMMENT,
   DELETE_COMMENT,
   POST_REPLY,
   GET_COMMENTS,

@@ -6,7 +6,7 @@ import SheetMenu from "./SheetMenu";
 import SearchBar from "../SearchBar";
 import Image from "next/image";
 
-const HeaderContent = () => {
+const HeaderContent = ({ currentUser }: { currentUser: User }) => {
   return (
     <div className="h-full px-4 outline outline-[1px] outline-blog-border">
       <nav className="w-full h-full grid grid-cols-12 items-center gap-4 justify-between max-w-screen-2xl mx-auto">
@@ -26,6 +26,7 @@ const HeaderContent = () => {
           <SearchBar />
         </div>
         <ul className="col-span-3 h-full flex items-center gap-4 justify-end max-[1000px]:col-span-2 max-[650px]:hidden max-[650px]:col-span-0">
+          {currentUser.ok && <li>{currentUser.data?.username}</li>}
           <li>
             <Link href="https://github.com/cirobtorres" target="_blank">
               <IoLogoGithub className="size-7" />

@@ -10,7 +10,7 @@ const Author = async ({
   author: { name: string; avatar: { url: string; alternativeText: string } };
 }) => {
   return (
-    <div className="flex gap-4 items-center">
+    <div className="flex gap-2 items-center">
       <Link href="/sobre" className="group">
         <div className="relative flex size-10 shrink-0 overflow-hidden rounded-full">
           <Image
@@ -32,7 +32,7 @@ const Author = async ({
       </Link>
       <Link href="/sobre">
         <p className="transition-colors duration-500 hover:text-blog-foreground-readable-hover text-blog-foreground-highlight">
-          <strong>{author.name}</strong>
+          <strong>@{author.name}</strong>
         </p>
       </Link>
     </div>

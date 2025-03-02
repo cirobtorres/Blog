@@ -8,10 +8,12 @@ import {
   TooltipTrigger,
 } from "../../../../Shadcnui/tooltip";
 import { Check, Copy } from "lucide-react";
+import { useToast } from "../../../../../hooks/useToast";
 
 const CopyButton = ({ htmlToRender }: { htmlToRender: string }) => {
   const [copied, setCopied] = useState(false);
   const [disable, setDisable] = useState(false);
+  const { toast } = useToast();
 
   const handleCopy = () => {
     const codeContent = new DOMParser().parseFromString(
@@ -21,6 +23,7 @@ const CopyButton = ({ htmlToRender }: { htmlToRender: string }) => {
 
     if (codeContent) {
       navigator.clipboard.writeText(codeContent);
+      toast({ description: "Código copiado!" });
       setCopied(true); // Variable to control layout
       setDisable(true); // Disable user to click on it for the duration of the effect (3 seconds)
 
@@ -46,7 +49,7 @@ const CopyButton = ({ htmlToRender }: { htmlToRender: string }) => {
             disabled={disable}
           >
             <div
-              className={`absolute -top-[85%] left-1/2 -translate-x-1/2 z-50 overflow-hidden rounded-md bg-blog-border px-2 py-1 text-sm text-blog-foreground-readable transition-all duration-200 ${
+              className={`absolute -top-[105%] left-1/2 -translate-x-1/2 z-50 overflow-hidden rounded-md bg-blog-border px-2 py-1 text-sm text-blog-foreground-readable transition-all duration-200 ${
                 copied
                   ? "visible scale-110 opacity-100"
                   : "invisible scale-100 opacity-0"

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Open_Sans } from "next/font/google";
-import { ThemeProvider } from "../providers/themeProvider";
-import { getGlobal } from "../lib/global";
+import { ThemeProvider } from "../providers/ThemeProvider";
+import { getGlobal } from "../service/global";
 import "../styles/globals.css";
 import "../styles/shadcnui.css";
 

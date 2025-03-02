@@ -1,5 +1,5 @@
-import graphqlClient from "./graphQlClient";
-import { GET_ABOUT } from "./queries/about";
+import graphqlClient from "../lib/graphQlClient";
+import { GET_ABOUT } from "../lib/queries/about";
 
 const getAbout = async () => {
   try {

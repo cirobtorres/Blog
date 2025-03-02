@@ -1,5 +1,9 @@
-import graphqlClient from "./graphQlClient";
-import { COUNT_ARTICLES, GET_ARTICLE, GET_ARTICLES } from "./queries/articles";
+import graphqlClient from "../lib/graphQlClient";
+import {
+  COUNT_ARTICLES,
+  GET_ARTICLE,
+  GET_ARTICLES,
+} from "../lib/queries/articles";
 
 const getArticles = async (
   sort?: string | null,

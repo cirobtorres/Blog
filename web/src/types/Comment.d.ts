@@ -3,7 +3,7 @@ type CommentProps = {
   body: string;
   createdAt: string;
   updatedAt: string;
-  parent_id: string | null;
+  parent_id: { documentId: string } | null;
   liked_by: string[] | [];
   comments: {
     documentId: string;
@@ -28,4 +28,11 @@ type SubComment = {
     blocked: boolean;
     username: string;
   };
+};
+
+type PageInfo = {
+  page: number | null;
+  pageCount: number | null;
+  pageSize: number | null;
+  total: number | null;
 };

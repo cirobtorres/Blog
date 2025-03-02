@@ -7,7 +7,16 @@ import BreadCrumb from "./BreadCrumb";
 import Link from "next/link";
 import { Suspense } from "react";
 import { Skeleton } from "../../Shadcnui/skeleton";
-import CountComments from "../../CommentSection/CountComments";
+import serverCountComments from "../../../service/comments/server";
+
+const CountComments = async ({ articleId }: { articleId: string }) => {
+  const { data: commentLength } = await serverCountComments(articleId);
+  if (commentLength)
+    return commentLength <= 1
+      ? `${commentLength} comentário`
+      : `${commentLength} comentários`;
+  return `0 comentário`;
+};
 
 const ArticleTitle = async ({ article }: { article: Article }) => {
   return (

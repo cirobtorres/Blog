@@ -1,7 +1,7 @@
 "use server";
 
 import { StaticBody } from "../../components/Body";
-import { getAbout } from "../../lib/about";
+import { getAbout } from "../../service/about";
 
 export default async function AboutMePage() {
   const { data: about } = await getAbout();

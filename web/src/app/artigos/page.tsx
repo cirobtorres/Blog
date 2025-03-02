@@ -2,7 +2,7 @@
 
 import { Suspense } from "react";
 import { StaticBody } from "../../components/Body";
-import { countArticles, getArticles } from "../../lib/articles";
+import { countArticles, getArticles } from "../../service/articles";
 import Link from "next/link";
 import Image from "next/image";
 import { formatDateToCustomFormat } from "../../utils/dates";

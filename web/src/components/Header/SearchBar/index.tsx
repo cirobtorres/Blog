@@ -5,7 +5,7 @@ import { useDebouncedCallback } from "use-debounce";
 import { ReadonlyURLSearchParams, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import slugify from "../../../utils/slugify";
-import { getArticles } from "../../../lib/articles";
+import { getArticles } from "../../../service/articles";
 import Link from "next/link";
 import Image from "next/image";
 import {

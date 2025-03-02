@@ -1,7 +1,7 @@
 "use server";
 
 import Link from "next/link";
-import { getArticles } from "../../lib/articles";
+import { getArticles } from "../../service/articles";
 import LastPublishedArticleCard from "./LastPublishedArticleCard";
 import ArticleCardList from "./ArticleCardList";
 

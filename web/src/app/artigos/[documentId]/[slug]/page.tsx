@@ -1,13 +1,26 @@
-"use server";
+// "use server";
 
-import { getArticle } from "../../../../lib/articles";
+import { getArticle } from "../../../../service/articles";
 import { DynamicBody } from "../../../../components/Body";
 import Hero from "../../../../components/Hero";
 import Article from "../../../../components/Article";
 import Categories from "../../../../components/Categories";
 import RelatedArticles from "../../../../components/RelatedArticles";
-import CommentSection from "@/components/CommentSection";
 import { getUserMeLoader } from "@/service/user-me-loader";
+import { getGlobal } from "../../../../service/global";
+import Comments from "@/components/Comments";
+import { CommentProvider } from "@/providers/CommentProvider";
+
+export async function generateMetadata({ params }: Params) {
+  const { documentId } = await params;
+  const { data: global } = await getGlobal();
+  const { data: article } = await getArticle(documentId);
+
+  return {
+    title: `${global.siteName} | ${article.title}`,
+    description: article.title,
+  };
+}
 
 interface Params {
   params: {
@@ -34,10 +47,9 @@ export default async function ArticlesPage({ params }: Params) {
           />
         )}
         <RelatedArticles />
-        <CommentSection
-          articleDocumentId={article.documentId}
-          loggedUser={user}
-        />
+        <CommentProvider>
+          <Comments currentUser={user} />
+        </CommentProvider>
       </DynamicBody>
     );
   }

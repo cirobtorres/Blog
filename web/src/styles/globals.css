@@ -187,6 +187,14 @@ input[type="search"]::-webkit-search-results-decoration {
     }
   }
 
+  .tiptap p.is-editor-empty:first-child::before {
+    content: attr(data-placeholder);
+    color: #636363;
+    float: left;
+    height: 0;
+    pointer-events: none;
+  }
+
   /*------------------------------Margins------------------------------*/
   .blog-center-content {
     max-width: 1280px;

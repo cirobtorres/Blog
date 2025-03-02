@@ -4,7 +4,13 @@ import { useEffect, useRef } from "react";
 import ProgressBar from "./ProgressBar";
 import HeaderContent from "./HeaderContent";
 
-const FloatingHeader = ({ documentId }: { documentId?: string }) => {
+const FloatingHeader = ({
+  documentId,
+  currentUser,
+}: {
+  documentId?: string;
+  currentUser: User;
+}) => {
   const headerRef = useRef<HTMLElement>(null);
 
   const hideNavbarListener = () => {
@@ -38,19 +44,19 @@ const FloatingHeader = ({ documentId }: { documentId?: string }) => {
       id="floating-header"
       className="fixed h-12 w-full backdrop-blur-sm shrink-0 [z-index:10] top-0 transition-[top] duration-300 bg-blog-background-backdrop"
     >
-      <HeaderContent />
+      <HeaderContent currentUser={currentUser} />
       <ProgressBar documentId={documentId} />
     </header>
   );
 };
 
-const StaticHeader = () => {
+const StaticHeader = ({ currentUser }: { currentUser: User }) => {
   return (
     <header
       id="floating-header"
       className="z-10 h-12 w-full backdrop-blur-sm shrink-0 bg-blog-background-backdrop"
     >
-      <HeaderContent />
+      <HeaderContent currentUser={currentUser} />
     </header>
   );
 };

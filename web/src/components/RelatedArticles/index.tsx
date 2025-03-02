@@ -1,4 +1,4 @@
-import { getArticles } from "../../lib/articles";
+import { getArticles } from "../../service/articles";
 import { ArticleCard } from "../Cards/ArticleCardList";
 import { Carousel, CarouselContent, CarouselItem } from "../Shadcnui/carousel";
 
@@ -7,7 +7,7 @@ const RelatedArticles = async () => {
     pageSize: 5,
   });
   return (
-    <section className="border-t border-blog-border bg-blog-background-3 py-8 flex flex-col justify-center">
+    <section className="border-y border-blog-border bg-blog-background-3 py-8 flex flex-col justify-center">
       <div
         className="w-full max-w-screen-lg mx-auto mb-8 grid grid-cols-1" // grid grid-cols-article max-lg:grid-cols-article-800 items-center
       >
