@@ -208,7 +208,7 @@ input[type="search"]::-webkit-search-results-decoration {
     h4,
     h5,
     h6 {
-      padding-top: 3rem; /* To align the top of each heading with the bottom of the header when navigating with anchors */
+      padding-top: 3rem;
       margin-bottom: 1rem;
     }
     p {
@@ -337,8 +337,8 @@ input[type="search"]::-webkit-search-results-decoration {
     display: grid;
     grid-template-columns: 1fr;
     overflow-x: auto;
-    white-space: pre-wrap; /* Overflow x (scrollbar): comment this */
-    word-break: break-word; /* Overflow x (scrollbar): comment this */
+    white-space: pre-wrap;
+    word-break: break-word;
   }
 
   .blog-code .line {
@@ -346,8 +346,8 @@ input[type="search"]::-webkit-search-results-decoration {
     position: relative;
     padding: 0 1rem 0 4rem;
     font-size: 12px;
-    height: auto; /* Overflow x (scrollbar): set this to 20px */
-    min-height: 20px; /* Overflow x (scrollbar): comment this */
+    height: auto;
+    min-height: 20px;
     color: hsl(0, 0%, 50%);
   }
 
@@ -369,8 +369,8 @@ input[type="search"]::-webkit-search-results-decoration {
     left: 0;
     top: 0px;
     width: 2px;
-    height: auto; /* Overflow x (scrollbar): set this to 20px */
-    min-height: 20px; /* Overflow x (scrollbar): comment this */
+    height: auto;
+    min-height: 20px;
     background: var(--blog-foreground-highlight);
   }
 

@@ -1,4 +1,5 @@
 import { formatDateToYouTubeLikeFormat } from "@/utils/dates";
+import { useMemo } from "react";
 
 const CommentHeader = ({
   comment,
@@ -18,7 +19,10 @@ const CommentHeader = ({
     >
       {comment.users_permissions_user.username}
       <span className="text-[#808080]">
-        {formatDateToYouTubeLikeFormat(comment.createdAt)}
+        {useMemo(
+          () => formatDateToYouTubeLikeFormat(comment.createdAt),
+          [comment.createdAt]
+        )}
       </span>
       <span className="text-[#808080]">
         {comment.updatedAt > comment.createdAt && "(editado)"}

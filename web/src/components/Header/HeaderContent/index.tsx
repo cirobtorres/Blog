@@ -4,7 +4,7 @@ import BlogNavigationMenu from "./BlogNavigationMenu";
 import DarkModeToggle from "./DarkModeToggle";
 import SheetMenu from "./SheetMenu";
 import SearchBar from "../SearchBar";
-import Image from "next/image";
+// import Image from "next/image";
 
 const HeaderContent = ({ currentUser }: { currentUser: User }) => {
   return (
@@ -16,7 +16,8 @@ const HeaderContent = ({ currentUser }: { currentUser: User }) => {
               href="/"
               className="flex items-center justify-between text-sm uppercase font-extrabold h-full transition-colors duration-500 text-blog-foreground-readable hover:text-blog-foreground-readable-hover"
             >
-              <Image src="/images/logo.png" alt="logo" width={48} height={48} />
+              {/* <Image src="/images/logo.png" alt="logo" width={48} height={48} /> */}
+              HOME
             </Link>
           </div>
           <BlogNavigationMenu />

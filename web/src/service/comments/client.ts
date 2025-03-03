@@ -21,7 +21,7 @@ export const useAsync = (
   // updateComment => Promise<CommentProps>
   // countComments => Promise<number>
   // deleteComment => Promise<string>
-  dependencies: string[] = []
+  dependencies: any[] = []
 ) => {
   const { execute, ...state } = useAsyncFn(func, dependencies, true);
 
@@ -41,7 +41,7 @@ export const useAsyncFn = (
   // updateComment => Promise<CommentProps>
   // countComments => Promise<number>
   // deleteComment => Promise<string>
-  dependencies: string[] = [],
+  dependencies: any[] = [],
   initialLoading: boolean = false
 ) => {
   const [loading, setLoading] = useState(initialLoading);
@@ -70,7 +70,14 @@ export const useAsyncFn = (
   return { loading, error, value, execute };
 };
 
-export const clientCountComments = async (documentId: string) => {
+export const clientCountComments = async (
+  documentId: string,
+  parent_id: {
+    documentId: {
+      eq: string | null;
+    };
+  } | null = null
+) => {
   return graphqlCommentClient
     .request(COUNT_COMMENTS, {
       filters: {
@@ -79,6 +86,7 @@ export const clientCountComments = async (documentId: string) => {
             eq: documentId,
           },
         },
+        parent_id,
       },
     })
     .then((res) => {
@@ -107,8 +115,8 @@ export const clientGetComments = async (
     pageSize: null,
     limit: null,
     start: null,
-  }
-  // parentId: string | null = null
+  },
+  parentId: string | null = null
 ) => {
   return graphqlCommentClient
     .request(GET_COMMENTS, {
@@ -118,11 +126,11 @@ export const clientGetComments = async (
             eq: documentId,
           },
         },
-        // parent_id: {
-        //   documentId: {
-        //     eq: parentId,
-        //   },
-        // },
+        parent_id: {
+          documentId: {
+            eq: parentId,
+          },
+        },
       },
       pagination,
       sort: "createdAt:desc",

@@ -14,6 +14,7 @@ type CommentProviderProps = {
   createLocalComment: (comment: CommentProps) => void;
   updateLocalComment: (updatedComment: CommentProps) => void;
   deleteLocalComment: (documentId: string) => void;
+  toggleLocalCommentLike: (myDocumentId: string, addLike: boolean) => void;
 };
 
 export const CommentContext = React.createContext<CommentProviderProps>({
@@ -23,13 +24,14 @@ export const CommentContext = React.createContext<CommentProviderProps>({
   createLocalComment: () => {},
   updateLocalComment: () => {},
   deleteLocalComment: () => {},
+  toggleLocalCommentLike: () => {},
 });
 
 export function CommentProvider({ children }: { children: React.ReactNode }) {
   const { id } = useParams();
   const {
     loading,
-    error,
+    // error,
     value: initialComments,
   } = useAsync(
     async () => clientGetComments(id as string, { limit: 10 }),
@@ -82,6 +84,30 @@ export function CommentProvider({ children }: { children: React.ReactNode }) {
     });
   }
 
+  function toggleLocalCommentLike(myDocumentId: string, addLike: boolean) {
+    setComments((prevComments) => {
+      return prevComments.map((comment) => {
+        if (myDocumentId === comment.documentId) {
+          if (addLike) {
+            return {
+              ...comment,
+              liked_by: [...comment.liked_by, { documentId: myDocumentId }],
+            };
+          } else {
+            return {
+              ...comment,
+              liked_by: comment.liked_by.filter(
+                (likedUser) => likedUser.documentId !== myDocumentId
+              ),
+            };
+          }
+        } else {
+          return comment;
+        }
+      });
+    });
+  }
+
   return (
     <CommentContext.Provider
       value={{
@@ -91,6 +117,7 @@ export function CommentProvider({ children }: { children: React.ReactNode }) {
         createLocalComment,
         updateLocalComment,
         deleteLocalComment,
+        toggleLocalCommentLike,
       }}
     >
       {loading ? (
@@ -102,9 +129,9 @@ export function CommentProvider({ children }: { children: React.ReactNode }) {
           <EditorLoading />
           <CommentLoading rows={2} />
         </div>
-      ) : error ? (
-        error
       ) : (
+        // ) : error ? (
+        //   error
         children
       )}
     </CommentContext.Provider>

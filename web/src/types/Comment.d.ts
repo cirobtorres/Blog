@@ -3,25 +3,13 @@ type CommentProps = {
   body: string;
   createdAt: string;
   updatedAt: string;
-  parent_id: { documentId: string } | null;
-  liked_by: string[] | [];
+  liked_by: {
+    documentId: string;
+  }[];
   comments: {
     documentId: string;
   }[];
-  users_permissions_user: {
-    documentId: string;
-    confirmed: boolean;
-    blocked: boolean;
-    username: string;
-  };
-};
-
-type SubComment = {
-  documentId: string;
-  body: string;
-  createdAt: string;
-  updatedAt: string;
-  liked_by: string[] | [];
+  parent_id: { documentId: string } | null;
   users_permissions_user: {
     documentId: string;
     confirmed: boolean;

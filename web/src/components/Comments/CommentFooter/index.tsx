@@ -10,7 +10,13 @@ const CommentFooter = ({
   return (
     <div className="flex items-center gap-4">
       <div className="flex gap-1">
-        <button type="submit" className="flex items-center gap-3">
+        <button
+          type="submit"
+          className="flex items-center gap-3"
+          // aria-label={}
+          // onClick={}
+          // disabled={}
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="14"

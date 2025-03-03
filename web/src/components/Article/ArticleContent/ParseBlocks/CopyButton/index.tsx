@@ -8,12 +8,11 @@ import {
   TooltipTrigger,
 } from "../../../../Shadcnui/tooltip";
 import { Check, Copy } from "lucide-react";
-import { useToast } from "../../../../../hooks/useToast";
+import { toast } from "../../../../../hooks/useToast";
 
 const CopyButton = ({ htmlToRender }: { htmlToRender: string }) => {
   const [copied, setCopied] = useState(false);
   const [disable, setDisable] = useState(false);
-  const { toast } = useToast();
 
   const handleCopy = () => {
     const codeContent = new DOMParser().parseFromString(

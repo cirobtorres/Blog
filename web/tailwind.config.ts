@@ -131,6 +131,27 @@ export default {
             transform: "scale(0.8)",
           },
         },
+        prixClipFix: {
+          "0%": {
+            "clip-path": "polygon(50% 50%, 0 0, 0 0, 0 0, 0 0, 0 0)",
+          },
+          "25%": {
+            "clip-path":
+              "polygon(50% 50%, 0 0, 100% 0, 100% 0, 100% 0, 100% 0)",
+          },
+          "50%": {
+            "clip-path":
+              "polygon(50% 50%, 0 0, 100% 0, 100% 100%, 100% 100%, 100% 100%)",
+          },
+          "75%": {
+            "clip-path":
+              "polygon(50% 50%, 0 0, 100% 0, 100% 100%, 0 100%, 0 100%)",
+          },
+          "100%": {
+            "clip-path":
+              "polygon(50% 50%, 0 0, 100% 0, 100% 100%, 0 100%, 0 0)",
+          },
+        },
         // SHADCN/UI==========--------------------------------------------------
         "accordion-down": {
           from: {
@@ -155,6 +176,7 @@ export default {
         "clip-pop-up-and-bounce": "clip-pop-up-and-bounce 0.2s ease-out",
         "border-spin": "profile-border-spin 3s linear infinite",
         "blog-pulse": "blog-pulse 2s infinite",
+        prixClipFix: "prixClipFix 2s linear infinite",
 
         // SHADCN/UI==========--------------------------------------------------
         "accordion-down": "accordion-down 0.2s ease-out",
