@@ -8,14 +8,14 @@ import {
   DELETE_COMMENT,
   GET_COMMENTS,
   POST_COMMENT,
-  POST_EDIT_COMMENT,
+  UPDATE_COMMENT,
 } from "../../lib/queries/comments";
 import sanitizer from "../../utils/sanitizer";
 
 export const useAsync = (
   func: (
     ...args: any[]
-  ) => Promise<CommentProps | CommentProps[] | number | string>,
+  ) => Promise<CommentProps | CommentProps[] | number | string | void>,
   // getComments => Promise<CommentProps[]>
   // createComment => Promise<CommentProps>
   // updateComment => Promise<CommentProps>
@@ -35,7 +35,7 @@ export const useAsync = (
 export const useAsyncFn = (
   func: (
     ...args: any[]
-  ) => Promise<CommentProps | CommentProps[] | number | string>,
+  ) => Promise<CommentProps | CommentProps[] | number | string | void>,
   // getComments => Promise<CommentProps[]>
   // createComment => Promise<CommentProps>
   // updateComment => Promise<CommentProps>
@@ -47,11 +47,12 @@ export const useAsyncFn = (
   const [loading, setLoading] = useState(initialLoading);
   const [error, setError] = useState<string | null>(null);
   const [value, setValue] = useState<
-    CommentProps | CommentProps[] | number | string | null
+    CommentProps | CommentProps[] | number | string | void | null
   >(null);
 
   const execute = useCallback(async (...params: any[]) => {
     setLoading(true);
+    // await new Promise((resolve) => setTimeout(resolve, 2000));
     return func(...params)
       .then((data) => {
         setValue(data);
@@ -116,7 +117,8 @@ export const clientGetComments = async (
     limit: null,
     start: null,
   },
-  parentId: string | null = null
+  parentId: string | null = null,
+  sort: string | null = "createdAt:desc"
 ) => {
   return graphqlCommentClient
     .request(GET_COMMENTS, {
@@ -133,7 +135,7 @@ export const clientGetComments = async (
         },
       },
       pagination,
-      sort: "createdAt:desc",
+      sort,
     })
     .then((res) => {
       const typedRes = res as {
@@ -191,7 +193,7 @@ export const clientUpdateComment = async ({
 }) => {
   const sanitizedBody = sanitizer(body);
   return graphqlCommentClient
-    .request(POST_EDIT_COMMENT, {
+    .request(UPDATE_COMMENT, {
       documentId,
       data: {
         body: sanitizedBody,

@@ -11,17 +11,17 @@ const CommentLoading = ({ rows }: { rows?: number }) => {
         >
           <Skeleton className="shrink-0 size-12 rounded-full" />
           <div className="w-full flex flex-col gap-2">
-            <Skeleton className="w-48 h-4" />
+            <Skeleton className="w-48 h-6" />
             <div className="flex flex-col gap-1">
-              <Skeleton className="w-[91%] h-4" />
-              <Skeleton className="w-[64%] h-4" />
-              <Skeleton className="w-[78%] h-4" />
-              <Skeleton className="w-[39%] h-4" />
+              <Skeleton className="w-[85%] h-3" />
+              <Skeleton className="w-[85%] h-3" />
+              <Skeleton className="w-[65%] h-3" />
+              <Skeleton className="w-[75%] h-3" />
             </div>
             <div className="flex items-center gap-2">
-              <Skeleton className="size-4" />
-              <Skeleton className="size-4" />
-              <Skeleton className="w-[15%] h-4" />
+              <Skeleton className="size-5" />
+              <Skeleton className="size-5" />
+              <Skeleton className="w-[25%] h-5" />
             </div>
           </div>
         </div>

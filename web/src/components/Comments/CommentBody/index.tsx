@@ -1,10 +1,5 @@
 import DOMPurify from "dompurify";
 import Editor from "../Editor";
-import {
-  clientUpdateComment,
-  useAsyncFn,
-} from "../../../service/comments/client";
-import { toast } from "../../../hooks/useToast";
 
 const CommentBody = ({
   comment,
@@ -17,33 +12,16 @@ const CommentBody = ({
   isEditing: boolean;
   setIsEditing: (value: boolean) => void;
   currentUser: User;
-  onUpdate: (updatedComment: CommentProps) => void;
+  onUpdate: (body: string) => Promise<void>;
 }) => {
   const sanitizedHtml = DOMPurify.sanitize(comment.body);
-  const updateCommentFn = useAsyncFn(clientUpdateComment, [], false);
-
-  function onCommentUpdate(body: string): Promise<void> {
-    return updateCommentFn
-      .execute({ documentId: comment.documentId, body })
-      .then((updatedComment) => {
-        onUpdate(updatedComment as CommentProps);
-        setIsEditing(false);
-      })
-      .then(() => {
-        toast({ description: "Comentário editado!" });
-      })
-      .catch((error) => {
-        toast({ description: "Erro ao editar comentário" });
-        console.error(error);
-      });
-  }
 
   return currentUser.data?.documentId ===
     comment.users_permissions_user.documentId && isEditing ? (
     <Editor
       autoFocus
       initialContent={sanitizedHtml}
-      onSubmit={onCommentUpdate}
+      onSubmit={onUpdate}
       cancel={() => setIsEditing(false)}
     />
   ) : (
