@@ -1,11 +1,12 @@
 import sanitizeHtml from "sanitize-html";
 
+const allowedTags = ["p"];
+
 const sanitizer = (comment: string) => {
   return sanitizeHtml(comment, {
-    allowedTags: ["p"],
-    // allowedAttributes: {
-    //   a: ["href", "target"],
-    // },
+    allowedTags,
+    allowedAttributes: {}, // Allows no tag attributes
+    disallowedTagsMode: "discard", // Completely discards texts within unallowed tags
   });
 };
 

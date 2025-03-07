@@ -1,12 +1,12 @@
 const slugify = (str: string) => {
   return str
     .toLowerCase()
-    .normalize("NFD") // Normaliza a string para decompor caracteres acentuados
-    .replace(/[\u0300-\u036f]/g, "") // Remove marcas diacríticas (acentos)
-    .trim() // Remove espaços extras no início e no final
-    .replace(/[^\w\s-]/g, "") // Remove caracteres especiais
-    .replace(/[\s_-]+/g, "-") // Substitui espaços e underscores por hifens
-    .replace(/^-+|-+$/g, "");
+    .normalize("NFD") // Normalize the string to decompose accented characters
+    .replace(/[\u0300-\u036f]/g, "") // Removes diacritical marks (accents)
+    .trim() // Remove extra spaces at the beginning and end
+    .replace(/[^\w\s-]/g, "") // Remove special characters
+    .replace(/[\s_-]+/g, "-") // Replaces spaces and underscores with hyphens
+    .replace(/^-+|-+$/g, ""); // Removes - at the beginning and end
 };
 
 export default slugify;

@@ -66,7 +66,7 @@ export function CommentProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const createLocalComment = useCallback((comment: CommentProps) => {
-    setComments((prev) => [...prev, comment]);
+    setComments((prev) => [comment, ...prev]);
   }, []);
 
   const updateLocalReply = useCallback((child: CommentProps) => {

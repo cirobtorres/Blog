@@ -1,13 +1,14 @@
-"use server";
-
 import Link from "next/link";
 import Image from "next/image";
 import { Skeleton } from "../Shadcnui/skeleton";
 
-const Author = async ({
+const Author = ({
   author,
 }: {
-  author: { name: string; avatar: { url: string; alternativeText: string } };
+  author: {
+    name: string;
+    avatar: { url: string; alternativeText: string } | null;
+  };
 }) => {
   return (
     <div className="flex gap-2 items-center">
