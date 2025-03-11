@@ -215,21 +215,21 @@ const ParseDetails = ({
   body: string;
 }) => {
   return (
-    <article className="w-full blog-center-content blog-heading blog-margin blog-text blog-lists bg-blog-background-2 p-4 mb-4">
+    <article className="w-full blog-center-content blog-heading blog-margin blog-text blog-lists bg-blog-background-2 mb-4">
       {collapsible ? (
         <Accordion type="single" collapsible defaultValue="">
           <AccordionItem
             value="item-1"
             className="[&_h3]:pt-0 [&_h3]:mb-0 [&_h3_button_p]:mb-0"
           >
-            <AccordionTrigger>
+            <AccordionTrigger className="p-4">
               {title && (
                 <p className="text-2xl font-extrabold text-blog-foreground-highlight">
                   {title}
                 </p>
               )}
             </AccordionTrigger>
-            <AccordionContent>
+            <AccordionContent className="p-4">
               <ParseRichTextBlocks
                 key={`shared.rich-text-details-${id}`}
                 body={body}

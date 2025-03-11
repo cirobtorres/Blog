@@ -18,9 +18,9 @@ const serverCountComments = async (documentId: string) => {
     return { data: comments_connection.pageInfo.total };
   } catch (error) {
     console.error("Failed to fetch count comments:", error);
-    // throw new Error("Failed to fetch get comments");
+    throw new Error("Failed to fetch count comments");
   }
-  return { data: null };
+  // return { data: null };
 };
 
 export default serverCountComments;

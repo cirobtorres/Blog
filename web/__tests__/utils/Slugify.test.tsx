@@ -1,5 +1,5 @@
 import "@testing-library/jest-dom";
-import slugify from "../src/utils/slugify";
+import slugify from "../../src/utils/slugify";
 
 describe("Slugify", () => {
   it("slugify correctly", () => {

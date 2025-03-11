@@ -48,7 +48,7 @@ const CopyButton = ({ htmlToRender }: { htmlToRender: string }) => {
             disabled={disable}
           >
             <div
-              className={`absolute -top-[105%] left-1/2 -translate-x-1/2 z-50 overflow-hidden rounded-md bg-blog-border px-2 py-1 text-sm text-blog-foreground-readable transition-all duration-200 ${
+              className={`z-50 h-6 absolute -top-[105%] left-1/2 -translate-x-1/2 overflow-hidden rounded-md bg-blog-border px-2 py-1 text-blog-foreground-readable transition-all duration-200 ${
                 copied
                   ? "visible scale-110 opacity-100"
                   : "invisible scale-100 opacity-0"

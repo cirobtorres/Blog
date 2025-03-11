@@ -1,5 +1,5 @@
 import "@testing-library/jest-dom";
-import convertMarkdowToHtmlString from "../src/utils/markdown";
+import convertMarkdowToHtmlString from "../../src/utils/markdown";
 
 describe("convertMarkdowToHtmlString", () => {
   it("receives undefined data and returns empty string", async () => {

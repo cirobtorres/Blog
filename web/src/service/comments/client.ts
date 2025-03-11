@@ -52,7 +52,6 @@ export const useAsyncFn = (
 
   const execute = useCallback(async (...params: any[]) => {
     setLoading(true);
-    // await new Promise((resolve) => setTimeout(resolve, 2000));
     return func(...params)
       .then((data) => {
         setValue(data);

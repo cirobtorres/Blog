@@ -2,7 +2,7 @@ import "@testing-library/jest-dom";
 import {
   formatDateToCustomFormat,
   formatDateToYouTubeLikeFormat,
-} from "../src/utils/dates";
+} from "../../src/utils/dates";
 
 describe("formatDateToCustomFormat", () => {
   it("format date to custom format", () => {

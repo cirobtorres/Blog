@@ -21,7 +21,7 @@ const highlightPreBlocks = (htmlContent: string, highlighter: Highlighter) => {
 
       const highlightedCode = highlighter.codeToHtml(decodedHtml, {
         theme: "blog-theme",
-        lang: language || "plaintext",
+        lang: language,
         transformers: [
           transformerNotationHighlight({
             matchAlgorithm: "v3",
@@ -44,7 +44,7 @@ const highlightPreBlocks = (htmlContent: string, highlighter: Highlighter) => {
 
       processedHtml = processedHtml.replace(fullMatch, highlightedCode);
     } catch (error) {
-      console.error(`Erro ao destacar código com Shiki: ${error}`);
+      console.error(`Failed highlighting code with Shiki: ${error}`);
     }
   }
 

@@ -1,5 +1,5 @@
 import "@testing-library/jest-dom";
-import sanitizer from "../src/utils/sanitizer";
+import sanitizer from "../../src/utils/sanitizer";
 
 describe("Sanitizer", () => {
   it("sanitize the html tags", () => {
