@@ -65,6 +65,7 @@ export const useAsyncFn = (
       .finally(() => {
         setLoading(false);
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, dependencies);
 
   return { loading, error, value, execute };
@@ -97,9 +98,7 @@ export const clientCountComments = async (
     })
     .catch((error) => {
       console.error(error);
-      return Promise.reject(
-        error?.response?.data?.message ?? "Failed to fetch count comments"
-      );
+      return Promise.reject(new Error("Failed to fetch count comments"));
     });
 };
 
@@ -144,9 +143,7 @@ export const clientGetComments = async (
     })
     .catch((error) => {
       console.error(error);
-      return Promise.reject(
-        error?.response?.data?.message ?? "Failed to fetch get comments"
-      );
+      return Promise.reject(new Error("Failed to fetch get comments"));
     });
 };
 
@@ -177,9 +174,7 @@ export const clientSaveComment = async ({
     })
     .catch((error) => {
       console.error(error);
-      return Promise.reject(
-        error?.response?.data?.message ?? "Failed to fetch save comment"
-      );
+      return Promise.reject(new Error("Failed to fetch save comment"));
     });
 };
 
@@ -206,9 +201,7 @@ export const clientUpdateComment = async ({
     })
     .catch((error) => {
       console.error(error);
-      return Promise.reject(
-        error?.response?.data?.message ?? "Failed to fetch update comment"
-      );
+      return Promise.reject(new Error("Failed to fetch update comment"));
     });
 };
 
@@ -226,8 +219,7 @@ export const clientDeleteComment = async ({
       return typedRes.deleteComment.documentId;
     })
     .catch((error) => {
-      return Promise.reject(
-        error?.response?.data?.message ?? "Failed to fetch delete comment"
-      );
+      console.error(error);
+      return Promise.reject(new Error("Failed to fetch delete comment"));
     });
 };

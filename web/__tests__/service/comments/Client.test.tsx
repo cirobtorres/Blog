@@ -1,3 +1,4 @@
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { graphqlCommentClient } from "../../../src/lib/graphQlClient";
 import {
   clientCountComments,
@@ -5,6 +6,8 @@ import {
   clientGetComments,
   clientSaveComment,
   clientUpdateComment,
+  useAsync,
+  useAsyncFn,
 } from "../../../src/service/comments/client";
 
 jest.mock("../../../src/lib/graphQlClient", () => ({
@@ -15,9 +18,101 @@ jest.mock("../../../src/lib/graphQlClient", () => ({
 
 const mockedGraphQLClient = jest.mocked(graphqlCommentClient);
 
+const TestUseAsyncFnComponent = ({
+  asyncFunction,
+}: {
+  asyncFunction: () => Promise<
+    CommentProps | CommentProps[] | number | string | void
+  >;
+}) => {
+  const { value, error, loading, execute } = useAsyncFn(asyncFunction, []);
+
+  return (
+    <div>
+      {loading && <p data-testid="loading">Loading...</p>}
+      {value !== undefined && <p data-testid="result">{String(value)}</p>}
+      {error && <p data-testid="error">{error}</p>}
+      <button onClick={() => execute()}>Fetch Data</button>
+    </div>
+  );
+};
+
+const TestUseAsyncComponent = ({
+  asyncFunction,
+}: {
+  asyncFunction: () => Promise<
+    CommentProps | CommentProps[] | number | string | void
+  >;
+}) => {
+  const { value, error, loading } = useAsync(asyncFunction, []);
+
+  return (
+    <div>
+      {loading && <p data-testid="loading">Loading...</p>}
+      {value !== undefined && <p data-testid="result">{String(value)}</p>}
+      {error && <p data-testid="error">{error}</p>}
+    </div>
+  );
+};
+
 describe("Service Comments (client)", () => {
-  // it("useAsync", () => {});
-  // it("useAsyncFn", () => {});
+  describe("useAsyncFn", () => {
+    it("displays loading and then the result of a request", async () => {
+      const mockAsyncFunction = jest.fn().mockResolvedValue("Dados carregados");
+
+      render(<TestUseAsyncFnComponent asyncFunction={mockAsyncFunction} />);
+
+      const button = screen.getByText("Fetch Data");
+      fireEvent.click(button);
+
+      expect(screen.getByTestId("loading")).toBeInTheDocument();
+
+      await waitFor(() => {
+        expect(screen.getByTestId("result")).toHaveTextContent(
+          "Dados carregados"
+        );
+      });
+
+      expect(screen.queryByTestId("loading")).not.toBeInTheDocument();
+    });
+
+    it("throws error when request fails", async () => {
+      const mockAsyncFunction = jest
+        .fn()
+        .mockRejectedValue(new Error("Erro na API"));
+
+      render(<TestUseAsyncFnComponent asyncFunction={mockAsyncFunction} />);
+
+      const button = screen.getByText("Fetch Data");
+      fireEvent.click(button);
+
+      expect(screen.getByTestId("loading")).toBeInTheDocument();
+
+      await waitFor(() => {
+        expect(screen.getByTestId("error")).toHaveTextContent("Erro na API");
+      });
+
+      expect(screen.queryByTestId("loading")).not.toBeInTheDocument();
+    });
+  });
+
+  describe("useAsync", () => {
+    it("displays loading and then the result of a request", async () => {
+      const mockAsyncFunction = jest.fn().mockResolvedValue("Dados carregados");
+
+      render(<TestUseAsyncComponent asyncFunction={mockAsyncFunction} />);
+
+      expect(screen.getByTestId("loading")).toBeInTheDocument();
+
+      await waitFor(() => {
+        expect(screen.getByTestId("result")).toHaveTextContent(
+          "Dados carregados"
+        );
+      });
+
+      expect(screen.queryByTestId("loading")).not.toBeInTheDocument();
+    });
+  });
 
   beforeEach(() => {
     jest.spyOn(console, "error").mockImplementation(() => {}); // Silence console.error
@@ -46,7 +141,7 @@ describe("Service Comments (client)", () => {
       (mockedGraphQLClient.request as jest.Mock).mockRejectedValue(
         new Error("API Error")
       );
-      await expect(clientCountComments("123")).rejects.toContain(
+      await expect(clientCountComments("123")).rejects.toThrow(
         "Failed to fetch count comments"
       );
     });
@@ -72,7 +167,7 @@ describe("Service Comments (client)", () => {
     it("rejects promise and print a warning", async () => {
       mockedGraphQLClient.request.mockRejectedValue(new Error("Erro na API"));
 
-      await expect(clientGetComments("123")).rejects.toContain(
+      await expect(clientGetComments("123")).rejects.toThrow(
         "Failed to fetch get comments"
       );
     });
@@ -101,7 +196,7 @@ describe("Service Comments (client)", () => {
 
       await expect(
         clientSaveComment({ documentId: "123", body: "Falha", userId: "user1" })
-      ).rejects.toContain("Failed to fetch save comment");
+      ).rejects.toThrow("Failed to fetch save comment");
     });
   });
 
@@ -127,12 +222,12 @@ describe("Service Comments (client)", () => {
 
       await expect(
         clientUpdateComment({ documentId: "123", body: "Falha" })
-      ).rejects.toContain("Failed to fetch update comment");
+      ).rejects.toThrow("Failed to fetch update comment");
     });
   });
 
   describe("clientDeleteComment", () => {
-    it("deve deletar um comentário e retornar o documentId", async () => {
+    it("deletes a comment and returns documentId", async () => {
       mockedGraphQLClient.request.mockResolvedValue({
         deleteComment: { documentId: "123" },
       });
@@ -143,12 +238,12 @@ describe("Service Comments (client)", () => {
       expect(mockedGraphQLClient.request).toHaveBeenCalled();
     });
 
-    it("deve tratar erro ao falhar na deleção", async () => {
+    it("fails do delete a comment", async () => {
       mockedGraphQLClient.request.mockRejectedValue(new Error("Erro na API"));
 
-      await expect(
-        clientDeleteComment({ documentId: "123" })
-      ).rejects.toContain("Failed to fetch delete comment");
+      await expect(clientDeleteComment({ documentId: "123" })).rejects.toThrow(
+        "Failed to fetch delete comment"
+      );
     });
   });
 });

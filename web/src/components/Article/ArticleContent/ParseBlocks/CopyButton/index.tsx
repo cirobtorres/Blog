@@ -9,6 +9,7 @@ import {
 } from "../../../../Shadcnui/tooltip";
 import { Check, Copy } from "lucide-react";
 import { toast } from "../../../../../hooks/useToast";
+import { ToasterProvider } from "../../../../../providers/ToasterProvider";
 
 const CopyButton = ({ htmlToRender }: { htmlToRender: string }) => {
   const [copied, setCopied] = useState(false);
@@ -35,50 +36,53 @@ const CopyButton = ({ htmlToRender }: { htmlToRender: string }) => {
   };
 
   return (
-    <TooltipProvider>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <button
-            className={`absolute right-2 top-1/2 -translate-y-1/2 size-8 rounded-lg transition-colors duration-500 dark text-blog-foreground-readable border border-blog-border ${
-              !copied
-                ? "hover:bg-blog-border hover:text-blog-foreground-readable-hover"
-                : "bg-blog-border"
-            }`}
-            onClick={handleCopy}
-            disabled={disable}
-          >
-            <div
-              className={`z-50 h-6 absolute -top-[105%] left-1/2 -translate-x-1/2 overflow-hidden rounded-md bg-blog-border px-2 py-1 text-blog-foreground-readable transition-all duration-200 ${
-                copied
-                  ? "visible scale-110 opacity-100"
-                  : "invisible scale-100 opacity-0"
+    <>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <button
+              className={`absolute right-2 top-1/2 -translate-y-1/2 size-8 rounded-lg transition-colors duration-500 dark text-blog-foreground-readable border border-blog-border ${
+                !copied
+                  ? "hover:bg-blog-border hover:text-blog-foreground-readable-hover"
+                  : "bg-blog-border"
               }`}
+              onClick={handleCopy}
+              disabled={disable}
             >
-              <p className="text-xs">Copiado!</p>
-            </div>
-            <div className="relative w-full">
-              <Check
-                className={`absolute size-4 left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 ${
+              <div
+                className={`z-50 h-6 absolute -top-[105%] left-1/2 -translate-x-1/2 overflow-hidden rounded-md bg-blog-border px-2 py-1 text-blog-foreground-readable transition-all duration-200 ${
                   copied
-                    ? " visible animate-clip-pop-up-and-bounce"
-                    : " invisible"
+                    ? "visible scale-110 opacity-100"
+                    : "invisible scale-100 opacity-0"
                 }`}
-              />
-              <Copy
-                className={`absolute size-4 left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 ${
-                  !copied ? "visible" : "invisible"
-                }`}
-              />
-            </div>
-          </button>
-        </TooltipTrigger>
-        {!copied && (
-          <TooltipContent>
-            <p>Copiar</p>
-          </TooltipContent>
-        )}
-      </Tooltip>
-    </TooltipProvider>
+              >
+                <p className="text-xs">Copiado!</p>
+              </div>
+              <div className="relative w-full">
+                <Check
+                  className={`absolute size-4 left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 ${
+                    copied
+                      ? " visible animate-clip-pop-up-and-bounce"
+                      : " invisible"
+                  }`}
+                />
+                <Copy
+                  className={`absolute size-4 left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 ${
+                    !copied ? "visible" : "invisible"
+                  }`}
+                />
+              </div>
+            </button>
+          </TooltipTrigger>
+          {!copied && (
+            <TooltipContent>
+              <p>Copiar</p>
+            </TooltipContent>
+          )}
+        </Tooltip>
+      </TooltipProvider>
+      <ToasterProvider />
+    </>
   );
 };
 
