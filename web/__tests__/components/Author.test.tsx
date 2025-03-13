@@ -1,5 +1,5 @@
 import "@testing-library/jest-dom";
-import Author, { AuthorSkeleton } from "../src/components/Author";
+import Author, { AuthorSkeleton } from "../../src/components/Author";
 import { render, screen, waitFor } from "@testing-library/react";
 
 describe("Author (has avatar)", () => {

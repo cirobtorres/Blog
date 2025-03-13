@@ -2,7 +2,7 @@ import "@testing-library/jest-dom";
 import { axe } from "jest-axe";
 import { toHaveNoViolations } from "jest-axe";
 import { act, render, screen } from "@testing-library/react";
-import Footer from "../src/components/Footer";
+import Footer from "../../src/components/Footer";
 
 describe("Footer", () => {
   it("renders a footer <footer></footer> within the component", () => {

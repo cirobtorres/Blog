@@ -126,7 +126,6 @@ describe("Article Libs", () => {
   test("countArticles returns total articles", async () => {
     (graphqlClient.request as jest.Mock).mockResolvedValue(mockPageData);
     const result = await countArticles();
-
     expect(result.data).toEqual(mockPageData.articles_connection.pageInfo);
     expect(graphqlClient.request).toHaveBeenCalled();
   });

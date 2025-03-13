@@ -238,7 +238,7 @@ let highlighter: Highlighter | null = null;
 
 const getHighlighter = async () => {
   if (!highlighter) {
-    // console.log("Creating a new highlighter instance");
+    // Creating a new highlighter instance
     highlighter = await createHighlighter({
       themes: [blogTheme],
       langs: [
@@ -254,9 +254,8 @@ const getHighlighter = async () => {
         "plaintext",
       ],
     });
-  } else {
-    // console.log("Using existing highlighter instance");
   }
+  // Using an existing highlighter instance
   return highlighter;
 };
 

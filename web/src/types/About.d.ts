@@ -1,8 +1,8 @@
 type About = {
   documentId: string;
   title: string;
-  updatedAt: string;
   createdAt: string;
+  updatedAt: string;
   publishedAt: string;
   blocks: ArticleBlocks[];
 };

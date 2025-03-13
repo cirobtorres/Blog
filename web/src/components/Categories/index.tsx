@@ -21,7 +21,7 @@ const Categories = ({
       {subCategories.length > 0 && (
         <Subcategories subCategories={subCategories} />
       )}
-      <Tags tags={tags} />
+      {tags.length > 0 && <Tags tags={tags} />}
     </section>
   );
 };
@@ -29,7 +29,9 @@ const Categories = ({
 const Category = ({ category }: { category: Category }) => {
   return (
     <article
-      className="max-w-screen-2xl mx-auto mb-12" // grid grid-cols-article max-lg:grid-cols-article-800 items-center
+      className="max-w-screen-2xl mx-auto mb-12"
+      role="region"
+      aria-labelledby="category-title"
     >
       <div className="flex justify-center flex-wrap gap-6 col-start-2 max-lg:col-start-1 px-4">
         <div className="w-full grid grid-cols-[1fr_auto_1fr] max-[800px]:grid-cols-1 items-center">
@@ -49,21 +51,31 @@ const Category = ({ category }: { category: Category }) => {
 const Subcategories = ({ subCategories }: { subCategories: SubCategory[] }) => {
   return (
     <article
-      className="max-w-screen-2xl mx-auto mb-10" // grid grid-cols-article max-lg:grid-cols-article-800 items-center
+      className="max-w-screen-2xl mx-auto mb-10"
+      aria-labelledby="subcategories-title"
     >
-      <ul className="max-w-[500px] mx-auto flex flex-wrap gap-6 justify-center items-center px-4">
+      <ul
+        role="list"
+        aria-label="Lista de tecnologias empregadas no artigo"
+        className="max-w-[500px] mx-auto flex flex-wrap gap-6 justify-center items-center px-4"
+      >
         {subCategories.map((subCategory) => (
           <li
             key={subCategory.documentId}
             className="flex items-center gap-2 h-6"
           >
-            <div dangerouslySetInnerHTML={{ __html: subCategory.svg }} />
+            <div
+              aria-hidden="true" // Accessibility: decorative element
+              dangerouslySetInnerHTML={{ __html: subCategory.svg }}
+            />
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Link
                     href={subCategory.link}
                     target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`Abrir nova aba com site oficial de ${subCategory.name}`}
                     className="transition-all duration-500 text-blog-foreground-readable hover:text-blog-foreground-readable-hover"
                   >
                     {subCategory.name}
@@ -83,17 +95,26 @@ const Subcategories = ({ subCategories }: { subCategories: SubCategory[] }) => {
 
 const Tags = ({ tags }: { tags: Tag[] }) => {
   return (
-    <article className="mb-10">
-      <div
-        className="max-w-screen-lg mx-auto" // grid grid-cols-article max-lg:grid-cols-article-800 items-center
-      >
-        <div className="flex justify-center flex-wrap gap-6 blog-heading col-start-2 max-lg:col-start-1 px-40 max-[800px]:px-4">
+    <article data-testid="article-tags" className="mb-10">
+      <div className="max-w-screen-lg mx-auto">
+        <ul
+          role="list"
+          data-testid="article-tags-list"
+          aria-labelledby="tags-list"
+          aria-label="Lista de tags"
+          className="flex justify-center flex-wrap gap-6 blog-heading col-start-2 max-lg:col-start-1 px-40 max-[800px]:px-4"
+        >
           {tags.map((tag) => (
-            <div key={tag.documentId} className="flex items-center gap-2 h-6">
+            <li
+              data-testid={tag.documentId}
+              key={tag.documentId}
+              role="listitem"
+              className="flex items-center gap-2 h-6"
+            >
               <span className="text-[#808080] italic">{tag.name}</span>
-            </div>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </article>
   );

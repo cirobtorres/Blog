@@ -6,7 +6,7 @@ import {
   PaginationLink,
 } from "../Shadcnui/pagination";
 
-const ArticlesPages = async ({
+const ArticlesPages = ({
   page,
   articlesCount,
 }: {
