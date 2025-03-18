@@ -6,8 +6,9 @@ exports[`Categories Categories component matches the snapshot 1`] = `
     class="mb-10"
   >
     <article
-      aria-labelledby="category-title"
+      aria-label="Categoria: Ciência da Computação"
       class="max-w-screen-2xl mx-auto mb-12"
+      data-testid="article-category"
       role="region"
     >
       <div
@@ -24,6 +25,7 @@ exports[`Categories Categories component matches the snapshot 1`] = `
           >
             <h2
               class="text-[2.5rem] font-extrabold text-center max-[800px]:text-[2rem]"
+              id="category-title-123"
             >
               Ciência da Computação
             </h2>
@@ -35,101 +37,24 @@ exports[`Categories Categories component matches the snapshot 1`] = `
       </div>
     </article>
     <article
-      aria-labelledby="subcategories-title"
+      aria-label="Tecnologias"
       class="max-w-screen-2xl mx-auto mb-10"
+      data-testid="article-subcategories"
     >
       <ul
-        aria-label="Lista de tecnologias empregadas no artigo"
+        aria-label="Lista das tecnologias abordadas neste artigo"
         class="max-w-[500px] mx-auto flex flex-wrap gap-6 justify-center items-center px-4"
+        data-testid="article-subcategories-list"
         role="list"
       >
         <li
           class="flex items-center gap-2 h-6"
+          data-testid="14"
+          role="listitem"
         >
           <div
             aria-hidden="true"
-          >
-            <svg
-              viewBox="0 0 180 180"
-              width="18"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <mask
-                height="180"
-                id=":r8:mask0_408_134"
-                maskUnits="userSpaceOnUse"
-                style="mask-type: alpha;"
-                width="180"
-                x="0"
-                y="0"
-              >
-                <circle
-                  cx="90"
-                  cy="90"
-                  fill="black"
-                  r="90"
-                />
-              </mask>
-              <g
-                mask="url(#:r8:mask0_408_134)"
-              >
-                <circle
-                  cx="90"
-                  cy="90"
-                  data-circle="true"
-                  fill="black"
-                  r="90"
-                />
-                <path
-                  d="M149.508 157.52L69.142 54H54V125.97H66.1136V69.3836L139.999 164.845C143.333 162.614 146.509 160.165 149.508 157.52Z"
-                  fill="url(#:r8:paint0_linear_408_134)"
-                />
-                <rect
-                  fill="url(#:r8:paint1_linear_408_134)"
-                  height="72"
-                  width="12"
-                  x="115"
-                  y="54"
-                />
-              </g>
-              <defs>
-                <lineargradient
-                  gradientUnits="userSpaceOnUse"
-                  id=":r8:paint0_linear_408_134"
-                  x1="109"
-                  x2="144.5"
-                  y1="116.5"
-                  y2="160.5"
-                >
-                  <stop
-                    stop-color="white"
-                  />
-                  <stop
-                    offset="1"
-                    stop-color="white"
-                    stop-opacity="0"
-                  />
-                </lineargradient>
-                <lineargradient
-                  gradientUnits="userSpaceOnUse"
-                  id=":r8:paint1_linear_408_134"
-                  x1="121"
-                  x2="120.799"
-                  y1="54"
-                  y2="106.875"
-                >
-                  <stop
-                    stop-color="white"
-                  />
-                  <stop
-                    offset="1"
-                    stop-color="white"
-                    stop-opacity="0"
-                  />
-                </lineargradient>
-              </defs>
-            </svg>
-          </div>
+          />
           <a
             aria-label="Abrir nova aba com site oficial de Next.js"
             class="transition-all duration-500 text-blog-foreground-readable hover:text-blog-foreground-readable-hover"
@@ -141,9 +66,29 @@ exports[`Categories Categories component matches the snapshot 1`] = `
             Next.js
           </a>
         </li>
+        <li
+          class="flex items-center gap-2 h-6"
+          data-testid="16"
+          role="listitem"
+        >
+          <div
+            aria-hidden="true"
+          />
+          <a
+            aria-label="Abrir nova aba com site oficial de Nest.js"
+            class="transition-all duration-500 text-blog-foreground-readable hover:text-blog-foreground-readable-hover"
+            data-state="closed"
+            href="https://nestjs.com/"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Nest.js
+          </a>
+        </li>
       </ul>
     </article>
     <article
+      aria-label="Tags"
       class="mb-10"
       data-testid="article-tags"
     >
@@ -152,12 +97,12 @@ exports[`Categories Categories component matches the snapshot 1`] = `
       >
         <ul
           aria-label="Lista de tags"
-          aria-labelledby="tags-list"
           class="flex justify-center flex-wrap gap-6 blog-heading col-start-2 max-lg:col-start-1 px-40 max-[800px]:px-4"
           data-testid="article-tags-list"
           role="list"
         >
           <li
+            aria-labelledby="Tag-1"
             class="flex items-center gap-2 h-6"
             data-testid="8"
             role="listitem"
@@ -169,6 +114,7 @@ exports[`Categories Categories component matches the snapshot 1`] = `
             </span>
           </li>
           <li
+            aria-labelledby="Tag-2"
             class="flex items-center gap-2 h-6"
             data-testid="11"
             role="listitem"
@@ -180,6 +126,7 @@ exports[`Categories Categories component matches the snapshot 1`] = `
             </span>
           </li>
           <li
+            aria-labelledby="Tag-3"
             class="flex items-center gap-2 h-6"
             data-testid="19"
             role="listitem"
@@ -191,6 +138,7 @@ exports[`Categories Categories component matches the snapshot 1`] = `
             </span>
           </li>
           <li
+            aria-labelledby="Tag-4"
             class="flex items-center gap-2 h-6"
             data-testid="33"
             role="listitem"
@@ -202,6 +150,7 @@ exports[`Categories Categories component matches the snapshot 1`] = `
             </span>
           </li>
           <li
+            aria-labelledby="Tag-5"
             class="flex items-center gap-2 h-6"
             data-testid="35"
             role="listitem"

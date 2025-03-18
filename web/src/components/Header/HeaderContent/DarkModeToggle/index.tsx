@@ -9,43 +9,86 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "../../../Shadcnui/tooltip";
+import { useEffect, useState } from "react";
+import { Skeleton } from "../../../Shadcnui/skeleton";
 
 export default function DarkModeToggle() {
-  const { setTheme } = useTheme();
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
-    <TooltipProvider>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <div className="relative">
-            <div className="flex shrink-0 justify-center items-center rounded-full size-8 duration-700 cursor-pointer bg-blog-background-1 dark:bg-[hsl(0,0%,14.9%,0.75)]">
+    <>
+      {!mounted && (
+        <Skeleton
+          aria-label="Carregando botão de modo noturno"
+          className="size-8 rounded-full"
+        />
+      )}
+      {mounted && (
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
               <button
-                type="button"
+                data-testid="dark-mode-toggle"
+                aria-label={`Botão de alternar tema de ${
+                  theme === "dark" ? "escuro" : "claro"
+                } para ${theme !== "dark" ? "escuro" : "claro"}`}
+                role="group"
+                className="relative focus:outline-blog-foreground-highlight"
+                tabIndex={0}
                 onClick={(event) => {
                   event?.preventDefault();
-                  setTheme("light");
+                  setTheme(theme === "dark" ? "light" : "dark");
                 }}
-                className="absolute opacity-0 scale-0 dark:opacity-100 dark:scale-100 p-1"
               >
-                <FaMoon className="text-xl text-[#40b88c]" />
+                <div className="flex shrink-0 justify-center items-center rounded-full size-8 cursor-pointer bg-blog-background-1 dark:bg-[hsl(0,0%,14.9%,0.75)]">
+                  <div
+                    data-testid="moon-button"
+                    tabIndex={-1}
+                    className="absolute duration-[600ms] transition-all pointer-events-none p-1"
+                    style={{
+                      opacity: theme === "dark" ? 1 : 0,
+                      scale: theme === "dark" ? 1 : 0,
+                      transform:
+                        theme === "dark" ? "rotate(360deg)" : "rotate(0deg)",
+                    }}
+                  >
+                    <FaMoon className="text-xl text-[#40b88c]" />
+                  </div>
+                  <div
+                    data-testid="sun-button"
+                    tabIndex={-1}
+                    className="absolute duration-[600ms] transition-all pointer-events-none p-1"
+                    style={{
+                      opacity: theme !== "dark" ? 1 : 0,
+                      scale: theme !== "dark" ? 1 : 0,
+                      transform:
+                        theme !== "dark" ? "rotate(0deg)" : "rotate(360deg)",
+                    }}
+                  >
+                    <IoSunny className="text-xl text-[#fbbf24]" />
+                  </div>
+                  <span
+                    data-testid="dark-mode-toggle-span"
+                    role="status"
+                    aria-live="polite"
+                    className="sr-only"
+                  >
+                    Tema {theme === "dark" ? "escuro" : "claro"}
+                  </span>
+                </div>
               </button>
-              <button
-                type="button"
-                onClick={(event) => {
-                  event?.preventDefault();
-                  setTheme("dark");
-                }}
-                className="absolute opacity-100 scale-100 dark:opacity-0 dark:scale-0 p-1"
-              >
-                <IoSunny className="text-xl text-[#fbbf24]" />
-              </button>
-            </div>
-          </div>
-        </TooltipTrigger>
-        <TooltipContent>
-          <p>Alternar tema</p>
-        </TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
+            </TooltipTrigger>
+            <TooltipContent role="tooltip">
+              <p data-testid="dark-mode-toggle-tooltip-text">Alternar tema</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      )}
+    </>
   );
 }

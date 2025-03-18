@@ -287,6 +287,7 @@ const CommentRow = ({
           />
           <CommentFooter
             comment={comment}
+            currentUser={currentUser}
             isReplying={isReplying}
             setIsReplying={setIsReplying}
           />

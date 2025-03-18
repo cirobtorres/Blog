@@ -4,6 +4,7 @@ exports[`Author (has avatar) matches the snapshot 1`] = `
 <DocumentFragment>
   <div
     class="flex gap-2 items-center"
+    data-id="author"
   >
     <a
       class="group"
@@ -44,6 +45,7 @@ exports[`Author (has no avatar) matches the snapshot 1`] = `
 <DocumentFragment>
   <div
     class="flex gap-2 items-center"
+    data-id="author"
   >
     <a
       class="group"

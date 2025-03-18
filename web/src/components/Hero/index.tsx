@@ -1,5 +1,3 @@
-"use server";
-
 import ArticleTitle from "./ArticleTitle";
 import ArticleImage from "./ArticleImage";
 

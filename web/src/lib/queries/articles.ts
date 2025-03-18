@@ -31,6 +31,7 @@ query Articles($sort: [String], $filters: ArticleFiltersInput, $pagination: Pagi
       name
     }
     author {
+      documentId
       name
       avatar {
         documentId
@@ -60,6 +61,7 @@ query Blocks($documentId: ID!) {
       height
     }
     author {
+      documentId
       name
       avatar {
         url

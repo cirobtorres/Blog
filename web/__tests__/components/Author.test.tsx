@@ -4,8 +4,10 @@ import { render, screen, waitFor } from "@testing-library/react";
 
 describe("Author (has avatar)", () => {
   const authorMock = {
+    documentId: "123",
     name: "John Doe",
     avatar: {
+      documentId: "1133445",
       url: "/path/to/avatar.jpg",
       alternativeText: "Avatar de John Doe",
     },
@@ -63,6 +65,7 @@ describe("Author (has avatar)", () => {
 
 describe("Author (has no avatar)", () => {
   const authorMock = {
+    documentId: "12345",
     name: "John Doe",
     avatar: null,
   };

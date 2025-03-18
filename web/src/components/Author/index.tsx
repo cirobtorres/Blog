@@ -2,16 +2,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { Skeleton } from "../Shadcnui/skeleton";
 
-const Author = ({
-  author,
-}: {
-  author: {
-    name: string;
-    avatar: { url: string; alternativeText: string } | null;
-  };
-}) => {
+const Author = ({ author }: { author: Author }) => {
   return (
-    <div className="flex gap-2 items-center">
+    <div data-id="author" className="flex gap-2 items-center">
       <Link href="/sobre" className="group">
         <div className="relative flex size-10 shrink-0 overflow-hidden rounded-full">
           <Image

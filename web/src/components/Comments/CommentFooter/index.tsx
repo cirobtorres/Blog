@@ -1,9 +1,11 @@
 const CommentFooter = ({
   comment,
+  currentUser,
   isReplying,
   setIsReplying,
 }: {
   comment: CommentProps;
+  currentUser: User;
   setIsReplying: (value: boolean) => void;
   isReplying: boolean;
 }) => {
@@ -35,17 +37,19 @@ const CommentFooter = ({
         </button>
         <span className="text-sm">{comment.liked_by.length}</span>
       </div>
-      <button
-        type="button"
-        onClick={() => setIsReplying(!isReplying)}
-        className={`text-sm transition-colors duration-500 hover:text-blog-foreground-readable-hover ${
-          isReplying
-            ? "text-blog-foreground-highlight"
-            : "text-blog-foreground-readable"
-        }`}
-      >
-        Responder
-      </button>
+      {currentUser.ok && (
+        <button
+          type="button"
+          onClick={() => setIsReplying(!isReplying)}
+          className={`text-sm transition-colors duration-500 hover:text-blog-foreground-readable-hover ${
+            isReplying
+              ? "text-blog-foreground-highlight"
+              : "text-blog-foreground-readable"
+          }`}
+        >
+          Responder
+        </button>
+      )}
     </div>
   );
 };

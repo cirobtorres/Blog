@@ -20,7 +20,6 @@ const serverCountComments = async (documentId: string) => {
     console.error("Failed to fetch count comments:", error);
     throw new Error("Failed to fetch count comments");
   }
-  // return { data: null };
 };
 
 export default serverCountComments;

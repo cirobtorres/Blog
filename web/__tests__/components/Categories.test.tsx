@@ -6,10 +6,16 @@ describe("Categories", () => {
 
   const subcategoriesMocked = [
     {
-      documentId: "123",
+      documentId: "14",
       name: "Next.js",
       link: "https://nextjs.org/",
-      svg: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" width="18"><mask height="180" id=":r8:mask0_408_134" maskUnits="userSpaceOnUse" width="180" x="0" y="0" style="mask-type: alpha;"><circle cx="90" cy="90" fill="black" r="90"></circle></mask><g mask="url(#:r8:mask0_408_134)"><circle cx="90" cy="90" data-circle="true" fill="black" r="90"></circle><path d="M149.508 157.52L69.142 54H54V125.97H66.1136V69.3836L139.999 164.845C143.333 162.614 146.509 160.165 149.508 157.52Z" fill="url(#:r8:paint0_linear_408_134)"></path><rect fill="url(#:r8:paint1_linear_408_134)" height="72" width="12" x="115" y="54"></rect></g><defs><linearGradient gradientUnits="userSpaceOnUse" id=":r8:paint0_linear_408_134" x1="109" x2="144.5" y1="116.5" y2="160.5"><stop stop-color="white"></stop><stop offset="1" stop-color="white" stop-opacity="0"></stop></linearGradient><linearGradient gradientUnits="userSpaceOnUse" id=":r8:paint1_linear_408_134" x1="121" x2="120.799" y1="54" y2="106.875"><stop stop-color="white"></stop><stop offset="1" stop-color="white" stop-opacity="0"></stop></linearGradient></defs></svg>',
+      svg: "",
+    },
+    {
+      documentId: "16",
+      name: "Nest.js",
+      link: "https://nestjs.com/",
+      svg: "",
     },
   ];
 
@@ -47,21 +53,96 @@ describe("Categories", () => {
     expect(asFragment()).toMatchSnapshot();
   });
 
-  // describe("Category", () => {
-  //   test("", () => {});
-  // });
+  describe("Category", () => {
+    test("Category to be in the document", () => {
+      render(<Categories category={categoryMocked} />);
 
-  // describe("Subcategories", () => {
-  //   test("", () => {});
-  // });
+      const category = screen.queryByTestId("article-category");
+      expect(category).toBeInTheDocument();
+    });
 
-  describe("Tags", () => {
-    test("Tags to not be in the document if tags article has no tag", () => {
+    test("Category accessibility attributes are rendered", () => {
+      render(<Categories category={categoryMocked} />);
+
+      const category = screen.queryByTestId("article-category");
+      expect(category).toHaveAttribute("role", "region");
+      expect(category).toHaveAttribute(
+        "aria-label",
+        `Categoria: ${categoryMocked.name}`
+      );
+      const h2Component = category?.querySelector("h2");
+      expect(h2Component).toHaveAttribute(
+        "id",
+        `category-title-${categoryMocked.documentId}`
+      );
+      expect(h2Component).toHaveTextContent(categoryMocked.name);
+    });
+  });
+
+  describe("Subcategories", () => {
+    test("Subcategories to not be in the document if article has no subcategories", () => {
+      render(<Categories category={categoryMocked} />);
+
+      const subcategories = screen.queryByTestId("article-subcategories");
+      expect(subcategories).toBeNull();
+      expect(subcategories).not.toBeInTheDocument();
+    });
+
+    test("Subcategories to not be in the document if subcategories is an empty array", () => {
+      render(<Categories category={categoryMocked} subCategories={[]} />);
+
+      const subcategories = screen.queryByTestId("article-subcategories");
+      expect(subcategories).toBeNull();
+      expect(subcategories).not.toBeInTheDocument();
+    });
+
+    test("Subcategories accessibility attributes are rendered", () => {
       render(
         <Categories
           category={categoryMocked}
           subCategories={subcategoriesMocked}
-          tags={[]}
+        />
+      );
+
+      // article
+      const subcategories = screen.queryByTestId("article-subcategories");
+      expect(subcategories).toHaveAttribute("aria-label", "Tecnologias");
+
+      // ul
+      const subcategoriesList = screen.queryByTestId(
+        "article-subcategories-list"
+      );
+      expect(subcategoriesList).toHaveAttribute("role", "list");
+      expect(subcategoriesList).toHaveAttribute(
+        "aria-label",
+        "Lista das tecnologias abordadas neste artigo"
+      );
+
+      const listItems = subcategoriesList?.getElementsByTagName("li");
+      expect(listItems?.length).toBe(subcategoriesMocked.length);
+
+      // li
+      Array.from(listItems || []).forEach((listItem, index) => {
+        const subcategory = subcategoriesMocked[index];
+        expect(listItem).toHaveAttribute("data-testid", subcategory.documentId);
+        expect(listItem).toHaveAttribute("role", "listitem");
+
+        const linklement = listItem.querySelector("a");
+        expect(linklement).toHaveAttribute("target", "_blank");
+        expect(linklement).toHaveAttribute("rel", "noopener noreferrer");
+        expect(linklement).toHaveClass(
+          "text-blog-foreground-readable hover:text-blog-foreground-readable-hover"
+        );
+      });
+    });
+  });
+
+  describe("Tags", () => {
+    test("Tags to not be in the document if article has no tag", () => {
+      render(
+        <Categories
+          category={categoryMocked}
+          subCategories={subcategoriesMocked}
         />
       );
 
@@ -70,14 +151,16 @@ describe("Categories", () => {
       expect(tags).not.toBeInTheDocument();
     });
 
-    test("Tags to be in the document if tags article has tags", () => {
-      render(
-        <Categories
-          category={categoryMocked}
-          subCategories={subcategoriesMocked}
-          tags={tagsMocked}
-        />
-      );
+    test("Tags to not be in the document if article is an empty array", () => {
+      render(<Categories category={categoryMocked} tags={[]} />);
+
+      const tags = screen.queryByTestId("article-tags");
+      expect(tags).toBeNull();
+      expect(tags).not.toBeInTheDocument();
+    });
+
+    test("Tags to be in the document if tags is a non empty array of tags", () => {
+      render(<Categories category={categoryMocked} tags={tagsMocked} />);
 
       const tags = screen.queryByTestId("article-tags");
       expect(tags).toBeInTheDocument();
@@ -89,25 +172,29 @@ describe("Categories", () => {
     });
 
     test("Tags accessibility attributes are rendered", () => {
-      render(
-        <Categories
-          category={categoryMocked}
-          subCategories={subcategoriesMocked}
-          tags={tagsMocked}
-        />
-      );
+      render(<Categories category={categoryMocked} tags={tagsMocked} />);
 
+      // article
+      const tag = screen.queryByTestId("article-tags");
+      expect(tag).toHaveAttribute("aria-label", "Tags");
+
+      // ul
       const tagsList = screen.queryByTestId("article-tags-list");
       expect(tagsList).toHaveAttribute("role", "list");
-      expect(tagsList).toHaveAttribute("aria-labelledby", "tags-list");
+      expect(tagsList).toHaveAttribute("aria-label", "Lista de tags");
 
       const listItems = tagsList?.getElementsByTagName("li");
       expect(listItems?.length).toBe(tagsMocked.length);
 
+      // li
       Array.from(listItems || []).forEach((listItem, index) => {
         const tag = tagsMocked[index];
+
         expect(listItem).toHaveAttribute("data-testid", tag.documentId);
         expect(listItem).toHaveAttribute("role", "listitem");
+
+        const spanElement = listItem.querySelector("span");
+        expect(spanElement).toHaveClass("text-[#808080] italic");
       });
     });
   });

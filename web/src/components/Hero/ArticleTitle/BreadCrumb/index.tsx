@@ -7,6 +7,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "../../../Shadcnui/breadcrumb";
+import slugify from "@/utils/slugify";
 
 const BreadCrumb = ({
   title,
@@ -16,22 +17,29 @@ const BreadCrumb = ({
   category: Category;
 }) => {
   return (
-    <BreadcrumbRoot className="mb-4">
+    <BreadcrumbRoot data-testid="breadcrumb" className="mb-4">
       <BreadcrumbList>
         <BreadcrumbItem>
-          <BreadcrumbLink href="/">Home</BreadcrumbLink>
+          <BreadcrumbLink data-testid="breadcrumb-home" href="/">
+            Home
+          </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator>
           <Slash />
         </BreadcrumbSeparator>
         <BreadcrumbItem>
-          <BreadcrumbLink href="/artigos">Artigos</BreadcrumbLink>
+          <BreadcrumbLink data-testid="breadcrumb-article" href="/artigos">
+            Artigos
+          </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator>
           <Slash />
         </BreadcrumbSeparator>
         <BreadcrumbPage>
-          <BreadcrumbLink href={`/artigos?category=${category.name}`}>
+          <BreadcrumbLink
+            data-testid="breadcrumb-article-category"
+            href={`/artigos?category=${slugify(category.name)}`}
+          >
             {category.name}
           </BreadcrumbLink>
         </BreadcrumbPage>
@@ -39,7 +47,10 @@ const BreadCrumb = ({
           <Slash />
         </BreadcrumbSeparator>
         <BreadcrumbItem>
-          <BreadcrumbPage className="relative text-blog-foreground-highlight after:absolute after:top-[calc(100%_+_4px)] after:left-0 after:w-full after:h-0.5 after:rounded-full after:bg-gradient-to-r after:from-transparent after:to-blog-foreground-highlight">
+          <BreadcrumbPage
+            data-testid="breadcrumb-article-title"
+            className="relative text-blog-foreground-highlight after:absolute after:top-[calc(100%_+_4px)] after:left-0 after:w-full after:h-0.5 after:rounded-full after:bg-gradient-to-r after:from-transparent after:to-blog-foreground-highlight"
+          >
             {title}
           </BreadcrumbPage>
         </BreadcrumbItem>
