@@ -59,7 +59,7 @@ const SearchBar = () => {
   return (
     <Dialog>
       <DialogTrigger
-        className="w-full rounded-3xl flex-1" // outline-none
+        className="w-full rounded flex-1" // outline-none
       >
         <Trigger />
       </DialogTrigger>
@@ -77,8 +77,12 @@ const SearchBar = () => {
 };
 
 const Trigger = () => {
+  // The search bar that displays on header content
   return (
-    <div className="relative w-full min-h-10 flex items-center rounded-3xl border border-blog-border bg-blog-background-1 transition-all duration-500 hover:bg-blog-background-2 group">
+    <div
+      data-testid="search-bar-trigger"
+      className="relative w-full min-h-8 mx-auto flex items-center rounded border border-blog-border bg-[#1d1d1d] transition-all duration-500 hover:bg-blog-border group"
+    >
       <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 transition-all duration-500 text-blog-foreground-readable group-hover:text-blog-foreground-readable-hover" />
       <p className="pl-12 w-full text-sm text-start transition-all duration-500 group-hover:text-blog-foreground-readable-hover">
         Buscar artigos...
@@ -94,6 +98,7 @@ const InputQuery = ({
   searchParams: ReadonlyURLSearchParams;
   handleSearch: (queryString: string) => void;
 }) => {
+  // This is the search bar once the user has clicked it (that appears inside the dialog)
   return (
     <div className="relative min-h-10 w-full py-4">
       <div className="flex flex-col justify-center">
@@ -109,6 +114,7 @@ const InputQuery = ({
           name="query"
           autoComplete="off"
           placeholder="Pesquisar artigos..."
+          autoFocus
           onChange={(event) => {
             handleSearch(event.target.value);
           }}
@@ -127,6 +133,7 @@ const InputQuery = ({
 };
 
 const ResultQuery = ({ sortedList }: { sortedList: ArticleList | null }) => {
+  // This is the search result box that appears bellow the search bar
   return (
     <>
       {sortedList && sortedList.length > 0 && (

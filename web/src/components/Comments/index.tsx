@@ -82,7 +82,11 @@ export default function Comments({ currentUser }: { currentUser: User }) {
           />
         ))}
       {comments !== null && comments.length === 0 && (
-        <h3 className="text-xl text-[#747474]">Ninguém comentou ainda...</h3>
+        <div className="mt-10">
+          <h3 className="text-xl text-center text-[#747474]">
+            Ninguém comentou ainda...
+          </h3>
+        </div>
       )}
       {pageLengthMemmorized && (
         <LoadMoreButton func={loadMore} loadFunc={loading} />
@@ -216,7 +220,7 @@ const CommentRow = ({
 
   function onCommentUpdate(body: string): Promise<void> {
     return updateCommentFn
-      .execute({ documentId: comment.documentId, body }) // TODO: está atualizando apenas os comments(parent_id=null)
+      .execute({ documentId: comment.documentId, body }) // TODO(BUG): está atualizando apenas os comments(parent_id=null)
       .then((updatedComment) => {
         return updatedComment as CommentProps;
       })

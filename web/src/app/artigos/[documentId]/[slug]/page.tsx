@@ -1,5 +1,3 @@
-// "use server";
-
 import { getArticle } from "../../../../service/articles";
 import { DynamicBody } from "../../../../components/Body";
 import Hero from "../../../../components/Hero";
@@ -36,7 +34,7 @@ export default async function ArticlesPage({ params }: Params) {
 
   if (article) {
     return (
-      <DynamicBody documentId={documentId}>
+      <DynamicBody>
         <Hero article={article} />
         <Article documentId={documentId} content={article.blocks} />
         {article.category && (

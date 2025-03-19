@@ -1,4 +1,4 @@
-import "@testing-library/jest-dom";
+import { requestBackEndNextImage } from "@/utils/mountNextImage";
 import Author, { AuthorSkeleton } from "../../src/components/Author";
 import { render, screen, waitFor } from "@testing-library/react";
 
@@ -25,25 +25,21 @@ describe("Author (has avatar)", () => {
   it("renders author's avatar inside link", async () => {
     render(<Author author={authorMock} />);
 
-    const avatarAvatarImage = screen.getByAltText(/Avatar de John Doe/i);
+    const avatarImage = screen.getByAltText(/Avatar de John Doe/i);
 
-    const PLACEHOLDER_IMAGE_NAME = "avatar";
-    const PLACEHOLDER_IMAGE_FILE_EXTENSION = "jpg";
-    const PROTOCOL = "http";
-    const IP = "127.0.0.1";
-    const PORT = "1337";
-    const PATH = "/path/to/";
-    const URL = `${PROTOCOL}://${IP}:${PORT}${PATH}${PLACEHOLDER_IMAGE_NAME}.${PLACEHOLDER_IMAGE_FILE_EXTENSION}`;
-    const encodedURL = encodeURIComponent(URL);
-    const width = "w=3840";
-    const quality = "q=75";
-    const nextOptimizedImage = `/_next/image?url=${encodedURL}&${width}&${quality}`;
+    const nextOptimizedImage = requestBackEndNextImage(
+      "avatar",
+      "jpg",
+      "/path/to/",
+      3840,
+      75
+    );
 
     await waitFor(() =>
       // next Image loads components lazily
       // Without waitFor, nextOptimizedImage would be null
       // Either use waitFor or set Image in the component as priority
-      expect(avatarAvatarImage.getAttribute("src")).toBe(nextOptimizedImage)
+      expect(avatarImage.getAttribute("src")).toBe(nextOptimizedImage)
     );
   });
 

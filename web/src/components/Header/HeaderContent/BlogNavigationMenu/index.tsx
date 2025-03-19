@@ -15,7 +15,10 @@ import { usePathname } from "next/navigation";
 const BlogNavigationMenu = () => {
   const pathname = usePathname();
   return (
-    <NavigationMenu className="max-[1000px]:hidden">
+    <NavigationMenu
+      data-testid="blog-navigation-menu"
+      className="max-[1000px]:hidden"
+    >
       <NavigationMenuList>
         <NavigationMenuItem>
           <Link href="/artigos" legacyBehavior passHref>

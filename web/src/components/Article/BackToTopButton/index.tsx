@@ -24,22 +24,20 @@ const BackToTopButton = ({
 
   useEffect(() => {
     const returnToTopListener = () => {
-      const headerHeight = documentId ? 400 + 480 + 80 + 16 : 0;
-      const scrollTop = window.scrollY;
-      const correctedScrollTop =
-        scrollTop - headerHeight < 0 ? 0 : scrollTop - headerHeight;
-      const elementHeight = document.getElementById(
-        documentId || "body"
-      )?.scrollHeight;
+      const elementHeight =
+        document.documentElement.scrollHeight - window.innerHeight; // Page total height
+
       const progressCircle = document.getElementById("progress-circle");
       const progressCircleBlur = document.getElementById(
         "progress-circle-blur"
       );
+
+      const scrollTop = window.scrollY; // Current Y coord height (pixels)
+
       if (elementHeight && progressCircle && progressCircleBlur) {
         const percentage =
-          correctedScrollTop < elementHeight
-            ? (correctedScrollTop / elementHeight) * 100
-            : 100;
+          scrollTop < elementHeight ? (scrollTop / elementHeight) * 100 : 100; // Current Y coord (percentage)
+
         progressCircle.style.strokeDashoffset = `${
           circunference.current - (circunference.current * percentage) / 100
         }`;

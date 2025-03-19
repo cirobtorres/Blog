@@ -23,8 +23,12 @@ import { IoLogoGithub } from "react-icons/io";
 export default function SheetMenu() {
   return (
     <Sheet>
-      <SheetTrigger asChild>
-        <Button variant="ghost" className="min-[1001px]:hidden">
+      <SheetTrigger
+        asChild
+        data-testid="sheet-menu"
+        className="min-[1001px]:hidden"
+      >
+        <Button variant="ghost">
           <Menu />
         </Button>
       </SheetTrigger>

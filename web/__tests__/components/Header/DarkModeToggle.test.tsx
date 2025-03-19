@@ -53,7 +53,7 @@ describe("DarkModeToggle", () => {
     expect(toogleButtonSpanDark).toHaveTextContent("Tema escuro");
     expect(toogleButtonDark).toHaveAttribute(
       "aria-label",
-      "Botão de alternar tema de escuro para claro"
+      "Alternar entre tema claro e escuro"
     );
     expect(moonButtonDark).toHaveStyle("opacity: 1");
     expect(moonButtonDark).toHaveStyle("transform: rotate(360deg)");
@@ -68,15 +68,10 @@ describe("DarkModeToggle", () => {
     fireEvent.click(toogleButtonDark);
     const { getAllByTestId } = render(<DarkModeToggle />);
 
-    const toogleButtonLight = getAllByTestId("dark-mode-toggle")[1];
     const toogleButtonSpanLight = getAllByTestId("dark-mode-toggle-span")[1];
     const moonButtonLight = getAllByTestId("moon-button")[1];
     const sunButtonLight = getAllByTestId("sun-button")[1];
 
-    expect(toogleButtonLight).toHaveAttribute(
-      "aria-label",
-      "Botão de alternar tema de claro para escuro"
-    );
     expect(toogleButtonSpanLight).toHaveTextContent("Tema claro");
     expect(moonButtonLight).toHaveStyle("opacity: 0");
     expect(moonButtonLight).toHaveStyle("transform: rotate(0deg)");

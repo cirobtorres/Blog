@@ -1,4 +1,3 @@
-import "@testing-library/jest-dom";
 import { axe } from "jest-axe";
 import { toHaveNoViolations } from "jest-axe";
 import { act, render, screen } from "@testing-library/react";

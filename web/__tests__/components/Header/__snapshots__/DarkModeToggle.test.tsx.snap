@@ -3,18 +3,18 @@
 exports[`DarkModeToggle matches the snapshot 1`] = `
 <DocumentFragment>
   <button
-    aria-label="Botão de alternar tema de claro para escuro"
-    class="relative focus:outline-blog-foreground-highlight"
+    aria-label="Alternar entre tema claro e escuro"
+    class="outline-blog-foreground-highlight focus:outline-blog-foreground-highlight relative"
     data-state="closed"
     data-testid="dark-mode-toggle"
-    role="group"
+    role="button"
     tabindex="0"
   >
     <div
       class="flex shrink-0 justify-center items-center rounded-full size-8 cursor-pointer bg-blog-background-1 dark:bg-[hsl(0,0%,14.9%,0.75)]"
     >
       <div
-        class="absolute duration-[600ms] transition-all pointer-events-none p-1"
+        class="absolute duration-500 transition-all pointer-events-none p-1"
         data-testid="moon-button"
         style="opacity: 0; transform: rotate(0deg);"
         tabindex="-1"
@@ -35,7 +35,7 @@ exports[`DarkModeToggle matches the snapshot 1`] = `
         </svg>
       </div>
       <div
-        class="absolute duration-[600ms] transition-all pointer-events-none p-1"
+        class="absolute duration-500 transition-all pointer-events-none p-1"
         data-testid="sun-button"
         style="opacity: 1; transform: rotate(0deg);"
         tabindex="-1"

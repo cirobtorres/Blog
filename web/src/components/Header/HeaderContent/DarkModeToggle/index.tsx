@@ -31,14 +31,15 @@ export default function DarkModeToggle() {
       {mounted && (
         <TooltipProvider>
           <Tooltip>
-            <TooltipTrigger asChild>
+            <TooltipTrigger
+              asChild
+              className="outline-blog-foreground-highlight focus:outline-blog-foreground-highlight"
+            >
               <button
                 data-testid="dark-mode-toggle"
-                aria-label={`Botão de alternar tema de ${
-                  theme === "dark" ? "escuro" : "claro"
-                } para ${theme !== "dark" ? "escuro" : "claro"}`}
-                role="group"
-                className="relative focus:outline-blog-foreground-highlight"
+                aria-label="Alternar entre tema claro e escuro"
+                role="button"
+                className="relative"
                 tabIndex={0}
                 onClick={(event) => {
                   event?.preventDefault();
@@ -49,7 +50,7 @@ export default function DarkModeToggle() {
                   <div
                     data-testid="moon-button"
                     tabIndex={-1}
-                    className="absolute duration-[600ms] transition-all pointer-events-none p-1"
+                    className="absolute duration-500 transition-all pointer-events-none p-1"
                     style={{
                       opacity: theme === "dark" ? 1 : 0,
                       scale: theme === "dark" ? 1 : 0,
@@ -62,7 +63,7 @@ export default function DarkModeToggle() {
                   <div
                     data-testid="sun-button"
                     tabIndex={-1}
-                    className="absolute duration-[600ms] transition-all pointer-events-none p-1"
+                    className="absolute duration-500 transition-all pointer-events-none p-1"
                     style={{
                       opacity: theme !== "dark" ? 1 : 0,
                       scale: theme !== "dark" ? 1 : 0,

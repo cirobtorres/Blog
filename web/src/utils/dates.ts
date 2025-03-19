@@ -25,6 +25,29 @@ function formatDateToCustomFormat(ISOdate: string) {
   return `${day} de ${month} de ${year}, às ${hours}:${minutes}`;
 }
 
+function formatDateMonthAndYear(ISOdate: string) {
+  const date = new Date(ISOdate);
+
+  const months = [
+    "janeiro",
+    "fevereiro",
+    "março",
+    "abril",
+    "maio",
+    "junho",
+    "julho",
+    "agosto",
+    "setembro",
+    "outubro",
+    "novembro",
+    "dezembro",
+  ];
+
+  const month = months[date.getMonth()];
+  const year = date.getFullYear();
+  return `${month} de ${year}`;
+}
+
 function formatDateToYouTubeLikeFormat(ISOdate: string) {
   const date = new Date(ISOdate);
   const now = new Date();
@@ -54,4 +77,8 @@ function formatDateToYouTubeLikeFormat(ISOdate: string) {
   return `há ${diffInMonths} ${diffInMonths === 1 ? "mês" : "meses"}`;
 }
 
-export { formatDateToCustomFormat, formatDateToYouTubeLikeFormat };
+export {
+  formatDateToCustomFormat,
+  formatDateMonthAndYear,
+  formatDateToYouTubeLikeFormat,
+};

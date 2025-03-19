@@ -1,46 +1,71 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
-const ProgressBar = ({ documentId }: { documentId?: string }) => {
+const ProgressBar = () => {
+  const progressBarRef = useRef<HTMLDivElement>(null);
+  const progressBarBlurRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
-    const linearProgressBarOnScroll = () => {
-      const headerHeight = documentId ? 400 + 480 + 80 + 16 : 0;
-      const elementHeight = document.getElementById(
-        documentId || "body"
-      )?.scrollHeight;
-      const progressBar = document.getElementById("progress-bar-blur");
-      const progressBarBlur = document.getElementById("progress-bar");
-      const scrollTop = window.scrollY;
-      const correctedScrollTop =
-        scrollTop - headerHeight < 0 ? 0 : scrollTop - headerHeight;
-      if (elementHeight && progressBar && progressBarBlur) {
+    const lineProgressOnScroll = () => {
+      const elementHeight =
+        document.documentElement.scrollHeight - window.innerHeight; // Page total height
+
+      const scrollTop = window.scrollY; // Current Y coord height (pixels)
+
+      if (
+        elementHeight &&
+        progressBarRef.current &&
+        progressBarBlurRef.current
+      ) {
         const percentage =
-          correctedScrollTop < elementHeight
-            ? (correctedScrollTop / elementHeight) * 100
-            : 100;
-        progressBarBlur.style.width = `${percentage}%`;
-        progressBar.style.width = `${percentage}%`;
+          scrollTop < elementHeight ? (scrollTop / elementHeight) * 100 : 100; // Current Y coord (percentage)
+
+        progressBarBlurRef.current.style.width = `${percentage}%`;
+        progressBarRef.current.style.width = `${percentage}%`;
       }
     };
 
-    window.addEventListener("scroll", linearProgressBarOnScroll);
-    // cleanup function
+    window.addEventListener("scroll", lineProgressOnScroll);
     return () => {
-      window.removeEventListener("scroll", linearProgressBarOnScroll);
+      // Cleanup
+      window.removeEventListener("scroll", lineProgressOnScroll);
     };
-  }, [documentId]);
+  }, []);
 
   return (
-    <div className="fixed top-[calc(100%_+_1px)] left-0 h-1 w-full inline-grid">
+    <div
+      id="progress"
+      data-testid="progress"
+      role="progressbar"
+      aria-live="polite"
+      aria-labelledby="progressbar-label"
+      aria-valuenow={
+        progressBarRef.current
+          ? Number(progressBarRef.current.style.width.replace("%", ""))
+          : 0
+      }
+      aria-valuemin={0}
+      aria-valuemax={100}
+      className="fixed top-[calc(100%_+_1px)] left-0 h-1 w-full inline-grid"
+    >
       <div
+        ref={progressBarRef}
         id="progress-bar-blur"
-        className="w-0 h-full col-start-1 row-start-1 bg-gradient-to-r from-transparent to-blog-foreground-highlight blur-xl rounded-full hidden max-lg:block"
+        data-testid="progress-bar-blur"
+        style={{ width: "0%" }}
+        className="h-full col-start-1 row-start-1 bg-gradient-to-r from-transparent to-blog-foreground-highlight blur-xl rounded-full hidden max-lg:block"
       />
       <div
+        ref={progressBarBlurRef}
         id="progress-bar"
-        className="w-0 h-full col-start-1 row-start-1 bg-gradient-to-r from-transparent to-blog-foreground-highlight rounded-full hidden max-lg:block"
+        data-testid="progress-bar"
+        style={{ width: "0%" }}
+        className="h-full col-start-1 row-start-1 bg-gradient-to-r from-transparent to-blog-foreground-highlight rounded-full hidden max-lg:block"
       />
+      <span id="progressbar-label" className="sr-only">
+        Progresso de rolagem da página
+      </span>
     </div>
   );
 };
