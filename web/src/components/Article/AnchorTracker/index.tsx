@@ -89,15 +89,17 @@ const AnchorTracker = ({ documentId }: { documentId: string }) => {
           defaultValue="item-1"
           className={
             "w-full" +
-            " self-start max-w-72 sticky top-12 mb-4 col-start-1 max-[800px]:col-start-auto" +
+            " self-start max-w-72 sticky top-14 mb-4 col-start-1 max-[800px]:col-start-auto" +
             " max-[800px]:self-auto max-[800px]:max-w-full max-[800px]:static max-[800px]:pt-0"
           }
         >
           <AccordionItem value="item-1">
-            <AccordionTrigger>Conteúdo</AccordionTrigger>
+            <AccordionTrigger className="px-2 mb-1 rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-blog-foreground-readable-hover">
+              Conteúdo
+            </AccordionTrigger>
             <AccordionContent
               ref={anchorListRef}
-              className="relative max-h-[50vh] pb-0 pt-0 before:absolute before:top-0 before:bottom-0 before:w-0.5 before:bg-blog-border"
+              className="px-2 py-1 relative max-h-[50vh] before:absolute before:top-0 before:left-0 before:bottom-0 before:my-2 before:w-0.5 before:bg-blog-border"
             >
               {anchorList.map((text, index) => (
                 <li key={index} className="mb-1">
@@ -107,9 +109,13 @@ const AnchorTracker = ({ documentId }: { documentId: string }) => {
                     aria-current={index === 0 ? "page" : "false"} // When pages load, the first anchor is supposed to be the colored one
                     className={
                       `flex text-sm transition-colors duration-500 break-words aria-current:text-blog-foreground-highlight` +
-                      ` aria-current:hover:text-blog-foreground-readable-hover hover:text-blog-foreground-readable-hover ${generatePaddingForSessions(
-                        text
-                      )} after:w-0.5 after:h-6 after:bg-transparent after:transition-all after:duration-500 after:absolute after:left-0 aria-current:after:bg-blog-foreground-highlight`
+                      ` aria-current:hover:text-blog-foreground-readable-hover hover:text-blog-foreground-readable-hover` +
+                      ` ${generatePaddingForSessions(text)}` +
+                      ` after:transition-all after:duration-500 after:w-0.5 after:h-5 after:bg-transparent` +
+                      ` after:absolute after:left-0 aria-current:after:bg-blog-foreground-highlight` +
+                      ` rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-blog-foreground-readable-hover` +
+                      ` focus-visible:text-blog-foreground-readable-hover focus-visible:bg-[hsl(0,0%,14.9%,0.75)]` +
+                      ` aria-current:focus-visible:text-blog-foreground-readable-hover`
                     }
                   >
                     {

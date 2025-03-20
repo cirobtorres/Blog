@@ -33,7 +33,7 @@ export default function DarkModeToggle() {
           <Tooltip>
             <TooltipTrigger
               asChild
-              className="outline-blog-foreground-highlight focus:outline-blog-foreground-highlight"
+              className="rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-blog-foreground-readable-hover"
             >
               <button
                 data-testid="dark-mode-toggle"

@@ -24,7 +24,7 @@ const HeaderAuthentication = ({ currentUser }: { currentUser: User }) => {
           <HoverCardTrigger>
             <li
               data-testid="header-user-authenticated"
-              className="flex items-center"
+              className="flex justify-center items-center"
             >
               <Popover onOpenChange={setIsPopoverOpen}>
                 <PopoverTrigger>
@@ -121,7 +121,7 @@ const HeaderAuthentication = ({ currentUser }: { currentUser: User }) => {
       )}
       {!currentUser.ok && (
         <li data-testid="header-user-unauthenticated">
-          <button className="font-extrabold text-xs uppercase transition-colors duration-500 hover:text-blog-foreground-readable-hover">
+          <button className="w-20 h-9 font-extrabold text-xs uppercase transition-colors duration-500 hover:bg-[hsl(0,0%,14.9%,0.75)] focus-visible:bg-[hsl(0,0%,14.9%,0.75)] hover:text-blog-foreground-readable-hover rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-blog-foreground-readable-hover">
             Login
           </button>
         </li>

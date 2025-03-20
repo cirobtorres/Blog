@@ -11,6 +11,8 @@ describe("getAbout", () => {
   const mockAboutData: About = {
     documentId: "123",
     title: "This is the about page title",
+    github_link: "https://github.com/johndoe",
+    github_blog_link: "https://github.com/johndoe/blog",
     createdAt: "2025-03-10T23:11:17.381Z",
     updatedAt: "2025-03-10T23:11:17.381Z",
     publishedAt: "2025-03-10T23:11:17.381Z",

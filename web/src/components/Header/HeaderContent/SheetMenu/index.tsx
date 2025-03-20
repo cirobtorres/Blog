@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Sheet,
   SheetClose,
@@ -18,7 +20,7 @@ import {
   AccordionTrigger,
 } from "../../../Shadcnui/accordion";
 import DarkModeToggle from "../DarkModeToggle";
-import { IoLogoGithub } from "react-icons/io";
+import GitHubLink from "../GitHubLink";
 
 export default function SheetMenu() {
   return (
@@ -28,7 +30,7 @@ export default function SheetMenu() {
         data-testid="sheet-menu"
         className="min-[1001px]:hidden"
       >
-        <Button variant="ghost">
+        <Button variant="ghost" className="transition-none">
           <Menu />
         </Button>
       </SheetTrigger>
@@ -49,25 +51,38 @@ export default function SheetMenu() {
           <SheetDescription className="mt-6">
             On small screens, navigate through PolyCode here!
           </SheetDescription>
-          <div className="grid gap-4 py-4 pl-4 [&_a]:transition-colors [&_a]:duration-500 [&_a]:text-blog-foreground-readable hover:[&_a]:text-blog-foreground-readable-hover">
+          <div className="grid py-4 pl-2 [&_a]:transition-colors [&_a]:duration-500 [&_a]:text-blog-foreground-readable hover:[&_a]:text-blog-foreground-readable-hover">
             <Accordion type="single" collapsible defaultValue="item-1">
               <AccordionItem value="item-1">
-                <AccordionTrigger>Artigos</AccordionTrigger>
-                <AccordionContent className="pl-4">
+                <AccordionTrigger className="px-2 rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-blog-foreground-readable-hover">
+                  Artigos
+                </AccordionTrigger>
+                <AccordionContent className="flex items-center pl-4">
                   <SheetClose asChild>
-                    <Link href="/artigos?page=1">Todos</Link>
+                    <Link
+                      href="/artigos?page=1"
+                      className="my-1 py-2 px-2 rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-blog-foreground-readable-hover"
+                    >
+                      Todos
+                    </Link>
                   </SheetClose>
                 </AccordionContent>
-                <AccordionContent className="pl-4">
+                <AccordionContent className="flex items-center pl-4">
                   <SheetClose asChild>
-                    <Link href="/artigos?page=1&category=tecnologia-da-informacao">
+                    <Link
+                      href="/artigos?page=1&category=tecnologia-da-informacao"
+                      className="my-1 py-2 px-2 rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-blog-foreground-readable-hover"
+                    >
                       Tecnologia da Informação
                     </Link>
                   </SheetClose>
                 </AccordionContent>
-                <AccordionContent className="pl-4">
+                <AccordionContent className="flex items-center pl-4">
                   <SheetClose asChild>
-                    <Link href="/artigos?page=1&category=modelagem-3d">
+                    <Link
+                      href="/artigos?page=1&category=modelagem-3d"
+                      className="my-1 py-2 px-2 rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-blog-foreground-readable-hover"
+                    >
                       Modelagem 3D
                     </Link>
                   </SheetClose>
@@ -75,20 +90,19 @@ export default function SheetMenu() {
               </AccordionItem>
             </Accordion>
             <SheetClose asChild>
-              <Link href="/sobre">Sobre</Link>
+              <Link
+                href="/sobre"
+                className="py-4 px-2 rounded focus:ring-2 focus:ring-blog-foreground-highlight focus:outline-none"
+              >
+                Sobre
+              </Link>
             </SheetClose>
           </div>
         </div>
-        <SheetFooter className="flex gap-4">
+        <SheetFooter className="flex gap-1">
           <DarkModeToggle />
           <SheetClose asChild>
-            <Link
-              href="https://github.com/cirobtorres"
-              target="_blank"
-              className="flex items-center gap-3"
-            >
-              <IoLogoGithub className="size-7" /> Ciro Torres
-            </Link>
+            <GitHubLink />
           </SheetClose>
         </SheetFooter>
       </SheetContent>

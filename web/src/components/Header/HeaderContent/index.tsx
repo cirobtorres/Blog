@@ -1,17 +1,11 @@
 import Link from "next/link";
-import { IoLogoGithub } from "react-icons/io";
 import BlogNavigationMenu from "./BlogNavigationMenu";
 import DarkModeToggle from "./DarkModeToggle";
 import SheetMenu from "./SheetMenu";
 import SearchBar from "../SearchBar";
 import Image from "next/image";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "../../Shadcnui/tooltip";
 import HeaderAuthentication from "./HeaderAuthentication";
+import GitHubLink from "./GitHubLink";
 
 const HeaderContent = ({ currentUser }: { currentUser: User }) => {
   return (
@@ -20,48 +14,48 @@ const HeaderContent = ({ currentUser }: { currentUser: User }) => {
       className="h-full px-4 outline outline-[1px] outline-blog-border"
     >
       <nav className="w-full h-full grid grid-cols-12 items-center gap-4 justify-between max-w-screen-2xl mx-auto">
-        <div className="col-span-3 h-full flex items-center gap-4 max-[1000px]:col-span-2">
+        <div
+          className={
+            `h-full` +
+            ` flex items-center gap-4` +
+            ` col-span-3 max-[1000px]:col-span-1` // column grid control
+          }
+        >
           <div className="flex items-center justify-between max-[1000px]:hidden">
             <Link
               href="/"
               data-testid="header-content-logo-link"
-              className="flex items-center justify-between text-sm uppercase font-extrabold h-full transition-colors duration-500 text-blog-foreground-readable hover:text-blog-foreground-readable-hover"
+              aria-labelledby="Logo com link de voltar para home"
+              className="flex items-center justify-between text-sm uppercase font-extrabold h-full transition-colors duration-500 text-blog-foreground-readable hover:text-blog-foreground-readable-hover rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-blog-foreground-readable-hover"
             >
-              <Image src="/images/logo.png" alt="logo" width={48} height={48} />
+              <Image src="/images/logo.png" alt="logo" width={40} height={40} />
             </Link>
           </div>
           <BlogNavigationMenu />
           <SheetMenu />
         </div>
-        <div className="w-full col-span-6 max-[1000px]:col-span-8 max-[650px]:col-span-10">
+        <div
+          className={
+            `w-full` +
+            ` flex justify-center` +
+            ` col-span-6 max-[1000px]:col-span-10` // column grid control
+          }
+        >
           <SearchBar />
         </div>
-        <ul className="col-span-3 h-full flex items-center gap-4 justify-end max-[1000px]:col-span-2 max-[650px]:hidden max-[650px]:col-span-0">
+        <ul
+          className={
+            `h-full` +
+            ` flex items-center justify-end gap-1` +
+            ` col-span-3 max-[1000px]:col-span-1` + // column grid control
+            ` max-[785px]:hidden`
+          }
+        >
           <HeaderAuthentication currentUser={currentUser} />
-          <li>
-            <Link
-              data-testid="header-content-github-link"
-              href="https://github.com/cirobtorres"
-              target="_blank"
-            >
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger
-                    asChild
-                    className="outline-blog-foreground-highlight focus:outline-blog-foreground-highlight"
-                  >
-                    <IoLogoGithub className="size-8" />
-                  </TooltipTrigger>
-                  <TooltipContent role="tooltip">
-                    <p data-testid="dark-mode-toggle-tooltip-text">
-                      https://github.com/cirobtorres
-                    </p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-            </Link>
+          <li className="flex justify-center items-center">
+            <GitHubLink />
           </li>
-          <li className="flex justify-center items-center h-full">
+          <li className="flex justify-center items-center">
             <DarkModeToggle />
           </li>
         </ul>

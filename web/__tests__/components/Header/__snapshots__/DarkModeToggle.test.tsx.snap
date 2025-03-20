@@ -4,7 +4,7 @@ exports[`DarkModeToggle matches the snapshot 1`] = `
 <DocumentFragment>
   <button
     aria-label="Alternar entre tema claro e escuro"
-    class="outline-blog-foreground-highlight focus:outline-blog-foreground-highlight relative"
+    class="rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-blog-foreground-readable-hover relative"
     data-state="closed"
     data-testid="dark-mode-toggle"
     role="button"

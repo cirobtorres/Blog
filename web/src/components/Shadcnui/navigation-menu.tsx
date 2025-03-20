@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as NavigationMenuPrimitive from "@radix-ui/react-navigation-menu";
-import { cva } from "class-variance-authority";
 import { ChevronDown } from "lucide-react";
+import { cva } from "class-variance-authority";
 import { cn } from "../../utils/clsx";
 
 const NavigationMenu = React.forwardRef<
@@ -40,9 +40,9 @@ NavigationMenuList.displayName = NavigationMenuPrimitive.List.displayName;
 const NavigationMenuItem = NavigationMenuPrimitive.Item;
 
 const navigationMenuTriggerStyle = cva(
-  "py-2 inline-flex items-center justify-center transition-colors duration-500" +
+  "py-2 inline-flex items-center justify-center rounded transition-colors duration-500" +
     " hover:text-blog-foreground-readable-hover focus:text-blog-foreground-readable-hover" +
-    " focus-visible:outline focus-visible:outline-2 focus-visible:outline-blog-foreground-highlight" +
+    " focus-visible:outline focus-visible:outline-2 focus-visible:outline-blog-foreground-readable-hover" +
     " disabled:pointer-events-none focus-visible:bg-[hsl(0,0%,14.9%,0.75)]" +
     " disabled:opacity-50 data-[active]:text-blog-foreground-readable-hover hover:bg-[hsl(0,0%,14.9%,0.75)]" +
     " data-[state=open]:text-blog-foreground-readable-hover data-[state=open]:bg-[hsl(0,0%,14.9%,0.75)] group"

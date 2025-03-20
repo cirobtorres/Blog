@@ -3,6 +3,8 @@ query About {
   about {
     documentId
     title
+    github_link
+    github_blog_link
     updatedAt
     createdAt
     publishedAt

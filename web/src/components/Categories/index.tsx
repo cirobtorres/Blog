@@ -84,7 +84,7 @@ const Subcategories = ({ subCategories }: { subCategories: SubCategory[] }) => {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={`Abrir nova aba com site oficial de ${subCategory.name}`}
-                    className="transition-all duration-500 text-blog-foreground-readable hover:text-blog-foreground-readable-hover"
+                    className="text-blog-foreground-readable hover:text-blog-foreground-readable-hover rounded focus-within:outline focus-within:outline-2 focus-within:outline-blog-foreground-readable-hover"
                   >
                     {subCategory.name}
                   </Link>

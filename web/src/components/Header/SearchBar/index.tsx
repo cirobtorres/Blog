@@ -58,9 +58,7 @@ const SearchBar = () => {
 
   return (
     <Dialog>
-      <DialogTrigger
-        className="w-full rounded flex-1" // outline-none
-      >
+      <DialogTrigger className="w-full rounded flex-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-blog-foreground-readable-hover">
         <Trigger />
       </DialogTrigger>
       <DialogContent>
@@ -81,7 +79,7 @@ const Trigger = () => {
   return (
     <div
       data-testid="search-bar-trigger"
-      className="relative w-full min-h-8 mx-auto flex items-center rounded border border-blog-border bg-[#1d1d1d] transition-all duration-500 hover:bg-blog-border group"
+      className="relative w-full min-h-9 flex items-center rounded border border-blog-border bg-[#1d1d1d] transition-all duration-500 hover:bg-blog-border group"
     >
       <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 transition-all duration-500 text-blog-foreground-readable group-hover:text-blog-foreground-readable-hover" />
       <p className="pl-12 w-full text-sm text-start transition-all duration-500 group-hover:text-blog-foreground-readable-hover">

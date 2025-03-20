@@ -38,7 +38,7 @@ const ArticleCard = ({ article }: { article: ArticleCard }) => {
     <Link
       href={`/artigos/[documentId]/[slug]`}
       as={`/artigos/${article.documentId}/${article.slug}`}
-      className="h-full w-full flex flex-col"
+      className="h-full w-full flex flex-col overflow-hidden rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-blog-foreground-readable-hover"
     >
       <div className="shrink-0 relative h-[200px] mb-2">
         <Image

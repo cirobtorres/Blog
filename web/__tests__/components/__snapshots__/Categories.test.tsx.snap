@@ -57,7 +57,7 @@ exports[`Categories Categories component matches the snapshot 1`] = `
           />
           <a
             aria-label="Abrir nova aba com site oficial de Next.js"
-            class="transition-all duration-500 text-blog-foreground-readable hover:text-blog-foreground-readable-hover"
+            class="text-blog-foreground-readable hover:text-blog-foreground-readable-hover rounded focus-within:outline focus-within:outline-2 focus-within:outline-blog-foreground-readable-hover"
             data-state="closed"
             href="https://nextjs.org/"
             rel="noopener noreferrer"
@@ -76,7 +76,7 @@ exports[`Categories Categories component matches the snapshot 1`] = `
           />
           <a
             aria-label="Abrir nova aba com site oficial de Nest.js"
-            class="transition-all duration-500 text-blog-foreground-readable hover:text-blog-foreground-readable-hover"
+            class="text-blog-foreground-readable hover:text-blog-foreground-readable-hover rounded focus-within:outline focus-within:outline-2 focus-within:outline-blog-foreground-readable-hover"
             data-state="closed"
             href="https://nestjs.com/"
             rel="noopener noreferrer"

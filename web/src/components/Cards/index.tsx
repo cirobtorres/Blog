@@ -22,8 +22,8 @@ const Cards = async () => {
       )}
     </>
   ) : (
-    <div className="h-full flex justify-center items-center">
-      <p className="text-5xl font-extrabold">
+    <div className="h-full flex justify-center items-center mx-4">
+      <p className="text-5xl max-[1000px]:text-3xl font-extrabold">
         Nenhum artigo publicado ainda :&#40;
       </p>
     </div>

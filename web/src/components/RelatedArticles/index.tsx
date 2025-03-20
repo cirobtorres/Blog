@@ -26,7 +26,7 @@ const RelatedArticles = async () => {
               {articles.map((article) => (
                 <CarouselItem
                   key={article.documentId}
-                  className="max-w-96 group"
+                  className="p-2 max-w-96 group"
                 >
                   <ArticleCard article={article} />
                 </CarouselItem>

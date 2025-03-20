@@ -67,8 +67,8 @@ const BackToTopButton = ({
             <button
               type="button"
               onClick={() => window.scrollTo(0, 0)}
-              className="relative flex group"
               style={{ height: `${diameter}px` }}
+              className="relative flex group rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-blog-foreground-readable-hover"
             >
               <div className="relative">
                 <svg

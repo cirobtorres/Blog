@@ -1,6 +1,10 @@
+import { getAbout } from "@/service/about";
 import Link from "next/link";
 
-const Footer = () => {
+const Footer = async () => {
+  const {
+    data: { github_blog_link: link },
+  } = await getAbout();
   return (
     <footer
       data-testid="footer"
@@ -19,13 +23,14 @@ const Footer = () => {
           Encontrou algum mau funcionamento neste site?
           <br />
           <Link
-            href="https://github.com/cirobtorres/blog"
+            data-testid="footer-link"
+            href={link || "/"}
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Repositório do Github para o código fonte do blog"
             className="break-words transition-colors duration-500 text-blog-foreground-highlight hover:text-blog-foreground-readable-hover"
           >
-            https://github.com/cirobtorres/blog
+            {link || "/"}
           </Link>
         </p>
       </div>

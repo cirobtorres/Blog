@@ -5,7 +5,7 @@ import { cn } from "../../utils/clsx";
 
 const buttonVariants = cva(
   "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all duration-500" +
-    " focus-visible:outline-none focus-visible:outline-blog-foreground-highlight focus-visible:outline-blog-foreground-highlight" +
+    " focus-visible:outline-none focus-visible:outline-blog-foreground-readable-hover focus-visible:outline-blog-foreground-readable-hover" +
     " disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {

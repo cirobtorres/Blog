@@ -22,6 +22,12 @@
         "shared.rich-text",
         "shared.slider"
       ]
+    },
+    "github_link": {
+      "type": "string"
+    },
+    "github_blog_link": {
+      "type": "string"
     }
   }
 }
