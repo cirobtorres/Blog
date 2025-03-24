@@ -4,8 +4,8 @@ import { Search } from "lucide-react";
 import { useDebouncedCallback } from "use-debounce";
 import { ReadonlyURLSearchParams, useSearchParams } from "next/navigation";
 import { useState } from "react";
-import slugify from "../../../utils/slugify";
 import { getArticles } from "../../../service/articles";
+import slugify from "../../../utils/slugify";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -58,7 +58,10 @@ const SearchBar = () => {
 
   return (
     <Dialog>
-      <DialogTrigger className="w-full rounded flex-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-blog-foreground-readable-hover">
+      <DialogTrigger
+        data-testid="search-bar-trigger-button"
+        className="w-full rounded flex-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-blog-foreground-readable-hover"
+      >
         <Trigger />
       </DialogTrigger>
       <DialogContent>
@@ -66,7 +69,11 @@ const SearchBar = () => {
           <DialogTitle className="sr-only">Buscador de artigos</DialogTitle>
         </DialogHeader>
         <form action="/artigos" className="overflow-x-hidden">
-          <InputQuery handleSearch={handleSearch} searchParams={searchParams} />
+          <InputQuery
+            data-testid="search-bar-input-query"
+            handleSearch={handleSearch}
+            searchParams={searchParams}
+          />
           <ResultQuery sortedList={sortedList} />
         </form>
       </DialogContent>
@@ -101,13 +108,15 @@ const InputQuery = ({
     <div className="relative min-h-10 w-full py-4">
       <div className="flex flex-col justify-center">
         <button
+          data-testid="search-bar-submit"
           type="submit"
           className="absolute left-4 top-1/2 -translate-y-1/2"
         >
           <Search className="size-4 transition-all duration-500 text-blog-foreground-readable hover:text-blog-foreground-readable-hover" />
         </button>
         <input
-          id="query"
+          id="search-bar-query"
+          data-testid="search-bar-query"
           type="query"
           name="query"
           autoComplete="off"
@@ -120,7 +129,10 @@ const InputQuery = ({
           className="text-sm w-full border-transparent border-none border-0 outline-none outline-0 pl-12 pr-16 bg-transparent"
         />
       </div>
-      <DialogClose className="absolute right-4 top-1/2 -translate-y-1/2 px-2 py-0.5 text-xs font-extrabold rounded border border-blog-border transition-all duration-500 bg-blog-background-2 hover:text-blog-foreground-readable-hover hover:bg-blog-background-1">
+      <DialogClose
+        data-testid="search-bar-close"
+        className="absolute right-4 top-1/2 -translate-y-1/2 px-2 py-0.5 text-xs font-extrabold rounded border border-blog-border transition-all duration-500 bg-blog-background-2 hover:text-blog-foreground-readable-hover hover:bg-blog-background-1"
+      >
         <DialogDescription className="sr-only">
           Fechar buscador
         </DialogDescription>
@@ -166,7 +178,7 @@ const ResultQuery = ({ sortedList }: { sortedList: ArticleList | null }) => {
       {sortedList && sortedList.length === 0 && (
         <>
           <hr />
-          <div className="py-4">
+          <div data-testid="search-bar-none-found" className="py-4">
             <span className="sr-only">Nenhum artigo encontrado</span>
             <p className="text-center text-sm text-blog-foreground-readable">
               Nenhum artigo encontrado

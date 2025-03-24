@@ -1,5 +1,5 @@
 import ProgressBar from "../../../src/components/Header/ProgressBar";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, act } from "@testing-library/react";
 
 describe("ProgressBar", () => {
   const pageHeight = 5000;
@@ -88,6 +88,24 @@ describe("ProgressBar", () => {
 
     // Progress bar blur must keep any blur class
     expect(progressBarBlur).toHaveClass(/.*blur.*/);
+  });
+
+  it("atualiza aria-valuenow corretamente ao rolar a página", () => {
+    render(<ProgressBar />);
+
+    const progressBar = screen.getByTestId("progress");
+
+    act(() => {
+      Object.defineProperty(window, "scrollY", { value: 500, writable: true });
+      window.dispatchEvent(new Event("scroll"));
+    });
+
+    setTimeout(() => {
+      expect(progressBar).toHaveAttribute("aria-valuenow");
+      const valueNow = Number(progressBar.getAttribute("aria-valuenow"));
+      expect(valueNow).toBeGreaterThan(0);
+      expect(valueNow).toBeLessThanOrEqual(100);
+    }, 100);
   });
 
   it("matches the snapshot", () => {

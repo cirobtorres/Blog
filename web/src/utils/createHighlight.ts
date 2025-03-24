@@ -2,6 +2,9 @@ import { createHighlighter, type Highlighter } from "shiki";
 
 const blogTheme = {
   name: "blog-theme",
+  colors: {
+    "editor.background": "var(--blog-pre)",
+  },
   settings: [
     {
       scope: [
@@ -227,9 +230,7 @@ const blogTheme = {
     },
     {
       scope: [],
-      settings: {
-        foreground: "red",
-      },
+      settings: {},
     },
   ],
 };

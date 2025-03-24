@@ -1,5 +1,3 @@
-"use server";
-
 import { getUserMeLoader } from "../../service/user-me-loader";
 import Footer from "../Footer";
 import { FloatingHeader, StaticHeader } from "../Header";

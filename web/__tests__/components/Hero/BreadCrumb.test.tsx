@@ -7,13 +7,6 @@ describe("BreadCrumb", () => {
     "Lorem, ipsum dolor sit amet consectetur adipisicing elit.";
   const mockedBreadCrumb = { documentId: "11", name: "Ciência da Computação" };
 
-  it("matches the snapshot", () => {
-    const { asFragment } = render(
-      <BreadCrumb title={mockedTitle} category={mockedBreadCrumb} />
-    );
-    expect(asFragment()).toMatchSnapshot();
-  });
-
   it("renders every link correctly", () => {
     render(<BreadCrumb title={mockedTitle} category={mockedBreadCrumb} />);
     const linkA = screen.getByTestId("breadcrumb-home");
@@ -33,5 +26,12 @@ describe("BreadCrumb", () => {
     const currentRoute = screen.getByTestId("breadcrumb-article-title");
     expect(currentRoute).toHaveClass("after:to-blog-foreground-highlight");
     expect(currentRoute).toHaveTextContent(mockedTitle);
+  });
+
+  it("matches the snapshot", () => {
+    const { asFragment } = render(
+      <BreadCrumb title={mockedTitle} category={mockedBreadCrumb} />
+    );
+    expect(asFragment()).toMatchSnapshot();
   });
 });

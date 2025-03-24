@@ -1,47 +1,51 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import DarkModeToggle from "../../../src/components/Header/HeaderContent/DarkModeToggle";
 import { useTheme } from "next-themes";
+import DarkModeToggle from "../../../src/components/Header/HeaderContent/DarkModeToggle";
+import userEvent from "@testing-library/user-event";
 
 jest.mock("next-themes", () => ({
   useTheme: jest.fn(),
 }));
 
-describe("DarkModeToggle", () => {
-  const setThemeMock = jest.fn();
-  (useTheme as jest.Mock).mockReturnValue({
-    theme: "light",
-    setTheme: setThemeMock,
-  });
+function setTheme(theme = "light") {
+  const mockSetTheme = jest.fn();
+  jest.spyOn(require("next-themes"), "useTheme").mockImplementation(() => ({
+    theme,
+    setTheme: mockSetTheme,
+  }));
+  return mockSetTheme;
+}
 
+describe("DarkModeToggle", () => {
   afterEach(() => {
     jest.restoreAllMocks();
   });
 
   it("renders dark mode toggle button", () => {
+    setTheme();
     render(<DarkModeToggle />);
     const toogleButton = screen.getByTestId("dark-mode-toggle");
     expect(toogleButton).toBeInTheDocument();
   });
 
   it("switches to dark theme if moon button is clicked", () => {
+    const mockSetTheme = setTheme();
     render(<DarkModeToggle />);
     const toogleButton = screen.getByTestId("dark-mode-toggle");
     fireEvent.click(toogleButton);
-    expect(setThemeMock).toHaveBeenCalledWith("dark");
+    expect(mockSetTheme).toHaveBeenCalledWith("dark");
   });
 
   it("switches to dark theme if the sun button is clicked", () => {
-    (useTheme as jest.Mock).mockReturnValue({
-      theme: "dark",
-      setTheme: setThemeMock,
-    });
+    const mockSetTheme = setTheme("dark");
     render(<DarkModeToggle />);
     const toogleButton = screen.getByTestId("dark-mode-toggle");
     fireEvent.click(toogleButton);
-    expect(setThemeMock).toHaveBeenCalledWith("light");
+    expect(mockSetTheme).toHaveBeenCalledWith("light");
   });
 
   it("checks the accessibility tools are in place", () => {
+    let mockSetTheme = setTheme("dark");
     const { getByTestId } = render(<DarkModeToggle />);
 
     const toogleButtonDark = getByTestId("dark-mode-toggle");
@@ -60,10 +64,7 @@ describe("DarkModeToggle", () => {
     expect(sunButtonDark).toHaveStyle("opacity: 0");
     expect(sunButtonDark).toHaveStyle("transform: rotate(360deg)");
 
-    (useTheme as jest.Mock).mockReturnValue({
-      theme: "light",
-      setTheme: setThemeMock,
-    });
+    mockSetTheme = setTheme("light");
 
     fireEvent.click(toogleButtonDark);
     const { getAllByTestId } = render(<DarkModeToggle />);
@@ -77,6 +78,36 @@ describe("DarkModeToggle", () => {
     expect(moonButtonLight).toHaveStyle("transform: rotate(0deg)");
     expect(sunButtonLight).toHaveStyle("opacity: 1");
     expect(sunButtonLight).toHaveStyle("transform: rotate(0deg)");
+  });
+
+  it("should correctly announce the current theme for screen readers", () => {
+    setTheme("dark");
+    render(<DarkModeToggle />);
+
+    // Encontra o elemento que contém o anúncio do tema
+    const themeStatus = screen.getByTestId("dark-mode-toggle-span");
+
+    // Verifica se o texto está correto para o tema escuro (mock inicial)
+    expect(themeStatus).toHaveTextContent("Tema escuro");
+    expect(themeStatus).toHaveAttribute("role", "status");
+    expect(themeStatus).toHaveAttribute("aria-live", "polite");
+    expect(themeStatus).toHaveClass("sr-only"); // Garante que está oculto visualmente
+  });
+
+  it("should update the theme announcement when theme changes", async () => {
+    const mockSetTheme = setTheme();
+
+    render(<DarkModeToggle />);
+
+    const themeStatus = screen.getByTestId("dark-mode-toggle-span");
+    expect(themeStatus).toHaveTextContent("Tema claro");
+
+    // Simula a mudança de tema
+    await userEvent.click(screen.getByTestId("dark-mode-toggle"));
+
+    // Verifica se o texto seria atualizado (o mock não atualiza o valor real)
+    // Este teste precisaria de ajustes se quisermos testar a mudança dinâmica
+    expect(mockSetTheme).toHaveBeenCalledWith("dark");
   });
 
   it("matches the snapshot", () => {

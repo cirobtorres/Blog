@@ -1,13 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import { Check, Copy } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "../../../../Shadcnui/tooltip";
-import { Check, Copy } from "lucide-react";
 import { toast } from "../../../../../hooks/useToast";
 import { ToasterProvider } from "../../../../../providers/ToasterProvider";
 

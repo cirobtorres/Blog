@@ -34,12 +34,10 @@
   --blog-border-green: var(--blog-black);
   --blog-border-red: var(--blog-black);
 
-  /* --blog-pre: hsl(240, 6%, 7%); */
-  --blog-pre: hsl(0, 0%, 12%);
+  --blog-pre: hsl(0, 0%, 100%);
   --blog-code-text: hsl(var(--blog-silver));
   --blog-code-keyword: var(--blog-orange);
   --blog-code-class: var(--blog-orange-darker);
-  /* --blog-code-function: 250 60% 80%; */
   --blog-code-tag-css: 60 42% 76%;
   --blog-code-parameter: 41 53% 67%;
   --blog-code-function: 190 100% 80%;
@@ -73,6 +71,8 @@
   --blog-border: hsl(0, 0%, 15%);
   --blog-border-green: hsl(142, 71%, 45%);
   --blog-border-red: hsl(0, 84%, 60%);
+
+  --blog-pre: hsl(0, 0%, 12%);
 }
 
 * {
@@ -369,7 +369,7 @@ input[type="search"]::-webkit-search-results-decoration {
     left: 0;
     top: 0px;
     width: 2px;
-    height: auto;
+    height: 100%;
     min-height: 20px;
     background: var(--blog-foreground-highlight);
   }

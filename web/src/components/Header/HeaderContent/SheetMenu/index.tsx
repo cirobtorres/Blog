@@ -30,7 +30,7 @@ export default function SheetMenu() {
         data-testid="sheet-menu"
         className="min-[1001px]:hidden"
       >
-        <Button variant="ghost" className="transition-none">
+        <Button variant="ghost" className="transition-none px-0">
           <Menu />
         </Button>
       </SheetTrigger>

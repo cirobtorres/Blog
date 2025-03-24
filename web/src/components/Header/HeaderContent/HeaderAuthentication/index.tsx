@@ -12,7 +12,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "../../../Shadcnui/popover";
-import logout from "../../../Authentication/Logout";
+import logout from "../../../../service/logout";
 import Image from "next/image";
 
 const HeaderAuthentication = ({ currentUser }: { currentUser: User }) => {

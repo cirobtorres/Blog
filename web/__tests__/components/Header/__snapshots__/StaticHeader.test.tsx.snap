@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`StaticHeader matches the authenticated (user) static header snapshot 1`] = `<DocumentFragment />`;

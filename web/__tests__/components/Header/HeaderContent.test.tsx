@@ -1,6 +1,6 @@
-import { mountNextImage } from "../../../src/utils/mountNextImage";
 import HeaderContent from "../../../src/components/Header/HeaderContent";
-import { render, screen, waitFor } from "@testing-library/react";
+import { mountNextImage } from "../../../src/utils/mountNextImage";
+import { act, render, screen, waitFor } from "@testing-library/react";
 import { getAbout } from "../../../src/service/about";
 
 jest.mock("next/navigation", () => ({
@@ -11,9 +11,7 @@ jest.mock("next/navigation", () => ({
   useSearchParams: jest.fn(() => new URLSearchParams()),
 }));
 
-jest.mock("../../../src/service/about", () => ({
-  getAbout: jest.fn(),
-}));
+jest.mock("../../../src/service/about");
 
 describe("HeaderContent", () => {
   const mockUserAuthenticated = {
@@ -43,13 +41,9 @@ describe("HeaderContent", () => {
     },
   };
 
-  const mockGitHubLink = "https://github.com/johndoe";
-
   beforeEach(() => {
-    // jest.spyOn(console, "error").mockImplementation(() => {}); // Silence console.error
-    // GitHubLink component error: TypeError: Cannot destructure property 'data' of '(intermediate value)' as it is undefined.
-    (getAbout as jest.Mock).mockResolvedValueOnce({
-      data: { github_link: mockGitHubLink },
+    (getAbout as jest.Mock).mockResolvedValue({
+      data: { github_link: "https://github.com/johndoe" },
     });
   });
 
@@ -58,15 +52,19 @@ describe("HeaderContent", () => {
   });
 
   it("renders the header content component", async () => {
-    await waitFor(() => {
+    await act(async () => {
       render(<HeaderContent currentUser={mockUserAuthenticated} />);
+    });
+    await waitFor(() => {
       expect(screen.getByTestId("header-content")).toBeInTheDocument();
     });
   });
 
   it("does render username if user is authenticated", async () => {
-    await waitFor(() => {
+    await act(async () => {
       render(<HeaderContent currentUser={mockUserAuthenticated} />);
+    });
+    await waitFor(() => {
       const authenticatedLi = screen.getByTestId("header-user-authenticated");
       const unauthenticatedLi = screen.queryByTestId(
         "header-user-unauthenticated"
@@ -77,8 +75,10 @@ describe("HeaderContent", () => {
   });
 
   it("does not render username if user is not authenticated", async () => {
-    await waitFor(() => {
+    await act(async () => {
       render(<HeaderContent currentUser={mockUserUnauthenticated} />);
+    });
+    await waitFor(() => {
       const authenticatedLi = screen.queryByTestId("header-user-authenticated");
       const unauthenticatedLi = screen.getByTestId(
         "header-user-unauthenticated"
@@ -89,32 +89,42 @@ describe("HeaderContent", () => {
   });
 
   it("renders with darkmode button toggle", async () => {
-    await waitFor(() => {
+    await act(async () => {
       render(<HeaderContent currentUser={mockUserUnauthenticated} />);
+    });
+    await waitFor(() => {
       const darkmodeButtonToggle = screen.getByTestId("dark-mode-toggle");
       expect(darkmodeButtonToggle).toBeInTheDocument();
     });
   });
 
   it("renders with search bar trigger", async () => {
-    await waitFor(() => {
+    await act(async () => {
       render(<HeaderContent currentUser={mockUserUnauthenticated} />);
+    });
+    await waitFor(() => {
       const searchBarTrigger = screen.getByTestId("search-bar-trigger");
       expect(searchBarTrigger).toBeInTheDocument();
     });
   });
 
-  it("renders with blog navigation menu", async () => {
-    await waitFor(() => {
+  it("renders with blog navigation menu as visible", async () => {
+    await act(async () => {
       render(<HeaderContent currentUser={mockUserUnauthenticated} />);
+    });
+    await waitFor(() => {
       const blogNavigationMenu = screen.getByTestId("blog-navigation-menu");
+      const style = window.getComputedStyle(blogNavigationMenu);
       expect(blogNavigationMenu).toBeInTheDocument();
+      expect(style.display).toBe("block");
     });
   });
 
   it("renders link and image logo", async () => {
-    await waitFor(() => {
+    await act(async () => {
       render(<HeaderContent currentUser={mockUserUnauthenticated} />);
+    });
+    await waitFor(() => {
       const logoLink = screen.getByTestId("header-content-logo-link");
       expect(logoLink).toHaveAttribute("href", "/");
 
@@ -131,11 +141,12 @@ describe("HeaderContent", () => {
     });
   });
 
-  it("renders with GitHub link", async () => {
-    await waitFor(() => {
-      render(<HeaderContent currentUser={mockUserUnauthenticated} />);
-      const githubLink = screen.getByTestId("header-content-github-link");
-      expect(githubLink).toHaveAttribute("href", mockGitHubLink);
+  it("matches the snapshot", async () => {
+    await act(async () => {
+      const { asFragment } = render(
+        <HeaderContent currentUser={mockUserUnauthenticated} />
+      );
+      expect(asFragment()).toMatchSnapshot();
     });
   });
 });

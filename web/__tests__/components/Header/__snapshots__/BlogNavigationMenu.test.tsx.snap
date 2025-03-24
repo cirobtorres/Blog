@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BlogNavigationMenu matches the snapshot 1`] = `
+<DocumentFragment>
+  <nav
+    aria-label="Main"
+    class="relative z-10 flex max-w-max flex-1 items-center justify-center max-[1000px]:hidden"
+    data-orientation="horizontal"
+    data-testid="blog-navigation-menu"
+    dir="ltr"
+  >
+    <div
+      style="position: relative;"
+    >
+      <ul
+        class="group flex flex-1 list-none items-center justify-center space-x-1"
+        data-orientation="horizontal"
+        dir="ltr"
+      >
+        <li>
+          <a
+            class="text-sm w-20  py-2 inline-flex items-center justify-center rounded transition-colors duration-500 hover:text-blog-foreground-readable-hover focus:text-blog-foreground-readable-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-blog-foreground-readable-hover disabled:pointer-events-none focus-visible:bg-[hsl(0,0%,14.9%,0.75)] disabled:opacity-50 data-[active]:text-blog-foreground-readable-hover hover:bg-[hsl(0,0%,14.9%,0.75)] data-[state=open]:text-blog-foreground-readable-hover data-[state=open]:bg-[hsl(0,0%,14.9%,0.75)] group"
+            data-radix-collection-item=""
+            href="/artigos"
+          >
+            Artigos
+          </a>
+        </li>
+        <li>
+          <a
+            class="text-sm w-20  py-2 inline-flex items-center justify-center rounded transition-colors duration-500 hover:text-blog-foreground-readable-hover focus:text-blog-foreground-readable-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-blog-foreground-readable-hover disabled:pointer-events-none focus-visible:bg-[hsl(0,0%,14.9%,0.75)] disabled:opacity-50 data-[active]:text-blog-foreground-readable-hover hover:bg-[hsl(0,0%,14.9%,0.75)] data-[state=open]:text-blog-foreground-readable-hover data-[state=open]:bg-[hsl(0,0%,14.9%,0.75)] group"
+            data-radix-collection-item=""
+            href="/sobre"
+          >
+            Sobre
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div
+      class="absolute left-0 top-full flex justify-center"
+    />
+  </nav>
+</DocumentFragment>
+`;

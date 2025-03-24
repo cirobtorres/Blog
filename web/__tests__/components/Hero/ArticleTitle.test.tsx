@@ -1,7 +1,5 @@
-import { render, screen, waitFor } from "@testing-library/react";
-import ArticleTitle, {
-  CountComments,
-} from "../../../src/components/Hero/ArticleTitle";
+import { act, render, screen, waitFor } from "@testing-library/react";
+import ArticleTitle from "../../../src/components/Hero/ArticleTitle";
 import serverCountComments from "../../../src/service/comments/server";
 
 jest.mock("../../../src/service/comments/server");
@@ -63,41 +61,43 @@ describe("ArticleTitle", () => {
     jest.restoreAllMocks(); // Restore original console.error after each test
   });
 
-  // it("renders CountComment with 0 commentary", async () => {
-  //   // TODO(FIX):
-  //   // Jest do not work properly with React Suspense
-  //   (serverCountComments as jest.Mock).mockResolvedValue({ data: 0 });
-  //   render(<ArticleTitle article={mockArticle} />);
-  //   await waitFor(() => {
-  //     const countCommentElement = screen.queryByTestId("hero-count-comments");
-  //     expect(countCommentElement).toBeInTheDocument();
-  //     expect(countCommentElement).toHaveTextContent("1 comentário");
-  //   });
-  // });
+  it("renders CountComment with 0 commentary", async () => {
+    (serverCountComments as jest.Mock).mockResolvedValue({ data: 0 });
 
-  // it("renders CountComment with 1 commentary", async () => {
-  //   // TODO(FIX):
-  //   // Jest do not work properly with React Suspense
-  //   (serverCountComments as jest.Mock).mockResolvedValue({ data: 1 });
-  //   render(<CountComments articleId="1" />);
-  //   await waitFor(() => {
-  //     const countCommentElement = screen.queryByTestId("hero-count-comments");
-  //     expect(countCommentElement).toBeInTheDocument();
-  //     expect(countCommentElement).toHaveTextContent("1 comentário");
-  //   });
-  // });
+    await act(async () => {
+      render(<ArticleTitle article={mockArticle} />);
+    });
 
-  // it("renders CountComment with 2 commentaries", async () => {
-  //   // TODO(FIX):
-  //   // Jest do not work properly with React Suspense
-  //   (serverCountComments as jest.Mock).mockResolvedValue({ data: 2 });
-  //   render(<CountComments articleId="1" />);
-  //   await waitFor(() => {
-  //     const countCommentElement = screen.queryByTestId("hero-count-comments");
-  //     expect(countCommentElement).toBeInTheDocument();
-  //     expect(countCommentElement).toHaveTextContent("1 comentário");
-  //   });
-  // });
+    await waitFor(() => {
+      const countCommentElement = screen.getByTestId("hero-count-comments");
+      expect(countCommentElement).toBeInTheDocument();
+      expect(countCommentElement).toHaveTextContent("0 comentário");
+    });
+  });
+
+  it("renders CountComment with 1 commentary", async () => {
+    (serverCountComments as jest.Mock).mockResolvedValue({ data: 1 });
+    await act(async () => {
+      render(<ArticleTitle article={mockArticle} />);
+    });
+    await waitFor(() => {
+      const countCommentElement = screen.queryByTestId("hero-count-comments");
+      expect(countCommentElement).toBeInTheDocument();
+      expect(countCommentElement).toHaveTextContent("1 comentário");
+    });
+  });
+
+  it("renders CountComment with 2 commentaries", async () => {
+    (serverCountComments as jest.Mock).mockResolvedValue({ data: 2 });
+    await act(async () => {
+      render(<ArticleTitle article={mockArticle} />);
+    });
+    await waitFor(() => {
+      const countCommentElement = screen.queryByTestId("hero-count-comments");
+      expect(countCommentElement).toBeInTheDocument();
+      expect(countCommentElement).toHaveTextContent("2 comentários");
+    });
+  });
 
   it("renders ArticleTitle", () => {
     render(<ArticleTitle article={mockArticle} />);
@@ -121,11 +121,7 @@ describe("ArticleTitle", () => {
     expect(description).toHaveClass("break-words text-[#808080]");
   });
 
-  // it("renders CountComments", () => {});
-
   it("matches the snapshot", async () => {
-    // TODO(FIX):
-    // Find a way to render CountComments instead its loading state
     const { asFragment } = render(<ArticleTitle article={mockArticle} />);
     await waitFor(() => expect(asFragment()).toMatchSnapshot());
   });

@@ -36,7 +36,9 @@ const FloatingHeader = ({ currentUser }: { currentUser: User }) => {
     <header
       ref={headerRef}
       id="floating-header"
+      data-testid="floating-header"
       className="fixed h-12 w-full backdrop-blur-sm shrink-0 [z-index:10] top-0 transition-[top] duration-300 bg-blog-background-backdrop"
+      style={{ top: 0 }}
     >
       <HeaderContent currentUser={currentUser} />
       <ProgressBar />
@@ -47,7 +49,8 @@ const FloatingHeader = ({ currentUser }: { currentUser: User }) => {
 const StaticHeader = ({ currentUser }: { currentUser: User }) => {
   return (
     <header
-      id="floating-header"
+      id="static-header"
+      data-testid="static-header"
       className="z-10 h-12 w-full backdrop-blur-sm shrink-0 bg-blog-background-backdrop"
     >
       <HeaderContent currentUser={currentUser} />

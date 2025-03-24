@@ -9,11 +9,20 @@ import {
   NavigationMenuList,
   navigationMenuTriggerStyle,
 } from "../../../Shadcnui/navigation-menu";
-import { cn } from "../../../../utils/clsx";
 import { usePathname } from "next/navigation";
 
 const BlogNavigationMenu = () => {
   const pathname = usePathname();
+
+  const getCleanPath = (path: string) => {
+    const url = new URL(path, "http://example.com");
+    return url.pathname;
+  };
+
+  const path = getCleanPath(pathname);
+  const isArticlesActive = path === "/artigos" || path.startsWith("/artigos/");
+  const isAboutActive = path === "/sobre" || path.startsWith("/sobre/");
+
   return (
     <NavigationMenu
       data-testid="blog-navigation-menu"
@@ -24,9 +33,7 @@ const BlogNavigationMenu = () => {
           <Link href="/artigos" legacyBehavior passHref>
             <NavigationMenuLink
               className={`text-sm w-20 ${
-                pathname.startsWith("/artigos")
-                  ? "text-blog-foreground-highlight "
-                  : ""
+                isArticlesActive ? "text-blog-foreground-highlight " : ""
               } ${navigationMenuTriggerStyle()}`}
             >
               Artigos
@@ -37,9 +44,7 @@ const BlogNavigationMenu = () => {
           <Link href="/sobre" legacyBehavior passHref>
             <NavigationMenuLink
               className={`text-sm w-20 ${
-                pathname.startsWith("/sobre")
-                  ? "text-blog-foreground-highlight "
-                  : ""
+                isAboutActive ? "text-blog-foreground-highlight " : ""
               } ${navigationMenuTriggerStyle()}`}
             >
               Sobre
@@ -50,31 +55,5 @@ const BlogNavigationMenu = () => {
     </NavigationMenu>
   );
 };
-
-const ListItem = React.forwardRef<
-  React.ComponentRef<"a">,
-  React.ComponentPropsWithoutRef<"a">
->(({ className, title, children, ...props }, ref) => {
-  return (
-    <li>
-      <NavigationMenuLink asChild>
-        <a
-          ref={ref}
-          className={cn(
-            "h-full block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-            className
-          )}
-          {...props}
-        >
-          <div className="text-sm font-medium leading-none">{title}</div>
-          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-            {children}
-          </p>
-        </a>
-      </NavigationMenuLink>
-    </li>
-  );
-});
-ListItem.displayName = "ListItem";
 
 export default BlogNavigationMenu;

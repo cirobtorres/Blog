@@ -2,19 +2,57 @@ import { axe } from "jest-axe";
 import { toHaveNoViolations } from "jest-axe";
 import { render, screen, waitFor } from "@testing-library/react";
 import Footer from "../../src/components/Footer";
+import React from "react";
+import resolvedComponent from "@/utils/resolvedComponent";
+import { getAbout } from "@/service/about";
+
+jest.mock("../../src/service/about", () => ({
+  getAbout: jest.fn(),
+}));
+
+function returnMock(props?: {
+  documentId?: string;
+  title?: string;
+  github_link?: string;
+  github_blog_link?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  publishedAt?: string;
+  blocks?: ArticleBlocks[];
+}) {
+  return (getAbout as jest.Mock).mockResolvedValue({
+    data: {
+      documentId: "12345",
+      title: "My Blog",
+      github_link: "https://github.com/johndoe",
+      github_blog_link: "https://github.com/johndoe/blog",
+      createdAt: "2022-01-01",
+      updatedAt: "2022-01-02",
+      publishedAt: "2022-01-01",
+      blocks: [],
+      ...props,
+    },
+  });
+}
 
 describe("Footer", () => {
+  afterEach(() => jest.restoreAllMocks());
+
   it("renders the footer component", async () => {
-    render(<Footer />);
-    waitFor(() => {
+    returnMock();
+    const FooterResolved = await resolvedComponent(Footer);
+    render(<FooterResolved />);
+    await waitFor(() => {
       const footer = screen.getByTestId("footer");
       expect(footer).toBeInTheDocument();
     });
   });
 
   it("renders the footer attributes", async () => {
-    render(<Footer />);
-    waitFor(() => {
+    returnMock();
+    const FooterResolved = await resolvedComponent(Footer);
+    render(<FooterResolved />);
+    await waitFor(() => {
       const footer = screen.getByTestId("footer");
       expect(footer).toHaveAttribute(
         "aria-label",
@@ -24,39 +62,39 @@ describe("Footer", () => {
   });
 
   it("renders the correct github footer link", async () => {
-    render(<Footer />);
-    waitFor(() => {
+    returnMock();
+    const FooterResolved = await resolvedComponent(Footer);
+    render(<FooterResolved />);
+    await waitFor(() => {
       const link = screen.getByTestId("footer-paragraph")?.querySelector("a");
-      expect(link).toHaveTextContent("https://github.com/cirobtorres/blog");
-      expect(link).toHaveAttribute(
-        "href",
-        "https://github.com/cirobtorres/blog"
-      );
+      expect(link).toHaveTextContent("https://github.com/johndoe/blog");
+      expect(link).toHaveAttribute("href", "https://github.com/johndoe/blog");
       expect(link).toHaveAttribute("target", "_blank");
       expect(link).toHaveAttribute("rel", "noopener noreferrer");
       expect(link).toHaveAttribute(
         "aria-label",
         "Repositório do Github para o código fonte do blog"
       );
-      expect(link).toHaveAttribute(
-        "href",
-        "https://github.com/cirobtorres/blog"
-      );
+      expect(link).toHaveAttribute("href", "https://github.com/johndoe/blog");
     });
   });
 
   it("should be accessible", async () => {
-    waitFor(async () => {
-      const { container } = render(<Footer />);
+    returnMock();
+    const FooterResolved = await resolvedComponent(Footer);
+    const { container } = render(<FooterResolved />);
+    await waitFor(async () => {
       const results = await axe(container);
       expect.extend(toHaveNoViolations);
       expect(results).toHaveNoViolations();
     });
   });
 
-  it("is responsive", () => {
-    render(<Footer />);
-    waitFor(() => {
+  it("is responsive", async () => {
+    returnMock();
+    const FooterResolved = await resolvedComponent(Footer);
+    render(<FooterResolved />);
+    await waitFor(() => {
       const footerParagraph = screen.getByTestId("footer-paragraph");
       expect(footerParagraph).toHaveClass("text-wrap");
       const link = screen.getByTestId("footer-link");
@@ -66,8 +104,23 @@ describe("Footer", () => {
     });
   });
 
-  it("matches the snapshot", () => {
-    const { asFragment } = render(<Footer />);
-    waitFor(() => expect(asFragment()).toMatchSnapshot());
+  it("links to home page if footer link is not set on the server", async () => {
+    returnMock({
+      github_link: "",
+      github_blog_link: "",
+    });
+    const FooterResolved = await resolvedComponent(Footer);
+    render(<FooterResolved />);
+    await waitFor(() => {
+      const link = screen.getByTestId("footer-link");
+      expect(link.getAttribute("href")).toBe("/");
+    });
+  });
+
+  it("matches the snapshot", async () => {
+    returnMock();
+    const FooterResolved = await resolvedComponent(Footer);
+    const { asFragment } = render(<FooterResolved />);
+    await waitFor(() => expect(asFragment()).toMatchSnapshot());
   });
 });

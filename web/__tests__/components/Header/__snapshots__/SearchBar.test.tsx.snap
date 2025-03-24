@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SearchBar matches the snapshot 1`] = `
+<DocumentFragment>
+  <button
+    aria-controls="radix-:ri:"
+    aria-expanded="false"
+    aria-haspopup="dialog"
+    class="w-full rounded flex-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-blog-foreground-readable-hover"
+    data-state="closed"
+    data-testid="search-bar-trigger-button"
+    type="button"
+  >
+    <div
+      class="relative w-full min-h-9 flex items-center rounded border border-blog-border bg-[#1d1d1d] transition-all duration-500 hover:bg-blog-border group"
+      data-testid="search-bar-trigger"
+    >
+      <svg
+        class="lucide lucide-search absolute left-3 top-1/2 -translate-y-1/2 size-4 transition-all duration-500 text-blog-foreground-readable group-hover:text-blog-foreground-readable-hover"
+        fill="none"
+        height="24"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        viewBox="0 0 24 24"
+        width="24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <circle
+          cx="11"
+          cy="11"
+          r="8"
+        />
+        <path
+          d="m21 21-4.3-4.3"
+        />
+      </svg>
+      <p
+        class="pl-12 w-full text-sm text-start transition-all duration-500 group-hover:text-blog-foreground-readable-hover"
+      >
+        Buscar artigos...
+      </p>
+    </div>
+  </button>
+</DocumentFragment>
+`;
