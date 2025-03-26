@@ -20,6 +20,7 @@ const CommentBody = ({
     comment.users_permissions_user.documentId && isEditing ? (
     <Editor
       autoFocus
+      currentUser={currentUser}
       initialContent={sanitizedHtml}
       onSubmit={onUpdate}
       cancel={() => setIsEditing(false)}

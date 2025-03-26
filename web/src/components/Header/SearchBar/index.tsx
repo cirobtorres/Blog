@@ -60,7 +60,7 @@ const SearchBar = () => {
     <Dialog>
       <DialogTrigger
         data-testid="search-bar-trigger-button"
-        className="w-full rounded flex-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-blog-foreground-readable-hover"
+        className="w-full rounded flex-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-blog-foreground-readable-hover group"
       >
         <Trigger />
       </DialogTrigger>
@@ -82,11 +82,10 @@ const SearchBar = () => {
 };
 
 const Trigger = () => {
-  // The search bar that displays on header content
   return (
     <div
       data-testid="search-bar-trigger"
-      className="relative w-full min-h-9 flex items-center rounded border border-blog-border bg-[#1d1d1d] transition-all duration-500 hover:bg-blog-border group"
+      className="relative w-full min-h-9 flex items-center rounded bg-[#1d1d1d] bg-opacity-75 hover:bg-blog-border group-focus-visible:bg-blog-border transition-all duration-500 group"
     >
       <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 transition-all duration-500 text-blog-foreground-readable group-hover:text-blog-foreground-readable-hover" />
       <p className="pl-12 w-full text-sm text-start transition-all duration-500 group-hover:text-blog-foreground-readable-hover">
@@ -110,9 +109,9 @@ const InputQuery = ({
         <button
           data-testid="search-bar-submit"
           type="submit"
-          className="absolute left-4 top-1/2 -translate-y-1/2"
+          className="absolute left-2 top-1/2 -translate-y-1/2"
         >
-          <Search className="size-4 transition-all duration-500 text-blog-foreground-readable hover:text-blog-foreground-readable-hover" />
+          <Search className="p-2 size-8 transition-all duration-500 text-blog-foreground-readable hover:text-blog-foreground-readable-hover" />
         </button>
         <input
           id="search-bar-query"
@@ -131,7 +130,7 @@ const InputQuery = ({
       </div>
       <DialogClose
         data-testid="search-bar-close"
-        className="absolute right-4 top-1/2 -translate-y-1/2 px-2 py-0.5 text-xs font-extrabold rounded border border-blog-border transition-all duration-500 bg-blog-background-2 hover:text-blog-foreground-readable-hover hover:bg-blog-background-1"
+        className="absolute right-2 top-1/2 -translate-y-1/2 px-2 py-0.5 text-xs font-extrabold rounded border border-blog-border transition-all duration-500 bg-blog-background-2 hover:text-blog-foreground-readable-hover hover:bg-blog-background-1"
       >
         <DialogDescription className="sr-only">
           Fechar buscador
@@ -149,7 +148,7 @@ const ResultQuery = ({ sortedList }: { sortedList: ArticleList | null }) => {
       {sortedList && sortedList.length > 0 && (
         <>
           <hr />
-          <ul className="flex flex-col py-4">
+          <ul className="flex flex-col py-4 px-1">
             {sortedList.map((article) => (
               <li key={article.documentId}>
                 <Link

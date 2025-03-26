@@ -9,10 +9,7 @@ import GitHubLink from "./GitHubLink";
 
 const HeaderContent = ({ currentUser }: { currentUser: User }) => {
   return (
-    <div
-      data-testid="header-content"
-      className="h-full px-4 outline outline-[1px] outline-blog-border"
-    >
+    <div data-testid="header-content" className="h-full px-4">
       <nav className="w-full h-full grid grid-cols-12 items-center gap-4 justify-between max-w-screen-2xl mx-auto">
         <div
           className={
@@ -36,9 +33,8 @@ const HeaderContent = ({ currentUser }: { currentUser: User }) => {
         </div>
         <div
           className={
-            `w-full` +
             ` flex justify-center` +
-            ` col-span-6 max-[1000px]:col-span-10` // column grid control
+            ` col-span-6 max-w-[500px] max-[1000px]:col-span-10 w-full mx-auto` // column grid control
           }
         >
           <SearchBar />

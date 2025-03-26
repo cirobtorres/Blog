@@ -12,13 +12,13 @@ const CodeBlock = ({
   id: string;
   htmlToRender: string;
 }) => {
-  const [state, setState] = useState(false);
+  const [collapse, setCollapse] = useState(false);
   const [highlightedCode, setHighlightedCode] = useState<string>("");
   const highlighterRef = useRef<Highlighter>(null);
 
   const updateState = useCallback(
     (state: boolean) => {
-      setState(() => {
+      setCollapse(() => {
         return state;
       });
       localStorage.setItem(`collapsible-${id}`, JSON.stringify(state));
@@ -54,17 +54,17 @@ const CodeBlock = ({
         dangerouslySetInnerHTML={{
           __html: highlightedCode,
         }}
-        className={`[grid-column-start:1] [grid-row-start:1] relative grid blog-code [&_pre]:scrollbar [&_pre]:max-h-[600px] [&_code]:py-1 ${
-          state
+        className={`[grid-column-start:1] [grid-row-start:1] relative grid blog-code [&_pre]:scrollbar [&_pre]:max-h-[700px] [&_code]:py-1 ${
+          collapse
             ? "grid-rows-1 [&_pre]:overflow-y-auto"
             : "grid-rows-[150px] [&_pre]:overflow-y-hidden before:absolute before:left-0 before:right-0 before:bottom-0 before:h-20 before:z-10 before:opacity-90 before:bg-blog-collapsible-code"
         }`}
       />
       <button
-        onClick={() => updateState(!state)}
+        onClick={() => updateState(!collapse)}
         className="w-fit mx-auto text-sm px-4 rounded border border-blog-border transition-all duration-500 bg-blog-background-1 hover:bg-blog-background-2 hover:text-blog-foreground-readable-hover"
       >
-        {state && (
+        {collapse && (
           <p className="flex justify-center items-center">
             Colapsar
             <svg
@@ -83,7 +83,7 @@ const CodeBlock = ({
             </svg>
           </p>
         )}
-        {!state && (
+        {!collapse && (
           <p className="flex justify-center items-center">
             Expandir
             <svg

@@ -6,13 +6,13 @@ exports[`SearchBar matches the snapshot 1`] = `
     aria-controls="radix-:ri:"
     aria-expanded="false"
     aria-haspopup="dialog"
-    class="w-full rounded flex-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-blog-foreground-readable-hover"
+    class="w-full rounded flex-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-blog-foreground-readable-hover group"
     data-state="closed"
     data-testid="search-bar-trigger-button"
     type="button"
   >
     <div
-      class="relative w-full min-h-9 flex items-center rounded border border-blog-border bg-[#1d1d1d] transition-all duration-500 hover:bg-blog-border group"
+      class="relative w-full min-h-9 flex items-center rounded bg-[#1d1d1d] bg-opacity-75 hover:bg-blog-border group-focus-visible:bg-blog-border transition-all duration-500 group"
       data-testid="search-bar-trigger"
     >
       <svg

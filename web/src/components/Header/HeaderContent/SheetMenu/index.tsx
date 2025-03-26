@@ -28,7 +28,7 @@ export default function SheetMenu() {
       <SheetTrigger
         asChild
         data-testid="sheet-menu"
-        className="min-[1001px]:hidden"
+        className="size-8 min-[1001px]:hidden"
       >
         <Button variant="ghost" className="transition-none px-0">
           <Menu />
@@ -41,7 +41,7 @@ export default function SheetMenu() {
               <SheetClose asChild>
                 <Link
                   href="/"
-                  className="px-1 rounded focus:ring-2 focus:ring-blog-foreground-highlight focus:outline-none"
+                  className="px-1 rounded focus:ring-2 focus:ring-blog-foreground-readable-hover focus:outline-none"
                 >
                   PolyCode
                 </Link>
@@ -92,7 +92,7 @@ export default function SheetMenu() {
             <SheetClose asChild>
               <Link
                 href="/sobre"
-                className="py-4 px-2 rounded focus:ring-2 focus:ring-blog-foreground-highlight focus:outline-none"
+                className="py-4 px-2 rounded focus:ring-2 focus:ring-blog-foreground-readable-hover focus:outline-none"
               >
                 Sobre
               </Link>

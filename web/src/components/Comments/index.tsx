@@ -1,7 +1,6 @@
 "use client";
 
 import Editor from "./Editor";
-import ProviderLogin from "../Authentication/Logins";
 import { useParams } from "next/navigation";
 import {
   clientCountComments,
@@ -22,6 +21,13 @@ import CommentBody from "./CommentBody";
 import CommentCount from "./CommentCount";
 import { toast } from "../../hooks/useToast";
 import LoadingSpinning from "./LoadingSpinning";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../Shadcnui/select";
 
 export default function Comments({ currentUser }: { currentUser: User }) {
   const params: { documentId: string; slug: string } = useParams();
@@ -66,13 +72,16 @@ export default function Comments({ currentUser }: { currentUser: User }) {
       className="max-w-screen-md mx-auto flex flex-col mb-20 pt-12 px-4"
     >
       <CommentSectionHeader articleId={documentId} />
-      {!currentUser.ok && <ProviderLogin />}
-      {currentUser.ok && (
+      {/* {!currentUser.ok && (
         <div className="flex flex-col mb-8">
-          <Avatar currentUser={currentUser as UserOn} />
-          <Editor onSubmit={onCommentCreate} />
+          <Avatar currentUser={currentUser} />
+          <Editor currentUser={currentUser} onSubmit={onCommentCreate} />
         </div>
-      )}
+      )} */}
+      <div className="flex flex-col mb-8">
+        <Avatar currentUser={currentUser} />
+        <Editor currentUser={currentUser} onSubmit={onCommentCreate} />
+      </div>
       {comments !== null &&
         comments?.map((comment: CommentProps) => (
           <CommentRow
@@ -95,34 +104,64 @@ export default function Comments({ currentUser }: { currentUser: User }) {
   );
 }
 
+type SelectValueProps = "Mais recente" | "Mais antigo" | "Maior likes";
+
 const CommentSectionHeader = ({ articleId }: { articleId: string }) => {
+  const [selectValue, setSelectValue] =
+    useState<SelectValueProps>("Mais recente");
   return (
-    <div className="flex justify-center items-center mx-auto gap-4 mb-12">
-      <h3 className="text-2xl font-extrabold">
+    <div className="flex justify-center items-center mx-auto gap-2 mb-12 max-[600px]:flex-col">
+      <h3
+        id="comment-session-header"
+        tabIndex={0}
+        className="flex items-center h-12 px-2 text-3xl font-extrabold"
+      >
         <CommentCount articleId={articleId} />
       </h3>
-      <button className="flex">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="lucide lucide-arrow-down-wide-narrow"
-        >
-          <path d="m3 16 4 4 4-4" />
-          <path d="M7 20V4" />
-          <path d="M11 4h10" />
-          <path d="M11 8h7" />
-          <path d="M11 12h4" />
-        </svg>
-        Ordenar por:
-      </button>
-      <span>mais recente</span>
+      <Select>
+        <p className="flex pr-2">Ordenar por:</p>
+        <SelectTrigger className="w-[180px]">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="lucide lucide-arrow-down-wide-narrow"
+          >
+            <path d="m3 16 4 4 4-4" />
+            <path d="M7 20V4" />
+            <path d="M11 4h10" />
+            <path d="M11 8h7" />
+            <path d="M11 12h4" />
+          </svg>
+          <SelectValue placeholder={selectValue} />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem
+            value="Mais recente"
+            onSelect={() => setSelectValue("Mais recente")}
+          >
+            Mais recente
+          </SelectItem>
+          <SelectItem
+            value="Mais antigo"
+            onSelect={() => setSelectValue("Mais antigo")}
+          >
+            Mais antigo
+          </SelectItem>
+          <SelectItem
+            value="Maior likes"
+            onSelect={() => setSelectValue("Maior likes")}
+          >
+            Maior likes
+          </SelectItem>
+        </SelectContent>
+      </Select>
     </div>
   );
 };
@@ -308,6 +347,7 @@ const CommentRow = ({
           <Avatar currentUser={currentUser as UserOn} />
           <Editor
             autoFocus
+            currentUser={currentUser}
             onSubmit={onReplyCreate}
             cancel={() => setIsReplying(false)}
           />

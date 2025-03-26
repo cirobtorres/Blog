@@ -13,7 +13,7 @@ const ArticleImage = ({ cover }: { cover: Cover }) => {
     >
       <figure
         className={
-          "flex flex-col h-[25rem] col-start-2 max-[800px]:col-start-1 max-[800px]:col-span-2 max-lg:mx-4 px-4 max-lg:pl-4 max-[800px]:pl-0"
+          "flex flex-col h-[25rem] col-start-2 max-[800px]:col-start-1 max-[800px]:col-span-2 max-lg:mx-4 max-lg:pl-4 max-[800px]:pl-0"
         }
       >
         <div className="shrink-0 relative h-full">
@@ -29,7 +29,9 @@ const ArticleImage = ({ cover }: { cover: Cover }) => {
             className="absolute object-cover"
           />
         </div>
-        <figcaption className="text-xs">{cover.caption}</figcaption>
+        {cover.caption && (
+          <figcaption className="mx-2 mt-3 text-xs">{cover.caption}</figcaption>
+        )}
       </figure>
     </section>
   );

@@ -68,7 +68,7 @@ const ArticleTitle = ({ article }: { article: Article }) => {
                 </div>
               </div>
               <div className="flex items-center gap-4">
-                <Link href="#comment-session">
+                <Link href="#comment-session-header">
                   <MessageCircle className="size-6" />
                 </Link>
                 <Suspense
