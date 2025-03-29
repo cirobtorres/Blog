@@ -22,7 +22,7 @@ const ArticleTitle = ({ article }: { article: Article }) => {
   return (
     <section
       data-testid="hero-article-title"
-      className="min-h-[30rem] py-8 mb-4 flex items-center border-b border-blog-border bg-blog-background-2"
+      className="min-h-[30rem] py-8 mb-4 flex items-center border-y border-blog-border bg-blog-background-2"
     >
       <div className="h-full grid grid-cols-article max-lg:grid-cols-article-800 mx-auto items-center max-w-screen-2xl">
         <div className="col-start-2 max-lg:col-start-1 ml-8 mr-4 max-lg:ml-4">

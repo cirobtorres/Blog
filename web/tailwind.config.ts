@@ -20,6 +20,8 @@ export default {
         "blog-background-3": "var(--blog-background-3)",
         "blog-border": "var(--blog-border)",
         "blog-background-backdrop": "var(--blog-background-backdrop)",
+        "blog-background-backdrop-hover":
+          "var(--blog-background-backdrop-hover)",
         "blog-foreground-readable": "var(--blog-foreground-readable)",
         "blog-foreground-readable-hover":
           "var(--blog-foreground-readable-hover)",
@@ -70,8 +72,10 @@ export default {
       backgroundImage: {
         "blog-moving-gradient":
           "conic-gradient(from var(--angle), transparent, var(--blog-foreground-highlight))",
-        "blog-collapsible-code":
-          "linear-gradient(180deg, #0000, hsl(0, 0%, 12%) 70%)",
+        "blog-fade-dot-up":
+          "linear-gradient(0deg, transparent, var(--blog-background-1) 100%)",
+        "blog-fade-dot-down":
+          "linear-gradient(0deg, var(--blog-background-1), transparent 100%)",
       },
       boxShadow: {
         "blog-highlight":

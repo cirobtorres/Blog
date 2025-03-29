@@ -78,6 +78,20 @@ query Blocks($documentId: ID!) {
       link
       svg
     }
+    technologies {
+      documentId
+      name
+      slug
+      link
+      file {
+        documentId
+        url
+        alternativeText
+        caption
+        width
+        height
+      }
+    }
     tags {
       documentId
       name

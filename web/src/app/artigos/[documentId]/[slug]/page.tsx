@@ -37,13 +37,11 @@ export default async function ArticlesPage({ params }: Params) {
       <DynamicBody>
         <Hero article={article} />
         <Article documentId={documentId} content={article.blocks} />
-        {article.category && (
-          <Categories
-            category={article.category}
-            subCategories={article.subCategories}
-            tags={article.tags}
-          />
-        )}
+        <Categories
+          category={article.category}
+          technologies={article.technologies}
+          tags={article.tags}
+        />
         <RelatedArticles />
         <CommentProvider>
           <Comments currentUser={user} />

@@ -4,7 +4,7 @@ import { formatDateToCustomFormat } from "../../../utils/dates";
 
 const LastPublishedArticleCard = ({ article }: { article: ArticleCard }) => {
   return (
-    <div className="w-full py-4 bg-blog-background-2 mb-10">
+    <div className="w-full py-4 bg-blog-background-2 mb-10 border-y border-blog-border">
       <div className="max-w-screen-2xl mx-auto flex items-center">
         <Link
           href={`artigos/${article.documentId}/${article.slug}`}

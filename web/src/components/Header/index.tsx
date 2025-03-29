@@ -6,17 +6,29 @@ import HeaderContent from "./HeaderContent";
 
 const FloatingHeader = ({ currentUser }: { currentUser: User }) => {
   const headerRef = useRef<HTMLElement>(null);
+  const scrollingDownRef = useRef(0);
 
   const hideNavbarListener = () => {
     let prevScrollPos = window.scrollY;
-    const threshold = 400 + 480 + 80; // threshold to maintain header on top, beyond which it is allowed to hide
+    const threshold = 1000; // Header is static for the first 1000 px on top
 
     const handleScroll = () => {
       const currScrollPos = window.scrollY;
-      if (currScrollPos < threshold || currScrollPos < prevScrollPos) {
-        if (headerRef.current) headerRef.current.style.top = "0";
+      if (
+        currScrollPos < threshold || // Show header when on top
+        currScrollPos < prevScrollPos || // Show header when scrolling up
+        (currScrollPos > prevScrollPos && scrollingDownRef.current < 1000) // Hide header after scrolling 1000 px down
+      ) {
+        if (headerRef.current) headerRef.current.style.top = "0"; // Show
       } else {
-        if (headerRef.current) headerRef.current.style.top = "-49px"; // 48px header height + 1px border width
+        if (headerRef.current) headerRef.current.style.top = "-48px"; // Hide
+      }
+      if (currScrollPos > prevScrollPos) {
+        // scrollingDownRef.current keeps header static for a certain amout of scrolling down before hiding it
+        scrollingDownRef.current += currScrollPos - prevScrollPos;
+      } else {
+        // It is restarted when scrolling up
+        scrollingDownRef.current = 0;
       }
       prevScrollPos = currScrollPos;
     };
@@ -30,14 +42,14 @@ const FloatingHeader = ({ currentUser }: { currentUser: User }) => {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, []); // Calls only once
 
   return (
     <header
       ref={headerRef}
       id="floating-header"
       data-testid="floating-header"
-      className="fixed h-12 w-full backdrop-blur-sm shrink-0 [z-index:10] top-0 transition-[top] duration-300 bg-blog-background-backdrop"
+      className="fixed top-0 [z-index:10] w-full h-12 shrink-0 transition-[top] duration-300 backdrop-blur-sm bg-blog-background-backdrop"
       style={{ top: 0 }}
     >
       <HeaderContent currentUser={currentUser} />

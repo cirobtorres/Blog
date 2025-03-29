@@ -29,7 +29,11 @@ const DotBackground = ({
   return (
     <div
       className={cn(
-        "relative rounded-lg bg-fixed bg-gray-950/[2.5%] bg-[size:10px_10px] bg-[image:radial-gradient(hsl(0,_0%,_12%)_1px,_transparent_0)] after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:inset-ring after:inset-ring-gray-950/5",
+        `relative bg-fixed` +
+          ` bg-[size:8px_8px] bg-[image:radial-gradient(hsl(0,_0%,_94%)_1px,_transparent_0)]` +
+          ` dark:bg-[image:radial-gradient(hsl(0,_0%,_16%)_1px,_transparent_0)]` +
+          ` after:absolute after:inset-0 after:pointer-events-none` +
+          ` after:rounded-lg after:inset-ring after:inset-ring-gray-950/50`,
         className
       )}
     >
@@ -48,7 +52,7 @@ const GridBackground = ({
   return (
     <div
       className={cn(
-        "bg-[size:95px_95px] bg-[image:linear-gradient(hsl(0,_0%,_12%)_1px,_transparent_1px),_linear-gradient(to_right,_hsl(0,_0%,_12%)_1px,_transparent_1px)]",
+        "bg-[size:80px_80px] bg-[image:linear-gradient(hsl(0,_0%,_12%)_1px,_transparent_1px),_linear-gradient(to_right,_hsl(0,_0%,_12%)_1px,_transparent_1px)]",
         className
       )}
     >

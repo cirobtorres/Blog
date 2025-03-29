@@ -72,32 +72,88 @@ describe("FloatingHeader", () => {
     expect(floatingHeader).toBeInTheDocument();
   });
 
-  it("hides (top:-49px) floating header component when scroll down viewport beyond threshold and bring it back if scroll it up (top:0px)", async () => {
+  it("hides (top:-48px) floating header component when scrolling down beyond threshold and brings it back when scrolling up", async () => {
     await act(async () =>
       render(<FloatingHeader currentUser={mockAuthUser} />)
     );
     const floatingHeader = screen.getByTestId("floating-header");
 
+    // At top of the page, the header should be visible (top: 0px)
     expect(floatingHeader).toHaveStyle("top: 0px");
 
-    // Scrolls downward (beyond threshold: 400 + 480 + 80 = 960)
+    // Rolling down beyond threshold (1000px) should hide the header (top: -48px)
     await act(async () => {
-      Object.defineProperty(window, "scrollY", { value: 1000, writable: true });
-      window.dispatchEvent(new Event("scroll"));
+      for (let i = 100; i <= 1100; i += 100) {
+        Object.defineProperty(window, "scrollY", {
+          value: i,
+          configurable: true,
+        });
+        window.dispatchEvent(new Event("scroll"));
+        await new Promise((res) => setTimeout(res, 10));
+      }
     });
 
-    // Check if its hidden (moved -49px upwards viewport)
     await waitFor(() => {
-      expect(floatingHeader).toHaveStyle("top: -49px");
+      expect(floatingHeader).toHaveStyle("top: -48px");
     });
 
-    // Scrolls upward
+    // Rolling up should bring the header back (top: 0px)
     await act(async () => {
-      Object.defineProperty(window, "scrollY", { value: 500, writable: true });
+      Object.defineProperty(window, "scrollY", {
+        value: 1050,
+        configurable: true,
+      });
       window.dispatchEvent(new Event("scroll"));
     });
 
-    // Checks if header is back!
+    await waitFor(() => {
+      expect(floatingHeader).toHaveStyle("top: 0px");
+    });
+
+    // Rolling down again to test scrollingDownRef
+    await act(async () => {
+      for (let i = 100; i <= 3000; i += 100) {
+        Object.defineProperty(window, "scrollY", {
+          value: i,
+          configurable: true,
+        });
+        window.dispatchEvent(new Event("scroll"));
+        await new Promise((res) => setTimeout(res, 10));
+      }
+    });
+
+    await waitFor(() => {
+      expect(floatingHeader).toHaveStyle("top: -48px");
+    });
+
+    // Still not at the top of the page (999px)
+    await act(async () => {
+      for (let i = 3000; i <= 2001; i -= 100) {
+        Object.defineProperty(window, "scrollY", {
+          value: i,
+          configurable: true,
+        });
+        window.dispatchEvent(new Event("scroll"));
+        await new Promise((res) => setTimeout(res, 10));
+      }
+    });
+
+    await waitFor(() => {
+      expect(floatingHeader).toHaveStyle("top: -48px");
+    });
+
+    // Should be at the top of the page
+    await act(async () => {
+      for (let i = 2000; i >= 1999; i -= 1) {
+        Object.defineProperty(window, "scrollY", {
+          value: i,
+          configurable: true,
+        });
+        window.dispatchEvent(new Event("scroll"));
+        await new Promise((res) => setTimeout(res, 10));
+      }
+    });
+
     await waitFor(() => {
       expect(floatingHeader).toHaveStyle("top: 0px");
     });

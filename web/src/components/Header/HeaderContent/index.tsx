@@ -23,7 +23,13 @@ const HeaderContent = ({ currentUser }: { currentUser: User }) => {
               href="/"
               data-testid="header-content-logo-link"
               aria-labelledby="Logo com link de voltar para home"
-              className="flex items-center justify-between text-sm uppercase font-extrabold h-full transition-colors duration-500 text-blog-foreground-readable hover:text-blog-foreground-readable-hover rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-blog-foreground-readable-hover"
+              className={
+                `h-full` +
+                ` flex items-center justify-between` +
+                ` uppercase font-extrabold text-sm text-blog-foreground-readable hover:text-blog-foreground-readable-hover rounded` +
+                ` transition-colors duration-500` +
+                ` focus-visible:outline focus-visible:outline-2 focus-visible:outline-blog-foreground-readable-hover`
+              }
             >
               <Image src="/images/logo.png" alt="logo" width={40} height={40} />
             </Link>

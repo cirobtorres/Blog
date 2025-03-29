@@ -4,38 +4,51 @@ exports[`Footer matches the snapshot 1`] = `
 <DocumentFragment>
   <footer
     aria-label="Footer com link do código fonte"
-    class="shrink-0 h-60 border-t border-blog-border bg-blog-background-2"
+    class="shrink-0 h-60 border-y border-blog-border bg-blog-background-2"
     data-testid="footer"
   >
     <div
-      class="relative h-full flex flex-col justify-center items-center mx-auto max-w-screen-2xl"
+      class="h-full flex flex-col justify-center items-center gap-4 mx-auto max-w-screen-2xl"
     >
       <div
-        class="w-full max-w-44 h-1 absolute inline-grid left-1/2 -translate-x-1/2 top-8"
+        class="flex justify-center"
+      >
+        <p
+          class="max-w-[75%] text-center text-wrap text-sm"
+          data-testid="footer-paragraph"
+        >
+          Encontrou algum mau funcionamento neste site?
+          <br />
+          <a
+            aria-label="Repositório do Github para o código fonte do blog"
+            class="break-words transition-colors duration-500 text-blog-foreground-highlight hover:text-blog-foreground-readable-hover"
+            data-testid="footer-link"
+            href="https://github.com/johndoe/blog"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            https://github.com/johndoe/blog
+          </a>
+        </p>
+      </div>
+      <div
+        class="w-full max-w-44 h-1 inline-grid"
       >
         <div
-          class="h-full col-start-1 row-start-1 bg-gradient-to-r from-transparent to-blog-foreground-highlight blur-xl rounded-full"
+          class="h-full col-start-1 row-start-1 bg-gradient-to-r from-transparent to-blog-foreground-highlight blur-lg rounded-full"
         />
         <div
           class="h-full col-start-1 row-start-1 bg-gradient-to-r from-transparent to-blog-foreground-highlight rounded-full"
         />
       </div>
+    </div>
+    <div
+      class="py-1"
+    >
       <p
-        class="max-w-[75%] text-center text-wrap text-sm"
-        data-testid="footer-paragraph"
+        class="text-center text-xs text-[#5a5a5a]"
       >
-        Encontrou algum mau funcionamento neste site?
-        <br />
-        <a
-          aria-label="Repositório do Github para o código fonte do blog"
-          class="break-words transition-colors duration-500 text-blog-foreground-highlight hover:text-blog-foreground-readable-hover"
-          data-testid="footer-link"
-          href="https://github.com/johndoe/blog"
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          https://github.com/johndoe/blog
-        </a>
+        Powered by Strapi & Next.js
       </p>
     </div>
   </footer>

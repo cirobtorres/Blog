@@ -150,7 +150,7 @@ describe("addIdsToHeadings", () => {
       "<h1>Coloque o fogo para ferver</h1><h2>Em seguida coloque as 4 colheres de catchup e mexa</h2><h3>Depois quando a água estiver fervendo ponhe o miojo</h3><h2>Em seguida coloque o tempero e as colheres de pimenta</h2><h1>Depois rale a mussarela em cima do miojo</h1><h2>Bom apetite!</h2>";
     const toTest = addIdsToHeadings(inputData);
     const expected =
-      '<h1 id="coloque-o-fogo-para-ferver">Coloque o fogo para ferver</h1><h2 id="em-seguida-coloque-as-4-colheres-de-catchup-e-mexa">Em seguida coloque as 4 colheres de catchup e mexa</h2><h3 id="depois-quando-a-agua-estiver-fervendo-ponhe-o-miojo">Depois quando a água estiver fervendo ponhe o miojo</h3><h2 id="em-seguida-coloque-o-tempero-e-as-colheres-de-pimenta">Em seguida coloque o tempero e as colheres de pimenta</h2><h1 id="depois-rale-a-mussarela-em-cima-do-miojo">Depois rale a mussarela em cima do miojo</h1><h2 id="bom-apetite">Bom apetite!</h2>';
+      '<h1 id="coloque-o-fogo-para-ferver" tabIndex="0">Coloque o fogo para ferver</h1><h2 id="em-seguida-coloque-as-4-colheres-de-catchup-e-mexa" tabIndex="0">Em seguida coloque as 4 colheres de catchup e mexa</h2><h3 id="depois-quando-a-agua-estiver-fervendo-ponhe-o-miojo" tabIndex="0">Depois quando a água estiver fervendo ponhe o miojo</h3><h2 id="em-seguida-coloque-o-tempero-e-as-colheres-de-pimenta" tabIndex="0">Em seguida coloque o tempero e as colheres de pimenta</h2><h1 id="depois-rale-a-mussarela-em-cima-do-miojo" tabIndex="0">Depois rale a mussarela em cima do miojo</h1><h2 id="bom-apetite" tabIndex="0">Bom apetite!</h2>';
     expect(toTest).toEqual(expected);
   });
 });

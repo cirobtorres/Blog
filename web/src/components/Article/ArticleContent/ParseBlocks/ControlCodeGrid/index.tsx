@@ -54,11 +54,18 @@ const CodeBlock = ({
         dangerouslySetInnerHTML={{
           __html: highlightedCode,
         }}
-        className={`[grid-column-start:1] [grid-row-start:1] relative grid blog-code [&_pre]:scrollbar [&_pre]:max-h-[700px] [&_code]:py-1 ${
-          collapse
-            ? "grid-rows-1 [&_pre]:overflow-y-auto"
-            : "grid-rows-[150px] [&_pre]:overflow-y-hidden before:absolute before:left-0 before:right-0 before:bottom-0 before:h-20 before:z-10 before:opacity-90 before:bg-blog-collapsible-code"
-        }`}
+        className={
+          `relative blog-code` +
+          ` [&_pre]:scrollbar [&_pre]:max-h-[700px] [&_code]:py-1` +
+          ` grid [grid-column-start:1] [grid-row-start:1]` +
+          ` transition-all duration-500` +
+          ` ${
+            collapse
+              ? "grid-rows-1 [&_pre]:overflow-y-auto"
+              : `grid-rows-[150px] [&_pre]:overflow-y-hidden`
+            // + `before:absolute before:left-0 before:right-0 before:bottom-0 before:h-20 before:z-10 before:opacity-90 before:bg-blog-fade-dot-down` // Fade out effect
+          }`
+        }
       />
       <button
         onClick={() => updateState(!collapse)}

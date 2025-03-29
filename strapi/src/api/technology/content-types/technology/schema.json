@@ -1,10 +1,10 @@
 {
   "kind": "collectionType",
-  "collectionName": "subcategories",
+  "collectionName": "technologies",
   "info": {
-    "singularName": "subcategory",
-    "pluralName": "subcategories",
-    "displayName": "SubCategory",
+    "singularName": "technology",
+    "pluralName": "technologies",
+    "displayName": "Technology",
     "description": ""
   },
   "options": {
@@ -15,30 +15,30 @@
     "name": {
       "type": "string",
       "required": true,
-      "unique": true
+      "unique": false
     },
     "slug": {
       "type": "uid",
       "targetField": "name",
       "required": true
     },
-    "category": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::category.category"
-    },
     "link": {
       "type": "string",
       "required": true
-    },
-    "svg": {
-      "type": "text"
     },
     "articles": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::article.article",
-      "mappedBy": "subCategories"
+      "inversedBy": "technologies"
+    },
+    "file": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
     }
   }
 }

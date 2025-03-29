@@ -43,9 +43,9 @@ const navigationMenuTriggerStyle = cva(
   "py-2 inline-flex items-center justify-center rounded transition-colors duration-500" +
     " hover:text-blog-foreground-readable-hover focus:text-blog-foreground-readable-hover" +
     " focus-visible:outline focus-visible:outline-2 focus-visible:outline-blog-foreground-readable-hover" +
-    " disabled:pointer-events-none focus-visible:bg-[hsl(0,0%,14.9%,0.75)]" +
-    " disabled:opacity-50 data-[active]:text-blog-foreground-readable-hover hover:bg-[hsl(0,0%,14.9%,0.75)]" +
-    " data-[state=open]:text-blog-foreground-readable-hover data-[state=open]:bg-[hsl(0,0%,14.9%,0.75)] group"
+    " disabled:pointer-events-none focus-visible:bg-blog-background-backdrop-hover" +
+    " disabled:opacity-50 data-[active]:text-blog-foreground-readable-hover hover:bg-blog-background-backdrop-hover" +
+    " data-[state=open]:text-blog-foreground-readable-hover data-[state=open]:bg-blog-background-backdrop-hover group"
 );
 
 const NavigationMenuTrigger = React.forwardRef<

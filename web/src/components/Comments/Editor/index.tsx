@@ -78,6 +78,7 @@ const Editor = ({
         e.preventDefault();
         await onSubmit(editor.getHTML());
         editor.commands.clearContent();
+        setIsOpen(false);
       }}
       className="w-full flex flex-col shrink-0"
     >
@@ -90,7 +91,7 @@ const Editor = ({
             id="content"
             name="content"
             onFocus={() => setIsOpen(true)}
-            className="relative text-left w-full h-full text-sm [scrollbar-width:none] [-ms-overflow-style:none] pb-2 mb-2 group"
+            className="relative text-left w-full h-full text-sm [scrollbar-width:none] [-ms-overflow-style:none] pb-2 group"
           >
             <div className="absolute top-[calc(100%)] w-full h-[1px] bg-blog-border" />
             <div className="absolute top-[calc(100%)] left-1/2 -translate-x-1/2 w-0 h-[2px] bg-blog-foreground-highlight group-focus-within:w-full group-focus-within:duration-200" />
@@ -98,7 +99,7 @@ const Editor = ({
         </PopoverTrigger>
         <PopoverLoginContent />
       </Popover>
-      <div className="h-8 flex shrink-0">
+      <div className="h-8 flex shrink-0 mt-2">
         <div className="flex-1 flex items-center gap-4">
           <p className="text-sm">
             Caracteres: {editor.storage.characterCount.characters()} / {limit}

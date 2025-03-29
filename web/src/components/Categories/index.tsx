@@ -5,23 +5,29 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "../Shadcnui/tooltip";
+import { DotBackground } from "../Backgrounds";
+import Image from "next/image";
 
 const Categories = ({
   category,
-  subCategories,
+  technologies,
   tags,
 }: {
   category: Category;
-  subCategories?: SubCategory[];
+  technologies?: Technology[];
   tags?: Tag[];
 }) => {
   return (
     <section className="mb-10">
-      <Category category={category} />
-      {subCategories && subCategories.length > 0 && (
-        <Subcategories subCategories={subCategories} />
-      )}
-      {tags && tags.length > 0 && <Tags tags={tags} />}
+      <DotBackground className="relative grid grid-rows-[80px] justify-center pt-20 pb-[81px]">
+        <div className="absolute top-0 h-20 left-0 right-0 opacity-90 bg-blog-fade-dot-up" />
+        {category && <Category category={category} />}
+        {technologies && technologies.length > 0 && (
+          <Technologies technologies={technologies} />
+        )}
+        {tags && tags.length > 0 && <Tags tags={tags} />}
+        <div className="absolute bottom-0 h-20 left-0 right-0 opacity-90 bg-blog-fade-dot-down" />
+      </DotBackground>
     </section>
   );
 };
@@ -29,68 +35,66 @@ const Categories = ({
 const Category = ({ category }: { category: Category }) => {
   return (
     <article
-      className="max-w-screen-2xl mx-auto mb-12"
+      className="max-w-screen-2xl mx-auto flex items-center"
       role="region"
       data-testid="article-category"
       aria-label={`Categoria: ${category.name}`}
     >
       <div className="flex justify-center flex-wrap gap-6 col-start-2 max-lg:col-start-1 px-4">
-        <div className="w-full grid grid-cols-[1fr_auto_1fr] max-[800px]:grid-cols-1 items-center">
-          <hr className="w-full h-[1px] bg-blog-border max-[800px]:hidden" />
-          <div className="px-4">
-            <h2
-              id={`category-title-${category.documentId}`}
-              className="text-[2.5rem] font-extrabold text-center max-[800px]:text-[2rem]"
-            >
-              {category.name}
-            </h2>
-          </div>
-          <hr className="w-full h-[1px] bg-blog-border max-[800px]:hidden" />
+        <div className="w-full flex justify-center">
+          <h2
+            id={`category-title-${category.documentId}`}
+            className="text-[2.5rem] font-extrabold text-center max-[800px]:text-[2rem]"
+          >
+            {category.name}
+          </h2>
         </div>
       </div>
     </article>
   );
 };
 
-const Subcategories = ({ subCategories }: { subCategories: SubCategory[] }) => {
+const Technologies = ({ technologies }: { technologies: Technology[] }) => {
   return (
     <article
-      data-testid="article-subcategories"
+      data-testid="article-technologies"
       aria-label="Tecnologias"
-      className="max-w-screen-2xl mx-auto mb-10"
+      className="max-w-screen-2xl mx-auto flex items-center"
     >
       <ul
-        data-testid="article-subcategories-list"
+        data-testid="article-technologies-list"
         role="list"
         aria-label="Lista das tecnologias abordadas neste artigo"
         className="max-w-[500px] mx-auto flex flex-wrap gap-6 justify-center items-center px-4"
       >
-        {subCategories.map((subCategory) => (
+        {technologies.map((tech) => (
           <li
-            key={subCategory.documentId}
-            data-testid={subCategory.documentId}
+            key={tech.documentId}
+            data-testid={tech.documentId}
             role="listitem"
-            className="flex items-center gap-2 h-6"
+            className="h-20 flex items-center gap-2"
           >
-            <div
-              aria-hidden="true" // Decorative element
-              dangerouslySetInnerHTML={{ __html: subCategory.svg }}
+            <Image
+              src={`http://127.0.0.1:1337` + tech.file.url}
+              alt={tech.file.alternativeText}
+              width={30}
+              height={30}
             />
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Link
-                    href={subCategory.link}
+                    href={tech.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    aria-label={`Abrir nova aba com site oficial de ${subCategory.name}`}
+                    aria-label={`Abrir nova aba com site oficial de ${tech.name}`}
                     className="text-blog-foreground-readable hover:text-blog-foreground-readable-hover rounded focus-within:outline focus-within:outline-2 focus-within:outline-blog-foreground-readable-hover"
                   >
-                    {subCategory.name}
+                    {tech.name}
                   </Link>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>{subCategory.link}</p>
+                  <p>{tech.link}</p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
@@ -103,7 +107,7 @@ const Subcategories = ({ subCategories }: { subCategories: SubCategory[] }) => {
 
 const Tags = ({ tags }: { tags: Tag[] }) => {
   return (
-    <article data-testid="article-tags" aria-label="Tags" className="mb-10">
+    <article data-testid="article-tags" aria-label="Tags" className="">
       <div className="max-w-screen-lg mx-auto">
         <ul
           role="list"
@@ -117,7 +121,7 @@ const Tags = ({ tags }: { tags: Tag[] }) => {
               key={tag.documentId}
               role="listitem"
               aria-labelledby={`Tag-${index + 1}`}
-              className="flex items-center gap-2 h-6"
+              className="h-20 flex items-center gap-2"
             >
               <span className="text-[#808080] italic">{tag.name}</span>
             </li>

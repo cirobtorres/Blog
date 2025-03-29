@@ -5,6 +5,7 @@ import {
   PopoverLoginContent,
   PopoverTrigger,
 } from "../../Shadcnui/popover";
+import logout from "@/service/logout";
 
 const Avatar = ({ currentUser }: { currentUser: User }) => {
   return currentUser.ok && currentUser.data ? (
@@ -35,13 +36,19 @@ const Avatar = ({ currentUser }: { currentUser: User }) => {
           </p>
         </PopoverTrigger>
       </div>
-      <PopoverContent className="flex justify-center w-28 p-0 hover:[&_button]:bg-blog-background-2 overflow-hidden">
-        <button
-          onClick={() => console.log("Sair")}
-          className="flex-1 cursor-pointer p-2"
-        >
-          Sair
-        </button>
+      <PopoverContent className="w-28 p-0 backdrop-blur-sm bg-blog-background-backdrop overflow-hidden">
+        <form action={logout}>
+          <button
+            type="submit"
+            className={
+              `w-full px-4 py-2 text-left cursor-pointer transition-all duration-300` +
+              ` text-blog-foreground-readable hover:text-blog-foreground-readable-hover` +
+              ` hover:bg-blog-background-backdrop-hover`
+            }
+          >
+            Sair
+          </button>
+        </form>
       </PopoverContent>
     </Popover>
   ) : (

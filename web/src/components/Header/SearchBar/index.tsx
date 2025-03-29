@@ -85,7 +85,7 @@ const Trigger = () => {
   return (
     <div
       data-testid="search-bar-trigger"
-      className="relative w-full min-h-9 flex items-center rounded bg-[#1d1d1d] bg-opacity-75 hover:bg-blog-border group-focus-visible:bg-blog-border transition-all duration-500 group"
+      className="relative w-full min-h-9 flex items-center rounded border border-blog-border bg-[#d8d8d8] dark:bg-[#1d1d1d] bg-opacity-50 hover:bg-blog-border group-focus-visible:bg-blog-border transition-all duration-500 group"
     >
       <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 transition-all duration-500 text-blog-foreground-readable group-hover:text-blog-foreground-readable-hover" />
       <p className="pl-12 w-full text-sm text-start transition-all duration-500 group-hover:text-blog-foreground-readable-hover">

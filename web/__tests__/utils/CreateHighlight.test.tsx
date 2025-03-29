@@ -1,4 +1,5 @@
-import getHighlighter, { blogTheme } from "../../src/utils/createHighlight";
+// import getHighlighter, { blogTheme } from "../../src/utils/createHighlight";
+import getHighlighter from "../../src/utils/createHighlight";
 import { createHighlighter } from "shiki";
 
 jest.mock("shiki", () => ({
@@ -17,7 +18,8 @@ describe("createHighlight", () => {
     (createHighlighter as jest.Mock).mockResolvedValue(mockHighlighter);
     const highlighter = await getHighlighter();
     expect(createHighlighter).toHaveBeenCalledWith({
-      themes: [blogTheme],
+      // themes: [blogTheme],
+      themes: ["github-dark"],
       langs: [
         "html",
         "css",

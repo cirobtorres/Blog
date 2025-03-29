@@ -10,6 +10,7 @@ import { formatDateMonthAndYear } from "../../../../utils/dates";
 import {
   Popover,
   PopoverContent,
+  PopoverLoginContent,
   PopoverTrigger,
 } from "../../../Shadcnui/popover";
 import logout from "../../../../service/logout";
@@ -52,7 +53,11 @@ const HeaderAuthentication = ({ currentUser }: { currentUser: User }) => {
                   <form action={logout}>
                     <button
                       type="submit"
-                      className="w-full px-4 py-2 text-left cursor-pointer transition-all duration-300 text-blog-foreground-readable hover:text-blog-foreground-readable-hover hover:bg-[hsl(0,0%,14.9%,0.75)]"
+                      className={
+                        `w-full px-4 py-2 text-left cursor-pointer transition-all duration-300` +
+                        ` text-blog-foreground-readable hover:text-blog-foreground-readable-hover` +
+                        ` hover:bg-blog-background-backdrop-hover`
+                      }
                     >
                       Sair
                     </button>
@@ -121,9 +126,23 @@ const HeaderAuthentication = ({ currentUser }: { currentUser: User }) => {
       )}
       {!currentUser.ok && (
         <li data-testid="header-user-unauthenticated">
-          <button className="w-20 h-9 font-extrabold text-xs uppercase transition-colors duration-500 hover:bg-[hsl(0,0%,14.9%,0.75)] focus-visible:bg-[hsl(0,0%,14.9%,0.75)] hover:text-blog-foreground-readable-hover rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-blog-foreground-readable-hover">
+          {/* <button className="w-20 h-9 font-extrabold text-xs uppercase transition-colors duration-500 hover:bg-[hsl(0,0%,14.9%,0.75)] focus-visible:bg-[hsl(0,0%,14.9%,0.75)] hover:text-blog-foreground-readable-hover rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-blog-foreground-readable-hover">
             Login
-          </button>
+          </button> */}
+          <Popover>
+            <PopoverTrigger className="flex items-center p-0.5 rounded">
+              <div className="relative flex size-8 shrink-0 overflow-hidden rounded-full">
+                <Image
+                  src="/images/not-authenticated.png"
+                  alt="Usuário anônimo"
+                  fill
+                  sizes="(max-width: 40px) 100vw"
+                  className="transition-all duration-500 absolute object-cover group-hover:brightness-50"
+                />
+              </div>
+            </PopoverTrigger>
+            <PopoverLoginContent align="center" />
+          </Popover>
         </li>
       )}
     </>

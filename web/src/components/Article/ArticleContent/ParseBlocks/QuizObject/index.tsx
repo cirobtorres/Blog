@@ -82,7 +82,7 @@ const QuizObjects = ({ quiz }: { quiz: Question }) => {
                   selected && isCorrect && checked[0] === index
                     ? "var(--blog-green)"
                     : selected && !isCorrect && checked[0] === index
-                    ? "#450a0a"
+                    ? "var(--blog-red)"
                     : choosedWrong === index
                     ? "var(--blog-green)"
                     : checked[0] === index
@@ -121,7 +121,7 @@ const QuizObjects = ({ quiz }: { quiz: Question }) => {
           backgroundColor: selected
             ? isCorrect
               ? "var(--blog-green)"
-              : "#450a0a"
+              : "var(--blog-red)"
             : "",
         }}
       >
@@ -131,14 +131,14 @@ const QuizObjects = ({ quiz }: { quiz: Question }) => {
           </p>
         ) : isCorrect ? (
           <>
-            <FaCheck className="text-green-500" />
+            <FaCheck className="text-[var(--blog-border-green)]" />
             <p className="text-sm text-blog-foreground-readable-hover">
               Resposta correta!
             </p>
           </>
         ) : (
           <>
-            <FaCheck className="text-red-500" />
+            <FaCheck className="text-[var(--blog-border-red)]" />
             <p className="text-sm text-blog-foreground-readable-hover">
               Resposta errada
             </p>

@@ -25,6 +25,7 @@ type Article = {
   author: Author;
   category: Category;
   subCategories: SubCategory[];
+  technologies: Technology[];
   tags: Tag[];
   blocks: ArticleBlocks[];
 };

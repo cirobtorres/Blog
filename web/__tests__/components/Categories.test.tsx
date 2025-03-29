@@ -4,18 +4,36 @@ import { render, screen } from "@testing-library/react";
 describe("Categories", () => {
   const categoryMocked = { documentId: "123", name: "Ciência da Computação" };
 
-  const subcategoriesMocked = [
+  const techMocked = [
     {
       documentId: "14",
       name: "Next.js",
+      slug: "next-js",
       link: "https://nextjs.org/",
-      svg: "",
+
+      file: {
+        documentId: "aabbcd",
+        url: "",
+        alternativeText: "",
+        caption: "",
+        width: 24,
+        height: 24,
+      },
     },
     {
       documentId: "16",
       name: "Nest.js",
+      slug: "next-js",
       link: "https://nestjs.com/",
-      svg: "",
+
+      file: {
+        documentId: "aabbcd123as",
+        url: "",
+        alternativeText: "",
+        caption: "",
+        width: 24,
+        height: 24,
+      },
     },
   ];
 
@@ -46,7 +64,7 @@ describe("Categories", () => {
     const { asFragment } = render(
       <Categories
         category={categoryMocked}
-        subCategories={subcategoriesMocked}
+        technologies={techMocked}
         tags={tagsMocked}
       />
     );
@@ -79,51 +97,48 @@ describe("Categories", () => {
     });
   });
 
-  describe("Subcategories", () => {
-    test("Subcategories to not be in the document if article has no subcategories", () => {
+  describe("Technologies", () => {
+    test("Technologies to not be in the document if article has no technologies", () => {
       render(<Categories category={categoryMocked} />);
 
-      const subcategories = screen.queryByTestId("article-subcategories");
-      expect(subcategories).toBeNull();
-      expect(subcategories).not.toBeInTheDocument();
+      const technologies = screen.queryByTestId("article-technologies");
+      expect(technologies).toBeNull();
+      expect(technologies).not.toBeInTheDocument();
     });
 
-    test("Subcategories to not be in the document if subcategories is an empty array", () => {
-      render(<Categories category={categoryMocked} subCategories={[]} />);
+    test("Subcategories to not be in the document if technologies is an empty array", () => {
+      render(<Categories category={categoryMocked} technologies={[]} />);
 
-      const subcategories = screen.queryByTestId("article-subcategories");
-      expect(subcategories).toBeNull();
-      expect(subcategories).not.toBeInTheDocument();
+      const technologies = screen.queryByTestId("article-technologies");
+      expect(technologies).toBeNull();
+      expect(technologies).not.toBeInTheDocument();
     });
 
     test("Subcategories accessibility attributes are rendered", () => {
       render(
-        <Categories
-          category={categoryMocked}
-          subCategories={subcategoriesMocked}
-        />
+        <Categories category={categoryMocked} technologies={techMocked} />
       );
 
       // article
-      const subcategories = screen.queryByTestId("article-subcategories");
-      expect(subcategories).toHaveAttribute("aria-label", "Tecnologias");
+      const technologies = screen.queryByTestId("article-technologies");
+      expect(technologies).toHaveAttribute("aria-label", "Tecnologias");
 
       // ul
-      const subcategoriesList = screen.queryByTestId(
-        "article-subcategories-list"
+      const technologiesList = screen.queryByTestId(
+        "article-technologies-list"
       );
-      expect(subcategoriesList).toHaveAttribute("role", "list");
-      expect(subcategoriesList).toHaveAttribute(
+      expect(technologiesList).toHaveAttribute("role", "list");
+      expect(technologiesList).toHaveAttribute(
         "aria-label",
         "Lista das tecnologias abordadas neste artigo"
       );
 
-      const listItems = subcategoriesList?.getElementsByTagName("li");
-      expect(listItems?.length).toBe(subcategoriesMocked.length);
+      const listItems = technologiesList?.getElementsByTagName("li");
+      expect(listItems?.length).toBe(techMocked.length);
 
       // li
       Array.from(listItems || []).forEach((listItem, index) => {
-        const subcategory = subcategoriesMocked[index];
+        const subcategory = techMocked[index];
         expect(listItem).toHaveAttribute("data-testid", subcategory.documentId);
         expect(listItem).toHaveAttribute("role", "listitem");
 
@@ -140,10 +155,7 @@ describe("Categories", () => {
   describe("Tags", () => {
     test("Tags to not be in the document if article has no tag", () => {
       render(
-        <Categories
-          category={categoryMocked}
-          subCategories={subcategoriesMocked}
-        />
+        <Categories category={categoryMocked} technologies={techMocked} />
       );
 
       const tags = screen.queryByTestId("article-tags");

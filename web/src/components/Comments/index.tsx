@@ -72,12 +72,6 @@ export default function Comments({ currentUser }: { currentUser: User }) {
       className="max-w-screen-md mx-auto flex flex-col mb-20 pt-12 px-4"
     >
       <CommentSectionHeader articleId={documentId} />
-      {/* {!currentUser.ok && (
-        <div className="flex flex-col mb-8">
-          <Avatar currentUser={currentUser} />
-          <Editor currentUser={currentUser} onSubmit={onCommentCreate} />
-        </div>
-      )} */}
       <div className="flex flex-col mb-8">
         <Avatar currentUser={currentUser} />
         <Editor currentUser={currentUser} onSubmit={onCommentCreate} />
@@ -266,14 +260,10 @@ const CommentRow = ({
       .then((updatedComment) => {
         const itIsAChild = updatedComment.parent_id === null;
         if (itIsAChild) {
-          console.log("1");
           updateLocalComment(updatedComment);
         } else {
-          console.log("2");
           setChilds((prev) => {
-            console.log("3");
             return prev.map((child) => {
-              console.log("4");
               return child.documentId === updatedComment.documentId
                 ? { ...child, body: updatedComment.body }
                 : child;
@@ -357,7 +347,7 @@ const CommentRow = ({
         <div className="pl-12">
           <button
             onClick={handleChildComments}
-            className="flex items-center gap-2 mb-4 text-sm text-blog-foreground-highlight hover:text-blog-foreground-readable-hover"
+            className="flex items-center gap-2 mb-4 text-sm transition-colors duration-500 text-blog-foreground-highlight hover:text-blog-foreground-readable-hover"
           >
             Respostas
             <svg

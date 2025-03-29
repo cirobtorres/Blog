@@ -71,17 +71,22 @@ const CommentOptions = ({
               <circle cx="12" cy="19" r="1" />
             </svg>
           </PopoverTrigger>
-          <PopoverContent className="w-28 p-0 hover:[&_button]:bg-blog-background-2 overflow-hidden">
+          <PopoverContent
+            className={
+              `w-28 p-0 overflow-hidden` +
+              ` backdrop-blur-sm bg-blog-background-backdrop`
+            }
+          >
             <div className="flex flex-col">
               <button
                 onClick={() => setIsEditing(!isEditing)}
-                className="justify-center cursor-pointer p-2"
+                className="p-2 justify-center cursor-pointer transition-colors duration-500 hover:bg-blog-background-backdrop-hover"
               >
                 Editar
               </button>
               <button
                 onClick={() => setOpenDialog(true)}
-                className="justify-center cursor-pointer p-2"
+                className="p-2 justify-center cursor-pointer transition-colors duration-500 hover:bg-blog-background-backdrop-hover"
               >
                 Excluir
               </button>

@@ -99,10 +99,10 @@ const AnchorTracker = ({ documentId }: { documentId: string }) => {
             </AccordionTrigger>
             <AccordionContent
               ref={anchorListRef}
-              className="px-2 py-1 relative max-h-[50vh] before:absolute before:top-0 before:left-0 before:bottom-0 before:my-2 before:w-0.5 before:bg-blog-border"
+              className="py-1 max-h-[50vh] relative before:absolute before:top-0 before:left-0 before:bottom-0 before:my-2 before:w-0.5 before:bg-blog-border"
             >
               {anchorList.map((text, index) => (
-                <li key={index} className="mb-1">
+                <li key={index} className="relative pl-2 pr-1 mb-1">
                   <Link
                     href={`#${Object.keys(text)}`}
                     aria-label={`Ir para ${Object.values(text)[0]}`}
@@ -111,8 +111,8 @@ const AnchorTracker = ({ documentId }: { documentId: string }) => {
                       `flex text-sm transition-colors duration-500 break-words aria-current:text-blog-foreground-highlight` +
                       ` aria-current:hover:text-blog-foreground-readable-hover hover:text-blog-foreground-readable-hover` +
                       ` ${generatePaddingForSessions(text)}` +
-                      ` after:transition-all after:duration-500 after:w-0.5 after:h-5 after:bg-transparent` +
                       ` after:absolute after:left-0 aria-current:after:bg-blog-foreground-highlight` +
+                      ` after:transition-all after:duration-500 after:w-0.5 after:h-full after:bg-transparent` +
                       ` rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-blog-foreground-readable-hover` +
                       ` focus-visible:text-blog-foreground-readable-hover focus-visible:bg-[hsl(0,0%,14.9%,0.75)]` +
                       ` aria-current:focus-visible:text-blog-foreground-readable-hover`

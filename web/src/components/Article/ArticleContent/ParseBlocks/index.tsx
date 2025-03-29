@@ -218,7 +218,7 @@ const ParseDetails = ({
   body: string;
 }) => {
   return (
-    <article className="w-full blog-center-content blog-heading blog-margin blog-text blog-lists bg-blog-background-2 mb-4">
+    <article className="border border-blog-border w-full blog-center-content blog-heading blog-margin blog-text blog-lists bg-blog-background-2 mb-4">
       {collapsible ? (
         <Accordion type="single" collapsible defaultValue="">
           <AccordionItem

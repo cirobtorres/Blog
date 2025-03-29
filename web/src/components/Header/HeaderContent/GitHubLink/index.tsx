@@ -40,7 +40,7 @@ const GitHubLink = () => {
       <Tooltip>
         <TooltipTrigger
           asChild
-          className="rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-blog-foreground-readable-hover"
+          className="px-0 py-0 rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-blog-foreground-readable-hover"
         >
           <Link
             data-testid="header-content-github-link"

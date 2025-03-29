@@ -26,7 +26,7 @@ const extractAnchors = (htmlString: string): { [key: string]: string }[] => {
 const addIdsToHeadings = (htmlString: string) => {
   return htmlString.replace(/<(h[1-6])>(.*?)<\/\1>/g, (match, tag, content) => {
     const id = slugify(content);
-    return `<${tag} id="${id}">${content}</${tag}>`;
+    return `<${tag} id="${id}" tabIndex="0">${content}</${tag}>`;
   });
 };
 
