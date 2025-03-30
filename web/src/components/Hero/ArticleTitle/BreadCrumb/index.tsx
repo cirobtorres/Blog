@@ -9,13 +9,7 @@ import {
 } from "../../../Shadcnui/breadcrumb";
 import slugify from "@/utils/slugify";
 
-const BreadCrumb = ({
-  title,
-  category,
-}: {
-  title: string;
-  category: Category;
-}) => {
+const BreadCrumb = ({ title, topic }: { title: string; topic: Topic }) => {
   return (
     <BreadcrumbRoot data-testid="breadcrumb" className="mb-4">
       <BreadcrumbList>
@@ -37,10 +31,10 @@ const BreadCrumb = ({
         </BreadcrumbSeparator>
         <BreadcrumbPage>
           <BreadcrumbLink
-            data-testid="breadcrumb-article-category"
-            href={`/artigos?category=${slugify(category.name)}`}
+            data-testid="breadcrumb-article-topic"
+            href={`/artigos?topic=${slugify(topic.name)}`}
           >
-            {category.name}
+            {topic.name}
           </BreadcrumbLink>
         </BreadcrumbPage>
         <BreadcrumbSeparator>

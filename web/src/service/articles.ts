@@ -29,8 +29,8 @@ const getArticles = async (
       and: searchTerms?.map((term) => ({
         or: [
           { slug: { contains: term } },
-          { category: { slug: { contains: term } } },
-          { subCategories: { slug: { contains: term } } },
+          { topic: { slug: { contains: term } } },
+          { tools: { slug: { contains: term } } },
           { tags: { slug: { contains: term } } },
         ],
       })),
@@ -74,8 +74,8 @@ const countArticles = async (sortBy?: string | null) => {
       and: searchTerms?.map((term) => ({
         or: [
           { slug: { contains: term } },
-          { category: { slug: { contains: term } } },
-          { subCategories: { slug: { contains: term } } },
+          { topic: { slug: { contains: term } } },
+          { tools: { slug: { contains: term } } },
           { tags: { slug: { contains: term } } },
         ],
       })),

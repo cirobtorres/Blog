@@ -74,22 +74,23 @@ const ArticlesList = ({ articles }: { articles: ArticleCard[] }) => {
                 />
               </div>
               <div className="w-full flex-1 flex flex-col gap-2 justify-center h-[212px] py-2 px-3 overflow-hidden">
-                {article.category && (
+                {article.topic && (
                   <div className="shrink-0 h-6 flex items-center gap-4">
                     <p className="text-base truncate flex-[0_0_auto]">
-                      {article.category.name}
+                      {article.topic.name}
                     </p>
-                    {article.subCategories && (
+                    {article.tools && (
                       <ul className="flex gap-x-2 overflow-x-auto blog-hide-scrollbar">
-                        {article.subCategories.map((subCategory) => (
+                        {article.tools.map((tool) => (
                           <li
-                            key={subCategory.documentId}
+                            key={tool.documentId}
                             className="flex items-center gap-2 text-xs [&_svg]:w-5"
                           >
-                            <div
-                              dangerouslySetInnerHTML={{
-                                __html: subCategory.svg,
-                              }}
+                            <Image
+                              src={`http://127.0.0.1:1337${tool.file.url}`}
+                              alt={tool.file.alternativeText}
+                              width={20}
+                              height={20}
                             />
                           </li>
                         ))}

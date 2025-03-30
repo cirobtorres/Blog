@@ -84,8 +84,8 @@ exports[`BreadCrumb matches the snapshot 1`] = `
       >
         <a
           class="transition-colors duration-500 text-blog-foreground-readable hover:text-blog-foreground-readable-hover [&_a]:hover:text-blog-foreground-readable-hover"
-          data-testid="breadcrumb-article-category"
-          href="/artigos?category=ciencia-da-computacao"
+          data-testid="breadcrumb-article-topic"
+          href="/artigos?topic=ciencia-da-computacao"
         >
           Ciência da Computação
         </a>

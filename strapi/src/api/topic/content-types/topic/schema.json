@@ -1,10 +1,10 @@
 {
   "kind": "collectionType",
-  "collectionName": "tags",
+  "collectionName": "topics",
   "info": {
-    "singularName": "tag",
-    "pluralName": "tags",
-    "displayName": "Tag",
+    "singularName": "topic",
+    "pluralName": "topics",
+    "displayName": "Topic",
     "description": ""
   },
   "options": {
@@ -15,18 +15,22 @@
     "name": {
       "type": "string",
       "required": true,
-      "unique": true
+      "maxLength": 65,
+      "minLength": 4
     },
     "slug": {
       "type": "uid",
-      "required": true,
-      "targetField": "name"
+      "targetField": "name",
+      "required": true
+    },
+    "description": {
+      "type": "string"
     },
     "articles": {
       "type": "relation",
-      "relation": "manyToMany",
+      "relation": "oneToMany",
       "target": "api::article.article",
-      "mappedBy": "tags"
+      "mappedBy": "topic"
     }
   }
 }

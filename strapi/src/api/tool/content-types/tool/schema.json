@@ -1,10 +1,10 @@
 {
   "kind": "collectionType",
-  "collectionName": "tags",
+  "collectionName": "tools",
   "info": {
-    "singularName": "tag",
-    "pluralName": "tags",
-    "displayName": "Tag",
+    "singularName": "tool",
+    "pluralName": "tools",
+    "displayName": "Tool",
     "description": ""
   },
   "options": {
@@ -15,18 +15,30 @@
     "name": {
       "type": "string",
       "required": true,
-      "unique": true
+      "maxLength": 35,
+      "minLength": 4
     },
     "slug": {
       "type": "uid",
-      "required": true,
       "targetField": "name"
+    },
+    "link": {
+      "type": "string",
+      "required": true
+    },
+    "file": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false,
+      "required": true
     },
     "articles": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::article.article",
-      "mappedBy": "tags"
+      "inversedBy": "tools"
     }
   }
 }

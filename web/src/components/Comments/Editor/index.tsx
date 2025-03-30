@@ -4,7 +4,6 @@ import Paragraph from "@tiptap/extension-paragraph";
 import Placeholder from "@tiptap/extension-placeholder";
 import Text from "@tiptap/extension-text";
 import CharacterCount from "@tiptap/extension-character-count";
-// import LoadingEditor from "../EditorLoading";
 import { useState } from "react";
 import {
   Popover,
@@ -58,6 +57,23 @@ const Editor = ({
         },
       },
       content: initialContent,
+      // onUpdate: ({ editor }) => {
+      //   // Prevents user from adding multiple empty paragraphs
+      //   const jsonContent = editor.getJSON();
+      //   jsonContent.content = jsonContent.content?.filter(
+      //     (node, index, arr) => {
+      //       if (node.type === "paragraph" && !node.content) {
+      //         return (
+      //           index === 0 ||
+      //           arr[index - 1].type !== "paragraph" ||
+      //           arr[index - 1].content
+      //         );
+      //       }
+      //       return true;
+      //     }
+      //   );
+      //   editor.commands.setContent(jsonContent);
+      // },
     },
     [currentUser.ok]
   );
@@ -68,7 +84,7 @@ const Editor = ({
   }
 
   if (!editor) {
-    // return <LoadingEditor />;
+    // return <CommentEditorSkeleton />;
     return;
   }
 
@@ -76,7 +92,12 @@ const Editor = ({
     <form
       onSubmit={async (e) => {
         e.preventDefault();
-        await onSubmit(editor.getHTML());
+        const contentJSON = editor.getHTML();
+        if (contentJSON === "<p></p>") {
+          return;
+        }
+        contentJSON.replace(/<\/?p>/g, "");
+        await onSubmit(contentJSON);
         editor.commands.clearContent();
         setIsOpen(false);
       }}
@@ -90,7 +111,10 @@ const Editor = ({
             autoFocus={autoFocus}
             id="content"
             name="content"
-            onFocus={() => setIsOpen(true)}
+            onFocus={() => {
+              setIsOpen(true);
+              editor.chain().focus().setTextSelection(limit).run(); // Cursor on the last element position
+            }}
             className="relative text-left w-full h-full text-sm [scrollbar-width:none] [-ms-overflow-style:none] pb-2 group"
           >
             <div className="absolute top-[calc(100%)] w-full h-[1px] bg-blog-border" />
@@ -129,7 +153,7 @@ const Editor = ({
                   ? "bg-[#747474] text-[#b3b3b3]"
                   : "bg-blog-foreground-highlight hover:bg-[hsl(30,93%,71%)] text-blog-background-3"
               }`}
-              disabled={editor.getHTML() === "<p></p>"}
+              disabled={editor.isEmpty}
             >
               Comentar
             </button>

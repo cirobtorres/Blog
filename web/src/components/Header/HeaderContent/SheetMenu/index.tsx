@@ -70,7 +70,7 @@ export default function SheetMenu() {
                 <AccordionContent className="flex items-center pl-4">
                   <SheetClose asChild>
                     <Link
-                      href="/artigos?page=1&category=tecnologia-da-informacao"
+                      href="/artigos?page=1&topic=tecnologia-da-informacao"
                       className="my-1 py-2 px-2 rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-blog-foreground-readable-hover"
                     >
                       Tecnologia da Informação
@@ -80,7 +80,7 @@ export default function SheetMenu() {
                 <AccordionContent className="flex items-center pl-4">
                   <SheetClose asChild>
                     <Link
-                      href="/artigos?page=1&category=modelagem-3d"
+                      href="/artigos?page=1&topic=modelagem-3d"
                       className="my-1 py-2 px-2 rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-blog-foreground-readable-hover"
                     >
                       Modelagem 3D

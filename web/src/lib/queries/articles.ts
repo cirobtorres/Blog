@@ -16,15 +16,25 @@ query Articles($sort: [String], $filters: ArticleFiltersInput, $pagination: Pagi
       width
       height
     }
-    category {
+    topic {
       documentId
       name
+      slug
+      description
     }
-    subCategories {
+    tools {
       documentId
       name
+      slug
       link
-      svg
+      file {
+        documentId
+        url
+        alternativeText
+        caption
+        width
+        height
+      }
     }
     tags {
       documentId
@@ -68,17 +78,13 @@ query Blocks($documentId: ID!) {
         alternativeText
       }
     }
-    category {
+    topic {
       documentId
       name
+      slug
+      description
     }
-    subCategories {
-      documentId
-      name
-      link
-      svg
-    }
-    technologies {
+    tools {
       documentId
       name
       slug

@@ -8,8 +8,8 @@ type ArticleCard = {
   publishedAt: string;
   cover: Cover;
   author: Author;
-  category: Category;
-  subCategories: SubCategory[];
+  topic: Topic;
+  tools: Tool[];
   tags: Tag[];
 };
 
@@ -23,9 +23,8 @@ type Article = {
   publishedAt: string;
   cover: Cover;
   author: Author;
-  category: Category;
-  subCategories: SubCategory[];
-  technologies: Technology[];
+  topic: Topic;
+  tools: Tool[];
   tags: Tag[];
   blocks: ArticleBlocks[];
 };

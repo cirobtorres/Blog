@@ -26,8 +26,8 @@ const ArticleTitle = ({ article }: { article: Article }) => {
     >
       <div className="h-full grid grid-cols-article max-lg:grid-cols-article-800 mx-auto items-center max-w-screen-2xl">
         <div className="col-start-2 max-lg:col-start-1 ml-8 mr-4 max-lg:ml-4">
-          {article.category && (
-            <BreadCrumb title={article.title} category={article.category} />
+          {article.topic && (
+            <BreadCrumb title={article.title} topic={article.topic} />
           )}
           <div className="blog-heading blog-center-content flex flex-col gap-4">
             <h1

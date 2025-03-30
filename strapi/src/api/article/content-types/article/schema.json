@@ -43,12 +43,6 @@
       "target": "api::author.author",
       "inversedBy": "articles"
     },
-    "category": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::category.category",
-      "inversedBy": "articles"
-    },
     "blocks": {
       "type": "dynamiczone",
       "components": [
@@ -65,22 +59,22 @@
       "target": "api::tag.tag",
       "inversedBy": "articles"
     },
-    "subCategories": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::subcategory.subcategory",
-      "inversedBy": "articles"
-    },
     "comments": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::comment.comment",
       "mappedBy": "article"
     },
-    "technologies": {
+    "topic": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::topic.topic",
+      "inversedBy": "articles"
+    },
+    "tools": {
       "type": "relation",
       "relation": "manyToMany",
-      "target": "api::technology.technology",
+      "target": "api::tool.tool",
       "mappedBy": "articles"
     }
   }

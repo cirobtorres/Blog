@@ -2,7 +2,7 @@ import { getArticle } from "../../../../service/articles";
 import { DynamicBody } from "../../../../components/Body";
 import Hero from "../../../../components/Hero";
 import Article from "../../../../components/Article";
-import Categories from "../../../../components/Categories";
+import TagsRelated from "../../../../components/TagsRelated";
 import RelatedArticles from "../../../../components/RelatedArticles";
 import { getUserMeLoader } from "@/service/user-me-loader";
 import { getGlobal } from "../../../../service/global";
@@ -37,9 +37,9 @@ export default async function ArticlesPage({ params }: Params) {
       <DynamicBody>
         <Hero article={article} />
         <Article documentId={documentId} content={article.blocks} />
-        <Categories
-          category={article.category}
-          technologies={article.technologies}
+        <TagsRelated
+          topic={article.topic}
+          tools={article.tools}
           tags={article.tags}
         />
         <RelatedArticles />

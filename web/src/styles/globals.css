@@ -334,7 +334,6 @@ input[type="search"]::-webkit-search-results-decoration {
 
   /*------------------------------Code------------------------------*/
   .blog-code {
-    margin-bottom: 1rem;
     background: var(--blog-pre);
     color: var(--blog-code-text);
     border: 1px solid var(--blog-border);

@@ -7,7 +7,7 @@ import {
 } from "@/service/comments/client";
 import { useParams } from "next/navigation";
 import React, { useCallback, useState } from "react";
-import CommentLoading from "../components/Comments/CommentLoading";
+import { CommentLoadingSkeleton } from "../components/Comments/CommentLoading";
 
 type CommentProviderProps = {
   comments: CommentProps[];
@@ -117,7 +117,7 @@ export function CommentProvider({ children }: { children: React.ReactNode }) {
     >
       {loading && page === 1 ? (
         <div className="mt-20 mb-20">
-          <CommentLoading />
+          <CommentLoadingSkeleton />
         </div>
       ) : (
         children

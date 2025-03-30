@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import getHighlighter from "../../../../../utils/createHighlight";
 import highlightPreBlocks from "../../../../../utils/highlight";
 import { type Highlighter } from "shiki";
+import { HazardBackground } from "../../../../Backgrounds";
 
 const CodeBlock = ({
   id,
@@ -16,7 +17,8 @@ const CodeBlock = ({
   const [highlightedCode, setHighlightedCode] = useState<string>("");
   const highlighterRef = useRef<Highlighter>(null);
 
-  const updateState = useCallback(
+  // Update code block collapse state and save it to localStorage
+  const updateCollapse = useCallback(
     (state: boolean) => {
       setCollapse(() => {
         return state;
@@ -26,13 +28,15 @@ const CodeBlock = ({
     [id]
   );
 
+  // Save code block collapse state when user enters the page or when he clicks the button
   useEffect(() => {
     const collapsible = localStorage.getItem(`collapsible-${id}`);
     if (collapsible) {
-      updateState(JSON.parse(collapsible));
+      updateCollapse(JSON.parse(collapsible));
     }
-  }, [id, updateState]);
+  }, [id, updateCollapse]);
 
+  // Load highlighter and highlight code blocks when its received from the server
   useEffect(() => {
     if (!highlighterRef.current) {
       getHighlighter().then((highlighter) => {
@@ -50,25 +54,64 @@ const CodeBlock = ({
 
   return htmlToRender.split("\n").length > 70 ? (
     <div className="w-full relative inline-grid">
-      <div
-        dangerouslySetInnerHTML={{
-          __html: highlightedCode,
-        }}
-        className={
-          `relative blog-code` +
-          ` [&_pre]:scrollbar [&_pre]:max-h-[700px] [&_code]:py-1` +
-          ` grid [grid-column-start:1] [grid-row-start:1]` +
-          ` transition-all duration-500` +
-          ` ${
-            collapse
-              ? "grid-rows-1 [&_pre]:overflow-y-auto"
-              : `grid-rows-[150px] [&_pre]:overflow-y-hidden`
-            // + `before:absolute before:left-0 before:right-0 before:bottom-0 before:h-20 before:z-10 before:opacity-90 before:bg-blog-fade-dot-down` // Fade out effect
-          }`
-        }
-      />
+      <ExpandableCodeBlock collapse={collapse} code={highlightedCode} />
+      <CollapseCodeButton collapse={collapse} updateCollapse={updateCollapse} />
+    </div>
+  ) : (
+    <NonExapandableCodeBlock code={highlightedCode} />
+  );
+};
+
+const ExpandableCodeBlock = ({
+  collapse,
+  code,
+}: {
+  collapse: boolean;
+  code: string;
+}) => {
+  return (
+    <div
+      dangerouslySetInnerHTML={{
+        __html: code,
+      }}
+      className={
+        `relative blog-code` +
+        ` [&_pre]:scrollbar [&_pre]:max-h-[700px] [&_code]:py-1` +
+        ` grid [grid-column-start:1] [grid-row-start:1]` +
+        ` transition-all duration-500` +
+        ` ${
+          collapse
+            ? "grid-rows-1 [&_pre]:overflow-y-auto"
+            : `grid-rows-[150px] [&_pre]:overflow-y-hidden`
+          // + `before:absolute before:left-0 before:right-0 before:bottom-0 before:h-20 before:z-10 before:opacity-90 before:bg-blog-fade-dot-down` // Fade out effect
+        }`
+      }
+    />
+  );
+};
+
+const NonExapandableCodeBlock = ({ code }: { code: string }) => {
+  return (
+    <div
+      dangerouslySetInnerHTML={{
+        __html: code,
+      }}
+      className={`blog-code [&_pre]:scrollbar [&_pre]:overflow-y-auto [&_pre]:max-h-[600px] [&_code]:py-1`}
+    />
+  );
+};
+
+const CollapseCodeButton = ({
+  collapse,
+  updateCollapse,
+}: {
+  collapse: boolean;
+  updateCollapse: (value: boolean) => void;
+}) => {
+  return (
+    <HazardBackground className="w-full h-10 flex justify-center items-center border border-t-0 border-blog-border">
       <button
-        onClick={() => updateState(!collapse)}
+        onClick={() => updateCollapse(!collapse)}
         className="w-fit mx-auto text-sm px-4 rounded border border-blog-border transition-all duration-500 bg-blog-background-1 hover:bg-blog-background-2 hover:text-blog-foreground-readable-hover"
       >
         {collapse && (
@@ -110,14 +153,7 @@ const CodeBlock = ({
           </p>
         )}
       </button>
-    </div>
-  ) : (
-    <div
-      dangerouslySetInnerHTML={{
-        __html: highlightedCode,
-      }}
-      className="blog-code [&_pre]:scrollbar [&_pre]:overflow-y-auto [&_pre]:max-h-[600px] [&_code]:py-1 "
-    />
+    </HazardBackground>
   );
 };
 
