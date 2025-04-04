@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import { useTheme } from "next-themes";
+import * as nextThemes from "next-themes";
 import DarkModeToggle from "../../../src/components/Header/HeaderContent/DarkModeToggle";
 import userEvent from "@testing-library/user-event";
 
@@ -9,9 +9,11 @@ jest.mock("next-themes", () => ({
 
 function setTheme(theme = "light") {
   const mockSetTheme = jest.fn();
-  jest.spyOn(require("next-themes"), "useTheme").mockImplementation(() => ({
+
+  jest.spyOn(nextThemes, "useTheme").mockImplementation(() => ({
     theme,
     setTheme: mockSetTheme,
+    themes: ["light", "dark"],
   }));
   return mockSetTheme;
 }
@@ -45,7 +47,7 @@ describe("DarkModeToggle", () => {
   });
 
   it("checks the accessibility tools are in place", () => {
-    let mockSetTheme = setTheme("dark");
+    setTheme("dark");
     const { getByTestId } = render(<DarkModeToggle />);
 
     const toogleButtonDark = getByTestId("dark-mode-toggle");
@@ -64,7 +66,7 @@ describe("DarkModeToggle", () => {
     expect(sunButtonDark).toHaveStyle("opacity: 0");
     expect(sunButtonDark).toHaveStyle("transform: rotate(360deg)");
 
-    mockSetTheme = setTheme("light");
+    setTheme("light");
 
     fireEvent.click(toogleButtonDark);
     const { getAllByTestId } = render(<DarkModeToggle />);
@@ -83,30 +85,19 @@ describe("DarkModeToggle", () => {
   it("should correctly announce the current theme for screen readers", () => {
     setTheme("dark");
     render(<DarkModeToggle />);
-
-    // Encontra o elemento que contém o anúncio do tema
     const themeStatus = screen.getByTestId("dark-mode-toggle-span");
-
-    // Verifica se o texto está correto para o tema escuro (mock inicial)
     expect(themeStatus).toHaveTextContent("Tema escuro");
     expect(themeStatus).toHaveAttribute("role", "status");
     expect(themeStatus).toHaveAttribute("aria-live", "polite");
-    expect(themeStatus).toHaveClass("sr-only"); // Garante que está oculto visualmente
+    expect(themeStatus).toHaveClass("sr-only");
   });
 
   it("should update the theme announcement when theme changes", async () => {
     const mockSetTheme = setTheme();
-
     render(<DarkModeToggle />);
-
     const themeStatus = screen.getByTestId("dark-mode-toggle-span");
     expect(themeStatus).toHaveTextContent("Tema claro");
-
-    // Simula a mudança de tema
     await userEvent.click(screen.getByTestId("dark-mode-toggle"));
-
-    // Verifica se o texto seria atualizado (o mock não atualiza o valor real)
-    // Este teste precisaria de ajustes se quisermos testar a mudança dinâmica
     expect(mockSetTheme).toHaveBeenCalledWith("dark");
   });
 

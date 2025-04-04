@@ -6,13 +6,22 @@ import { protectedRoutes } from "./config/routes";
 export async function middleware(request: NextRequest) {
   const url = request.nextUrl;
   const currentPath = url.pathname;
-  // const currentPath = request.nextUrl.pathname;
+  const searchParams = url.searchParams;
 
-  // 1. Redirect URL JWT Tokens (if exists)
-  const token = url.searchParams.get("jwt");
-
+  // 1. Handle JWT from query params (after provider auth)
+  const token = searchParams.get("jwt");
   if (token) {
-    const response = NextResponse.redirect(new URL(currentPath, request.url));
+    // Remove jwt from URL
+    searchParams.delete("jwt");
+    const response = NextResponse.redirect(
+      new URL(
+        `${currentPath}${
+          searchParams.toString() ? `?${searchParams.toString()}` : ""
+        }`,
+        request.url
+      )
+    );
+
     response.cookies.set("jwt", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
@@ -20,21 +29,25 @@ export async function middleware(request: NextRequest) {
       path: "/",
       maxAge: 60 * 60 * 24 * 7, // 1 week
     });
+
     return response;
   }
 
-  // 2. Authentication
+  // 2. Authentication check
   try {
-    // Protecting routes
     const user = await getUserMeLoader();
-    const currentPath = request.nextUrl.pathname;
+
+    // Protecting routes
     if (protectedRoutes.includes(currentPath) && !user.ok) {
-      return NextResponse.redirect(new URL("/", request.url));
+      // Store the current path for redirect after login
+      const loginUrl = new URL("/login", request.url);
+      loginUrl.searchParams.set("redirect", currentPath);
+      return NextResponse.redirect(loginUrl);
     }
 
-    return NextResponse.next(); // Authenticated
+    return NextResponse.next();
   } catch (error) {
     console.error("Error verifying user:", error);
-    return NextResponse.next(); // Not authenticated
+    return NextResponse.next();
   }
 }

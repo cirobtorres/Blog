@@ -1,8 +1,14 @@
-import graphqlClient from "../lib/graphQlClient";
+import {
+  graphqlReadArticleClient,
+  graphqlLikeArticleClient,
+} from "../lib/graphQlClient";
 import {
   COUNT_ARTICLES,
+  COUNT_LIKES,
+  DISLIKE_ARTICLE,
   GET_ARTICLE,
   GET_ARTICLES,
+  LIKE_ARTICLE,
 } from "../lib/queries/articles";
 
 const getArticles = async (
@@ -37,11 +43,12 @@ const getArticles = async (
     };
 
     const { articles }: { articles: ArticleCard[] } =
-      await graphqlClient.request(GET_ARTICLES, {
+      await graphqlReadArticleClient.request(GET_ARTICLES, {
         sort,
         filters,
         pagination,
       });
+
     return { data: articles };
   } catch (error) {
     console.error("Failed to fetch articles:", error);
@@ -51,12 +58,11 @@ const getArticles = async (
 
 const getArticle = async (documentId: string) => {
   try {
-    const { article }: { article: Article } = await graphqlClient.request(
-      GET_ARTICLE,
-      {
+    const { article }: { article: Article } =
+      await graphqlReadArticleClient.request(GET_ARTICLE, {
         documentId,
-      }
-    );
+      });
+
     return { data: article };
   } catch (error) {
     console.error("Failed to fetch article:", error);
@@ -94,9 +100,10 @@ const countArticles = async (sortBy?: string | null) => {
           total: number;
         };
       };
-    } = await graphqlClient.request(COUNT_ARTICLES, {
+    } = await graphqlReadArticleClient.request(COUNT_ARTICLES, {
       filters,
     });
+
     return { data: pageInfo };
   } catch (error) {
     console.error("Failed to fetch count articles:", error);
@@ -104,4 +111,89 @@ const countArticles = async (sortBy?: string | null) => {
   }
 };
 
-export { getArticles, getArticle, countArticles };
+const countArticleLikes = async (articleDocumentId: string) => {
+  try {
+    const filters = {
+      article: {
+        documentId: {
+          eq: articleDocumentId,
+        },
+      },
+    };
+
+    const {
+      articleLikes,
+    }: {
+      articleLikes: {
+        documentId: string;
+        users_permissions_user: {
+          documentId: string;
+        };
+      }[];
+    } = await graphqlLikeArticleClient.request(COUNT_LIKES, {
+      filters,
+    });
+
+    return { data: articleLikes };
+  } catch (error) {
+    console.error("Failed to count article likes:", error);
+    throw new Error("Failed to count article likes");
+  }
+};
+
+const likeArticle = async (
+  articleDocumentId: string,
+  userDocumentId: string
+) => {
+  try {
+    const data = {
+      article: articleDocumentId,
+      users_permissions_user: userDocumentId,
+    };
+
+    const {
+      createArticleLike: { documentId },
+    }: {
+      createArticleLike: {
+        documentId: string;
+        users_permissions_user: string;
+      };
+    } = await graphqlLikeArticleClient.request(LIKE_ARTICLE, {
+      documentId: articleDocumentId,
+      data,
+    });
+
+    return { data: documentId };
+  } catch (error) {
+    console.error("Failed to like article:", error);
+    throw new Error("Failed to like article");
+  }
+};
+
+const dislikeArticle = async (articleDocumentId: string) => {
+  try {
+    const {
+      deleteArticleLike: { documentId },
+    }: {
+      deleteArticleLike: {
+        documentId: string;
+      };
+    } = await graphqlLikeArticleClient.request(DISLIKE_ARTICLE, {
+      documentId: articleDocumentId,
+    });
+
+    return { data: documentId };
+  } catch (error) {
+    console.error("Failed to dislike article:", error);
+    throw new Error("Failed to dislike article");
+  }
+};
+
+export {
+  getArticles,
+  getArticle,
+  countArticles,
+  countArticleLikes,
+  likeArticle,
+  dislikeArticle,
+};

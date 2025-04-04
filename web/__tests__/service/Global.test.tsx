@@ -1,11 +1,13 @@
-import graphqlClient from "../../src/lib/graphQlClient";
+import { graphqlReadGlobalClient } from "../../src/lib/graphQlClient";
 import { getGlobal } from "../../src/service/global";
 
 jest.mock("../../src/lib/graphQlClient", () => ({
-  request: jest.fn(),
+  graphqlReadGlobalClient: {
+    request: jest.fn(),
+  },
 }));
 
-jest.mocked(graphqlClient);
+jest.mocked(graphqlReadGlobalClient);
 
 describe("getGlobal", () => {
   const mockGlobalData: Global = {
@@ -38,20 +40,20 @@ describe("getGlobal", () => {
   });
 
   it("returns global data", async () => {
-    (graphqlClient.request as jest.Mock).mockResolvedValue({
+    (graphqlReadGlobalClient.request as jest.Mock).mockResolvedValue({
       global: mockGlobalData,
     });
     const { data: global } = await getGlobal();
     expect(global).toEqual(mockGlobalData);
-    expect(graphqlClient.request).toHaveBeenCalled();
+    expect(graphqlReadGlobalClient.request).toHaveBeenCalled();
   });
 
   it("throws an error when trying to retrieve global data", async () => {
     // Simulates an error to GraphQL
-    (graphqlClient.request as jest.Mock).mockRejectedValue(
+    (graphqlReadGlobalClient.request as jest.Mock).mockRejectedValue(
       new Error("Erro na API")
     );
     await expect(getGlobal()).rejects.toThrow("Failed to fetch global");
-    expect(graphqlClient.request).toHaveBeenCalled();
+    expect(graphqlReadGlobalClient.request).toHaveBeenCalled();
   });
 });

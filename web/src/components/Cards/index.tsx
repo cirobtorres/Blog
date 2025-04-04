@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { getArticles } from "../../service/articles";
 import LastPublishedArticleCard from "./LastPublishedArticleCard";
-import ArticleCardList from "./ArticleCardList";
+import { ArticleCardList } from "./ArticleCardList";
 
 const Cards = async () => {
   const { data: articles } = await getArticles("createdAt:desc");

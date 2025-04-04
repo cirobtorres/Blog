@@ -4,9 +4,12 @@
 import { useCallback, useEffect, useState } from "react";
 import { graphqlCommentClient } from "../../lib/graphQlClient";
 import {
+  COUNT_COMMENT_LIKES,
   COUNT_COMMENTS,
   DELETE_COMMENT,
+  DISLIKE_COMMENT,
   GET_COMMENTS,
+  LIKE_COMMENT,
   POST_COMMENT,
   UPDATE_COMMENT,
 } from "../../lib/queries/comments";
@@ -67,7 +70,6 @@ export const useAsyncFn = (
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, dependencies);
-
   return { loading, error, value, execute };
 };
 
@@ -222,4 +224,82 @@ export const clientDeleteComment = async ({
       console.error(error);
       return Promise.reject(new Error("Failed to fetch delete comment"));
     });
+};
+
+export const countCommentLikes = async (commentDocumentId: string) => {
+  try {
+    const filters = {
+      comment: {
+        documentId: {
+          eq: commentDocumentId,
+        },
+      },
+    };
+    const {
+      commentLikes,
+    }: {
+      commentLikes: {
+        documentId: string;
+        users_permissions_user: {
+          documentId: string;
+        };
+      }[];
+    } = await graphqlCommentClient.request(COUNT_COMMENT_LIKES, {
+      filters,
+    });
+    return { data: commentLikes };
+  } catch (error) {
+    console.error("Failed to count comment likes:", error);
+    throw new Error("Failed to count comment likes");
+  }
+};
+
+export const likeComment = async (
+  commentDocumentId: string,
+  userDocumentId: string
+) => {
+  try {
+    const data = {
+      comment: commentDocumentId,
+      users_permissions_user: userDocumentId,
+    };
+    const {
+      updateComment,
+    }: {
+      updateComment: {
+        documentId: string;
+        users_permissions_user: {
+          documentId: string;
+        };
+      };
+    } = await graphqlCommentClient.request(LIKE_COMMENT, {
+      documentId: commentDocumentId,
+      data,
+    });
+    return { data: updateComment };
+  } catch (error) {
+    console.error("Failed to like comment:", error);
+    throw new Error("Failed to like comment");
+  }
+};
+
+export const dislikeComment = async (commentDocumentId: string) => {
+  try {
+    const {
+      updateComment,
+    }: {
+      updateComment: {
+        documentId: string;
+        users_permissions_user: {
+          documentId: string;
+        };
+      };
+    } = await graphqlCommentClient.request(DISLIKE_COMMENT, {
+      documentId: commentDocumentId,
+    });
+    return { data: updateComment };
+  } catch (error) {
+    console.error("Failed to dislike comment:", error);
+    throw new Error("Failed to dislike comment");
+  }
 };

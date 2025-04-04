@@ -3,7 +3,6 @@
 import * as React from "react";
 import * as PopoverPrimitive from "@radix-ui/react-popover";
 import { cn } from "@/utils/clsx";
-import ProviderLogin from "../Authentication/Logins";
 
 const Popover = PopoverPrimitive.Root;
 
@@ -37,29 +36,4 @@ const PopoverContent = React.forwardRef<
 ));
 PopoverContent.displayName = PopoverPrimitive.Content.displayName;
 
-const PopoverLoginContent = ({
-  align = "start",
-}: {
-  align?: "center" | "end" | "start";
-}) => {
-  return (
-    <PopoverContent align={align} className="shadow-xl rounded-xl max-w-60 p-0">
-      <p className="text-center text-sm border-b border-blog-border py-1">
-        Faça{" "}
-        <span className="font-extrabold text-blog-foreground-readable-hover">
-          LOGIN
-        </span>{" "}
-        para comentar
-      </p>
-      <ProviderLogin />
-    </PopoverContent>
-  );
-};
-
-export {
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  PopoverAnchor,
-  PopoverLoginContent,
-};
+export { Popover, PopoverTrigger, PopoverContent, PopoverAnchor };

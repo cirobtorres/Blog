@@ -1,15 +1,12 @@
+import { useState } from "react";
 import { useEditor, EditorContent } from "@tiptap/react";
+import { Popover, PopoverTrigger } from "@/components/Shadcnui/popover";
 import Document from "@tiptap/extension-document";
 import Paragraph from "@tiptap/extension-paragraph";
 import Placeholder from "@tiptap/extension-placeholder";
 import Text from "@tiptap/extension-text";
 import CharacterCount from "@tiptap/extension-character-count";
-import { useState } from "react";
-import {
-  Popover,
-  PopoverLoginContent,
-  PopoverTrigger,
-} from "@/components/Shadcnui/popover";
+import PopoverLoginContent from "@/components/Authentication/PopoverLoginContent";
 
 const limit = 255;
 
@@ -53,7 +50,7 @@ const Editor = ({
       editorProps: {
         attributes: {
           class:
-            "outline-none [&_*:not(:last-child)]:mb-2 [&_h4]:text-2xl [&_h4]:font-extrabold",
+            "outline-none [&_*:not(:last-child)]:mb-4 [&_h4]:text-2xl [&_h4]:font-extrabold",
         },
       },
       content: initialContent,
@@ -113,7 +110,11 @@ const Editor = ({
             name="content"
             onFocus={() => {
               setIsOpen(true);
-              editor.chain().focus().setTextSelection(limit).run(); // Cursor on the last element position
+              editor
+                .chain()
+                .focus()
+                .setTextSelection(limit * 2)
+                .run(); // Cursor on the last element position
             }}
             className="relative text-left w-full h-full text-sm [scrollbar-width:none] [-ms-overflow-style:none] pb-2 group"
           >

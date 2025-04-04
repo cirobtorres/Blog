@@ -4,7 +4,6 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import getHighlighter from "../../../../../utils/createHighlight";
 import highlightPreBlocks from "../../../../../utils/highlight";
 import { type Highlighter } from "shiki";
-import { HazardBackground } from "../../../../Backgrounds";
 
 const CodeBlock = ({
   id,
@@ -109,7 +108,7 @@ const CollapseCodeButton = ({
   updateCollapse: (value: boolean) => void;
 }) => {
   return (
-    <HazardBackground className="w-full h-10 flex justify-center items-center border border-t-0 border-blog-border">
+    <div className="w-full h-10 flex justify-center items-center">
       <button
         onClick={() => updateCollapse(!collapse)}
         className="w-fit mx-auto text-sm px-4 rounded border border-blog-border transition-all duration-500 bg-blog-background-1 hover:bg-blog-background-2 hover:text-blog-foreground-readable-hover"
@@ -153,7 +152,7 @@ const CollapseCodeButton = ({
           </p>
         )}
       </button>
-    </HazardBackground>
+    </div>
   );
 };
 

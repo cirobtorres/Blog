@@ -35,7 +35,7 @@ export default async function ArticlesPage({ params }: Params) {
   if (article) {
     return (
       <DynamicBody>
-        <Hero article={article} />
+        <Hero article={article} currentUser={user} />
         <Article documentId={documentId} content={article.blocks} />
         <TagsRelated
           topic={article.topic}

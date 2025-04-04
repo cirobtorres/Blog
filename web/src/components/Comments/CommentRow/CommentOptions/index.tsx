@@ -51,7 +51,7 @@ const CommentOptions = ({
   return (
     currentUser.data?.documentId ===
       comment.users_permissions_user.documentId && (
-      <div className="col-span-1">
+      <div className="col-span-1 ml-auto mt-1.5">
         <Popover>
           <PopoverTrigger>
             <svg

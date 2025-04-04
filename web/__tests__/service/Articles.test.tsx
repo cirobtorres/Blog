@@ -1,4 +1,4 @@
-import graphqlClient from "../../src/lib/graphQlClient";
+import { graphqlReadArticleClient } from "../../src/lib/graphQlClient";
 import {
   countArticles,
   getArticle,
@@ -7,10 +7,12 @@ import {
 import slugify from "../../src/utils/slugify";
 
 jest.mock("../../src/lib/graphQlClient", () => ({
-  request: jest.fn(),
+  graphqlReadArticleClient: {
+    request: jest.fn(),
+  },
 }));
 
-jest.mocked(graphqlClient);
+jest.mocked(graphqlReadArticleClient);
 
 describe("Article Libs", () => {
   const mockDatas = {
@@ -124,79 +126,87 @@ describe("Article Libs", () => {
 
   // --------------------------------------------------
   test("countArticles returns total articles", async () => {
-    (graphqlClient.request as jest.Mock).mockResolvedValue(mockPageData);
+    (graphqlReadArticleClient.request as jest.Mock).mockResolvedValue(
+      mockPageData
+    );
     const result = await countArticles();
     expect(result.data).toEqual(mockPageData.articles_connection.pageInfo);
-    expect(graphqlClient.request).toHaveBeenCalled();
+    expect(graphqlReadArticleClient.request).toHaveBeenCalled();
   });
 
   test("countArticles returns total articles", async () => {
     const query = "This is my query string!";
     const filters = slugify(query);
-    (graphqlClient.request as jest.Mock).mockResolvedValue(mockPageData);
+    (graphqlReadArticleClient.request as jest.Mock).mockResolvedValue(
+      mockPageData
+    );
     const result = await countArticles(filters);
 
     expect(result.data).toEqual(mockPageData.articles_connection.pageInfo);
-    expect(graphqlClient.request).toHaveBeenCalled();
+    expect(graphqlReadArticleClient.request).toHaveBeenCalled();
   });
 
-  test("countArticles throws an error when graphqlClient.request fails", async () => {
+  test("countArticles throws an error when graphqlReadArticleClient.request fails", async () => {
     // Simulates an error to GraphQL
-    (graphqlClient.request as jest.Mock).mockRejectedValue(
+    (graphqlReadArticleClient.request as jest.Mock).mockRejectedValue(
       new Error("Erro na API")
     );
 
     await expect(countArticles()).rejects.toThrow(
       "Failed to fetch count articles"
     );
-    expect(graphqlClient.request).toHaveBeenCalled();
+    expect(graphqlReadArticleClient.request).toHaveBeenCalled();
   });
 
   // --------------------------------------------------
   test("getArticles returns articles", async () => {
-    (graphqlClient.request as jest.Mock).mockResolvedValue(mockDatas);
+    (graphqlReadArticleClient.request as jest.Mock).mockResolvedValue(
+      mockDatas
+    );
     const result = await getArticles();
 
     expect(result.data).toEqual(mockDatas.articles);
-    expect(graphqlClient.request).toHaveBeenCalled();
+    expect(graphqlReadArticleClient.request).toHaveBeenCalled();
   });
 
   test("getArticles returns articles sorted by createdAt", async () => {
-    (graphqlClient.request as jest.Mock).mockResolvedValue(mockDatas);
+    (graphqlReadArticleClient.request as jest.Mock).mockResolvedValue(
+      mockDatas
+    );
     const result = await getArticles(null, "createdAt:asc");
 
     expect(result.data).toEqual(mockDatas.articles);
-    expect(graphqlClient.request).toHaveBeenCalled();
+    expect(graphqlReadArticleClient.request).toHaveBeenCalled();
   });
 
-  test("getArticles throws an error when graphqlClient.request fails", async () => {
+  test("getArticles throws an error when graphqlReadArticleClient.request fails", async () => {
     // Simulates an error to GraphQL
-    (graphqlClient.request as jest.Mock).mockRejectedValue(
+    (graphqlReadArticleClient.request as jest.Mock).mockRejectedValue(
       new Error("Erro na API")
     );
 
     await expect(getArticles()).rejects.toThrow("Failed to fetch articles");
 
-    expect(graphqlClient.request).toHaveBeenCalled();
+    expect(graphqlReadArticleClient.request).toHaveBeenCalled();
   });
 
   // --------------------------------------------------
   test("getArticle returns article", async () => {
-    (graphqlClient.request as jest.Mock).mockResolvedValue(mockData);
+    (graphqlReadArticleClient.request as jest.Mock).mockResolvedValue(mockData);
     const result = await getArticle("2101");
 
     expect(result.data).toEqual(mockData.article);
-    expect(graphqlClient.request).toHaveBeenCalled();
+    expect(graphqlReadArticleClient.request).toHaveBeenCalled();
   });
 
-  test("getArticle throws an error when graphqlClient.request fails", async () => {
+  test("getArticle throws an error when graphqlReadArticleClient.request fails", async () => {
     // Simulates an error to GraphQL
-    (graphqlClient.request as jest.Mock).mockRejectedValue(
+    (graphqlReadArticleClient.request as jest.Mock).mockRejectedValue(
       new Error("Erro na API")
     );
 
     await expect(getArticle("2101")).rejects.toThrow("Failed to fetch article");
 
-    expect(graphqlClient.request).toHaveBeenCalled();
+    expect(graphqlReadArticleClient.request).toHaveBeenCalled();
   });
 });

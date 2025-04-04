@@ -1,6 +1,6 @@
 import { axe } from "jest-axe";
 import { toHaveNoViolations } from "jest-axe";
-import { render, screen, waitFor } from "@testing-library/react";
+import { act, render, screen, waitFor } from "@testing-library/react";
 import Footer from "../../src/components/Footer";
 import React from "react";
 import resolvedComponent from "@/utils/resolvedComponent";
@@ -26,9 +26,9 @@ function returnMock(props?: {
       title: "My Blog",
       github_link: "https://github.com/johndoe",
       github_blog_link: "https://github.com/johndoe/blog",
-      createdAt: "2022-01-01",
-      updatedAt: "2022-01-02",
-      publishedAt: "2022-01-01",
+      createdAt: "2025-03-10T23:11:17.381Z",
+      updatedAt: "2025-03-10T23:11:17.381Z",
+      publishedAt: "2025-03-10T23:11:17.381Z",
       blocks: [],
       ...props,
     },
@@ -83,7 +83,8 @@ describe("Footer", () => {
     returnMock();
     const FooterResolved = await resolvedComponent(Footer);
     const { container } = render(<FooterResolved />);
-    await waitFor(async () => {
+    // Either act or waitFor are necessary here because of changing of states
+    await act(async () => {
       const results = await axe(container);
       expect.extend(toHaveNoViolations);
       expect(results).toHaveNoViolations();

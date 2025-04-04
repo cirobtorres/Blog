@@ -1,11 +1,13 @@
-import graphqlClient from "../../../src/lib/graphQlClient";
+import { graphqlReadArticleClient } from "../../../src/lib/graphQlClient";
 import serverCountComments from "../../../src/service/comments/server";
 
 jest.mock("../../../src/lib/graphQlClient", () => ({
-  request: jest.fn(),
+  graphqlReadArticleClient: {
+    request: jest.fn(),
+  },
 }));
 
-jest.mocked(graphqlClient);
+jest.mocked(graphqlReadArticleClient);
 
 describe("serverCountComments (server)", () => {
   const mockPageData = {
@@ -25,18 +27,20 @@ describe("serverCountComments (server)", () => {
   });
 
   it("returns comment count for article documentId", async () => {
-    (graphqlClient.request as jest.Mock).mockResolvedValue(mockPageData);
+    (graphqlReadArticleClient.request as jest.Mock).mockResolvedValue(
+      mockPageData
+    );
     const result = await serverCountComments("2110");
 
     expect(result.data).toEqual(
       mockPageData.comments_connection.pageInfo.total
     );
-    expect(graphqlClient.request).toHaveBeenCalled();
+    expect(graphqlReadArticleClient.request).toHaveBeenCalled();
   });
 
   it("throws comment count error for article documentId", async () => {
     // Simulates an error to GraphQL
-    (graphqlClient.request as jest.Mock).mockRejectedValue(
+    (graphqlReadArticleClient.request as jest.Mock).mockRejectedValue(
       new Error("Erro na API")
     );
 
@@ -44,6 +48,6 @@ describe("serverCountComments (server)", () => {
       "Failed to fetch count comments"
     );
 
-    expect(graphqlClient.request).toHaveBeenCalled();
+    expect(graphqlReadArticleClient.request).toHaveBeenCalled();
   });
 });

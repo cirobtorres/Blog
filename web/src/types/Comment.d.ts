@@ -3,9 +3,6 @@ type CommentProps = {
   body: string;
   createdAt: string;
   updatedAt: string;
-  liked_by: {
-    documentId: string;
-  }[];
   comments: {
     documentId: string;
   }[];

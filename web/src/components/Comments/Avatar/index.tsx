@@ -2,10 +2,10 @@ import Image from "next/image";
 import {
   Popover,
   PopoverContent,
-  PopoverLoginContent,
   PopoverTrigger,
 } from "../../Shadcnui/popover";
 import logout from "@/service/logout";
+import PopoverLoginContent from "@/components/Authentication/PopoverLoginContent";
 
 const Avatar = ({ currentUser }: { currentUser: User }) => {
   return currentUser.ok && currentUser.data ? (

@@ -158,4 +158,38 @@ query($filters: ArticleFiltersInput) {
   }
 }`;
 
-export { GET_ARTICLES, GET_ARTICLE, COUNT_ARTICLES };
+const COUNT_LIKES = `
+query ArticleLikes($filters: ArticleLikeFiltersInput) {
+  articleLikes(filters: $filters) {
+    documentId
+    users_permissions_user {
+      documentId
+    }
+  }
+}`;
+
+const LIKE_ARTICLE = `
+mutation CreateArticleLike($data: ArticleLikeInput!) {
+  createArticleLike(data: $data) {
+    documentId
+    users_permissions_user {
+      documentId
+    }
+  }
+}`;
+
+const DISLIKE_ARTICLE = `
+mutation DeleteArticleLike($documentId: ID!) {
+  deleteArticleLike(documentId: $documentId) {
+    documentId
+  }
+}`;
+
+export {
+  GET_ARTICLES,
+  GET_ARTICLE,
+  COUNT_ARTICLES,
+  COUNT_LIKES,
+  LIKE_ARTICLE,
+  DISLIKE_ARTICLE,
+};

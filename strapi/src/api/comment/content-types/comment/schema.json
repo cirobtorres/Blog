@@ -28,12 +28,6 @@
       "target": "api::article.article",
       "inversedBy": "comments"
     },
-    "liked_by": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "plugin::users-permissions.user",
-      "inversedBy": "user_like"
-    },
     "parent_id": {
       "type": "relation",
       "relation": "manyToOne",

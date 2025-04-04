@@ -1,4 +1,4 @@
-import graphqlClient from "../../lib/graphQlClient";
+import { graphqlReadArticleClient } from "../../lib/graphQlClient";
 import { COUNT_COMMENTS } from "../../lib/queries/comments";
 
 const serverCountComments = async (documentId: string) => {
@@ -6,7 +6,7 @@ const serverCountComments = async (documentId: string) => {
     const {
       comments_connection,
     }: { comments_connection: { pageInfo: { total: number } } } =
-      await graphqlClient.request(COUNT_COMMENTS, {
+      await graphqlReadArticleClient.request(COUNT_COMMENTS, {
         filters: {
           article: {
             documentId: {

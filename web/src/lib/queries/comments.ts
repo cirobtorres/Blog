@@ -9,9 +9,6 @@ query Nodes($pagination: PaginationArg, $filters: CommentFiltersInput, $sort: [S
       parent_id {
         documentId
       }
-      liked_by {
-        documentId
-      }
       users_permissions_user {
         documentId
         confirmed
@@ -39,9 +36,6 @@ mutation CreateComment($data: CommentInput!) {
     createdAt
     updatedAt
     parent_id {
-      documentId
-    }
-    liked_by {
       documentId
     }
     users_permissions_user {
@@ -94,10 +88,40 @@ query PageInfo($filters: CommentFiltersInput) {
   }
 }`;
 
+const COUNT_COMMENT_LIKES = `
+query CommentLikes($filters: CommentLikeFiltersInput) {
+  commentLikes(filters: $filters) {
+    documentId
+    users_permissions_user {
+      documentId
+    }
+  }
+}`;
+
+const LIKE_COMMENT = `
+mutation CreateCommentLike($data: CommentLikeInput!) {
+  createCommentLike(data: $data) {
+    documentId
+    users_permissions_user {
+      documentId
+    }
+  }
+}`;
+
+const DISLIKE_COMMENT = `
+mutation DeleteCommentLike($documentId: ID!) {
+  deleteCommentLike(documentId: $documentId) {
+    documentId
+  }
+}`;
+
 export {
   GET_COMMENTS,
   POST_COMMENT,
   UPDATE_COMMENT,
   DELETE_COMMENT,
   COUNT_COMMENTS,
+  COUNT_COMMENT_LIKES,
+  LIKE_COMMENT,
+  DISLIKE_COMMENT,
 };

@@ -1,11 +1,13 @@
 import { formatDateToCustomFormat } from "../../../utils/dates";
-import { Clock, MessageCircle, ThumbsUp } from "lucide-react";
+import { Clock, MessageCircle } from "lucide-react";
 import Author from "../../Author";
 import BreadCrumb from "./BreadCrumb";
 import Link from "next/link";
 import { Suspense } from "react";
 import { Skeleton } from "../../Shadcnui/skeleton";
 import serverCountComments from "../../../service/comments/server";
+import ArticleLikeButton from "./ArticleLikeButton";
+import { countArticleLikes } from "../../../service/articles";
 
 const CountComments = async ({ articleId }: { articleId: string }) => {
   const { data: commentLength } = await serverCountComments(articleId);
@@ -18,7 +20,14 @@ const CountComments = async ({ articleId }: { articleId: string }) => {
   );
 };
 
-const ArticleTitle = ({ article }: { article: Article }) => {
+const ArticleTitle = async ({
+  article,
+  currentUser,
+}: {
+  article: Article;
+  currentUser: User;
+}) => {
+  const { data: totalLikes } = await countArticleLikes(article.documentId);
   return (
     <section
       data-testid="hero-article-title"
@@ -67,10 +76,11 @@ const ArticleTitle = ({ article }: { article: Article }) => {
                   )}
                 </div>
               </div>
-              <div className="flex items-center gap-4">
-                <Link href="#comment-session-header">
-                  <MessageCircle className="size-6" />
-                </Link>
+              <Link
+                href="#comment-session-header"
+                className="flex items-center gap-4"
+              >
+                <MessageCircle className="size-6" />
                 <Suspense
                   fallback={
                     <Skeleton
@@ -81,13 +91,11 @@ const ArticleTitle = ({ article }: { article: Article }) => {
                 >
                   <CountComments articleId={article.documentId} />
                 </Suspense>
-              </div>
-              <div className="flex items-center gap-4">
-                <button type="button">
-                  <ThumbsUp className="size-6" />
-                </button>
-                <p>4 likes</p>
-              </div>
+              </Link>
+              <ArticleLikeButton
+                currentUser={currentUser}
+                totalLikes={totalLikes}
+              />
             </div>
           </div>
         </div>

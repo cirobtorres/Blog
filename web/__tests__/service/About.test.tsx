@@ -1,11 +1,13 @@
-import graphqlClient from "../../src/lib/graphQlClient";
+import { graphqlReadAboutClient } from "../../src/lib/graphQlClient";
 import { getAbout } from "../../src/service/about";
 
 jest.mock("../../src/lib/graphQlClient", () => ({
-  request: jest.fn(),
+  graphqlReadAboutClient: {
+    request: jest.fn(),
+  },
 }));
 
-jest.mocked(graphqlClient);
+jest.mocked(graphqlReadAboutClient);
 
 describe("getAbout", () => {
   const mockAboutData: About = {
@@ -28,20 +30,20 @@ describe("getAbout", () => {
   });
 
   it("returns about data", async () => {
-    (graphqlClient.request as jest.Mock).mockResolvedValue({
+    (graphqlReadAboutClient.request as jest.Mock).mockResolvedValue({
       about: mockAboutData,
     });
     const { data: about } = await getAbout();
     expect(about).toEqual(mockAboutData);
-    expect(graphqlClient.request).toHaveBeenCalled();
+    expect(graphqlReadAboutClient.request).toHaveBeenCalled();
   });
 
   it("throws an error when trying to retrieve about data", async () => {
     // Simulates an error to GraphQL
-    (graphqlClient.request as jest.Mock).mockRejectedValue(
+    (graphqlReadAboutClient.request as jest.Mock).mockRejectedValue(
       new Error("Erro na API")
     );
     await expect(getAbout()).rejects.toThrow("Failed to fetch about");
-    expect(graphqlClient.request).toHaveBeenCalled();
+    expect(graphqlReadAboutClient.request).toHaveBeenCalled();
   });
 });
