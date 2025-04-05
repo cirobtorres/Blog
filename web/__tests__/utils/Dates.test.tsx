@@ -1,4 +1,3 @@
-import "@testing-library/jest-dom";
 import {
   formatDateToCustomFormat,
   formatDateToYouTubeLikeFormat,
@@ -21,55 +20,55 @@ describe("formatDateToYouTubeLikeFormat", () => {
   });
 
   it("should return 'há 5 segundos' when the input date is 5 seconds ago", () => {
-    const inputData = new Date(Date.now() - 5000).toISOString(); // 5 segundos atrás
+    const inputData = new Date(Date.now() - 5000).toISOString(); // 5 sec ago
     const result = formatDateToYouTubeLikeFormat(inputData);
     expect(result).toBe("há 5 segundos");
   });
 
   it("should return 'há 1 minuto' when the input date is 1 minute ago", () => {
-    const inputData = new Date(Date.now() - 60000).toISOString(); // 1 minuto atrás
+    const inputData = new Date(Date.now() - 60000).toISOString(); // 1 min ago
     const result = formatDateToYouTubeLikeFormat(inputData);
     expect(result).toBe("há 1 minuto");
   });
 
   it("should return 'há 3 minutos' when the input date is 3 minutes ago", () => {
-    const inputData = new Date(Date.now() - 180000).toISOString(); // 3 minutos atrás
+    const inputData = new Date(Date.now() - 180000).toISOString(); // 3 min ago
     const result = formatDateToYouTubeLikeFormat(inputData);
     expect(result).toBe("há 3 minutos");
   });
 
   it("should return 'há 1 hora' when the input date is 1 hour ago", () => {
-    const inputData = new Date(Date.now() - 3600000).toISOString(); // 1 hora atrás
+    const inputData = new Date(Date.now() - 3600000).toISOString(); // 1 h ago
     const result = formatDateToYouTubeLikeFormat(inputData);
     expect(result).toBe("há 1 hora");
   });
 
   it("should return 'há 2 horas' when the input date is 2 hours ago", () => {
-    const inputData = new Date(Date.now() - 7200000).toISOString(); // 2 horas atrás
+    const inputData = new Date(Date.now() - 7200000).toISOString(); // 2 h ago
     const result = formatDateToYouTubeLikeFormat(inputData);
     expect(result).toBe("há 2 horas");
   });
 
   it("should return 'há 1 dia' when the input date is 1 day ago", () => {
-    const inputData = new Date(Date.now() - 86400000).toISOString(); // 1 dia atrás
+    const inputData = new Date(Date.now() - 86400000).toISOString(); // 1 day ago
     const result = formatDateToYouTubeLikeFormat(inputData);
     expect(result).toBe("há 1 dia");
   });
 
   it("should return 'há 5 dias' when the input date is 5 days ago", () => {
-    const inputData = new Date(Date.now() - 432000000).toISOString(); // 5 dias atrás
+    const inputData = new Date(Date.now() - 432000000).toISOString(); // 5 days ago
     const result = formatDateToYouTubeLikeFormat(inputData);
     expect(result).toBe("há 5 dias");
   });
 
   it("should return 'há 1 mês' when the input date is 1 month ago", () => {
-    const inputData = new Date(Date.now() - 2592000000).toISOString(); // 1 mês atrás (aproximadamente 30 dias)
+    const inputData = new Date(Date.now() - 2592000000).toISOString(); // 1 month ago (~30 days)
     const result = formatDateToYouTubeLikeFormat(inputData);
     expect(result).toBe("há 1 mês");
   });
 
   it("should return 'há 3 meses' when the input date is 3 months ago", () => {
-    const inputData = new Date(Date.now() - 7776000000).toISOString(); // 3 meses atrás
+    const inputData = new Date(Date.now() - 7776000000).toISOString(); // 3 months ago
     const result = formatDateToYouTubeLikeFormat(inputData);
     expect(result).toBe("há 3 meses");
   });

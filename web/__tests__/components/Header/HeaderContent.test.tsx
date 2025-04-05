@@ -1,7 +1,11 @@
 import HeaderContent from "../../../src/components/Header/HeaderContent";
-import { mountNextImage } from "../../../src/utils/mountNextImage";
+import { mountLocalImage } from "../../../__mocks__/utilities/mountNextImage";
 import { act, render, screen, waitFor } from "@testing-library/react";
 import { getAbout } from "../../../src/service/about";
+import {
+  createAuthenticatedUser,
+  unauthorizedUserMock,
+} from "../../../__mocks__/mockUser";
 
 jest.mock("next/navigation", () => ({
   // HeaderContent contains multiple nested components.
@@ -13,34 +17,9 @@ jest.mock("next/navigation", () => ({
 
 jest.mock("../../../src/service/about");
 
+const authenticatedUserMock = createAuthenticatedUser();
+
 describe("HeaderContent", () => {
-  const mockUserAuthenticated = {
-    ok: true,
-    data: {
-      id: 1,
-      documentId: "Absh1-19AK3-Po24S",
-      username: "johndoe",
-      email: "johndoe@gmail.com",
-      provider: "google",
-      confirmed: true,
-      blocked: false,
-      createdAt: "2025-03-10T23:11:17.381Z",
-      updatedAt: "2025-03-10T23:11:17.381Z",
-      publishedAt: "2025-03-10T23:11:17.381Z",
-    },
-    error: null,
-  };
-
-  const mockUserUnauthenticated = {
-    ok: false,
-    data: null,
-    error: {
-      status: 401,
-      name: "Unauthorized",
-      message: "User not authenticated",
-    },
-  };
-
   beforeEach(() => {
     (getAbout as jest.Mock).mockResolvedValue({
       data: { github_link: "https://github.com/johndoe" },
@@ -53,7 +32,7 @@ describe("HeaderContent", () => {
 
   it("renders the header content component", async () => {
     await act(async () => {
-      render(<HeaderContent currentUser={mockUserAuthenticated} />);
+      render(<HeaderContent currentUser={authenticatedUserMock} />);
     });
     await waitFor(() => {
       expect(screen.getByTestId("header-content")).toBeInTheDocument();
@@ -62,7 +41,7 @@ describe("HeaderContent", () => {
 
   it("does render username if user is authenticated", async () => {
     await act(async () => {
-      render(<HeaderContent currentUser={mockUserAuthenticated} />);
+      render(<HeaderContent currentUser={authenticatedUserMock} />);
     });
     await waitFor(() => {
       const authenticatedLi = screen.getByTestId("header-user-authenticated");
@@ -76,7 +55,7 @@ describe("HeaderContent", () => {
 
   it("does not render username if user is not authenticated", async () => {
     await act(async () => {
-      render(<HeaderContent currentUser={mockUserUnauthenticated} />);
+      render(<HeaderContent currentUser={unauthorizedUserMock} />);
     });
     await waitFor(() => {
       const authenticatedLi = screen.queryByTestId("header-user-authenticated");
@@ -90,7 +69,7 @@ describe("HeaderContent", () => {
 
   it("renders with darkmode button toggle", async () => {
     await act(async () => {
-      render(<HeaderContent currentUser={mockUserUnauthenticated} />);
+      render(<HeaderContent currentUser={unauthorizedUserMock} />);
     });
     await waitFor(() => {
       const darkmodeButtonToggle = screen.getByTestId("dark-mode-toggle");
@@ -100,7 +79,7 @@ describe("HeaderContent", () => {
 
   it("renders with search bar trigger", async () => {
     await act(async () => {
-      render(<HeaderContent currentUser={mockUserUnauthenticated} />);
+      render(<HeaderContent currentUser={unauthorizedUserMock} />);
     });
     await waitFor(() => {
       const searchBarTrigger = screen.getByTestId("search-bar-trigger");
@@ -110,7 +89,7 @@ describe("HeaderContent", () => {
 
   it("renders with blog navigation menu as visible", async () => {
     await act(async () => {
-      render(<HeaderContent currentUser={mockUserUnauthenticated} />);
+      render(<HeaderContent currentUser={unauthorizedUserMock} />);
     });
     await waitFor(() => {
       const blogNavigationMenu = screen.getByTestId("blog-navigation-menu");
@@ -122,20 +101,17 @@ describe("HeaderContent", () => {
 
   it("renders link and image logo", async () => {
     await act(async () => {
-      render(<HeaderContent currentUser={mockUserUnauthenticated} />);
+      render(<HeaderContent currentUser={unauthorizedUserMock} />);
     });
     await waitFor(() => {
       const logoLink = screen.getByTestId("header-content-logo-link");
       expect(logoLink).toHaveAttribute("href", "/");
-
-      const nextOptimizedImage = mountNextImage({
+      const nextOptimizedImage = mountLocalImage({
         imageFilename: "logo",
         imageFileExtension: "png",
         path: "/images/",
         width: 96,
-        quality: 75,
       });
-
       const logoImage = logoLink.querySelector("img");
       expect(logoImage).toHaveAttribute("src", nextOptimizedImage);
     });
@@ -144,7 +120,7 @@ describe("HeaderContent", () => {
   it("matches the snapshot", async () => {
     await act(async () => {
       const { asFragment } = render(
-        <HeaderContent currentUser={mockUserUnauthenticated} />
+        <HeaderContent currentUser={unauthorizedUserMock} />
       );
       expect(asFragment()).toMatchSnapshot();
     });

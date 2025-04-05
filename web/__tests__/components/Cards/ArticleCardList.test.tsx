@@ -4,15 +4,12 @@ import {
   ArticleCard,
   ArticleCardList,
 } from "../../../src/components/Cards/ArticleCardList";
-import { requestBackEndNextImage } from "@/utils/mountNextImage";
+import { requestBackEndImage } from "../../../__mocks__/utilities/mountNextImage";
 import { formatDateToCustomFormat } from "@/utils/dates";
 import { axe, toHaveNoViolations } from "jest-axe";
 import slugify from "@/utils/slugify";
 
 faker.seed(1); // Snapshots
-
-// const randomInt = (max = 10, min = 1) =>
-//   Math.ceil(Math.random() * (max + min) - min);
 
 const randomInt = (max = 10, min = 1) => {
   return faker.number.int({ min, max });
@@ -69,6 +66,8 @@ describe("ArticleCardList", () => {
     });
   });
 
+  // TODO: test article with no image (no src and no alt)
+
   it("matches the snapshot", () => {
     const { asFragment } = render(
       <ArticleCardList articles={mockedArticleList} />
@@ -94,23 +93,7 @@ describe("ArticleCard", () => {
     const imageContainer = screen.getByTestId("article-card-image");
     const image = imageContainer.querySelector("img");
 
-    const url = mockedArticleList[0].cover.url;
-    const filename = url.substring(
-      url.lastIndexOf("/") + 1,
-      url.lastIndexOf(".")
-    );
-    const extension = url.substring(url.lastIndexOf(".") + 1);
-    const path = url.substring(0, url.lastIndexOf("/") + 1);
-    const width = mockedArticleList[0].cover.width * 2;
-    const quality = 75;
-
-    const nextJsImage = requestBackEndNextImage(
-      filename,
-      extension,
-      path,
-      width,
-      quality
-    );
+    const nextJsImage = requestBackEndImage(mockedArticleList[0].cover.url);
 
     const alt = mockedArticleList[0].cover.alternativeText;
 

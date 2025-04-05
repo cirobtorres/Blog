@@ -3,37 +3,46 @@
 exports[`Author (has avatar) matches the snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="flex gap-2 items-center"
-    data-id="author"
+    class="flex items-center gap-2"
+    data-testid="author-container"
+    id="author-container"
   >
     <a
       class="group"
+      data-testid="author-avatar-link"
       href="/sobre"
+      id="author-avatar-link"
     >
       <div
-        class="relative flex size-10 shrink-0 overflow-hidden rounded-full"
+        class="relative flex size-10 shrink-0 rounded-full overflow-hidden"
+        data-testid="author-avatar-container"
+        id="author-avatar-container"
       >
         <img
-          alt="Avatar de John Doe"
+          alt="Studio vulpes at approbo vicissitudo subiungo aedificium temeritas tego vesica."
           class="transition-all duration-500 absolute object-cover group-hover:brightness-50"
           data-nimg="fill"
+          data-testid="author-avatar-image"
           decoding="async"
+          id="author-avatar-image"
           loading="lazy"
           sizes="(max-width: 40px) 100vw"
-          src="/_next/image?url=http%3A%2F%2F127.0.0.1%3A1337%2Fpath%2Fto%2Favatar.jpg&w=3840&q=75"
-          srcset="/_next/image?url=http%3A%2F%2F127.0.0.1%3A1337%2Fpath%2Fto%2Favatar.jpg&w=640&q=75 640w, /_next/image?url=http%3A%2F%2F127.0.0.1%3A1337%2Fpath%2Fto%2Favatar.jpg&w=750&q=75 750w, /_next/image?url=http%3A%2F%2F127.0.0.1%3A1337%2Fpath%2Fto%2Favatar.jpg&w=828&q=75 828w, /_next/image?url=http%3A%2F%2F127.0.0.1%3A1337%2Fpath%2Fto%2Favatar.jpg&w=1080&q=75 1080w, /_next/image?url=http%3A%2F%2F127.0.0.1%3A1337%2Fpath%2Fto%2Favatar.jpg&w=1200&q=75 1200w, /_next/image?url=http%3A%2F%2F127.0.0.1%3A1337%2Fpath%2Fto%2Favatar.jpg&w=1920&q=75 1920w, /_next/image?url=http%3A%2F%2F127.0.0.1%3A1337%2Fpath%2Fto%2Favatar.jpg&w=2048&q=75 2048w, /_next/image?url=http%3A%2F%2F127.0.0.1%3A1337%2Fpath%2Fto%2Favatar.jpg&w=3840&q=75 3840w"
+          src="/_next/image?url=http%3A%2F%2F127.0.0.1%3A1337%2Ftabulate%2Fincidentally%2Ffreely%2Fick%2Fof_aggravating.png&w=3840&q=75"
+          srcset="/_next/image?url=http%3A%2F%2F127.0.0.1%3A1337%2Ftabulate%2Fincidentally%2Ffreely%2Fick%2Fof_aggravating.png&w=640&q=75 640w, /_next/image?url=http%3A%2F%2F127.0.0.1%3A1337%2Ftabulate%2Fincidentally%2Ffreely%2Fick%2Fof_aggravating.png&w=750&q=75 750w, /_next/image?url=http%3A%2F%2F127.0.0.1%3A1337%2Ftabulate%2Fincidentally%2Ffreely%2Fick%2Fof_aggravating.png&w=828&q=75 828w, /_next/image?url=http%3A%2F%2F127.0.0.1%3A1337%2Ftabulate%2Fincidentally%2Ffreely%2Fick%2Fof_aggravating.png&w=1080&q=75 1080w, /_next/image?url=http%3A%2F%2F127.0.0.1%3A1337%2Ftabulate%2Fincidentally%2Ffreely%2Fick%2Fof_aggravating.png&w=1200&q=75 1200w, /_next/image?url=http%3A%2F%2F127.0.0.1%3A1337%2Ftabulate%2Fincidentally%2Ffreely%2Fick%2Fof_aggravating.png&w=1920&q=75 1920w, /_next/image?url=http%3A%2F%2F127.0.0.1%3A1337%2Ftabulate%2Fincidentally%2Ffreely%2Fick%2Fof_aggravating.png&w=2048&q=75 2048w, /_next/image?url=http%3A%2F%2F127.0.0.1%3A1337%2Ftabulate%2Fincidentally%2Ffreely%2Fick%2Fof_aggravating.png&w=3840&q=75 3840w"
           style="position: absolute; height: 100%; width: 100%; left: 0px; top: 0px; right: 0px; bottom: 0px; color: transparent;"
         />
       </div>
     </a>
     <a
+      data-testid="author-username-link"
       href="/sobre"
+      id="author-username-link"
     >
       <p
-        class="transition-colors duration-500 hover:text-blog-foreground-readable-hover text-blog-foreground-highlight"
+        class="transition-colors duration-500 text-blog-foreground-highlight hover:text-blog-foreground-readable-hover"
       >
         <strong>
-          @John Doe
+          @Helene
         </strong>
       </p>
     </a>
@@ -44,21 +53,28 @@ exports[`Author (has avatar) matches the snapshot 1`] = `
 exports[`Author (has no avatar) matches the snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="flex gap-2 items-center"
-    data-id="author"
+    class="flex items-center gap-2"
+    data-testid="author-container"
+    id="author-container"
   >
     <a
       class="group"
+      data-testid="author-avatar-link"
       href="/sobre"
+      id="author-avatar-link"
     >
       <div
-        class="relative flex size-10 shrink-0 overflow-hidden rounded-full"
+        class="relative flex size-10 shrink-0 rounded-full overflow-hidden"
+        data-testid="author-avatar-container"
+        id="author-avatar-container"
       >
         <img
-          alt="Avatar de John Doe"
+          alt="Avatar de Adolph"
           class="transition-all duration-500 absolute object-cover group-hover:brightness-50"
           data-nimg="fill"
+          data-testid="author-avatar-image"
           decoding="async"
+          id="author-avatar-image"
           loading="lazy"
           sizes="(max-width: 40px) 100vw"
           src="/_next/image?url=%2Fimages%2Fnot-authenticated.png&w=3840&q=75"
@@ -68,13 +84,15 @@ exports[`Author (has no avatar) matches the snapshot 1`] = `
       </div>
     </a>
     <a
+      data-testid="author-username-link"
       href="/sobre"
+      id="author-username-link"
     >
       <p
-        class="transition-colors duration-500 hover:text-blog-foreground-readable-hover text-blog-foreground-highlight"
+        class="transition-colors duration-500 text-blog-foreground-highlight hover:text-blog-foreground-readable-hover"
       >
         <strong>
-          @John Doe
+          @Adolph
         </strong>
       </p>
     </a>

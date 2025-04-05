@@ -7,23 +7,23 @@ exports[`ArticleImage matches the snapshot 1`] = `
     data-testid="hero-article-image"
   >
     <figure
-      aria-labelledby="image-caption-12345"
+      aria-labelledby="image-caption-6b042125-686a-43e0-8a68-23cf5bee102e"
       class="flex flex-col h-[25rem] col-start-2 max-[800px]:col-start-1 max-[800px]:col-span-2 max-lg:mx-4 max-lg:pl-4 max-[800px]:pl-0"
     >
       <div
         class="shrink-0 relative h-full"
       >
         <img
-          alt="Lorem ipsum dolor sit amet, consectetur adipisicing elit."
+          alt="Occaecati venio apto apud timor cubicularis asperiores vestigium conqueror tantillus."
           class="absolute object-cover"
           data-nimg="fill"
           data-testid="hero-article-image-cover"
           decoding="async"
           loading="lazy"
           role="img"
-          sizes="(max-width: 1920) 100vw, (max-width: 960) 50vw, 33vw"
-          src="/_next/image?url=http%3A%2F%2F127.0.0.1%3A1337%2Fimages%2Ftest-image.png&w=3840&q=75"
-          srcset="/_next/image?url=http%3A%2F%2F127.0.0.1%3A1337%2Fimages%2Ftest-image.png&w=256&q=75 256w, /_next/image?url=http%3A%2F%2F127.0.0.1%3A1337%2Fimages%2Ftest-image.png&w=384&q=75 384w, /_next/image?url=http%3A%2F%2F127.0.0.1%3A1337%2Fimages%2Ftest-image.png&w=640&q=75 640w, /_next/image?url=http%3A%2F%2F127.0.0.1%3A1337%2Fimages%2Ftest-image.png&w=750&q=75 750w, /_next/image?url=http%3A%2F%2F127.0.0.1%3A1337%2Fimages%2Ftest-image.png&w=828&q=75 828w, /_next/image?url=http%3A%2F%2F127.0.0.1%3A1337%2Fimages%2Ftest-image.png&w=1080&q=75 1080w, /_next/image?url=http%3A%2F%2F127.0.0.1%3A1337%2Fimages%2Ftest-image.png&w=1200&q=75 1200w, /_next/image?url=http%3A%2F%2F127.0.0.1%3A1337%2Fimages%2Ftest-image.png&w=1920&q=75 1920w, /_next/image?url=http%3A%2F%2F127.0.0.1%3A1337%2Fimages%2Ftest-image.png&w=2048&q=75 2048w, /_next/image?url=http%3A%2F%2F127.0.0.1%3A1337%2Fimages%2Ftest-image.png&w=3840&q=75 3840w"
+          sizes="(max-width: 512) 100vw, (max-width: 256) 50vw, 33vw"
+          src="/_next/image?url=http%3A%2F%2F127.0.0.1%3A1337%2Fagitated%2Fhyena%2Ffor%2Fha%2Fpsst.png&w=3840&q=75"
+          srcset="/_next/image?url=http%3A%2F%2F127.0.0.1%3A1337%2Fagitated%2Fhyena%2Ffor%2Fha%2Fpsst.png&w=256&q=75 256w, /_next/image?url=http%3A%2F%2F127.0.0.1%3A1337%2Fagitated%2Fhyena%2Ffor%2Fha%2Fpsst.png&w=384&q=75 384w, /_next/image?url=http%3A%2F%2F127.0.0.1%3A1337%2Fagitated%2Fhyena%2Ffor%2Fha%2Fpsst.png&w=640&q=75 640w, /_next/image?url=http%3A%2F%2F127.0.0.1%3A1337%2Fagitated%2Fhyena%2Ffor%2Fha%2Fpsst.png&w=750&q=75 750w, /_next/image?url=http%3A%2F%2F127.0.0.1%3A1337%2Fagitated%2Fhyena%2Ffor%2Fha%2Fpsst.png&w=828&q=75 828w, /_next/image?url=http%3A%2F%2F127.0.0.1%3A1337%2Fagitated%2Fhyena%2Ffor%2Fha%2Fpsst.png&w=1080&q=75 1080w, /_next/image?url=http%3A%2F%2F127.0.0.1%3A1337%2Fagitated%2Fhyena%2Ffor%2Fha%2Fpsst.png&w=1200&q=75 1200w, /_next/image?url=http%3A%2F%2F127.0.0.1%3A1337%2Fagitated%2Fhyena%2Ffor%2Fha%2Fpsst.png&w=1920&q=75 1920w, /_next/image?url=http%3A%2F%2F127.0.0.1%3A1337%2Fagitated%2Fhyena%2Ffor%2Fha%2Fpsst.png&w=2048&q=75 2048w, /_next/image?url=http%3A%2F%2F127.0.0.1%3A1337%2Fagitated%2Fhyena%2Ffor%2Fha%2Fpsst.png&w=3840&q=75 3840w"
           style="position: absolute; height: 100%; width: 100%; left: 0px; top: 0px; right: 0px; bottom: 0px; color: transparent;"
         />
       </div>
@@ -32,7 +32,7 @@ exports[`ArticleImage matches the snapshot 1`] = `
         data-testid="hero-article-image-caption"
         role="doc-figure"
       >
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Temporibus architecto quod obcaecati consequatur delectus necessitatibus, eum, dolor nihil, rem odit blanditiis! Consectetur explicabo sed inventore ex omnis porro quae veritatis.
+        Vacuus quia tantillus conscendo centum vehemens cursus vobis somnus quasi amplus vir defaeco nesciunt cumque capillus venio.
       </figcaption>
     </figure>
   </section>

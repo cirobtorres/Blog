@@ -115,11 +115,7 @@ describe("Service Comments (client)", () => {
   });
 
   beforeEach(() => {
-    jest.spyOn(console, "error").mockImplementation(() => {}); // Silence console.error
-  });
-
-  afterEach(() => {
-    jest.restoreAllMocks(); // Restore original console.error after each test
+    jest.spyOn(console, "error").mockImplementation(() => {}); // Silence console.error from mockRejectedValue
   });
 
   describe("clientCountComments", () => {

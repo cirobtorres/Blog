@@ -1,4 +1,3 @@
-import "@testing-library/jest-dom";
 import { extractAnchors, addIdsToHeadings } from "../../src/utils/anchors";
 
 describe("extractAnchors", () => {

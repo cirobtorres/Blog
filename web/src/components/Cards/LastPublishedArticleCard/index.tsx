@@ -4,13 +4,23 @@ import { formatDateToCustomFormat } from "../../../utils/dates";
 
 const LastPublishedArticleCard = ({ article }: { article: ArticleCard }) => {
   return (
-    <div className="w-full py-4 bg-blog-background-2 mb-10 border-y border-blog-border">
+    <div
+      id="last-published-article-card-container"
+      data-testid="last-published-article-card-container"
+      className="w-full py-4 mb-10 border-y border-blog-border bg-blog-background-2"
+    >
       <div className="max-w-screen-2xl mx-auto flex items-center">
         <Link
+          id="last-published-article-card-link"
+          data-testid="last-published-article-card-link"
           href={`artigos/${article.documentId}/${article.slug}`}
           className="w-full"
         >
-          <div className="relative h-[500px]">
+          <div
+            id="last-published-article-card-image-container"
+            data-testid="last-published-article-card-image-container"
+            className="relative h-[500px]"
+          >
             <Image
               src={`http://127.0.0.1:1337${article.cover.url}`}
               alt={article.cover.alternativeText}
@@ -22,7 +32,11 @@ const LastPublishedArticleCard = ({ article }: { article: ArticleCard }) => {
               }
               className="absolute object-cover"
             />
-            <div className="flex flex-col gap-2 w-full absolute bottom-0 px-20 max-[800px]:px-12 max-[500px]:px-4 py-4 backdrop-blur-xl backdrop-brightness-150">
+            <div
+              id="last-published-article-card-paragraph-container"
+              data-testid="last-published-article-card-paragraph-container"
+              className="w-full absolute bottom-0 flex flex-col gap-2 px-20 max-[800px]:px-12 max-[500px]:px-4 py-4 backdrop-blur-xl backdrop-brightness-150"
+            >
               <p
                 className={
                   "text-white font-extrabold" +

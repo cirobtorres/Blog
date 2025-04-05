@@ -1,5 +1,9 @@
 import { StaticHeader } from "@/components/Header";
 import { act, render, screen } from "@testing-library/react";
+import {
+  createAuthenticatedUser,
+  notFoundUserMock,
+} from "../../../__mocks__/mockUser";
 
 jest.mock("next/navigation", () => ({
   // HeaderContent contains multiple nested components.
@@ -25,36 +29,9 @@ jest.mock("../../../src/service/about", () => ({
 }));
 
 describe("StaticHeader", () => {
-  const mockAuthUser = {
-    ok: true,
-    data: {
-      id: 1,
-      documentId: "Absh1-19AK3-Po24S",
-      username: "johndoe",
-      email: "johndoe@gmail.com",
-      provider: "google",
-      confirmed: true,
-      blocked: false,
-      createdAt: "2025-03-10T23:11:17.381Z",
-      updatedAt: "2025-03-10T23:11:17.381Z",
-      publishedAt: "2025-03-10T23:11:17.381Z",
-    },
-    error: null,
-  };
-
-  const mockUnauthUser = {
-    ok: false,
-    data: null,
-    error: {
-      status: 404,
-      name: "",
-      message: "Not Found",
-    },
-  };
-
   it("renders the authenticated (user) static header component", async () => {
     await act(async () => {
-      render(<StaticHeader currentUser={mockAuthUser} />);
+      render(<StaticHeader currentUser={createAuthenticatedUser()} />);
     });
     const staticHeader = screen.getByTestId("static-header");
     expect(staticHeader).toBeInTheDocument();
@@ -62,7 +39,7 @@ describe("StaticHeader", () => {
 
   it("renders the unauthenticated (user) static header component", async () => {
     await act(async () => {
-      render(<StaticHeader currentUser={mockAuthUser} />);
+      render(<StaticHeader currentUser={createAuthenticatedUser()} />);
     });
     const staticHeader = screen.getByTestId("static-header");
     expect(staticHeader).toBeInTheDocument();
@@ -70,7 +47,7 @@ describe("StaticHeader", () => {
 
   it("matches the classes", async () => {
     await act(async () => {
-      render(<StaticHeader currentUser={mockAuthUser} />);
+      render(<StaticHeader currentUser={createAuthenticatedUser()} />);
     });
     const staticHeader = screen.getByTestId("static-header");
     expect(staticHeader).toHaveClass(
@@ -81,7 +58,7 @@ describe("StaticHeader", () => {
   it("matches the authenticated (user) static header snapshot", async () => {
     await act(async () => {
       const { asFragment } = render(
-        <StaticHeader currentUser={mockUnauthUser} />
+        <StaticHeader currentUser={notFoundUserMock} />
       );
       expect(asFragment()).toMatchSnapshot();
     });

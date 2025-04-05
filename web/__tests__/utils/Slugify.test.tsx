@@ -1,8 +1,7 @@
-import "@testing-library/jest-dom";
 import slugify from "../../src/utils/slugify";
 
 describe("Slugify", () => {
-  it("slugify correctly", () => {
+  it("works", () => {
     const inputData =
       "   O ;sabIÁ  Ñãô SA::BiA qUE&* __O sÀBiÓ_sa!(BIA   As\\$#soBIa@r   2 1    ";
     const toTest = slugify(inputData);

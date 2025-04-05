@@ -1,56 +1,84 @@
-import { requestBackEndNextImage } from "@/utils/mountNextImage";
+import { faker } from "@faker-js/faker";
+import { createAuthorMock } from "../../__mocks__/mockAuthor";
+import { requestBackEndImage } from "../../__mocks__/utilities/mountNextImage";
 import Author, { AuthorSkeleton } from "../../src/components/Author";
 import { render, screen, waitFor } from "@testing-library/react";
 
-describe("Author (has avatar)", () => {
-  const authorMock = {
-    documentId: "123",
-    name: "John Doe",
-    avatar: {
-      documentId: "1133445",
-      url: "/path/to/avatar.jpg",
-      alternativeText: "Avatar de John Doe",
-    },
+faker.seed(1); // Snapshot
+
+interface AuthorHasAvatar {
+  documentId: string;
+  name: string;
+  avatar: {
+    alternativeText: string;
+    url: string;
+    documentId: string;
   };
+}
 
-  it("renders author's name inside link", () => {
+interface AuthorHasNoAvatar {
+  documentId: string;
+  name: string;
+  avatar: null;
+}
+
+const authorMock = createAuthorMock() as AuthorHasAvatar;
+const authorMockNoAvatar = createAuthorMock(false) as AuthorHasNoAvatar;
+
+describe("Author (has avatar)", () => {
+  it("renders author-container component", () => {
     render(<Author author={authorMock} />);
+    const mainContainer = screen.getByTestId("author-container");
+    expect(mainContainer).toBeInTheDocument();
+  });
 
-    const authorLink = screen.getByRole("link", { name: /@John Doe/i });
-
+  it("renders author-avatar-link component", () => {
+    render(<Author author={authorMock} />);
+    const authorLink = screen.getByTestId("author-avatar-link");
     expect(authorLink).toBeInTheDocument();
     expect(authorLink).toHaveAttribute("href", "/sobre");
+    expect(authorLink).toHaveClass("group");
   });
 
-  it("renders author's avatar inside link", async () => {
+  it("renders author-avatar-container component", () => {
     render(<Author author={authorMock} />);
-
-    const avatarImage = screen.getByAltText(/Avatar de John Doe/i);
-
-    const nextOptimizedImage = requestBackEndNextImage(
-      "avatar",
-      "jpg",
-      "/path/to/",
-      3840,
-      75
+    const authorLink = screen.getByTestId("author-avatar-container");
+    expect(authorLink).toBeInTheDocument();
+    expect(authorLink).toHaveClass(
+      "relative flex size-10 shrink-0 rounded-full overflow-hidden"
     );
+  });
 
-    await waitFor(() =>
+  it("renders author-avatar-image component", async () => {
+    render(<Author author={authorMock} />);
+    const avatarImage = screen.getByTestId("author-avatar-image");
+    const avatarImageSrc = avatarImage.getAttribute("src");
+    const avatarImageAlt = avatarImage.getAttribute("alt");
+    const nextOptimizedImage = requestBackEndImage(authorMock.avatar.url);
+    await waitFor(() => {
       // next Image loads components lazily
-      // Without waitFor, nextOptimizedImage would be null
       // Either use waitFor or set Image in the component as priority
-      expect(avatarImage.getAttribute("src")).toBe(nextOptimizedImage)
-    );
+      expect(avatarImage).toBeInTheDocument();
+      expect(avatarImage).toHaveClass("absolute object-cover");
+      expect(avatarImage).toHaveAttribute("data-nimg", "fill");
+      expect(avatarImageAlt).toBe(authorMock.avatar?.alternativeText);
+      expect(avatarImageSrc).toBe(nextOptimizedImage);
+    });
   });
 
-  it("checks if link points towards /sobre", () => {
+  it("render author-username-link component", () => {
     render(<Author author={authorMock} />);
-
-    const avatarLink = screen.getAllByRole("link");
-
-    avatarLink.forEach((link) =>
-      expect(link).toHaveAttribute("href", "/sobre")
+    const avatarLink = screen.getByTestId("author-username-link");
+    expect(avatarLink).toBeInTheDocument();
+    expect(avatarLink).toHaveAttribute("href", "/sobre");
+    const avatarParagraph = avatarLink.querySelector("p");
+    expect(avatarParagraph).toBeInTheDocument();
+    expect(avatarParagraph).toHaveClass(
+      "transition-colors duration-500 text-blog-foreground-highlight hover:text-blog-foreground-readable-hover"
     );
+    const avatarStrong = avatarParagraph?.querySelector("strong");
+    expect(avatarStrong).toBeInTheDocument();
+    expect(avatarStrong).toHaveTextContent(`@${authorMock.name}`);
   });
 
   it("matches the snapshot", () => {
@@ -60,59 +88,35 @@ describe("Author (has avatar)", () => {
 });
 
 describe("Author (has no avatar)", () => {
-  const authorMock = {
-    documentId: "12345",
-    name: "John Doe",
-    avatar: null,
-  };
-
-  it("renders author placeholder image", async () => {
-    render(<Author author={authorMock} />);
-    const authorAvatarImage = screen.getByAltText(
-      /Avatar de John Doe/i
-    ) as HTMLImageElement;
-
-    const PLACEHOLDER_IMAGE_NAME = "not-authenticated";
-    const PLACEHOLDER_IMAGE_FILE_EXTENSION = "png";
-    const PATH = "/images/";
-    const URL = `${PATH}${PLACEHOLDER_IMAGE_NAME}.${PLACEHOLDER_IMAGE_FILE_EXTENSION}`;
-    const encodedURL = encodeURIComponent(URL);
-    const width = "w=3840";
-    const quality = "q=75";
-    const nextOptimizedImage = `/_next/image?url=${encodedURL}&${width}&${quality}`;
-
-    await waitFor(() =>
+  it("renders author-avatar-image component (placeholder image)", async () => {
+    render(<Author author={authorMockNoAvatar} />);
+    const avatarImage = screen.getByTestId("author-avatar-image");
+    const avatarImageSrc = avatarImage.getAttribute("src");
+    const avatarImageAlt = avatarImage.getAttribute("alt");
+    const nextOptimizedImage = requestBackEndImage();
+    await waitFor(() => {
       // next Image loads components lazily
-      // Without waitFor, nextOptimizedImage would be null
       // Either use waitFor or set Image in the component as priority
-      expect(authorAvatarImage.getAttribute("src")).toBe(nextOptimizedImage)
-    );
-  });
-
-  it("renders author image alt text", () => {
-    render(<Author author={authorMock} />);
-    const authorAvatarImage = screen.getByAltText(/Avatar de John Doe/i);
-    expect(authorAvatarImage).toHaveAttribute("alt", "Avatar de John Doe");
+      expect(avatarImage).toBeInTheDocument();
+      expect(avatarImage).toHaveClass("absolute object-cover");
+      expect(avatarImage).toHaveAttribute("data-nimg", "fill");
+      expect(avatarImageAlt).toBe(`Avatar de ${authorMockNoAvatar.name}`);
+      expect(avatarImageSrc).toBe(nextOptimizedImage);
+    });
   });
 
   it("matches the snapshot", () => {
-    const { asFragment } = render(<Author author={authorMock} />);
+    const { asFragment } = render(<Author author={authorMockNoAvatar} />);
     expect(asFragment()).toMatchSnapshot();
   });
 });
 
 describe("AuthorSkeleton", () => {
-  it("renders successfully", () => {
-    const { container } = render(<AuthorSkeleton />);
-    expect(container).toBeInTheDocument();
-  });
-
   it("renders each skeleton, one for the avatar and the other one for the username", () => {
     const { container } = render(<AuthorSkeleton />);
-
     const avatarSkeleton = container.querySelector(".size-10");
     const nameSkeleton = container.querySelector(".w-20");
-
+    expect(container).toBeInTheDocument();
     expect(avatarSkeleton).toBeInTheDocument();
     expect(nameSkeleton).toBeInTheDocument();
   });

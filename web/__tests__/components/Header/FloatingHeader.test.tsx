@@ -1,5 +1,9 @@
 import { act, render, screen, waitFor } from "@testing-library/react";
 import { FloatingHeader } from "../../../src/components/Header";
+import {
+  createAuthenticatedUser,
+  unauthorizedUserMock,
+} from "../../../__mocks__/mockUser";
 
 jest.mock("next/navigation", () => ({
   // HeaderContent contains multiple nested components.
@@ -25,40 +29,13 @@ jest.mock("../../../src/service/about", () => ({
 }));
 
 describe("FloatingHeader", () => {
-  const mockAuthUser = {
-    ok: true,
-    data: {
-      id: 1,
-      documentId: "Absh1-19AK3-Po24S",
-      username: "johndoe",
-      email: "johndoe@gmail.com",
-      provider: "google",
-      confirmed: true,
-      blocked: false,
-      createdAt: "2025-03-10T23:11:17.381Z",
-      updatedAt: "2025-03-10T23:11:17.381Z",
-      publishedAt: "2025-03-10T23:11:17.381Z",
-    },
-    error: null,
-  };
-
-  const mockUnauthUser = {
-    ok: false,
-    data: null,
-    error: {
-      status: 404,
-      name: "",
-      message: "Not Found",
-    },
-  };
-
   beforeAll(() => {
     window.scrollTo = jest.fn();
   });
 
   it("renders the authenticated (user) floating header component", async () => {
     await act(async () => {
-      render(<FloatingHeader currentUser={mockAuthUser} />);
+      render(<FloatingHeader currentUser={createAuthenticatedUser()} />);
     });
     const floatingHeader = screen.getByTestId("floating-header");
     expect(floatingHeader).toBeInTheDocument();
@@ -66,7 +43,7 @@ describe("FloatingHeader", () => {
 
   it("renders the unauthenticated (user) floating header component", async () => {
     await act(async () => {
-      render(<FloatingHeader currentUser={mockAuthUser} />);
+      render(<FloatingHeader currentUser={createAuthenticatedUser()} />);
     });
     const floatingHeader = screen.getByTestId("floating-header");
     expect(floatingHeader).toBeInTheDocument();
@@ -74,7 +51,7 @@ describe("FloatingHeader", () => {
 
   it("hides (top:-48px) floating header component when scrolling down beyond threshold and brings it back when scrolling up", async () => {
     await act(async () =>
-      render(<FloatingHeader currentUser={mockAuthUser} />)
+      render(<FloatingHeader currentUser={createAuthenticatedUser()} />)
     );
     const floatingHeader = screen.getByTestId("floating-header");
 
@@ -162,7 +139,7 @@ describe("FloatingHeader", () => {
   it("matches the authenticated (user) static header snapshot", async () => {
     await act(async () => {
       const { asFragment } = render(
-        <FloatingHeader currentUser={mockUnauthUser} />
+        <FloatingHeader currentUser={unauthorizedUserMock} />
       );
       expect(asFragment()).toMatchSnapshot();
     });

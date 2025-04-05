@@ -85,9 +85,9 @@ exports[`BreadCrumb matches the snapshot 1`] = `
         <a
           class="transition-colors duration-500 text-blog-foreground-readable hover:text-blog-foreground-readable-hover [&_a]:hover:text-blog-foreground-readable-hover"
           data-testid="breadcrumb-article-topic"
-          href="/artigos?topic=ciencia-da-computacao"
+          href="/artigos?topic=voro-caute-thorax-usus"
         >
-          Ciência da Computação
+          voro caute thorax usus
         </a>
       </span>
       <li
@@ -122,7 +122,7 @@ exports[`BreadCrumb matches the snapshot 1`] = `
           data-testid="breadcrumb-article-title"
           role="link"
         >
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+          Usus beatae versus depopulo perspiciatis tener.
         </span>
       </li>
     </ol>

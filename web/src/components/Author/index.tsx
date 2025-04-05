@@ -4,10 +4,25 @@ import { Skeleton } from "../Shadcnui/skeleton";
 
 const Author = ({ author }: { author: Author }) => {
   return (
-    <div data-id="author" className="flex gap-2 items-center">
-      <Link href="/sobre" className="group">
-        <div className="relative flex size-10 shrink-0 overflow-hidden rounded-full">
+    <div
+      id="author-container"
+      data-testid="author-container"
+      className="flex items-center gap-2"
+    >
+      <Link
+        id="author-avatar-link"
+        data-testid="author-avatar-link"
+        href="/sobre"
+        className="group"
+      >
+        <div
+          id="author-avatar-container"
+          data-testid="author-avatar-container"
+          className="relative flex size-10 shrink-0 rounded-full overflow-hidden"
+        >
           <Image
+            id="author-avatar-image"
+            data-testid="author-avatar-image"
             src={
               author.avatar
                 ? `http://127.0.0.1:1337${author.avatar.url}`
@@ -24,8 +39,12 @@ const Author = ({ author }: { author: Author }) => {
           />
         </div>
       </Link>
-      <Link href="/sobre">
-        <p className="transition-colors duration-500 hover:text-blog-foreground-readable-hover text-blog-foreground-highlight">
+      <Link
+        id="author-username-link"
+        data-testid="author-username-link"
+        href="/sobre"
+      >
+        <p className="transition-colors duration-500 text-blog-foreground-highlight hover:text-blog-foreground-readable-hover">
           <strong>@{author.name}</strong>
         </p>
       </Link>
