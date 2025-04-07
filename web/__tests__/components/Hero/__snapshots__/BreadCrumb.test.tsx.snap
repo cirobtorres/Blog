@@ -6,6 +6,7 @@ exports[`BreadCrumb matches the snapshot 1`] = `
     aria-label="breadcrumb"
     class="mb-4"
     data-testid="breadcrumb"
+    id="breadcrumb"
   >
     <ol
       class="flex flex-wrap items-center gap-1.5 break-words text-sm sm:gap-2.5 text-blog-foreground-readable"
@@ -17,6 +18,7 @@ exports[`BreadCrumb matches the snapshot 1`] = `
           class="transition-colors duration-500 text-blog-foreground-readable hover:text-blog-foreground-readable-hover [&_a]:hover:text-blog-foreground-readable-hover"
           data-testid="breadcrumb-home"
           href="/"
+          id="breadcrumb-home"
         >
           Home
         </a>
@@ -50,6 +52,7 @@ exports[`BreadCrumb matches the snapshot 1`] = `
           class="transition-colors duration-500 text-blog-foreground-readable hover:text-blog-foreground-readable-hover [&_a]:hover:text-blog-foreground-readable-hover"
           data-testid="breadcrumb-article"
           href="/artigos"
+          id="breadcrumb-article"
         >
           Artigos
         </a>
@@ -86,6 +89,7 @@ exports[`BreadCrumb matches the snapshot 1`] = `
           class="transition-colors duration-500 text-blog-foreground-readable hover:text-blog-foreground-readable-hover [&_a]:hover:text-blog-foreground-readable-hover"
           data-testid="breadcrumb-article-topic"
           href="/artigos?topic=voro-caute-thorax-usus"
+          id="breadcrumb-article-topic"
         >
           voro caute thorax usus
         </a>
@@ -120,6 +124,7 @@ exports[`BreadCrumb matches the snapshot 1`] = `
           aria-disabled="true"
           class="font-normal relative text-blog-foreground-highlight after:absolute after:top-[calc(100%_+_4px)] after:left-0 after:w-full after:h-0.5 after:rounded-full after:bg-gradient-to-r after:from-transparent after:to-blog-foreground-highlight"
           data-testid="breadcrumb-article-title"
+          id="breadcrumb-article-title"
           role="link"
         >
           Usus beatae versus depopulo perspiciatis tener.

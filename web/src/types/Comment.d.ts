@@ -6,6 +6,12 @@ type CommentProps = {
   comments: {
     documentId: string;
   }[];
+  comment_likes: {
+    documentId: string;
+    users_permissions_user: {
+      documentId: string;
+    };
+  }[];
   parent_id: { documentId: string } | null;
   users_permissions_user: {
     documentId: string;

@@ -1,12 +1,12 @@
 "use client";
 
+import React, { useCallback, useState } from "react";
+import { useParams } from "next/navigation";
 import {
   clientCountComments,
   clientGetComments,
   useAsync,
 } from "@/service/comments/client";
-import { useParams } from "next/navigation";
-import React, { useCallback, useState } from "react";
 import { CommentLoadingSkeleton } from "../components/Comments/CommentLoading";
 
 type CommentProviderProps = {

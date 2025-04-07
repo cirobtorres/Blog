@@ -15,15 +15,15 @@ const AnchorTracker = ({ documentId }: { documentId: string }) => {
   const anchorListRef = useRef<HTMLDivElement>(null);
 
   const generatePaddingForSessions = (text: { [x: string]: string }) => {
-    return Object.values(text)[0].match(/<h[1][^>]*>(.*?)<\/h[1]>/gi)
+    return Object.values(text)[0].match(/<h[1][^>]*>(.*?)<\/h[1]>/gi) // Flag g (global): all occurrencies; // Flag i: case-insensitive
       ? "pl-0"
-      : Object.values(text)[0].match(/<h[2][^>]*>(.*?)<\/h[2]>/gi)
+      : Object.values(text)[0].match(/<h[2][^>]*>(.*?)<\/h[2]>/gi) // Flag g (global): all occurrencies; // Flag i: case-insensitive
       ? "pl-3"
-      : Object.values(text)[0].match(/<h[3][^>]*>(.*?)<\/h[3]>/gi)
+      : Object.values(text)[0].match(/<h[3][^>]*>(.*?)<\/h[3]>/gi) // Flag g (global): all occurrencies; // Flag i: case-insensitive
       ? "pl-6"
-      : Object.values(text)[0].match(/<h[4][^>]*>(.*?)<\/h[4]>/gi)
+      : Object.values(text)[0].match(/<h[4][^>]*>(.*?)<\/h[4]>/gi) // Flag g (global): all occurrencies; // Flag i: case-insensitive
       ? "pl-9"
-      : Object.values(text)[0].match(/<h[5][^>]*>(.*?)<\/h[5]>/gi)
+      : Object.values(text)[0].match(/<h[5][^>]*>(.*?)<\/h[5]>/gi) // Flag g (global): all occurrencies; // Flag i: case-insensitive
       ? "pl-12"
       : "pl-[3.75rem]";
   };

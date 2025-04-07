@@ -11,10 +11,14 @@ import slugify from "@/utils/slugify";
 
 const BreadCrumb = ({ title, topic }: { title: string; topic: Topic }) => {
   return (
-    <BreadcrumbRoot data-testid="breadcrumb" className="mb-4">
+    <BreadcrumbRoot id="breadcrumb" data-testid="breadcrumb" className="mb-4">
       <BreadcrumbList>
         <BreadcrumbItem>
-          <BreadcrumbLink data-testid="breadcrumb-home" href="/">
+          <BreadcrumbLink
+            id="breadcrumb-home"
+            data-testid="breadcrumb-home"
+            href="/"
+          >
             Home
           </BreadcrumbLink>
         </BreadcrumbItem>
@@ -22,7 +26,11 @@ const BreadCrumb = ({ title, topic }: { title: string; topic: Topic }) => {
           <Slash />
         </BreadcrumbSeparator>
         <BreadcrumbItem>
-          <BreadcrumbLink data-testid="breadcrumb-article" href="/artigos">
+          <BreadcrumbLink
+            id="breadcrumb-article"
+            data-testid="breadcrumb-article"
+            href="/artigos"
+          >
             Artigos
           </BreadcrumbLink>
         </BreadcrumbItem>
@@ -31,6 +39,7 @@ const BreadCrumb = ({ title, topic }: { title: string; topic: Topic }) => {
         </BreadcrumbSeparator>
         <BreadcrumbPage>
           <BreadcrumbLink
+            id="breadcrumb-article-topic"
             data-testid="breadcrumb-article-topic"
             href={`/artigos?topic=${slugify(topic.name)}`}
           >
@@ -42,6 +51,7 @@ const BreadCrumb = ({ title, topic }: { title: string; topic: Topic }) => {
         </BreadcrumbSeparator>
         <BreadcrumbItem>
           <BreadcrumbPage
+            id="breadcrumb-article-title"
             data-testid="breadcrumb-article-title"
             className="relative text-blog-foreground-highlight after:absolute after:top-[calc(100%_+_4px)] after:left-0 after:w-full after:h-0.5 after:rounded-full after:bg-gradient-to-r after:from-transparent after:to-blog-foreground-highlight"
           >

@@ -5,9 +5,15 @@ import { FloatingHeader, StaticHeader } from "../Header";
 const DynamicBody = async ({ children }: { children: React.ReactNode }) => {
   const user = await getUserMeLoader();
   return (
-    <div className="h-full min-h-screen flex flex-col justify-between">
+    <div
+      id="dyn-body-container"
+      data-testid="dyn-body-container"
+      className="h-full min-h-screen flex flex-col justify-between"
+    >
       <FloatingHeader currentUser={user} />
-      <main className="flex-1 mt-12">{children}</main>
+      <main id="dyn-main" data-testid="dyn-main" className="flex-1 mt-12">
+        {children}
+      </main>
       <Footer />
     </div>
   );
@@ -16,9 +22,19 @@ const DynamicBody = async ({ children }: { children: React.ReactNode }) => {
 const StaticBody = async ({ children }: { children: React.ReactNode }) => {
   const user = await getUserMeLoader();
   return (
-    <div className="h-full min-h-screen flex flex-col justify-between">
+    <div
+      id="stc-container"
+      data-testid="stc-container"
+      className="h-full min-h-screen flex flex-col justify-between"
+    >
       <StaticHeader currentUser={user} />
-      <main className="flex flex-col flex-1">{children}</main>
+      <main
+        id="stc-main"
+        data-testid="stc-main"
+        className="flex flex-col flex-1"
+      >
+        {children}
+      </main>
       <Footer />
     </div>
   );

@@ -4,8 +4,6 @@ import { render, screen, fireEvent, act } from "@testing-library/react";
 describe("ProgressBar", () => {
   const pageHeight = 5000;
 
-  // beforeEach(() => {});
-
   afterAll(() => {
     jest.clearAllMocks();
   });

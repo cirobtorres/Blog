@@ -9,6 +9,12 @@ query Nodes($pagination: PaginationArg, $filters: CommentFiltersInput, $sort: [S
       parent_id {
         documentId
       }
+      comment_likes {
+        documentId
+        users_permissions_user {
+          documentId
+        }
+      }
       users_permissions_user {
         documentId
         confirmed

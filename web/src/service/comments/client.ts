@@ -264,19 +264,17 @@ export const likeComment = async (
       users_permissions_user: userDocumentId,
     };
     const {
-      updateComment,
+      createCommentLike,
     }: {
-      updateComment: {
+      createCommentLike: {
         documentId: string;
-        users_permissions_user: {
-          documentId: string;
-        };
+        users_permissions_user: { documentId: string }[];
       };
     } = await graphqlCommentClient.request(LIKE_COMMENT, {
       documentId: commentDocumentId,
       data,
     });
-    return { data: updateComment };
+    return { data: createCommentLike };
   } catch (error) {
     console.error("Failed to like comment:", error);
     throw new Error("Failed to like comment");
@@ -286,9 +284,9 @@ export const likeComment = async (
 export const dislikeComment = async (commentDocumentId: string) => {
   try {
     const {
-      updateComment,
+      deleteCommentLike,
     }: {
-      updateComment: {
+      deleteCommentLike: {
         documentId: string;
         users_permissions_user: {
           documentId: string;
@@ -297,7 +295,7 @@ export const dislikeComment = async (commentDocumentId: string) => {
     } = await graphqlCommentClient.request(DISLIKE_COMMENT, {
       documentId: commentDocumentId,
     });
-    return { data: updateComment };
+    return { data: deleteCommentLike };
   } catch (error) {
     console.error("Failed to dislike comment:", error);
     throw new Error("Failed to dislike comment");

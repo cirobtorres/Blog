@@ -7,7 +7,11 @@ const RelatedArticles = async () => {
     pageSize: 5,
   });
   return (
-    <section className="border-y border-blog-border bg-blog-background-3 py-8 flex flex-col justify-center">
+    <section
+      id="rel-art-container"
+      data-testid="rel-art-container"
+      className="border-y border-blog-border bg-blog-background-3 py-8 flex flex-col justify-center"
+    >
       <div className="w-full max-w-screen-lg mx-auto mb-8 grid grid-cols-1">
         <div className="text-center blog-heading col-start-1 px-8 max-lg:px-4">
           <h2>Artigos relacionados</h2>

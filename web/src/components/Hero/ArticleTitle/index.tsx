@@ -3,22 +3,10 @@ import { Clock, MessageCircle } from "lucide-react";
 import Author from "../../Author";
 import BreadCrumb from "./BreadCrumb";
 import Link from "next/link";
-import { Suspense } from "react";
-import { Skeleton } from "../../Shadcnui/skeleton";
-import serverCountComments from "../../../service/comments/server";
 import ArticleLikeButton from "./ArticleLikeButton";
 import { countArticleLikes } from "../../../service/articles";
-
-const CountComments = async ({ articleId }: { articleId: string }) => {
-  const { data: commentLength } = await serverCountComments(articleId);
-  return (
-    <p data-testid="hero-count-comments">
-      {commentLength <= 1
-        ? `${commentLength} comentário`
-        : `${commentLength} comentários`}
-    </p>
-  );
-};
+import serverCountComments from "../../../service/comments/server";
+import { Skeleton } from "../../Shadcnui/skeleton";
 
 const ArticleTitle = async ({
   article,
@@ -28,38 +16,66 @@ const ArticleTitle = async ({
   currentUser: User;
 }) => {
   const { data: totalLikes } = await countArticleLikes(article.documentId);
+  const { data: commentLength } = await serverCountComments(article.documentId);
   return (
     <section
-      data-testid="hero-article-title"
-      className="min-h-[30rem] py-8 mb-4 flex items-center border-y border-blog-border bg-blog-background-2"
+      id="hat-main-container" // hat = hero-article-title
+      data-testid="hat-main-container"
+      role="region"
+      aria-labelledby="hat-header"
+      className="flex items-center min-h-[30rem] py-8 mb-4 border-y border-blog-border bg-blog-background-2"
     >
-      <div className="h-full grid grid-cols-article max-lg:grid-cols-article-800 mx-auto items-center max-w-screen-2xl">
-        <div className="col-start-2 max-lg:col-start-1 ml-8 mr-4 max-lg:ml-4">
+      <div
+        id="hat-grid-container"
+        data-testid="hat-grid-container"
+        className="h-full grid grid-cols-article max-lg:grid-cols-article-800 mx-auto items-center max-w-screen-2xl"
+      >
+        <div
+          id="hat-grid-item"
+          data-testid="hat-grid-item"
+          className="col-start-2 max-lg:col-start-1 ml-8 mr-4 max-lg:ml-4"
+        >
           {article.topic && (
             <BreadCrumb title={article.title} topic={article.topic} />
           )}
-          <div className="blog-heading blog-center-content flex flex-col gap-4">
+          <div
+            id="hat-content-container"
+            data-testid="hat-content-container"
+            className="blog-heading blog-center-content flex flex-col gap-4"
+          >
             <h1
-              data-testid="hero-article-title-header"
+              id="hat-header"
+              data-testid="hat-header"
               className="leading-[4rem] font-extrabold break-words"
             >
               {article.title}
             </h1>
             <p
-              data-testid="hero-article-title-description"
+              id="hat-description"
+              data-testid="hat-description"
               className="text-2xl break-words text-[#808080]"
             >
               {article.description}
             </p>
-            <div className="flex flex-wrap items-center gap-8">
+            <div
+              id="hat-footer"
+              data-testid="hat-footer"
+              className="flex flex-wrap items-center gap-8"
+            >
               {article.author && <Author author={article.author} />}
-              <div className="flex items-center gap-4">
+              <div
+                id="hat-iso-date"
+                data-testid="hat-iso-date"
+                className="flex items-center gap-4"
+              >
                 <Clock className="size-6 stroke-blog-foreground-readable" />
                 <div className="flex flex-col justify-center">
                   <p className="text-base">
                     <small>
                       Criado:{" "}
-                      <time>{formatDateToCustomFormat(article.createdAt)}</time>
+                      <time dateTime={article.createdAt}>
+                        {formatDateToCustomFormat(article.createdAt)}
+                      </time>
                     </small>
                   </p>
                   {new Date(article.updatedAt).getTime() -
@@ -68,7 +84,7 @@ const ArticleTitle = async ({
                     <p className="text-base leading-3">
                       <small>
                         Atualizado:{" "}
-                        <time>
+                        <time dateTime={article.createdAt}>
                           {formatDateToCustomFormat(article.updatedAt)}
                         </time>
                       </small>
@@ -77,20 +93,28 @@ const ArticleTitle = async ({
                 </div>
               </div>
               <Link
+                id="hat-link-to-comment-session"
+                data-testid="hat-link-to-comment-session"
                 href="#comment-session-header"
                 className="flex items-center gap-4"
+                aria-label={`Ir para a seção de comentários (${commentLength} ${
+                  commentLength === 1 ? "comentário" : "comentários"
+                })`}
               >
                 <MessageCircle className="size-6" />
-                <Suspense
-                  fallback={
-                    <Skeleton
-                      data-testid="count-comments-loading"
-                      className="h-6 w-28"
-                    />
-                  }
-                >
-                  <CountComments articleId={article.documentId} />
-                </Suspense>
+                {commentLength === undefined || commentLength === null ? (
+                  <Skeleton
+                    id="hat-skeleton-comment-count"
+                    data-testid="hat-skeleton-comment-count"
+                    className="h-6 w-28"
+                  />
+                ) : (
+                  <p>
+                    {commentLength === 1
+                      ? `${commentLength} comentário`
+                      : `${commentLength} comentários`}
+                  </p>
+                )}
               </Link>
               <ArticleLikeButton
                 currentUser={currentUser}
@@ -105,4 +129,3 @@ const ArticleTitle = async ({
 };
 
 export default ArticleTitle;
-export { CountComments };

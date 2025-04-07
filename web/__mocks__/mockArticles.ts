@@ -4,6 +4,7 @@ import { generateRandomCreatedAt } from "./utilities/randomISOdatetime";
 import slugify from "@/utils/slugify";
 import { createCoverMock } from "./mockCover";
 import { createAuthorMock } from "./mockAuthor";
+import { mockTopic } from "./mockTopic";
 
 export function createArticleMock() {
   return {
@@ -17,7 +18,7 @@ export function createArticleMock() {
     ...generateRandomCreatedAt(),
     cover: createCoverMock(),
     author: createAuthorMock(),
-    topic: {},
+    topic: mockTopic(),
     tools: [],
     tags: [],
     blocks: [],

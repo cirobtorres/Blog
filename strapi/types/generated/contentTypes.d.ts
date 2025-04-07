@@ -530,6 +530,7 @@ export interface ApiAuthorAuthor extends Struct.CollectionTypeSchema {
 export interface ApiCommentLikeCommentLike extends Struct.CollectionTypeSchema {
   collectionName: 'comment_likes';
   info: {
+    description: '';
     displayName: 'CommentLike';
     pluralName: 'comment-likes';
     singularName: 'comment-like';
@@ -538,7 +539,7 @@ export interface ApiCommentLikeCommentLike extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    comment: Schema.Attribute.Relation<'oneToOne', 'api::comment.comment'>;
+    comment: Schema.Attribute.Relation<'manyToOne', 'api::comment.comment'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -553,7 +554,7 @@ export interface ApiCommentLikeCommentLike extends Struct.CollectionTypeSchema {
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     users_permissions_user: Schema.Attribute.Relation<
-      'oneToOne',
+      'manyToOne',
       'plugin::users-permissions.user'
     >;
   };
@@ -573,6 +574,10 @@ export interface ApiCommentComment extends Struct.CollectionTypeSchema {
   attributes: {
     article: Schema.Attribute.Relation<'manyToOne', 'api::article.article'>;
     body: Schema.Attribute.RichText & Schema.Attribute.Required;
+    comment_likes: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::comment-like.comment-like'
+    >;
     comments: Schema.Attribute.Relation<'oneToMany', 'api::comment.comment'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -1185,6 +1190,10 @@ export interface PluginUsersPermissionsUser
   };
   attributes: {
     blocked: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    comment_likes: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::comment-like.comment-like'
+    >;
     comments: Schema.Attribute.Relation<'oneToMany', 'api::comment.comment'>;
     confirmationToken: Schema.Attribute.String & Schema.Attribute.Private;
     confirmed: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;

@@ -96,20 +96,44 @@ function ArticleLikeButton({
       }
     };
 
+    // Accessibility------------------------------------------------------------
+    const handleKeyPress = (e: React.KeyboardEvent<HTMLButtonElement>) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        toggleLike();
+      }
+    };
+
+    const buttonAriaLabel = hasLiked
+      ? "Remover curtida do artigo"
+      : "Curtir artigo";
+
     // currentUser.ok === true
     return (
-      <div className="flex items-center gap-4">
+      <div
+        id="halb-user" // halb = hero-article-like-button
+        data-testid="halb-user"
+        className="flex items-center gap-4"
+      >
         <button
+          id="halb-button"
+          data-testid="halb-button"
           type="button"
           onClick={toggleLike}
+          onKeyDown={handleKeyPress}
+          aria-pressed={hasLiked}
+          aria-label={buttonAriaLabel}
           className="flex items-center gap-2"
         >
           <ThumbsUp
+            id="halb-icon-active"
+            data-testid="halb-icon-active"
             className={`size-6 ${
               hasLiked
                 ? "text-blog-foreground-highlight"
                 : "text-blog-foreground-readable"
             }`}
+            aria-hidden="true"
           />
           <p>{formatLikeCount(likeCount.length)}</p>
         </button>
@@ -119,10 +143,15 @@ function ArticleLikeButton({
 
   // currentUser.ok === false
   return (
-    <div className="flex items-center gap-4">
+    <div id="halb" data-testid="halb" className="flex items-center gap-4">
       <Popover>
         <PopoverTrigger className="flex items-center gap-2">
-          <ThumbsUp className="size-6" />
+          <ThumbsUp
+            id="halb-icon"
+            data-testid="halb-icon"
+            className="size-6"
+            aria-hidden="true"
+          />
           <p>{formatLikeCount(likeCount.length)}</p>
         </PopoverTrigger>
         <PopoverLoginContent align="center" />

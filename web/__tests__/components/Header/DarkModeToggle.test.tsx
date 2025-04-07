@@ -9,7 +9,6 @@ jest.mock("next-themes", () => ({
 
 function setTheme(theme = "light") {
   const mockSetTheme = jest.fn();
-
   jest.spyOn(nextThemes, "useTheme").mockImplementation(() => ({
     theme,
     setTheme: mockSetTheme,

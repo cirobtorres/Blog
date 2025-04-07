@@ -4,7 +4,8 @@
   "info": {
     "singularName": "comment-like",
     "pluralName": "comment-likes",
-    "displayName": "CommentLike"
+    "displayName": "CommentLike",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -13,13 +14,15 @@
   "attributes": {
     "comment": {
       "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::comment.comment"
+      "relation": "manyToOne",
+      "target": "api::comment.comment",
+      "inversedBy": "comment_likes"
     },
     "users_permissions_user": {
       "type": "relation",
-      "relation": "oneToOne",
-      "target": "plugin::users-permissions.user"
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "comment_likes"
     }
   }
 }

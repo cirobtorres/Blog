@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 async function resolvedComponent(Component: {
   (): Promise<React.JSX.Element>;
 }) {
@@ -6,11 +5,11 @@ async function resolvedComponent(Component: {
   return () => ComponentResolved;
 }
 
-async function resolvedComponentWithProps(
-  Component: ({ props }: { [key: string]: any }) => React.JSX.Element,
-  props: { [key: string]: any }
+async function resolvedComponentWithProps<T extends object>(
+  Component: (props: T) => React.JSX.Element | Promise<React.JSX.Element>,
+  props: T
 ) {
-  const ComponentResolved = Component({ ...props });
+  const ComponentResolved = await Component(props);
   return () => ComponentResolved;
 }
 
