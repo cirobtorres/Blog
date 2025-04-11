@@ -3,7 +3,7 @@
 import Image from "next/image";
 
 const ArticleImage = ({ cover }: { cover: Cover }) => {
-  const URL = process.env.NEXT_PUBLIC_BACKEND_URL ?? "http://127.0.0.1:1337";
+  const URL = process.env.NEXT_PUBLIC_BACKEND_IP ?? "http://127.0.0.1:1337";
   return (
     <section
       data-testid="hero-article-image"

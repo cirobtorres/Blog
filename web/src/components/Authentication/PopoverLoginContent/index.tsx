@@ -20,7 +20,9 @@ const PopoverLoginContent = ({
 
   return (
     <PopoverContent
-      data-testid="header-user-unauthenticated-login-screen"
+      // huu = header-user-unauthenticated
+      id="huu-login-screen"
+      data-testid="huu-login-screen"
       align={align}
       className="shadow-xl rounded-xl max-w-60 p-0"
     >
@@ -39,7 +41,11 @@ const PopoverLoginContent = ({
 
 const LoginHeader = () => {
   return (
-    <p className="text-center text-sm border-b border-blog-border pb-2">
+    <p
+      id="huu-login-header"
+      data-testid="huu-login-header"
+      className="text-center text-sm border-b border-blog-border pb-2"
+    >
       Faça{" "}
       <span className="font-extrabold text-blog-foreground-readable-hover">
         LOGIN
@@ -58,9 +64,14 @@ const FloatingInput = ({
   placeholder?: string;
 }) => {
   return (
-    <fieldset className="relative mt-2 rounded border border-blog-border bg-black bg-opacity-50 group">
+    <fieldset
+      id={`floating-login-${type}-container`}
+      data-testid={`floating-login-${type}-container`}
+      className="relative mt-2 rounded border border-blog-border bg-black bg-opacity-50 group"
+    >
       <input
-        id={`floating-login-${type}`}
+        id={`floating-login-${type}-input`}
+        data-testid={`floating-login-${type}-input`}
         type={type}
         name={`login-${type}`}
         placeholder={placeholder}
@@ -73,7 +84,9 @@ const FloatingInput = ({
         }
       />
       <label
-        htmlFor="floating-login-email"
+        id={`floating-login-${type}-label`}
+        data-testid={`floating-login-${type}-label`}
+        htmlFor={`floating-login-${type}-input`}
         className={
           `absolute top-1/2 z-10 origin-[0] start-1 px-1 select-none` +
           ` -translate-y-5 scale-75 text-blog-foreground-highlight peer-focus:-translate-y-5 peer-focus:scale-75 peer-focus:text-blog-foreground-highlight` +
@@ -101,7 +114,11 @@ const LoginButton = () => {
 
 const Or = () => {
   return (
-    <div className="relative h-6 my-4 items-center grid grid-cols-[1fr_auto_1fr]">
+    <div
+      id={`floating-login-or`}
+      data-testid={`floating-login-or`}
+      className="relative h-6 my-4 items-center grid grid-cols-[1fr_auto_1fr]"
+    >
       <hr className="w-full border-blog-border" />
       <span className="px-2 text-sm text-[hsl(0,0%,75%)] pointer-events-none select-none">
         ou
@@ -110,9 +127,12 @@ const Or = () => {
     </div>
   );
 };
+
 function ProviderLogin() {
+  // Do NEVER switch URL localhost for IP 127.0.0.1
+  // Otherwise Strapi is going to redirect to strapi panel admin rather than next.js front app
   const backendUrl =
-    process.env.NEXT_PUBLIC_BACKEND_URL ?? "http://127.0.0.1:1337";
+    process.env.NEXT_PUBLIC_BACKEND_URL ?? "http://localhost:1337";
 
   const generateProviderUrl = (provider: string) => {
     return `${backendUrl}/api/connect/${provider}`;
@@ -120,22 +140,25 @@ function ProviderLogin() {
 
   return (
     <div
+      id={`floating-login-provider-container`}
+      data-testid={`floating-login-provider-container`}
       className={
         `flex flex-col justify-center items-center gap-1 px-2 pb-2` + // Shape
         ` [&_a]:transition-colors [&_a]:duration-500` + // Child transitions
         ` [&_a]:flex [&_a]:justify-center [&_a]:items-center [&_a]:gap-2 [&_a]:py-1 [&_a]:px-3` + // Child layout
-        ` [&_a]:text-blog-foreground-readable hover:[&_a]:text-blog-foreground-readable-hover` + // Child colors
-        ` [&_a]:bg-opacity-50 [&_a]:rounded [&_a]:w-full`
+        ` [&_a]:w-full [&_a]:rounded [&_a]:bg-opacity-50` + // Child layout
+        ` [&_a]:text-blog-foreground-readable hover:[&_a]:text-blog-foreground-readable-hover` // Child colors
       }
     >
-      {providers.map((provider) => (
+      {providers.map((element) => (
         <Link
-          key={`key-provider-${provider.provider}`}
-          href={generateProviderUrl(provider.provider)}
-          className="bg-opacity-50"
-          style={{ backgroundColor: provider.bg || "#000" }}
+          id={`key-provider-${element.provider}`}
+          data-testid={`key-provider-${element.provider}`}
+          key={`key-provider-${element.provider}`}
+          href={generateProviderUrl(element.provider)}
+          style={{ backgroundColor: element.bg || "#000" }}
         >
-          {provider.label}
+          {element.label}
         </Link>
       ))}
     </div>
@@ -144,7 +167,11 @@ function ProviderLogin() {
 
 const LoginFooter = () => {
   return (
-    <p className="text-center text-sm p-2">
+    <p
+      id="huu-login-footer"
+      data-testid="huu-login-footer"
+      className="text-center text-sm p-2"
+    >
       Crie uma conta{" "}
       <Link href="/" className="text-blog-foreground-highlight">
         aqui

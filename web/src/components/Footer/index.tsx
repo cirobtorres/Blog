@@ -1,5 +1,5 @@
-import { getAbout } from "@/service/about";
 import Link from "next/link";
+import { getAbout } from "../../service/about";
 
 const Footer = async () => {
   const {

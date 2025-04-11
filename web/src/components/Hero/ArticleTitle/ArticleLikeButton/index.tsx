@@ -130,8 +130,8 @@ function ArticleLikeButton({
             data-testid="halb-icon-active"
             className={`size-6 ${
               hasLiked
-                ? "text-blog-foreground-highlight"
-                : "text-blog-foreground-readable"
+                ? "fill-blog-foreground-highlight text-blog-foreground-highlight"
+                : "fill-transparent text-blog-foreground-readable"
             }`}
             aria-hidden="true"
           />

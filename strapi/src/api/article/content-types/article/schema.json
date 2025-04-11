@@ -76,6 +76,12 @@
       "relation": "manyToMany",
       "target": "api::tool.tool",
       "mappedBy": "articles"
+    },
+    "article_likes": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::article-like.article-like",
+      "mappedBy": "article"
     }
   }
 }

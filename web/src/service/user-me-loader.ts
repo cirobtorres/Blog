@@ -1,8 +1,7 @@
 import { getAuthToken } from "./get-auth-token";
 
 export async function getUserMeLoader() {
-  const baseUrl =
-    process.env.NEXT_PUBLIC_BACKEND_URL ?? "http://127.0.0.1:1337";
+  const baseUrl = process.env.NEXT_PUBLIC_BACKEND_IP ?? "http://127.0.0.1:1337";
   const path = "/api/users/me";
 
   const url = new URL(path, baseUrl);

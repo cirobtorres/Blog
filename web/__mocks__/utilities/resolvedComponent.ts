@@ -13,5 +13,4 @@ async function resolvedComponentWithProps<T extends object>(
   return () => ComponentResolved;
 }
 
-export default resolvedComponent;
-export { resolvedComponentWithProps };
+export { resolvedComponent, resolvedComponentWithProps };

@@ -13,7 +13,7 @@ type CommentProps = {
     };
   }[];
   parent_id: { documentId: string } | null;
-  users_permissions_user: {
+  users_permissions_user?: {
     documentId: string;
     confirmed: boolean;
     blocked: boolean;

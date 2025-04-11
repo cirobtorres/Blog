@@ -23,7 +23,8 @@ export async function GET(
   const provider = (await params.params).provider;
 
   const backendUrl =
-    process.env.NEXT_PUBLIC_BACKEND_URL ?? "http://127.0.0.1:1337";
+    process.env.NEXT_PUBLIC_BACKEND_IP ?? "http://127.0.0.1:1337";
+
   const path = `/api/auth/${provider}/callback`;
 
   const url = new URL(backendUrl + path);

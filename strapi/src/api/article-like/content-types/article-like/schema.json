@@ -14,13 +14,15 @@
   "attributes": {
     "article": {
       "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::article.article"
+      "relation": "manyToOne",
+      "target": "api::article.article",
+      "inversedBy": "article_likes"
     },
     "users_permissions_user": {
       "type": "relation",
-      "relation": "oneToOne",
-      "target": "plugin::users-permissions.user"
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "article_likes"
     }
   }
 }

@@ -412,7 +412,7 @@ export interface ApiArticleLikeArticleLike extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    article: Schema.Attribute.Relation<'oneToOne', 'api::article.article'>;
+    article: Schema.Attribute.Relation<'manyToOne', 'api::article.article'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -427,7 +427,7 @@ export interface ApiArticleLikeArticleLike extends Struct.CollectionTypeSchema {
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     users_permissions_user: Schema.Attribute.Relation<
-      'oneToOne',
+      'manyToOne',
       'plugin::users-permissions.user'
     >;
   };
@@ -445,6 +445,10 @@ export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    article_likes: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::article-like.article-like'
+    >;
     author: Schema.Attribute.Relation<'manyToOne', 'api::author.author'>;
     blocks: Schema.Attribute.DynamicZone<
       [
@@ -1189,6 +1193,10 @@ export interface PluginUsersPermissionsUser
     timestamps: true;
   };
   attributes: {
+    article_likes: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::article-like.article-like'
+    >;
     blocked: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     comment_likes: Schema.Attribute.Relation<
       'oneToMany',

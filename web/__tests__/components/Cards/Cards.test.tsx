@@ -2,7 +2,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 import { mockArticles } from "../../../__mocks__/mockArticles";
 import { getArticles } from "../../../src/service/articles";
 import Cards from "../../../src/components/Cards";
-import resolvedComponent from "../../../__mocks__/utilities/resolvedComponent";
+import { resolvedComponent } from "../../../__mocks__/utilities/resolvedComponent";
 
 jest.mock("../../../src/service/articles", () => ({
   getArticles: jest.fn(),

@@ -44,10 +44,8 @@ describe("HeaderContent", () => {
       render(<HeaderContent currentUser={authenticatedUserMock} />);
     });
     await waitFor(() => {
-      const authenticatedLi = screen.getByTestId("header-user-authenticated");
-      const unauthenticatedLi = screen.queryByTestId(
-        "header-user-unauthenticated"
-      );
+      const authenticatedLi = screen.getByTestId("hua"); // hua = header-user-authenticated
+      const unauthenticatedLi = screen.queryByTestId("huu");
       expect(authenticatedLi).toBeInTheDocument();
       expect(unauthenticatedLi).not.toBeInTheDocument();
     });
@@ -58,10 +56,8 @@ describe("HeaderContent", () => {
       render(<HeaderContent currentUser={unauthorizedUserMock} />);
     });
     await waitFor(() => {
-      const authenticatedLi = screen.queryByTestId("header-user-authenticated");
-      const unauthenticatedLi = screen.getByTestId(
-        "header-user-unauthenticated"
-      );
+      const authenticatedLi = screen.queryByTestId("hua"); // hua = header-user-authenticated
+      const unauthenticatedLi = screen.getByTestId("huu");
       expect(authenticatedLi).not.toBeInTheDocument();
       expect(unauthenticatedLi).toBeInTheDocument();
     });

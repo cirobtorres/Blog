@@ -1,6 +1,6 @@
 import { getUserMeLoader } from "../../service/user-me-loader";
-import Footer from "../Footer";
 import { FloatingHeader, StaticHeader } from "../Header";
+import Footer from "../Footer";
 
 const DynamicBody = async ({ children }: { children: React.ReactNode }) => {
   const user = await getUserMeLoader();
@@ -23,8 +23,8 @@ const StaticBody = async ({ children }: { children: React.ReactNode }) => {
   const user = await getUserMeLoader();
   return (
     <div
-      id="stc-container"
-      data-testid="stc-container"
+      id="stc-body-container"
+      data-testid="stc-body-container"
       className="h-full min-h-screen flex flex-col justify-between"
     >
       <StaticHeader currentUser={user} />

@@ -1,6 +1,6 @@
 import { GraphQLClient } from "graphql-request";
 
-const backend = process.env.NEXT_PUBLIC_BACKEND_URL || "http://127.0.0.1:1337";
+const backend = process.env.NEXT_PUBLIC_BACKEND_IP || "http://127.0.0.1:1337";
 const endpoint = `${backend}/graphql`;
 const globalToken = process.env.NEXT_PUBLIC_BACKEND_READ_GLOBAL_TOKEN;
 const aboutToken = process.env.NEXT_PUBLIC_BACKEND_READ_ABOUT_TOKEN;

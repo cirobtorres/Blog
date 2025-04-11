@@ -44,6 +44,12 @@ mutation CreateComment($data: CommentInput!) {
     parent_id {
       documentId
     }
+    comment_likes {
+      documentId
+      users_permissions_user {
+        documentId
+      }
+    }
     users_permissions_user {
       documentId
       confirmed
@@ -65,6 +71,12 @@ mutation UpdateComment($documentId: ID!, $data: CommentInput!) {
     updatedAt
     parent_id {
       documentId
+    }
+    comment_likes {
+      documentId
+      users_permissions_user {
+        documentId
+      }
     }
     users_permissions_user {
       documentId

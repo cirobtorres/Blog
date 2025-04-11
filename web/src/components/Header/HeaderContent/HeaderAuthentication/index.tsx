@@ -13,13 +13,16 @@ const HeaderAuthentication = ({ currentUser }: { currentUser: User }) => {
   return (
     <>
       {currentUser.ok && (
+        // hua = header-user-authenticated
         <li
-          data-testid="header-user-authenticated"
+          id="hua"
+          data-testid="hua"
           className="flex justify-center items-center"
         >
           <Popover>
             <PopoverTrigger
-              data-testid="header-user-authenticated-logout-trigger"
+              id="hua-logout-trigger"
+              data-testid="hua-logout-trigger"
               aria-haspopup="true"
               aria-controls="logout-popover-content"
             >
@@ -51,7 +54,7 @@ const HeaderAuthentication = ({ currentUser }: { currentUser: User }) => {
                 }}
               >
                 <button
-                  data-testid="header-user-authenticated-logout-button"
+                  data-testid="hua-logout-button"
                   type="submit"
                   className={
                     `w-full px-4 py-2 text-left cursor-pointer transition-all duration-300` +
@@ -67,10 +70,12 @@ const HeaderAuthentication = ({ currentUser }: { currentUser: User }) => {
         </li>
       )}
       {!currentUser.ok && (
-        <li data-testid="header-user-unauthenticated">
+        // huu = header-user-unauthenticated
+        <li id="huu" data-testid="huu">
           <Popover>
             <PopoverTrigger
-              data-testid="header-user-unauthenticated-login-trigger"
+              id="huu-login-trigger"
+              data-testid="huu-login-trigger"
               className="flex items-center p-0.5 rounded"
             >
               <div className="relative flex size-8 shrink-0 overflow-hidden rounded-full">

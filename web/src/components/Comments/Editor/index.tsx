@@ -110,11 +110,16 @@ const Editor = ({
             name="content"
             onFocus={() => {
               setIsOpen(true);
+
+              // Cursor on the last element position:
               editor
                 .chain()
                 .focus()
-                .setTextSelection(limit * 2)
-                .run(); // Cursor on the last element position
+                // The character limit does not take into account the HTML tags.
+                // For example: Hello World is actually <p>Hello World</p> (18 characters, not 11)
+                // So the real textSelection length is always higher than the actual allowed character limit number.
+                .setTextSelection(limit * 10)
+                .run();
             }}
             className="relative text-left w-full h-full text-sm [scrollbar-width:none] [-ms-overflow-style:none] pb-2 group"
           >

@@ -58,15 +58,14 @@ export default function Comments({ currentUser }: { currentUser: User }) {
         <Avatar currentUser={currentUser} />
         <Editor currentUser={currentUser} onSubmit={onCommentCreate} />
       </div>
-      {comments !== null &&
-        comments?.map((comment: CommentProps) => (
-          <CommentRow
-            key={comment.documentId}
-            comment={comment}
-            currentUser={currentUser}
-          />
-        ))}
-      {comments !== null && comments.length === 0 && (
+      {comments?.map((comment: CommentProps) => (
+        <CommentRow
+          key={comment.documentId}
+          comment={comment}
+          currentUser={currentUser}
+        />
+      ))}
+      {comments?.length === 0 && (
         <div className="mt-10">
           <h3 className="text-xl text-center text-[#747474]">
             Ninguém comentou ainda...

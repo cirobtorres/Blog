@@ -16,7 +16,7 @@ type CommentProviderProps = {
   loadMore: () => void;
   createLocalComment: (comment: CommentProps) => void;
   updateLocalComment: (updatedComment: CommentProps) => void;
-  updateLocalReply: (updatedComment: CommentProps) => void;
+  createLocalReply: (updatedComment: CommentProps) => void;
   deleteLocalComment: (documentId: string) => void;
 };
 
@@ -27,7 +27,7 @@ export const CommentContext = React.createContext<CommentProviderProps>({
   loadMore: () => {},
   createLocalComment: () => {},
   updateLocalComment: () => {},
-  updateLocalReply: () => {},
+  createLocalReply: () => {},
   deleteLocalComment: () => {},
 });
 
@@ -69,8 +69,8 @@ export function CommentProvider({ children }: { children: React.ReactNode }) {
     setComments((prev) => [comment, ...prev]);
   }, []);
 
-  const updateLocalReply = useCallback((child: CommentProps) => {
-    if (child.parent_id)
+  const createLocalReply = useCallback((child: CommentProps) => {
+    if (child.parent_id) {
       setComments((prev) =>
         prev.map((parentComment) =>
           parentComment.documentId === child.parent_id
@@ -84,6 +84,7 @@ export function CommentProvider({ children }: { children: React.ReactNode }) {
             : parentComment
         )
       );
+    }
   }, []);
 
   const updateLocalComment = useCallback((updatedComment: CommentProps) => {
@@ -111,7 +112,7 @@ export function CommentProvider({ children }: { children: React.ReactNode }) {
         loadMore,
         createLocalComment,
         updateLocalComment,
-        updateLocalReply,
+        createLocalReply,
         deleteLocalComment,
       }}
     >

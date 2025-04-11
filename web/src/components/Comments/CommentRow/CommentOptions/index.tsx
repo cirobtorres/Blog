@@ -15,19 +15,25 @@ import {
 import { clientDeleteComment, useAsyncFn } from "@/service/comments/client";
 import { useToast } from "@/hooks/useToast";
 import { ToasterProvider } from "@/providers/ToasterProvider";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { useComment } from "../../../../hooks/useComment";
 
 const CommentOptions = ({
-  comment,
+  currentComment,
   currentUser,
   isEditing,
   setIsEditing,
+  setMyChilds,
+  setTemporaryChilds,
+  setTotalChilds,
 }: {
-  comment: CommentProps;
+  currentComment: CommentProps;
   currentUser: User;
   isEditing: boolean;
   setIsEditing: (value: boolean) => void;
+  setMyChilds?: Dispatch<SetStateAction<CommentProps[]>>;
+  setTemporaryChilds?: Dispatch<SetStateAction<CommentProps[]>>;
+  setTotalChilds: Dispatch<SetStateAction<number>>;
 }) => {
   const [openDialog, setOpenDialog] = useState(false);
   const commentContext = useComment();
@@ -35,11 +41,29 @@ const CommentOptions = ({
   const deleteCommentFn = useAsyncFn(clientDeleteComment, [], false);
   const { toast } = useToast();
 
-  function onCommentDelete() {
+  async function onCommentDelete() {
     return deleteCommentFn
-      .execute({ documentId: comment.documentId })
+      .execute({ documentId: currentComment.documentId })
       .then((documentId) => {
-        return deleteLocalComment(documentId as string);
+        if (setMyChilds) {
+          // If parent_id !== null
+          setMyChilds((prev: CommentProps[]) =>
+            prev.filter(
+              (child: CommentProps) => child.documentId !== documentId
+            )
+          );
+          setTotalChilds((prev) => prev--); // TODO (BUG): Not working
+        } else {
+          // If parent_id === null
+          deleteLocalComment(documentId as string);
+        }
+        if (setTemporaryChilds) {
+          setTemporaryChilds((prev: CommentProps[]) =>
+            prev.filter(
+              (child: CommentProps) => child.documentId !== documentId
+            )
+          );
+        }
       })
       .then(() => toast({ description: "Comentário excluído" }))
       .catch((error) => {
@@ -49,8 +73,9 @@ const CommentOptions = ({
   }
 
   return (
+    currentComment.users_permissions_user &&
     currentUser.data?.documentId ===
-      comment.users_permissions_user.documentId && (
+      currentComment.users_permissions_user.documentId && (
       <div className="col-span-1 ml-auto mt-1.5">
         <Popover>
           <PopoverTrigger>

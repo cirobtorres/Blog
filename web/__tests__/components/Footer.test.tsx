@@ -3,7 +3,7 @@ import { toHaveNoViolations } from "jest-axe";
 import { act, render, screen, waitFor } from "@testing-library/react";
 import Footer from "../../src/components/Footer";
 import React from "react";
-import resolvedComponent from "../../__mocks__/utilities/resolvedComponent";
+import { resolvedComponent } from "../../__mocks__/utilities/resolvedComponent";
 import { getAbout } from "@/service/about";
 
 jest.mock("../../src/service/about", () => ({
@@ -36,8 +36,6 @@ function returnMock(props?: {
 }
 
 describe("Footer", () => {
-  afterEach(() => jest.restoreAllMocks());
-
   it("renders the footer component", async () => {
     returnMock();
     const FooterResolved = await resolvedComponent(Footer);
