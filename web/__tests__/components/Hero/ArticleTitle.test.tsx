@@ -12,7 +12,12 @@ import ArticleTitle from "../../../src/components/Hero/ArticleTitle";
 
 faker.seed(5); // Snapshot
 
-const articleMock = createArticleMock();
+const articleMock = {
+  ...createArticleMock(),
+  createdAt: "2025-03-20T01:42:30.824Z",
+  updatedAt: "2025-03-20T01:42:30.824Z", // Increase it by >10s in order to test "Atualizado"
+};
+
 const userMock = createAuthenticatedUser();
 
 jest.mock("next/navigation", () => ({
@@ -51,7 +56,7 @@ describe("ArticleTitle", () => {
   });
 
   describe("User on", () => {
-    // let fragment: DocumentFragment;
+    let fragment: DocumentFragment;
 
     beforeEach(async () => {
       const ArticleTitleResolved = await resolvedComponentWithProps(
@@ -61,9 +66,8 @@ describe("ArticleTitle", () => {
           currentUser: userMock,
         }
       );
-      render(<ArticleTitleResolved />);
-      // const { asFragment } = render(<ArticleTitleResolved />);
-      // fragment = asFragment();
+      const { asFragment } = render(<ArticleTitleResolved />);
+      fragment = asFragment();
     });
 
     afterAll(async () => {
@@ -186,9 +190,9 @@ describe("ArticleTitle", () => {
     });
 
     // TODO: FIX
-    // it("matches the snapshot", () => {
-    //   expect(fragment).toMatchSnapshot();
-    // });
+    it("matches the snapshot", () => {
+      expect(fragment).toMatchSnapshot();
+    });
   });
 
   describe("User off", () => {

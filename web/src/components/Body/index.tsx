@@ -31,7 +31,7 @@ const StaticBody = async ({ children }: { children: React.ReactNode }) => {
       <main
         id="stc-main"
         data-testid="stc-main"
-        className="flex flex-col flex-1"
+        className="flex-1 flex flex-col"
       >
         {children}
       </main>

@@ -155,10 +155,10 @@ const Editor = ({
             </button>
             <button
               type="submit"
-              className={`shrink-0 w-28 rounded px-3 transition-colors duration-200 ${
+              className={`shrink-0 w-28 rounded px-3 border transition-colors duration-200 ${
                 editor.isEmpty
-                  ? "bg-[#747474] text-[#b3b3b3]"
-                  : "bg-blog-background-2 border border-blog-border text-blog-foreground-highlight hover:text-blog-foreground-readable-hover hover:bg-blog-border"
+                  ? "bg-[#3a3a3a] text-[#919191] border-[#646464]"
+                  : "bg-blog-background-2 border-blog-border text-blog-foreground-highlight hover:text-blog-foreground-readable-hover hover:bg-blog-border"
               }`}
               disabled={editor.isEmpty}
             >

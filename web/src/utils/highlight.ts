@@ -21,7 +21,6 @@ const highlightPreBlocks = (htmlContent: string, highlighter: Highlighter) => {
 
       const highlightedCode = highlighter.codeToHtml(decodedHtml, {
         theme: "blog-theme",
-        // theme: "github-dark",
         lang: language,
         transformers: [
           transformerNotationHighlight({

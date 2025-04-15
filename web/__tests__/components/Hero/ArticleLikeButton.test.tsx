@@ -11,7 +11,6 @@ import {
   createAuthenticatedUser,
   unauthorizedUserMock,
 } from "../../../__mocks__/mockUser";
-// import { randomInt } from "../../../__mocks__/utilities/randomInt";
 
 faker.seed(1);
 
@@ -65,6 +64,11 @@ jest.mock("../../../src/lib/graphQlClient", () => ({
       },
     }),
   },
+}));
+
+jest.mock("../../../src/service/articles", () => ({
+  likeArticle: jest.fn().mockResolvedValue({ data: "mock-like-id" }),
+  dislikeArticle: jest.fn().mockResolvedValue({}),
 }));
 
 describe("ArticleLikeButton", () => {
@@ -147,7 +151,9 @@ describe("ArticleLikeButton", () => {
         expect(likeButton).toHaveTextContent(`${length} like`);
         expect(likeButton).toHaveAttribute("aria-pressed", "false");
         expect(likeButton).toHaveAttribute("aria-label", "Curtir artigo");
-        expect(thumbsUpIcon).toHaveClass("fill-blog-foreground-readable");
+        expect(thumbsUpIcon).toHaveClass(
+          "stroke-blog-foreground-readable fill-transparent"
+        );
         // User likes the article
         fireEvent.click(likeButton);
         await waitFor(() =>
@@ -158,7 +164,9 @@ describe("ArticleLikeButton", () => {
           "aria-label",
           "Remover curtida do artigo"
         );
-        expect(thumbsUpIcon).toHaveClass("fill-blog-foreground-highlight");
+        expect(thumbsUpIcon).toHaveClass(
+          "stroke-blog-foreground-highlight fill-blog-foreground-highlight"
+        );
         // User dislikes the article
         fireEvent.click(likeButton);
         await waitFor(() =>
@@ -166,7 +174,9 @@ describe("ArticleLikeButton", () => {
         );
         expect(likeButton).toHaveAttribute("aria-pressed", "false");
         expect(likeButton).toHaveAttribute("aria-label", "Curtir artigo");
-        expect(thumbsUpIcon).toHaveClass("fill-blog-foreground-readable");
+        expect(thumbsUpIcon).toHaveClass(
+          "stroke-blog-foreground-readable fill-transparent"
+        );
       });
     });
 
@@ -177,7 +187,7 @@ describe("ArticleLikeButton", () => {
           totalLikes={totalLikesMock}
         />
       );
-      expect(asFragment()).toMatchSnapshot();
+      await act(async () => expect(asFragment()).toMatchSnapshot());
     });
   });
 
@@ -202,7 +212,7 @@ describe("ArticleLikeButton", () => {
           totalLikes={totalLikesMock}
         />
       );
-      expect(asFragment()).toMatchSnapshot();
+      await act(async () => expect(asFragment()).toMatchSnapshot());
     });
   });
 });

@@ -1,10 +1,9 @@
 import { axe } from "jest-axe";
 import { toHaveNoViolations } from "jest-axe";
 import { act, render, screen, waitFor } from "@testing-library/react";
-import Footer from "../../src/components/Footer";
-import React from "react";
 import { resolvedComponent } from "../../__mocks__/utilities/resolvedComponent";
-import { getAbout } from "@/service/about";
+import { getAbout } from "../../src/service/about";
+import Footer from "../../src/components/Footer";
 
 jest.mock("../../src/service/about", () => ({
   getAbout: jest.fn(),
@@ -81,7 +80,6 @@ describe("Footer", () => {
     returnMock();
     const FooterResolved = await resolvedComponent(Footer);
     const { container } = render(<FooterResolved />);
-    // Either act or waitFor are necessary here because of changing of states
     await act(async () => {
       const results = await axe(container);
       expect.extend(toHaveNoViolations);

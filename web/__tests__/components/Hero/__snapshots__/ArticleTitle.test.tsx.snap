@@ -1,0 +1,333 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ArticleTitle User on matches the snapshot 1`] = `
+<DocumentFragment>
+  <section
+    aria-labelledby="hat-header"
+    class="flex items-center min-h-[30rem] py-8 mb-4 border-y border-blog-border bg-blog-background-2"
+    data-testid="hat-main-container"
+    id="hat-main-container"
+    role="region"
+  >
+    <div
+      class="h-full grid grid-cols-article max-lg:grid-cols-article-800 mx-auto items-center max-w-screen-2xl"
+      data-testid="hat-grid-container"
+      id="hat-grid-container"
+    >
+      <div
+        class="col-start-2 max-lg:col-start-1 ml-8 mr-4 max-lg:ml-4"
+        data-testid="hat-grid-item"
+        id="hat-grid-item"
+      >
+        <nav
+          aria-label="breadcrumb"
+          class="mb-4"
+          data-testid="breadcrumb"
+          id="breadcrumb"
+        >
+          <ol
+            class="flex flex-wrap items-center gap-1.5 break-words text-sm sm:gap-2.5 text-blog-foreground-readable"
+          >
+            <li
+              class="inline-flex items-center gap-1.5"
+            >
+              <a
+                class="transition-colors duration-500 text-blog-foreground-readable hover:text-blog-foreground-readable-hover [&_a]:hover:text-blog-foreground-readable-hover"
+                data-testid="breadcrumb-home"
+                href="/"
+                id="breadcrumb-home"
+              >
+                Home
+              </a>
+            </li>
+            <li
+              aria-hidden="true"
+              class="[&>svg]:w-3.5 [&>svg]:h-3.5"
+              role="presentation"
+            >
+              <svg
+                class="lucide lucide-slash"
+                fill="none"
+                height="24"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M22 2 2 22"
+                />
+              </svg>
+            </li>
+            <li
+              class="inline-flex items-center gap-1.5"
+            >
+              <a
+                class="transition-colors duration-500 text-blog-foreground-readable hover:text-blog-foreground-readable-hover [&_a]:hover:text-blog-foreground-readable-hover"
+                data-testid="breadcrumb-article"
+                href="/artigos"
+                id="breadcrumb-article"
+              >
+                Artigos
+              </a>
+            </li>
+            <li
+              aria-hidden="true"
+              class="[&>svg]:w-3.5 [&>svg]:h-3.5"
+              role="presentation"
+            >
+              <svg
+                class="lucide lucide-slash"
+                fill="none"
+                height="24"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M22 2 2 22"
+                />
+              </svg>
+            </li>
+            <span
+              aria-current="page"
+              aria-disabled="true"
+              class="font-normal"
+              role="link"
+            >
+              <a
+                class="transition-colors duration-500 text-blog-foreground-readable hover:text-blog-foreground-readable-hover [&_a]:hover:text-blog-foreground-readable-hover"
+                data-testid="breadcrumb-article-topic"
+                href="/artigos?topic=adficio"
+                id="breadcrumb-article-topic"
+              >
+                adficio
+              </a>
+            </span>
+            <li
+              aria-hidden="true"
+              class="[&>svg]:w-3.5 [&>svg]:h-3.5"
+              role="presentation"
+            >
+              <svg
+                class="lucide lucide-slash"
+                fill="none"
+                height="24"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M22 2 2 22"
+                />
+              </svg>
+            </li>
+            <li
+              class="inline-flex items-center gap-1.5"
+            >
+              <span
+                aria-current="page"
+                aria-disabled="true"
+                class="font-normal relative text-blog-foreground-highlight after:absolute after:top-[calc(100%_+_4px)] after:left-0 after:w-full after:h-0.5 after:rounded-full after:bg-gradient-to-r after:from-transparent after:to-blog-foreground-highlight"
+                data-testid="breadcrumb-article-title"
+                id="breadcrumb-article-title"
+                role="link"
+              >
+                Subseco tergum acerbitas nesciunt ab dolorum.
+              </span>
+            </li>
+          </ol>
+        </nav>
+        <div
+          class="blog-heading blog-center-content flex flex-col gap-4"
+          data-testid="hat-content-container"
+          id="hat-content-container"
+        >
+          <h1
+            class="leading-[4rem] font-extrabold break-words"
+            data-testid="hat-header"
+            id="hat-header"
+          >
+            Subseco tergum acerbitas nesciunt ab dolorum.
+          </h1>
+          <p
+            class="text-2xl break-words text-[#808080]"
+            data-testid="hat-description"
+            id="hat-description"
+          >
+            Voro caute thorax usus vesco abbas delinquo vomica cubitum torqueo in tepidus deorsum adamo aiunt amoveo casso vobis ratione totam maxime rem tonsor.
+          </p>
+          <div
+            class="flex flex-wrap items-center gap-8"
+            data-testid="hat-footer"
+            id="hat-footer"
+          >
+            <div
+              class="flex items-center gap-2"
+              data-testid="author-container"
+              id="author-container"
+            >
+              <a
+                class="group"
+                data-testid="author-avatar-link"
+                href="/sobre"
+                id="author-avatar-link"
+              >
+                <div
+                  class="relative flex size-10 shrink-0 rounded-full overflow-hidden"
+                  data-testid="author-avatar-container"
+                  id="author-avatar-container"
+                >
+                  <img
+                    alt="Consectetur tergiversatio atrocitas apto benevolentia sortitus."
+                    class="transition-all duration-500 absolute object-cover group-hover:brightness-50"
+                    data-nimg="fill"
+                    data-testid="author-avatar-image"
+                    decoding="async"
+                    id="author-avatar-image"
+                    loading="lazy"
+                    sizes="(max-width: 40px) 100vw"
+                    src="/_next/image?url=http%3A%2F%2F127.0.0.1%3A1337%2Fveg%2Fblah%2Fdeliquesce%2Foften_gladly_linear.png&w=3840&q=75"
+                    srcset="/_next/image?url=http%3A%2F%2F127.0.0.1%3A1337%2Fveg%2Fblah%2Fdeliquesce%2Foften_gladly_linear.png&w=640&q=75 640w, /_next/image?url=http%3A%2F%2F127.0.0.1%3A1337%2Fveg%2Fblah%2Fdeliquesce%2Foften_gladly_linear.png&w=750&q=75 750w, /_next/image?url=http%3A%2F%2F127.0.0.1%3A1337%2Fveg%2Fblah%2Fdeliquesce%2Foften_gladly_linear.png&w=828&q=75 828w, /_next/image?url=http%3A%2F%2F127.0.0.1%3A1337%2Fveg%2Fblah%2Fdeliquesce%2Foften_gladly_linear.png&w=1080&q=75 1080w, /_next/image?url=http%3A%2F%2F127.0.0.1%3A1337%2Fveg%2Fblah%2Fdeliquesce%2Foften_gladly_linear.png&w=1200&q=75 1200w, /_next/image?url=http%3A%2F%2F127.0.0.1%3A1337%2Fveg%2Fblah%2Fdeliquesce%2Foften_gladly_linear.png&w=1920&q=75 1920w, /_next/image?url=http%3A%2F%2F127.0.0.1%3A1337%2Fveg%2Fblah%2Fdeliquesce%2Foften_gladly_linear.png&w=2048&q=75 2048w, /_next/image?url=http%3A%2F%2F127.0.0.1%3A1337%2Fveg%2Fblah%2Fdeliquesce%2Foften_gladly_linear.png&w=3840&q=75 3840w"
+                    style="position: absolute; height: 100%; width: 100%; left: 0px; top: 0px; right: 0px; bottom: 0px; color: transparent;"
+                  />
+                </div>
+              </a>
+              <a
+                data-testid="author-username-link"
+                href="/sobre"
+                id="author-username-link"
+              >
+                <p
+                  class="transition-colors duration-500 text-blog-foreground-highlight hover:text-blog-foreground-readable-hover"
+                >
+                  <strong>
+                    @Dejuan
+                  </strong>
+                </p>
+              </a>
+            </div>
+            <div
+              class="flex items-center gap-4"
+              data-testid="hat-iso-date"
+              id="hat-iso-date"
+            >
+              <svg
+                class="lucide lucide-clock size-6 stroke-blog-foreground-readable"
+                fill="none"
+                height="24"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <circle
+                  cx="12"
+                  cy="12"
+                  r="10"
+                />
+                <polyline
+                  points="12 6 12 12 16 14"
+                />
+              </svg>
+              <div
+                class="flex flex-col justify-center"
+              >
+                <p
+                  class="text-base"
+                >
+                  <small>
+                    Criado: 
+                    <time
+                      datetime="2025-03-20T01:42:30.824Z"
+                    >
+                      19 de março de 2025, às 22:42
+                    </time>
+                  </small>
+                </p>
+              </div>
+            </div>
+            <a
+              aria-label="Ir para a seção de comentários (3 comentários)"
+              class="flex items-center gap-4"
+              data-testid="hat-link-to-comment-session"
+              href="#comment-session-header"
+              id="hat-link-to-comment-session"
+            >
+              <svg
+                class="lucide lucide-message-circle size-6"
+                fill="none"
+                height="24"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"
+                />
+              </svg>
+              <p>
+                3 comentários
+              </p>
+            </a>
+            <div
+              class="flex items-center gap-4"
+              data-testid="halb-user"
+              id="halb-user"
+            >
+              <button
+                aria-label="Curtir artigo"
+                aria-pressed="false"
+                class="flex items-center gap-2"
+                data-testid="halb-button"
+                id="halb-button"
+                type="button"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="lucide lucide-heart-icon lucide-heart size-6 text-transparent stroke-blog-foreground-readable fill-transparent"
+                  data-testid="halb-icon-active"
+                  fill="none"
+                  height="24"
+                  id="halb-icon-active"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  width="24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"
+                  />
+                </svg>
+                <p>
+                  1 like
+                </p>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</DocumentFragment>
+`;

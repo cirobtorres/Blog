@@ -2,6 +2,7 @@ import { createHighlighter, type Highlighter } from "shiki";
 
 const blogTheme = {
   name: "blog-theme",
+  displayName: "Blog Theme",
   colors: {
     "editor.background": "var(--blog-pre)",
   },
@@ -22,7 +23,6 @@ const blogTheme = {
       scope: [
         "support.class",
         "support.type",
-        "entity.name.type",
         "entity.name.namespace",
         "entity.other.attribute",
         "entity.name.scope-resolution",
@@ -65,7 +65,12 @@ const blogTheme = {
       },
     },
     {
-      scope: ["string", "string.quoted.single", "string.quoted.double"],
+      scope: [
+        // "string",
+        "string.quoted.template.js",
+        "string.quoted.single",
+        "string.quoted.double",
+      ],
       settings: { foreground: "hsl(var(--blog-code-string))" },
     },
     {
@@ -157,16 +162,15 @@ const blogTheme = {
     },
     {
       scope: [
+        "meta.object-literal.key", // Colors entire query string content
         "constant.other.placeholder",
         "entity.name.variable",
         "meta.definition.variable.name",
-        "meta.object-literal.key",
         "meta.structure.dictionary.key.python",
         "source.coffee.embedded",
         "support.function.git-rebase",
         "support.type.vendored.property-name",
         "support.variable",
-        "constant.numeric",
         // "constant.other", // Alters the color of numbers in regex
       ],
       settings: {
@@ -183,6 +187,13 @@ const blogTheme = {
         "entity.name.tag.less", // CSS tags
         "entity.name.tag.css", // CSS tags
         "entity.name.tag.scss", // CSS tags
+        "source.js.embedded.expression.template",
+        "punctuation.section.group.begin.js", // Parentheses inside query strings
+        "punctuation.section.group.end.js", // Parentheses inside query strings
+        "punctuation.section.group.begin.ts", // Parentheses inside query strings
+        "punctuation.section.group.end.ts", // Parentheses inside query strings
+        "meta.brace.round.js", // Parentheses inside query strings
+        "meta.brace.round.ts", // Parentheses inside query strings
       ],
       settings: {
         foreground: "hsl(var(--blog-code-readable))",
@@ -199,8 +210,6 @@ const blogTheme = {
         "source.powershell variable.other.member",
         "support.constant.handlebars",
         "support.function",
-        "entity.name.tag.jsx",
-        "entity.name.tag.tsx",
         "keyword.operator.jsx",
       ],
       settings: {
@@ -217,20 +226,21 @@ const blogTheme = {
     },
     {
       scope: [
+        "constant.numeric",
+        "punctuation.section.embedded.begin.jsx",
         "punctuation.section.embedded.begin.tsx",
+        "punctuation.section.embedded.end.jsx",
         "punctuation.section.embedded.end.tsx",
         "variable.other.constant.tsx",
-        "punctuation.section.embedded.begin.jsx",
-        "punctuation.section.embedded.end.jsx",
         "variable.parameter",
+        "entity.name.tag",
+        "entity.name.tag.jsx",
+        "entity.name.tag.tsx",
+        "entity.name.type", // React opening tag
       ],
       settings: {
         foreground: "hsl(var(--blog-code-parameter))",
       },
-    },
-    {
-      scope: [],
-      settings: {},
     },
   ],
 };
@@ -242,7 +252,6 @@ const getHighlighter = async () => {
     // Creating a new highlighter instance
     highlighter = await createHighlighter({
       themes: [blogTheme],
-      // themes: ["github-dark"],
       langs: [
         "html",
         "css",

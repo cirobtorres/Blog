@@ -1,12 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import { useParams } from "next/navigation";
 import { Popover } from "@/components/Shadcnui/popover";
 import { PopoverTrigger } from "@radix-ui/react-popover";
-import { ThumbsUp } from "lucide-react";
-import PopoverLoginContent from "@/components/Authentication/PopoverLoginContent";
 import { dislikeArticle, likeArticle } from "../../../../service/articles";
-import { useParams } from "next/navigation";
+import PopoverLoginContent from "@/components/Authentication/PopoverLoginContent";
 
 function ArticleLikeButton({
   currentUser,
@@ -125,16 +124,26 @@ function ArticleLikeButton({
           aria-label={buttonAriaLabel}
           className="flex items-center gap-2"
         >
-          <ThumbsUp
+          <svg
             id="halb-icon-active"
             data-testid="halb-icon-active"
-            className={`size-6 text-transparent ${
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className={`lucide lucide-heart-icon lucide-heart size-6 text-transparent ${
               hasLiked
-                ? "fill-blog-foreground-highlight"
-                : "fill-blog-foreground-readable"
+                ? "stroke-blog-foreground-highlight fill-blog-foreground-highlight"
+                : "stroke-blog-foreground-readable fill-transparent"
             }`}
             aria-hidden="true"
-          />
+          >
+            <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+          </svg>
           <p>{formatLikeCount(likeCount.length)}</p>
         </button>
       </div>
@@ -146,12 +155,22 @@ function ArticleLikeButton({
     <div id="halb" data-testid="halb" className="flex items-center gap-4">
       <Popover>
         <PopoverTrigger className="flex items-center gap-2">
-          <ThumbsUp
+          <svg
             id="halb-icon"
             data-testid="halb-icon"
-            className="size-6"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="lucide lucide-heart-icon lucide-heart size-6 stroke-blog-foreground-readable fill-transparent"
             aria-hidden="true"
-          />
+          >
+            <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+          </svg>
           <p>{formatLikeCount(likeCount.length)}</p>
         </PopoverTrigger>
         <PopoverLoginContent align="center" />

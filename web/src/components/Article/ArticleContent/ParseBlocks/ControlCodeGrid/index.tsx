@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -51,13 +52,25 @@ const CodeBlock = ({
     }
   }, [htmlToRender]);
 
-  return htmlToRender.split("\n").length > 70 ? (
-    <div className="w-full relative inline-grid">
-      <ExpandableCodeBlock collapse={collapse} code={highlightedCode} />
-      <CollapseCodeButton collapse={collapse} updateCollapse={updateCollapse} />
-    </div>
-  ) : (
-    <NonExapandableCodeBlock code={highlightedCode} />
+  // return htmlToRender.split("\n").length > 70 ? (
+  //   <div className="w-full relative inline-grid">
+  //     <ExpandableCodeBlock collapse={collapse} code={highlightedCode} />
+  //     <CollapseCodeButton collapse={collapse} updateCollapse={updateCollapse} />
+  //   </div>
+  // ) : (
+  //   <NonExapandableCodeBlock code={highlightedCode} />
+  // );
+  return <FullCodeBlock code={highlightedCode} />;
+};
+
+const FullCodeBlock = ({ code }: { code: string }) => {
+  return (
+    <div
+      dangerouslySetInnerHTML={{
+        __html: code,
+      }}
+      className={`blog-code [&_pre]:scrollbar [&_pre]:overflow-y-auto [&_code]:py-1`}
+    />
   );
 };
 
@@ -82,7 +95,6 @@ const ExpandableCodeBlock = ({
           collapse
             ? "grid-rows-1 [&_pre]:overflow-y-auto"
             : `grid-rows-[150px] [&_pre]:overflow-y-hidden`
-          // + `before:absolute before:left-0 before:right-0 before:bottom-0 before:h-20 before:z-10 before:opacity-90 before:bg-blog-fade-dot-down` // Fade out effect
         }`
       }
     />

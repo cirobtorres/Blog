@@ -18,7 +18,6 @@ describe("createHighlight", () => {
     const highlighter = await getHighlighter();
     expect(createHighlighter).toHaveBeenCalledWith({
       themes: [blogTheme],
-      // themes: ["github-dark"],
       langs: [
         "html",
         "css",

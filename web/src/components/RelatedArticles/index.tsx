@@ -7,33 +7,53 @@ const RelatedArticles = async () => {
     pageSize: 5,
   });
   return (
-    <section
-      id="rel-art-container"
-      data-testid="rel-art-container"
-      className="border-y border-blog-border bg-blog-background-3 py-8 flex flex-col justify-center"
-    >
-      <div className="w-full max-w-screen-lg mx-auto mb-8 grid grid-cols-1">
-        <div className="text-center blog-heading col-start-1 px-8 max-lg:px-4">
-          <h2>Artigos relacionados</h2>
+    articles.length > 0 && (
+      <section
+        id="ra-container" // related-article
+        data-testid="ra-container" // related-article
+        className={
+          `flex flex-col justify-center` +
+          ` border-y border-blog-border` +
+          ` bg-blog-background-3` +
+          ` py-8`
+        }
+      >
+        <div className="w-full max-w-screen-lg grid grid-cols-1 mx-auto mb-8">
+          <div className="blog-heading text-center col-start-1 max-lg:px-4 px-8">
+            <h2>Artigos relacionados</h2>
+          </div>
         </div>
-      </div>
-      <div className="max-w-screen-lg mx-auto grid grid-cols-1">
-        <div>
-          <Carousel opts={{ loop: true, dragFree: true }}>
-            <CarouselContent className="mx-1">
-              {articles.map((article) => (
-                <CarouselItem
-                  key={article.documentId}
-                  className="p-2 my-2 max-w-96 rounded-lg transition-shadow duration-500 hover:shadow-blog-highlight group"
-                >
-                  <ArticleCard article={article} />
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-          </Carousel>
+        <div
+          id="rac-container" // related-article-carousel
+          data-testid="rac-container" // related-article-carousel
+          className="grid grid-cols-1 max-w-screen-lg mx-auto"
+        >
+          <div>
+            <Carousel opts={{ loop: true, dragFree: true }}>
+              <CarouselContent className="mx-1">
+                {articles.map((article) => (
+                  <CarouselItem
+                    id={`rac-item-${article.documentId}`} // related-article-carousel
+                    data-testid={`rac-item-${article.documentId}`} // related-article-carousel
+                    key={article.documentId}
+                    className={
+                      `max-w-96` +
+                      ` transition-shadow duration-500` +
+                      ` hover:shadow-blog-highlight` +
+                      ` rounded-lg` +
+                      ` p-2 my-2` +
+                      ` group`
+                    }
+                  >
+                    <ArticleCard article={article} />
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+            </Carousel>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    )
   );
 };
 
