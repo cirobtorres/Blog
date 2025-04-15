@@ -23,8 +23,16 @@ const Thumb = (props: {
         className="relative w-full h-full flex-[0_0_100%] flex justify-center items-center border-0 p-0 m-0 cursor-pointer appearance-none [-webkit-appearance:none] touch-manipulation bg-transparent"
       >
         <Image
-          src={`http://127.0.0.1:1337${file.url}`}
-          alt={file.alternativeText}
+          src={
+            file.url
+              ? process.env.NEXT_PUBLIC_BACKEND_IP + file.url
+              : "https://placehold.co/256x256/171717/FFFFFF/png"
+          }
+          alt={
+            file.alternativeText
+              ? file.alternativeText
+              : `Imagem de nº ${file.documentId}`
+          }
           fill
           sizes={`(max-width: ${file.width}) 100vw, (max-width: ${
             file.width / 2
@@ -82,8 +90,16 @@ const SliderCarousel = ({
             >
               <div className="relative w-full h-[400px]">
                 <Image
-                  src={`http://127.0.0.1:1337${file.url}`}
-                  alt={file.alternativeText}
+                  src={
+                    file.url
+                      ? process.env.NEXT_PUBLIC_BACKEND_IP + file.url
+                      : "https://placehold.co/1920x1080/171717/FFFFFF/png"
+                  }
+                  alt={
+                    file.alternativeText
+                      ? file.alternativeText
+                      : `Imagem de nº ${file.documentId}`
+                  }
                   fill
                   sizes={`(max-width: ${file.width}) 100vw, (max-width: ${
                     file.width / 2

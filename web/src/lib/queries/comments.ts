@@ -34,6 +34,34 @@ query Nodes($pagination: PaginationArg, $filters: CommentFiltersInput, $sort: [S
   }
 }`;
 
+const GET_COMMENT = `
+query GetComment($documentId: ID!) {
+  comment(documentId: $documentId) {
+    documentId
+    body
+    createdAt
+    updatedAt
+    parent_id {
+      documentId
+    }
+    comment_likes {
+      documentId
+      users_permissions_user {
+        documentId
+      }
+    }
+    users_permissions_user {
+      documentId
+      confirmed
+      blocked
+      username
+    }
+    comments {
+      documentId
+    }
+  }
+}`;
+
 const POST_COMMENT = `
 mutation CreateComment($data: CommentInput!) {
   createComment(data: $data) {
@@ -135,6 +163,7 @@ mutation DeleteCommentLike($documentId: ID!) {
 
 export {
   GET_COMMENTS,
+  GET_COMMENT,
   POST_COMMENT,
   UPDATE_COMMENT,
   DELETE_COMMENT,

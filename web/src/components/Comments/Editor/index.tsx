@@ -8,7 +8,8 @@ import Text from "@tiptap/extension-text";
 import CharacterCount from "@tiptap/extension-character-count";
 import PopoverLoginContent from "@/components/Authentication/PopoverLoginContent";
 
-const limit = 255;
+const limit = 512;
+const textSelectionLimit = 9999; // Always keep textSelectionLimit way higher than limit
 
 const Editor = ({
   currentUser,
@@ -118,7 +119,7 @@ const Editor = ({
                 // The character limit does not take into account the HTML tags.
                 // For example: Hello World is actually <p>Hello World</p> (18 characters, not 11)
                 // So the real textSelection length is always higher than the actual allowed character limit number.
-                .setTextSelection(limit * 10)
+                .setTextSelection(textSelectionLimit)
                 .run();
             }}
             className="relative text-left w-full h-full text-sm [scrollbar-width:none] [-ms-overflow-style:none] pb-2 group"
@@ -131,10 +132,10 @@ const Editor = ({
       </Popover>
       <div className="h-8 flex shrink-0 mt-2">
         <div className="flex-1 flex items-center gap-4">
-          <p className="text-sm">
+          <p className="text-sm text-[#808080]">
             Caracteres: {editor.storage.characterCount.characters()} / {limit}
           </p>
-          <p className="text-sm">
+          <p className="text-sm text-[#808080]">
             Palavras: {editor.storage.characterCount.words()}
           </p>
         </div>
@@ -142,7 +143,7 @@ const Editor = ({
           <div className="flex gap-1">
             <button
               type="button"
-              className="shrink-0 w-28 rounded-2xl px-3 border border-blog-border text-blog-foreground-readable"
+              className="shrink-0 w-28 rounded px-3 transition-colors duration-200 border border-blog-border text-blog-foreground-readable hover:text-blog-foreground-readable-hover hover:bg-blog-border"
               onClick={() => {
                 editor.commands.clearContent();
                 editor.commands.blur();
@@ -154,10 +155,10 @@ const Editor = ({
             </button>
             <button
               type="submit"
-              className={`shrink-0 w-28 rounded-2xl px-3 ${
+              className={`shrink-0 w-28 rounded px-3 transition-colors duration-200 ${
                 editor.isEmpty
                   ? "bg-[#747474] text-[#b3b3b3]"
-                  : "bg-blog-foreground-highlight hover:bg-[hsl(30,93%,71%)] text-blog-background-3"
+                  : "bg-blog-background-2 border border-blog-border text-blog-foreground-highlight hover:text-blog-foreground-readable-hover hover:bg-blog-border"
               }`}
               disabled={editor.isEmpty}
             >

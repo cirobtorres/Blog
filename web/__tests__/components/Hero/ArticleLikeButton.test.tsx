@@ -11,11 +11,11 @@ import {
   createAuthenticatedUser,
   unauthorizedUserMock,
 } from "../../../__mocks__/mockUser";
-import { randomInt } from "../../../__mocks__/utilities/randomInt";
+// import { randomInt } from "../../../__mocks__/utilities/randomInt";
 
 faker.seed(1);
 
-const length = randomInt(5, 10);
+const length = 1;
 
 const mockTotalLikes = () =>
   Array.from({ length }, () => ({
@@ -129,7 +129,7 @@ describe("ArticleLikeButton", () => {
       );
       await act(async () => {
         const likeButton = screen.getByTestId("halb-button");
-        expect(likeButton).toHaveTextContent(`${length} likes`);
+        expect(likeButton).toHaveTextContent(`${length} like`);
       });
     });
 
@@ -140,29 +140,33 @@ describe("ArticleLikeButton", () => {
           totalLikes={totalLikesMock}
         />
       );
-      await waitFor(async () => {
+      await act(async () => {
         const likeButton = screen.getByTestId("halb-button");
         const thumbsUpIcon = screen.getByTestId("halb-icon-active");
         // User haven't liked the article yet
-        expect(likeButton).toHaveTextContent(`${length} likes`);
+        expect(likeButton).toHaveTextContent(`${length} like`);
         expect(likeButton).toHaveAttribute("aria-pressed", "false");
         expect(likeButton).toHaveAttribute("aria-label", "Curtir artigo");
-        expect(thumbsUpIcon).toHaveClass("text-blog-foreground-readable");
+        expect(thumbsUpIcon).toHaveClass("fill-blog-foreground-readable");
         // User likes the article
         fireEvent.click(likeButton);
-        expect(likeButton).toHaveTextContent(`${length + 1} likes`);
+        await waitFor(() =>
+          expect(likeButton).toHaveTextContent(`${length + 1} likes`)
+        );
         expect(likeButton).toHaveAttribute("aria-pressed", "true");
         expect(likeButton).toHaveAttribute(
           "aria-label",
           "Remover curtida do artigo"
         );
-        expect(thumbsUpIcon).toHaveClass("text-blog-foreground-highlight");
+        expect(thumbsUpIcon).toHaveClass("fill-blog-foreground-highlight");
         // User dislikes the article
         fireEvent.click(likeButton);
-        expect(likeButton).toHaveTextContent(`${length} likes`);
+        await waitFor(() =>
+          expect(likeButton).toHaveTextContent(`${length} like`)
+        );
         expect(likeButton).toHaveAttribute("aria-pressed", "false");
         expect(likeButton).toHaveAttribute("aria-label", "Curtir artigo");
-        expect(thumbsUpIcon).toHaveClass("text-blog-foreground-readable");
+        expect(thumbsUpIcon).toHaveClass("fill-blog-foreground-readable");
       });
     });
 

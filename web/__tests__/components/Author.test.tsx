@@ -1,3 +1,4 @@
+import "@testing-library/jest-dom";
 import { faker } from "@faker-js/faker";
 import { createAuthorMock } from "../../__mocks__/mockAuthor";
 import { requestBackEndImage } from "../../__mocks__/utilities/mountNextImage";
@@ -26,6 +27,10 @@ const authorMock = createAuthorMock() as AuthorHasAvatar;
 const authorMockNoAvatar = createAuthorMock(false) as AuthorHasNoAvatar;
 
 describe("Author (has avatar)", () => {
+  beforeEach(() => {
+    process.env.NEXT_PUBLIC_BACKEND_IP = "http://127.0.0.1:1337";
+  });
+
   it("renders author-container component", () => {
     render(<Author author={authorMock} />);
     const mainContainer = screen.getByTestId("author-container");

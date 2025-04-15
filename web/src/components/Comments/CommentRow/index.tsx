@@ -2,6 +2,7 @@ import { useParams } from "next/navigation";
 import { Dispatch, SetStateAction, useState } from "react";
 import {
   clientCountComments,
+  clientGetComment,
   clientGetComments,
   clientSaveComment,
   clientUpdateComment,
@@ -10,15 +11,15 @@ import {
 } from "../../../service/comments/client";
 import { useComment } from "../../../hooks/useComment";
 import { toast } from "../../../hooks/useToast";
-import Image from "next/image";
+import { Avatar, CommentAvatar } from "../Avatar";
+import { CommentLoadingSpinning } from "../CommentLoading";
 import CommentHeader from "./CommentHeader";
 import CommentBody from "./CommentBody";
 import CommentFooter from "./CommentFooter";
 import CommentOptions from "./CommentOptions";
-import Avatar from "../Avatar";
 import Editor from "../Editor";
-import LoadMoreButton from "../LoadMoreButton";
-import { CommentLoadingSpinning } from "../CommentLoading";
+import HiddenReplies from "./HiddenReplies";
+import ShowRepliesButton from "./ShowRepliesButton";
 
 const CommentRow = ({
   comment,
@@ -73,6 +74,9 @@ const CommentRow = ({
   const [childs, setChilds] = useState<CommentProps[]>([]);
   const [totalChilds, setTotalChilds] = useState<number>(0);
 
+  // childsOnDb controls whether "Carregar Mais" button is visible or not.
+  const [childsOnDb, setChildsOnDb] = useState(false);
+
   const { loading } = useAsync(async () => {
     if (page === 0) return;
     // Array Destructuring
@@ -106,23 +110,24 @@ const CommentRow = ({
 
     // setTotalChilds stores this total in a state.
     setTotalChilds(total);
+    setChildsOnDb(totalChilds > childs.length);
   }, [page]);
 
-  // Accessing Context---------------------------------------------------------------------
-  const commentContext = useComment();
+  // Temporary Childs----------------------------------------------------------------------
   const [temporaryChilds, setTemporaryChilds] = useState<CommentProps[]>([]);
   const [current, setCurrent] = useState(false);
 
-  // childPageLength controls whether "Carregar Mais" button is visible or not.
-  const childPageLength = totalChilds > childs.length + temporaryChilds.length;
-
-  // Create--------------------------------------------------------------------------------
+  // Accessing Context---------------------------------------------------------------------
+  const commentContext = useComment();
   const createReplyFn = useAsyncFn(clientSaveComment, [], false);
+  const [createReplyFnLoading, setCreateReplyFnLoading] = useState(false);
   const updateCommentFn = useAsyncFn(clientUpdateComment, [], false);
   const updateLocalComment = commentContext?.updateLocalComment;
   const createLocalReply = commentContext?.createLocalReply;
 
+  // Create--------------------------------------------------------------------------------
   async function onReplyCreate(body: string) {
+    setCreateReplyFnLoading(true);
     return createReplyFn
       .execute({
         documentId, // Article's document id
@@ -130,24 +135,25 @@ const CommentRow = ({
         userId: currentUser.data?.documentId,
         parentId: currentComment.documentId, // This comment's document id
       })
-      .then((comment) => {
+      .then(async (comment) => {
         setIsReplying(false);
-        setChilds((prevChilds) => [...prevChilds, comment as CommentProps]);
-        if (!currentComment.parent_id) {
-          setCurrent(true);
-          if (areChildrenHidden)
-            setTemporaryChilds((prevChilds) => [
-              ...prevChilds,
-              comment as CommentProps,
-            ]);
-        }
         createLocalReply(comment as CommentProps);
+        const { data: newComment } = await clientGetComment({
+          documentId: (comment as CommentProps).documentId,
+        });
+        setCurrent(true);
+        if (areChildrenHidden)
+          setTemporaryChilds((prevChilds) => [...prevChilds, newComment]);
+        setChilds((prevChilds) => [...prevChilds, newComment as CommentProps]);
+      })
+      .then(() => {
         toast({ description: "Comentário criado!" });
       })
       .catch((error) => {
         console.error(error);
         toast({ description: "Erro ao criar comentário" });
-      });
+      })
+      .finally(() => setCreateReplyFnLoading(false));
   }
 
   // Update--------------------------------------------------------------------------------
@@ -171,22 +177,18 @@ const CommentRow = ({
 
   /*
   TODO (BUG):
+    Alterações em temporaryChilds não refletem no banco de dados. 
        - Reprodução:
         1. Crie um novo comentário;
-        2. NÃO aperte "Respostas";
-        3. Edite o comentário;
-    EXPLICAÇÃO: O comentário não será deletado. NÃO ESCONDA os comentário, 
-    pois ao trazer os comentários escondidos de volta, 
-    esses virão por meio de uma nova request ao database 
-    (não serão temporaryChilds, serão Childs). 
+        2. NÃO aperte "Respostas" (não transforme temporaryChilds em childs);
+        3. Delete o comentário (a mudança não afeta o banco de dados);
+    OBS: NÃO ESCONDA os comentário, pois ao trazer os comentários escondidos de volta, 
+    esses virão por meio de uma nova request ao database (não serão temporaryChilds, serão Childs). 
     Qualquer edição/delete ao temporaryChilds é perdido.
-    SOLUÇÃO: edições em temporaryChilds precisam ser enviadas ao database.
-  
   TODO (BUG):
-    childPageLength não funciona bem com CommentOptions (delete). 
-    A disfunção entre totalChilds e childs.length faz com que, em certas ocasiões,
-    o botão de "carregar mais" apareça (ainda que não exista comentários a serem carregados). 
-    "Respostas" e "Carregar mais" devem desaparecer quando não houver mais childs
+    HiddenReplies está aparecendo quando não deveria
+  TODO: 
+    Mudar esse nome "HiddenReplies"
   */
 
   return (
@@ -196,7 +198,7 @@ const CommentRow = ({
       className="flex flex-col"
     >
       <div className="py-4 grid grid-cols-[48px_repeat(10,_1fr)_48px]">
-        <CommentAvatar />
+        <CommentAvatar currentUser={currentUser} />
         <div className="col-span-10 flex flex-col gap-2 mt-2">
           <CommentHeader comment={currentComment} currentUser={currentUser} />
           <CommentBody
@@ -220,7 +222,6 @@ const CommentRow = ({
           setIsEditing={setIsEditing}
           setMyChilds={setMyChilds}
           setTemporaryChilds={setTemporaryChilds}
-          setTotalChilds={setTotalChilds}
         />
       </div>
       {isReplying && (
@@ -236,81 +237,32 @@ const CommentRow = ({
       )}
       {(currentComment.comments?.length > 0 || current) && (
         <div className="pl-12">
-          <button
-            onClick={handleChildComments}
-            className="flex items-center gap-2 mb-4 text-sm transition-colors duration-100 text-blog-foreground-highlight hover:text-blog-foreground-readable-hover"
-          >
-            Respostas
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="lucide lucide-chevron-down duration-100"
-              style={{ rotate: areChildrenHidden ? "0deg" : "180deg" }}
-            >
-              <path d="m6 9 6 6 6-6" />
-            </svg>
-          </button>
+          <ShowRepliesButton
+            isHidden={areChildrenHidden}
+            alternateHidden={handleChildComments}
+          />
           {loading && page === 1 && <CommentLoadingSpinning />}
-          <div
-            className={`${
-              areChildrenHidden ? "hidden" : "block"
-            } flex flex-col justify-center`}
-          >
-            {childs.map((child: CommentProps) => (
-              <CommentRow
-                key={child.documentId}
-                comment={child}
-                setMyChilds={setChilds}
-                currentUser={currentUser}
-              />
-            ))}
-            {childPageLength && (
-              <LoadMoreButton func={loadMore} loadFunc={loading} />
-            )}
-          </div>
+          <HiddenReplies
+            isHidden={areChildrenHidden}
+            currentUser={currentUser}
+            childs={childs}
+            setChilds={setChilds}
+            childsOnDb={childsOnDb}
+            loading={loading}
+            loadMore={loadMore}
+          />
+          {createReplyFnLoading && <CommentLoadingSpinning />}
           {temporaryChilds &&
             temporaryChilds.map((child) => (
               <CommentRow
                 key={child.documentId}
                 comment={child}
                 currentUser={currentUser}
+                setMyChilds={setChilds}
               />
             ))}
         </div>
       )}
-    </div>
-  );
-};
-
-const CommentAvatar = () => {
-  return (
-    <div className="col-span-1">
-      <div className="relative flex size-10 shrink-0 overflow-hidden rounded-full">
-        <Image
-          src={
-            "/images/not-authenticated.png"
-            // author.avatar
-            //   ? `http://127.0.0.1:1337${author.avatar.url}`
-            // : "/images/not-authenticated.png"
-          }
-          alt={
-            ""
-            // author.avatar
-            // ? author.avatar.alternativeText
-            // : `Avatar de ${author.name}`
-          }
-          fill
-          sizes="(max-width: 40px) 100vw"
-          className="transition-all duration-500 absolute object-cover group-hover:brightness-50"
-        />
-      </div>
     </div>
   );
 };

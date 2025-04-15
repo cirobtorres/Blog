@@ -46,6 +46,10 @@ jest.mock("../../../src/lib/graphQlClient", () => ({
 }));
 
 describe("ArticleTitle", () => {
+  beforeEach(() => {
+    process.env.NEXT_PUBLIC_BACKEND_IP = "http://127.0.0.1:1337";
+  });
+
   describe("User on", () => {
     // let fragment: DocumentFragment;
 

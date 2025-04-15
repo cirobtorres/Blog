@@ -13,6 +13,10 @@ faker.seed(5); // Snapshot
 const snapshotArticle = createArticleMock();
 
 describe("LastPublishedArticleCard", () => {
+  beforeEach(() => {
+    process.env.NEXT_PUBLIC_BACKEND_IP = "http://127.0.0.1:1337";
+  });
+
   it("renders last published article card container component", () => {
     render(<LastPublishedArticleCard article={mockArticle} />);
     const container = screen.getByTestId(

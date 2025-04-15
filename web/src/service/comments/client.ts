@@ -8,6 +8,7 @@ import {
   COUNT_COMMENTS,
   DELETE_COMMENT,
   DISLIKE_COMMENT,
+  GET_COMMENT,
   GET_COMMENTS,
   LIKE_COMMENT,
   POST_COMMENT,
@@ -146,6 +147,23 @@ export const clientGetComments = async (
     .catch((error) => {
       console.error(error);
       return Promise.reject(new Error("Failed to fetch get comments"));
+    });
+};
+
+export const clientGetComment = async ({
+  documentId,
+}: {
+  documentId: string;
+}) => {
+  return graphqlCommentClient
+    .request(GET_COMMENT, { documentId })
+    .then((res) => {
+      const { comment } = res as { comment: CommentProps };
+      return { data: comment };
+    })
+    .catch((error) => {
+      console.error(error);
+      return Promise.reject(new Error("Failed to fetch get comment"));
     });
 };
 

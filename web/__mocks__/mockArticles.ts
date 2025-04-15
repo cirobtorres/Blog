@@ -1,10 +1,12 @@
 import { faker } from "@faker-js/faker";
 import { randomInt } from "./utilities/randomInt";
 import { generateRandomCreatedAt } from "./utilities/randomISOdatetime";
-import slugify from "@/utils/slugify";
 import { createCoverMock } from "./mockCover";
 import { createAuthorMock } from "./mockAuthor";
 import { mockTopic } from "./mockTopic";
+import { createTagsMock } from "./mockTags";
+import slugify from "@/utils/slugify";
+import { createToolsMock } from "./mockTools";
 
 export function createArticleMock() {
   return {
@@ -19,8 +21,8 @@ export function createArticleMock() {
     cover: createCoverMock(),
     author: createAuthorMock(),
     topic: mockTopic(),
-    tools: [],
-    tags: [],
+    tools: createToolsMock(),
+    tags: createTagsMock(),
     blocks: [],
   };
 }

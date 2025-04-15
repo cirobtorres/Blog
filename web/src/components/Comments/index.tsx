@@ -7,7 +7,7 @@ import { useComment } from "../../hooks/useComment";
 import { toast } from "../../hooks/useToast";
 import CommentRow from "./CommentRow";
 import Editor from "./Editor";
-import Avatar from "./Avatar";
+import { Avatar } from "./Avatar";
 import LoadMoreButton from "./LoadMoreButton";
 import CommentSectionHeader from "./CommentSectionHeader";
 

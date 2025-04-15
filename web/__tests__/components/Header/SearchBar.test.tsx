@@ -1,5 +1,3 @@
-import "@testing-library/jest-dom";
-import SearchBar from "../../../src/components/Header/SearchBar";
 import {
   render,
   screen,
@@ -7,6 +5,8 @@ import {
   waitFor,
   act,
 } from "@testing-library/react";
+import "@testing-library/jest-dom";
+import SearchBar from "../../../src/components/Header/HeaderContent/SearchBar";
 import userEvent from "@testing-library/user-event";
 import { getArticles } from "../../../src/service/articles";
 import { useSearchParams } from "next/navigation";
@@ -18,6 +18,10 @@ jest.mock("next/navigation", () => ({
 }));
 
 describe("SearchBar", () => {
+  beforeEach(() => {
+    process.env.NEXT_PUBLIC_BACKEND_IP = "http://127.0.0.1:1337";
+  });
+
   afterEach(() => {
     jest.clearAllMocks();
   });

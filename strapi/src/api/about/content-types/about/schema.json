@@ -17,17 +17,21 @@
     },
     "blocks": {
       "type": "dynamiczone",
-      "components": [
-        "shared.media",
-        "shared.rich-text",
-        "shared.slider"
-      ]
+      "components": ["shared.media", "shared.rich-text", "shared.slider"]
     },
     "github_link": {
       "type": "string"
     },
     "github_blog_link": {
       "type": "string"
+    },
+    "display_name": {
+      "type": "string"
+    },
+    "media": {
+      "allowedTypes": ["images", "files", "videos", "audios"],
+      "type": "media",
+      "multiple": false
     }
   }
 }

@@ -1,19 +1,12 @@
 "use server";
 
+import { convertToHTML } from "@/utils/convertToHtml";
 import {
   ParseRichTextBlocks,
   ParseSliderBlocks,
   ParseQuizBlocks,
   ParseDetails,
 } from "./ParseBlocks";
-import convertMarkdowToHtmlString from "../../../utils/markdown";
-import { addIdsToHeadings } from "../../../utils/anchors";
-
-const convertToHTML = async (blocks: string) => {
-  const contentHtml = await convertMarkdowToHtmlString(blocks);
-  const htmlToRender = addIdsToHeadings(contentHtml);
-  return htmlToRender;
-};
 
 const ArticleContent = async ({ documentId, content }: ArticleContent) => {
   const toRender = await Promise.all(

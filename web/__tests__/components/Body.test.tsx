@@ -55,6 +55,10 @@ jest.mock("../../src/service/user-me-loader", () => ({
 });
 
 describe("DynamicBody", () => {
+  beforeEach(() => {
+    process.env.NEXT_PUBLIC_BACKEND_IP = "http://127.0.0.1:1337";
+  });
+
   it("renders in the document", async () => {
     const ResolvedDynamicBody = await resolvedComponentWithProps(DynamicBody, {
       children: <p>Conteúdo...</p>,

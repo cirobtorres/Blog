@@ -7,6 +7,8 @@ type ArticleCard = {
   updatedAt: string;
   publishedAt: string;
   cover: Cover;
+  topic: Topic;
+  tools: Tool[];
 };
 
 type Article = {

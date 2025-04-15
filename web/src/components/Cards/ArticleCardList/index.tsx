@@ -53,7 +53,11 @@ const ArticleCard = ({ article }: { article: ArticleCard }) => {
       role="link"
       href={`/artigos/[documentId]/[slug]`}
       as={`/artigos/${article.documentId}/${article.slug}`}
-      className="border border-blog-border overflow-hidden h-full w-full flex flex-col rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-blog-foreground-readable-hover"
+      className={
+        `w-full h-full flex flex-col` +
+        ` border border-blog-border overflow-hidden rounded` +
+        ` focus-visible:outline focus-visible:outline-2 focus-visible:outline-blog-foreground-readable-hover`
+      }
       aria-label="Clique para ler mais sobre o artigo"
     >
       <div
@@ -61,9 +65,17 @@ const ArticleCard = ({ article }: { article: ArticleCard }) => {
         className="relative h-[200px] shrink-0 mb-2"
       >
         <Image
+          src={
+            article.cover
+              ? process.env.NEXT_PUBLIC_BACKEND_IP + article.cover.url
+              : "https://placehold.co/1920x1080/171717/FFFFFF/png"
+          }
+          alt={
+            article.cover
+              ? article.cover.alternativeText
+              : `Imagem de destaque da capa do artigo ${article.documentId}`
+          }
           role="img"
-          src={`http://127.0.0.1:1337${article.cover.url}`}
-          alt={article.cover.alternativeText || "Imagem de capa do artigo"}
           fill
           sizes={
             `(max-width: ${article.cover.width}) 100vw` +

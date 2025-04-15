@@ -28,7 +28,7 @@ export default function SheetMenu() {
       <SheetTrigger
         asChild
         data-testid="sheet-menu"
-        className="size-8 min-[1001px]:hidden"
+        className="shrink-0 size-8 min-[1001px]:hidden"
       >
         <Button variant="ghost" className="transition-none px-0">
           <Menu />
@@ -99,7 +99,7 @@ export default function SheetMenu() {
             </SheetClose>
           </div>
         </div>
-        <SheetFooter className="flex gap-1">
+        <SheetFooter className="flex flex-row gap-1">
           <DarkModeToggle />
           <SheetClose asChild>
             <GitHubLink />

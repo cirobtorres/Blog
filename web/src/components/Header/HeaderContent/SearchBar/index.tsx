@@ -4,8 +4,8 @@ import { Search } from "lucide-react";
 import { useDebouncedCallback } from "use-debounce";
 import { ReadonlyURLSearchParams, useSearchParams } from "next/navigation";
 import { useState } from "react";
-import { getArticles } from "../../../service/articles";
-import slugify from "../../../utils/slugify";
+import { getArticles } from "../../../../service/articles";
+import slugify from "../../../../utils/slugify";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -16,7 +16,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "../../Shadcnui/dialog";
+} from "../../../Shadcnui/dialog";
 
 type ArticleList = {
   documentId: string;
@@ -85,7 +85,16 @@ const Trigger = () => {
   return (
     <div
       data-testid="search-bar-trigger"
-      className="relative w-full min-h-9 flex items-center rounded border border-blog-border bg-[#d8d8d8] dark:bg-[#1d1d1d] bg-opacity-50 hover:bg-blog-border group-focus-visible:bg-blog-border transition-all duration-500 group"
+      className={
+        `relative` +
+        ` w-full min-h-9` +
+        ` flex items-center` +
+        ` border border-blog-border rounded` +
+        ` bg-opacity-50 bg-[#d8d8d8] dark:bg-[#1d1d1d]` +
+        ` hover:bg-blog-border` +
+        ` transition-all duration-500` +
+        ` group group-focus-visible:bg-blog-border`
+      }
     >
       <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 transition-all duration-500 text-blog-foreground-readable group-hover:text-blog-foreground-readable-hover" />
       <p className="pl-12 w-full text-sm text-start transition-all duration-500 group-hover:text-blog-foreground-readable-hover">
@@ -158,8 +167,17 @@ const ResultQuery = ({ sortedList }: { sortedList: ArticleList | null }) => {
                 >
                   <div className="shrink-0 relative size-8">
                     <Image
-                      src={`http://127.0.0.1:1337${article.cover.url}`}
-                      alt={article.cover.alternativeText}
+                      src={
+                        article.cover
+                          ? process.env.NEXT_PUBLIC_BACKEND_IP +
+                            article.cover.url
+                          : "https://placehold.co/256x144/171717/FFFFFF/png"
+                      }
+                      alt={
+                        article.cover
+                          ? article.cover.alternativeText
+                          : `Imagem de destaque da capa do artigo ${article.documentId}`
+                      }
                       fill
                       sizes="(min-width: 16px) 100vw"
                       className="absolute object-cover"

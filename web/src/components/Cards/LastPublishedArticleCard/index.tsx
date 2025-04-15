@@ -22,8 +22,16 @@ const LastPublishedArticleCard = ({ article }: { article: ArticleCard }) => {
             className="relative h-[500px]"
           >
             <Image
-              src={`http://127.0.0.1:1337${article.cover.url}`}
-              alt={article.cover.alternativeText}
+              src={
+                article.cover
+                  ? process.env.NEXT_PUBLIC_BACKEND_IP + article.cover.url
+                  : "https://placehold.co/1920x1080/171717/FFFFFF/png"
+              }
+              alt={
+                article.cover
+                  ? article.cover.alternativeText
+                  : `Imagem de destaque da capa do artigo ${article.documentId}`
+              }
               fill
               sizes={
                 `(max-width: ${article.cover.width}) 100vw`

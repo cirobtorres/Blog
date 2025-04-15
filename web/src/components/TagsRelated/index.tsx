@@ -73,8 +73,14 @@ const Tools = ({ tools }: { tools: Tool[] }) => {
             className="flex items-center gap-2"
           >
             <Image
-              src={`http://127.0.0.1:1337` + tool.file.url}
-              alt={tool.file.alternativeText}
+              src={
+                tool.file
+                  ? process.env.NEXT_PUBLIC_BACKEND_IP + tool.file.url
+                  : "https://placehold.co/32x32/171717/FFFFFF/png"
+              }
+              alt={
+                tool.file ? tool.file.alternativeText : `Logo do ${tool.name}`
+              }
               width={32}
               height={32}
               // className="rounded-full border-2 border-blog-border bg-black"

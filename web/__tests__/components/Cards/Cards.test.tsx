@@ -9,6 +9,10 @@ jest.mock("../../../src/service/articles", () => ({
 }));
 
 describe("Cards", () => {
+  beforeEach(() => {
+    process.env.NEXT_PUBLIC_BACKEND_IP = "http://127.0.0.1:1337";
+  });
+
   it("renders 'Nenhum artigo publicado ainda' if not article has been published yet (there is no article)", async () => {
     (getArticles as jest.Mock).mockResolvedValue({ data: [] });
     const CardsResolved = await resolvedComponent(Cards);

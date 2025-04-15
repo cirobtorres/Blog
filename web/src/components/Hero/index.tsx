@@ -11,7 +11,7 @@ const Hero = async (props: HeroProps) => {
   return (
     <>
       <ArticleTitle article={article} currentUser={currentUser} />
-      <ArticleImage cover={article.cover} />
+      <ArticleImage article={article} />
     </>
   );
 };

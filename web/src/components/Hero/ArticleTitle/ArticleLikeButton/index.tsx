@@ -128,10 +128,10 @@ function ArticleLikeButton({
           <ThumbsUp
             id="halb-icon-active"
             data-testid="halb-icon-active"
-            className={`size-6 ${
+            className={`size-6 text-transparent ${
               hasLiked
-                ? "fill-blog-foreground-highlight text-blog-foreground-highlight"
-                : "fill-transparent text-blog-foreground-readable"
+                ? "fill-blog-foreground-highlight"
+                : "fill-blog-foreground-readable"
             }`}
             aria-hidden="true"
           />

@@ -13,17 +13,17 @@ const Avatar = ({ currentUser }: { currentUser: User }) => {
       <div className="flex items-center gap-2 mb-2">
         <div className="relative flex size-10 shrink-0 overflow-hidden rounded-full">
           <Image
+            // TODO: Puxar a imagem de avatar dos providers
             src={
-              "/images/not-authenticated.png"
-              // author.avatar
-              //   ? `http://127.0.0.1:1337${author.avatar.url}`
-              // : "/images/not-authenticated.png"
+              currentUser.data.avatar
+                ? process.env.NEXT_PUBLIC_BACKEND_IP +
+                  currentUser.data.avatar.url
+                : "/images/not-authenticated.png"
             }
             alt={
-              ""
-              // author.avatar
-              // ? author.avatar.alternativeText
-              // : `Avatar de ${author.name}`
+              currentUser.data.avatar
+                ? currentUser.data.avatar.alternativeText
+                : `Avatar de ${currentUser.data.username}`
             }
             fill
             sizes="(max-width: 40px) 100vw"
@@ -74,4 +74,33 @@ const Avatar = ({ currentUser }: { currentUser: User }) => {
   );
 };
 
-export default Avatar;
+const CommentAvatar = ({ currentUser }: { currentUser: User }) => {
+  return (
+    <div className="col-span-1">
+      <div className="relative flex size-10 shrink-0 overflow-hidden rounded-full">
+        <Image
+          // TODO: Puxar a imagem de avatar dos providers
+          src={
+            currentUser.data?.avatar
+              ? process.env.NEXT_PUBLIC_BACKEND_IP + currentUser.data.avatar.url
+              : "/images/not-authenticated.png"
+          }
+          alt={
+            currentUser.data?.avatar
+              ? currentUser.data.avatar.alternativeText
+              : `Avatar de ${
+                  currentUser.data?.username
+                    ? currentUser.data?.username
+                    : "usuário desconhecido"
+                }`
+          }
+          fill
+          sizes="(max-width: 40px) 100vw"
+          className="transition-all duration-500 absolute object-cover group-hover:brightness-50"
+        />
+      </div>
+    </div>
+  );
+};
+
+export { Avatar, CommentAvatar };

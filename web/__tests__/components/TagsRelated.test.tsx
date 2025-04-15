@@ -1,69 +1,22 @@
 import TagsRelated from "@/components/TagsRelated";
 import { render, screen } from "@testing-library/react";
+import { mockTopic } from "../../__mocks__/mockTopic";
+import { createToolsMock } from "../../__mocks__/mockTools";
+import { createTagsMock } from "../../__mocks__/mockTags";
+import { faker } from "@faker-js/faker";
+
+faker.seed(4); // Snapshot
 
 describe("Categories", () => {
-  const topicMocked = {
-    documentId: "123",
-    name: "Ciência da Computação",
-    slug: "ciencia-da-computacao",
-    description: "Descrição da categoria",
-  };
+  const topicMocked = mockTopic();
 
-  const toolsMocked = [
-    {
-      documentId: "14",
-      name: "Next.js",
-      slug: "next-js",
-      link: "https://nextjs.org/",
+  const toolsMocked = createToolsMock();
 
-      file: {
-        documentId: "aabbcd",
-        url: "",
-        alternativeText: "",
-        caption: "",
-        width: 24,
-        height: 24,
-      },
-    },
-    {
-      documentId: "16",
-      name: "Nest.js",
-      slug: "next-js",
-      link: "https://nestjs.com/",
+  const tagsMocked = createTagsMock();
 
-      file: {
-        documentId: "aabbcd123as",
-        url: "",
-        alternativeText: "",
-        caption: "",
-        width: 24,
-        height: 24,
-      },
-    },
-  ];
-
-  const tagsMocked = [
-    {
-      documentId: "8",
-      name: "Programação",
-    },
-    {
-      documentId: "11",
-      name: "linguagem de Programação",
-    },
-    {
-      documentId: "19",
-      name: "Banco de Dados",
-    },
-    {
-      documentId: "33",
-      name: "Diagrama UML",
-    },
-    {
-      documentId: "35",
-      name: "Programação",
-    },
-  ];
+  beforeEach(() => {
+    process.env.NEXT_PUBLIC_BACKEND_IP = "http://127.0.0.1:1337";
+  });
 
   test("Categories component matches the snapshot", () => {
     const { asFragment } = render(

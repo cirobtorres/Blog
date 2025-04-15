@@ -27,7 +27,7 @@
   --blog-foreground-readable-hover: hsl(var(--blog-black));
   --blog-foreground-highlight: hsl(var(--blog-orange));
   --blog-foreground-highlight-lighter: hsl(var(--blog-orange-lighter));
-  --blog-foreground-highlight-backdrop: hsl(30, 90%, 75%, 0.3);
+  --blog-foreground-highlight-backdrop: hsla(30, 100%, 80%, 0.15);
 
   --blog-green: hsl(144, 56%, 41%);
   --blog-red: hsl(0, 100%, 60%);
@@ -38,16 +38,16 @@
 
   --blog-pre: hsl(0, 0%, 100%);
   --blog-code-text: hsl(var(--blog-silver));
-  --blog-code-keyword: var(--blog-orange);
-  --blog-code-class: var(--blog-orange-darker);
+  --blog-code-keyword: 30 78% 55%;
+  --blog-code-class: 30 78% 55%;
   --blog-code-tag-css: 60 42% 76%;
-  --blog-code-parameter: 41 53% 67%;
-  --blog-code-function: 190 100% 80%;
-  --blog-code-readable: 278 8% 80%;
+  --blog-code-parameter: 41 97% 61%;
+  --blog-code-function: 190 69% 61%;
+  --blog-code-readable: var(--blog-black);
   --blog-code-literal: 160 66% 55%;
-  --blog-code-type: 160 66% 55%;
-  --blog-code-string: 101 29% 47%;
-  --blog-code-comment: 0 0% 50%;
+  --blog-code-type: 160 67% 51%;
+  --blog-code-string: 100 61% 38%;
+  --blog-code-comment: 0 0% 75%;
   --blog-code-regexp: 350 80% 58%;
   --blog-code-regexp-lighter: 330 70% 65%;
   --blog-code-regexp-darker: 295 65% 47%;
@@ -65,9 +65,11 @@
   --blog-background-backdrop: hsla(0, 0%, 7%, 0.25);
   --blog-background-backdrop-hover: hsla(0, 0%, 15%, 0.25);
 
+  --blog-placeholder: hsl(0, 0%, 30%);
   --blog-foreground-readable: hsl(var(--blog-silver));
   --blog-foreground-readable-hover: hsl(0, 0%, 100%);
   --blog-foreground-highlight: hsl(var(--blog-orange));
+  --blog-foreground-highlight-backdrop: hsla(30, 100%, 80%, 0.15);
 
   --blog-green: hsl(145, 80%, 10%);
   --blog-red: hsl(0, 75%, 15%);
@@ -77,6 +79,20 @@
   --blog-border-red: hsl(0, 84%, 60%);
 
   --blog-pre: hsl(0, 0%, 12%);
+  --blog-code-text: hsl(var(--blog-silver));
+  --blog-code-keyword: var(--blog-orange);
+  --blog-code-class: var(--blog-orange-darker);
+  --blog-code-tag-css: 60 42% 76%;
+  --blog-code-parameter: 41 53% 67%;
+  --blog-code-function: 190 100% 80%;
+  --blog-code-readable: 278 8% 80%;
+  --blog-code-literal: 160 66% 55%;
+  --blog-code-type: 160 66% 55%;
+  --blog-code-string: 101 29% 47%;
+  --blog-code-comment: 0 0% 50%;
+  --blog-code-regexp: 350 80% 58%;
+  --blog-code-regexp-lighter: 330 70% 65%;
+  --blog-code-regexp-darker: 295 65% 47%;
 }
 
 * {
@@ -196,7 +212,7 @@ input[type="search"]::-webkit-search-results-decoration {
 
   .tiptap p.is-editor-empty:first-child::before {
     content: attr(data-placeholder);
-    color: #636363;
+    color: var(--blog-placeholder);
     float: left;
     height: 0;
     pointer-events: none;

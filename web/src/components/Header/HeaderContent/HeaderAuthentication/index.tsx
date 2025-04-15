@@ -28,17 +28,21 @@ const HeaderAuthentication = ({ currentUser }: { currentUser: User }) => {
             >
               <div className="relative flex size-8 shrink-0 overflow-hidden rounded-full">
                 <Image
+                  // TODO: Puxar a imagem de avatar dos providers
                   src={
-                    "/images/not-authenticated.png"
-                    // author.avatar
-                    //   ? `http://127.0.0.1:1337${author.avatar.url}`
-                    // : "/images/not-authenticated.png"
+                    currentUser.data?.avatar
+                      ? process.env.NEXT_PUBLIC_BACKEND_IP +
+                        currentUser.data.avatar.url
+                      : "/images/not-authenticated.png"
                   }
                   alt={
-                    ""
-                    // author.avatar
-                    // ? author.avatar.alternativeText
-                    // : `Avatar de ${author.name}`
+                    currentUser.data?.avatar
+                      ? currentUser.data.avatar.alternativeText
+                      : `Avatar de ${
+                          currentUser.data?.username
+                            ? currentUser.data?.username
+                            : "usuário desconhecido"
+                        }`
                   }
                   fill
                   sizes="(max-width: 40px) 100vw"

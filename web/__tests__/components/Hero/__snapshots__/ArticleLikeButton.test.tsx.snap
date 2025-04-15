@@ -38,7 +38,7 @@ exports[`ArticleLikeButton User off matches the snapshot 1`] = `
         />
       </svg>
       <p>
-        7 likes
+        1 like
       </p>
     </button>
   </div>
@@ -62,7 +62,7 @@ exports[`ArticleLikeButton User on matches the snapshot 1`] = `
     >
       <svg
         aria-hidden="true"
-        class="lucide lucide-thumbs-up size-6 text-blog-foreground-readable"
+        class="lucide lucide-thumbs-up size-6 text-transparent fill-blog-foreground-readable"
         data-testid="halb-icon-active"
         fill="none"
         height="24"
@@ -83,7 +83,7 @@ exports[`ArticleLikeButton User on matches the snapshot 1`] = `
         />
       </svg>
       <p>
-        7 likes
+        1 like
       </p>
     </button>
   </div>

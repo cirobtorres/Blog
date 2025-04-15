@@ -25,45 +25,35 @@ const CommentOptions = ({
   setIsEditing,
   setMyChilds,
   setTemporaryChilds,
-  setTotalChilds,
 }: {
   currentComment: CommentProps;
   currentUser: User;
   isEditing: boolean;
   setIsEditing: (value: boolean) => void;
   setMyChilds?: Dispatch<SetStateAction<CommentProps[]>>;
-  setTemporaryChilds?: Dispatch<SetStateAction<CommentProps[]>>;
-  setTotalChilds: Dispatch<SetStateAction<number>>;
+  setTemporaryChilds: Dispatch<SetStateAction<CommentProps[]>>;
 }) => {
+  const { toast } = useToast();
+  const [released, setReleased] = useState(true);
   const [openDialog, setOpenDialog] = useState(false);
   const commentContext = useComment();
-  const deleteLocalComment = commentContext?.deleteLocalComment;
   const deleteCommentFn = useAsyncFn(clientDeleteComment, [], false);
-  const { toast } = useToast();
+  const deleteLocalComment = commentContext?.deleteLocalComment;
 
   async function onCommentDelete() {
     return deleteCommentFn
       .execute({ documentId: currentComment.documentId })
       .then((documentId) => {
-        if (setMyChilds) {
-          // If parent_id !== null
+        deleteLocalComment(documentId as string);
+        if (setMyChilds)
           setMyChilds((prev: CommentProps[]) =>
             prev.filter(
               (child: CommentProps) => child.documentId !== documentId
             )
           );
-          setTotalChilds((prev) => prev--); // TODO (BUG): Not working
-        } else {
-          // If parent_id === null
-          deleteLocalComment(documentId as string);
-        }
-        if (setTemporaryChilds) {
-          setTemporaryChilds((prev: CommentProps[]) =>
-            prev.filter(
-              (child: CommentProps) => child.documentId !== documentId
-            )
-          );
-        }
+        setTemporaryChilds((prev: CommentProps[]) =>
+          prev.filter((child: CommentProps) => child.documentId !== documentId)
+        );
       })
       .then(() => toast({ description: "Comentário excluído" }))
       .catch((error) => {
@@ -76,9 +66,18 @@ const CommentOptions = ({
     currentComment.users_permissions_user &&
     currentUser.data?.documentId ===
       currentComment.users_permissions_user.documentId && (
-      <div className="col-span-1 ml-auto mt-1.5">
+      <div className="col-span-1 mx-auto">
         <Popover>
-          <PopoverTrigger>
+          <PopoverTrigger
+            onPointerDown={() => setReleased(false)}
+            onPointerUp={() => setReleased(true)}
+            onPointerLeave={() => setReleased(true)}
+            className={`p-2 rounded-full border ${
+              released
+                ? "transition-[border-color] duration-700 ease-in border-transparent"
+                : "border-blog-border bg-blog-border"
+            }`}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -119,20 +118,62 @@ const CommentOptions = ({
           </PopoverContent>
         </Popover>
         <Dialog open={openDialog} onOpenChange={setOpenDialog}>
-          <DialogContent className="p-8 pb-6 top-1/2 -translate-y-1/2 data-[state=closed]:slide-out-to-top-[50%] data-[state=open]:slide-in-from-top-[50%]">
-            <DialogHeader>
-              <DialogTitle>Deseja excluir esse comentário?</DialogTitle>
-              <DialogDescription className="flex items-center h-24">
+          <DialogContent className="bg-blog-background-2 p-8 pb-6 top-1/2 -translate-y-1/2 data-[state=closed]:slide-out-to-top-[50%] data-[state=open]:slide-in-from-top-[50%]">
+            <DialogHeader className="flex flex-col gap-10">
+              <div className="grid grid-cols-[1fr_calc(20px_+_8px_*_2)] relative">
+                <DialogTitle className="line-clamp-2">
+                  Deseja excluir esse comentário?
+                </DialogTitle>
+                <DialogClose
+                  className={
+                    `absolute right-1 top-1/2 -translate-y-1/2 p-0.5 rounded` +
+                    ` border border-blog-border` +
+                    ` transition-colors duration-200` +
+                    ` text-blog-foreground-highlight bg-blog-background-1` +
+                    ` hover:text-blog-foreground-readable-hover hover:bg-blog-border`
+                  }
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="lucide lucide-x-icon lucide-x"
+                  >
+                    <path d="M18 6 6 18" />
+                    <path d="m6 6 12 12" />
+                  </svg>
+                </DialogClose>
+              </div>
+              <DialogDescription className="flex items-center box-border text-sm max-h-[calc(20px_*_4)] line-clamp-4">
                 Após confirmada, essa ação não poderá ser desfeita!
               </DialogDescription>
             </DialogHeader>
-            <DialogFooter>
-              <DialogClose className="w-24 rounded-full py-1 hover:text-blog-foreground-readable-hover hover:bg-blog-border">
+            <DialogFooter className="mt-10">
+              <DialogClose
+                className={
+                  `w-24 py-2 rounded` + // Layout
+                  ` border border-blog-border` + // Border
+                  ` transition-colors duration-200` + // Transition
+                  ` text-blog-foreground-highlight hover:text-blog-foreground-readable-hover` + // Text
+                  ` bg-blog-background-1 hover:bg-blog-border` // Background
+                }
+              >
                 Cancelar
               </DialogClose>
               <DialogClose
                 onClick={onCommentDelete}
-                className="w-24 rounded-full py-1 hover:text-blog-foreground-readable-hover hover:bg-blog-border"
+                className={
+                  `w-24 py-2 rounded` + // Layout
+                  ` transition-colors duration-200` + // Transition
+                  ` hover:text-blog-foreground-readable-hover` + // Text
+                  ` hover:bg-blog-border` // Background
+                }
               >
                 Excluir
               </DialogClose>

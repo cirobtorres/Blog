@@ -20,8 +20,8 @@ const highlightPreBlocks = (htmlContent: string, highlighter: Highlighter) => {
       const decodedHtml = decodeHtmlEntities(codeContent.trim());
 
       const highlightedCode = highlighter.codeToHtml(decodedHtml, {
-        // theme: "blog-theme",
-        theme: "github-dark",
+        theme: "blog-theme",
+        // theme: "github-dark",
         lang: language,
         transformers: [
           transformerNotationHighlight({

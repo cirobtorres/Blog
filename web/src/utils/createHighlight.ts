@@ -241,8 +241,8 @@ const getHighlighter = async () => {
   if (!highlighter) {
     // Creating a new highlighter instance
     highlighter = await createHighlighter({
-      // themes: [blogTheme],
-      themes: ["github-dark"],
+      themes: [blogTheme],
+      // themes: ["github-dark"],
       langs: [
         "html",
         "css",

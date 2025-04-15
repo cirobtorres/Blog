@@ -25,7 +25,7 @@ const Author = ({ author }: { author: Author }) => {
             data-testid="author-avatar-image"
             src={
               author.avatar
-                ? `http://127.0.0.1:1337${author.avatar.url}`
+                ? process.env.NEXT_PUBLIC_BACKEND_IP + author.avatar.url
                 : "/images/not-authenticated.png"
             }
             alt={

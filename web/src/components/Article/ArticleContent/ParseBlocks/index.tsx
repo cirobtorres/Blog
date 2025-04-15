@@ -194,8 +194,16 @@ const ParseMediaBlocks = ({ block }: { block: SharedMedia }) => {
       <article className="mb-4">
         <figure className={"flex flex-col gap-3"}>
           <Image
-            src={`http://127.0.0.1:1337${block.file.url}`}
-            alt={block.file.alternativeText}
+            src={
+              block.file
+                ? process.env.NEXT_PUBLIC_BACKEND_IP + block.file.url
+                : "https://placehold.co/1920x1080/171717/FFFFFF/png"
+            }
+            alt={
+              block.file
+                ? block.file.alternativeText
+                : `Imagem de id nº ${block.id}`
+            }
             width={block.file.width}
             height={block.file.height}
           />

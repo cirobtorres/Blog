@@ -17,6 +17,7 @@ const CommentFooter = ({
   setIsReplying: (value: boolean) => void;
   isReplying: boolean;
 }) => {
+  const [released, setReleased] = useState(true);
   const [likeCount, setLikeCount] = useState(comment.comment_likes);
   const [commentLikeId, setCommentLikeId] = useState<string | null>(
     likeCount.filter(
@@ -93,23 +94,35 @@ const CommentFooter = ({
       comment.users_permissions_user && (
         <div className="flex items-center gap-4">
           <div className="flex gap-3">
-            <button type="button" onClick={toggleLike}>
+            <button
+              type="button"
+              onClick={toggleLike}
+              onPointerDown={() => setReleased(false)}
+              onPointerUp={() => setReleased(true)}
+              onPointerLeave={() => setReleased(true)}
+              className={`rounded-full border ${
+                released
+                  ? "transition-[border-color] duration-700 ease-in border-transparent"
+                  : "border-blog-border bg-blog-border"
+              }`}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="14"
-                height="14"
+                width="24"
+                height="24"
                 viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                className={`lucide lucide-thumbs-up ${
+                className={`lucide lucide-thumbs-up p-0.5 ${
                   hasLiked
                     ? "stroke-blog-foreground-highlight fill-blog-foreground-highlight"
                     : "stroke-current fill-none"
                 }`}
               >
-                <path d="M7 10v12" />
-                <path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z" />
+                <path d="M9 18v-6H5l7-7 7 7h-4v6H9z" />
               </svg>
             </button>
             <span className="text-sm p-1">{likeCount.length}</span>
@@ -117,13 +130,31 @@ const CommentFooter = ({
           <button
             type="button"
             onClick={() => setIsReplying(!isReplying)}
-            className={`p-1 text-sm transition-colors duration-500 hover:text-blog-foreground-readable-hover ${
+            className={`text-sm p-1 transition-colors duration-500 text-blog-foreground-readable hover:text-blog-foreground-readable-hover ${
               isReplying
                 ? "text-blog-foreground-highlight"
                 : "text-blog-foreground-readable"
             }`}
           >
             Responder
+          </button>
+          <button className="text-sm p-1 flex items-center gap-1 transition-colors duration-500 text-blog-foreground-readable hover:text-blog-foreground-readable-hover">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="lucide lucide-flag-icon lucide-flag"
+            >
+              <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z" />
+              <line x1="4" x2="4" y1="22" y2="15" />
+            </svg>
+            Reportar
           </button>
         </div>
       )
