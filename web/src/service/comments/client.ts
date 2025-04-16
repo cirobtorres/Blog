@@ -119,7 +119,7 @@ export const clientGetComments = async (
     start: null,
   },
   parentId: string | null = null,
-  sort: string | null = "createdAt:desc"
+  sort: string[] | null = ["createdAt:desc"]
 ) => {
   return graphqlCommentClient
     .request(GET_COMMENTS, {

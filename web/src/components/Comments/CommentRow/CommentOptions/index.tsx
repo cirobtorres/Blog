@@ -12,55 +12,25 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/Shadcnui/popover";
-import { clientDeleteComment, useAsyncFn } from "@/service/comments/client";
-import { useToast } from "@/hooks/useToast";
 import { ToasterProvider } from "@/providers/ToasterProvider";
 import { Dispatch, SetStateAction, useState } from "react";
-import { useComment } from "../../../../hooks/useComment";
 
 const CommentOptions = ({
   currentComment,
   currentUser,
   isEditing,
   setIsEditing,
-  setMyChilds,
-  setTemporaryChilds,
+  onDelete,
 }: {
   currentComment: CommentProps;
   currentUser: User;
   isEditing: boolean;
   setIsEditing: (value: boolean) => void;
-  setMyChilds?: Dispatch<SetStateAction<CommentProps[]>>;
-  setTemporaryChilds: Dispatch<SetStateAction<CommentProps[]>>;
+  setChilds?: Dispatch<SetStateAction<CommentProps[]>>;
+  onDelete: (documentId: string) => Promise<void>;
 }) => {
-  const { toast } = useToast();
   const [released, setReleased] = useState(true);
   const [openDialog, setOpenDialog] = useState(false);
-  const commentContext = useComment();
-  const deleteCommentFn = useAsyncFn(clientDeleteComment, [], false);
-  const deleteLocalComment = commentContext?.deleteLocalComment;
-
-  async function onCommentDelete() {
-    return deleteCommentFn
-      .execute({ documentId: currentComment.documentId })
-      .then((documentId) => {
-        deleteLocalComment(documentId as string);
-        if (setMyChilds)
-          setMyChilds((prev: CommentProps[]) =>
-            prev.filter(
-              (child: CommentProps) => child.documentId !== documentId
-            )
-          );
-        setTemporaryChilds((prev: CommentProps[]) =>
-          prev.filter((child: CommentProps) => child.documentId !== documentId)
-        );
-      })
-      .then(() => toast({ description: "Comentário excluído" }))
-      .catch((error) => {
-        toast({ description: "Erro ao excluir comentário" });
-        console.error(error);
-      });
-  }
 
   return (
     currentComment.users_permissions_user &&
@@ -167,7 +137,7 @@ const CommentOptions = ({
                 Cancelar
               </DialogClose>
               <DialogClose
-                onClick={onCommentDelete}
+                onClick={() => onDelete(currentComment.documentId)}
                 className={
                   `w-24 py-2 rounded` + // Layout
                   ` transition-colors duration-200` + // Transition

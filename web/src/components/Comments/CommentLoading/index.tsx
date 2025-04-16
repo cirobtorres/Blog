@@ -49,6 +49,7 @@ const CommentLoadingSkeleton = ({ rows }: { rows?: number }) => {
   );
 };
 
+// TODO: https://www.radix-ui.com/themes/docs/components/spinner
 const CommentLoadingSpinning = () => {
   return (
     <div className="w-fit mx-auto animate-spin">

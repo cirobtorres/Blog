@@ -8,8 +8,7 @@ import Text from "@tiptap/extension-text";
 import CharacterCount from "@tiptap/extension-character-count";
 import PopoverLoginContent from "@/components/Authentication/PopoverLoginContent";
 
-const limit = 512;
-const textSelectionLimit = 9999; // Always keep textSelectionLimit way higher than limit
+const characterLimit = 512;
 
 const Editor = ({
   currentUser,
@@ -43,7 +42,7 @@ const Editor = ({
           showOnlyCurrent: true,
         }),
         CharacterCount.configure({
-          limit,
+          limit: characterLimit,
         }),
       ],
       autofocus: autoFocus,
@@ -86,16 +85,19 @@ const Editor = ({
     return;
   }
 
+  const lastCharacterIndex = editor.getHTML().length;
+
   return (
     <form
       onSubmit={async (e) => {
         e.preventDefault();
-        const contentJSON = editor.getHTML();
-        if (contentJSON === "<p></p>") {
-          return;
+        let contentHTML = editor.getHTML();
+        contentHTML = contentHTML.replace(/<p>(\s|&nbsp;)*<\/p>/g, ""); // Remove every empty <p></p> in contentHTML
+        if (!contentHTML || contentHTML.trim() === "") {
+          setIsOpen(false);
+          return; // Safeguard. Prevents saving empty comments
         }
-        contentJSON.replace(/<\/?p>/g, "");
-        await onSubmit(contentJSON);
+        await onSubmit(contentHTML);
         editor.commands.clearContent();
         setIsOpen(false);
       }}
@@ -111,16 +113,8 @@ const Editor = ({
             name="content"
             onFocus={() => {
               setIsOpen(true);
-
               // Cursor on the last element position:
-              editor
-                .chain()
-                .focus()
-                // The character limit does not take into account the HTML tags.
-                // For example: Hello World is actually <p>Hello World</p> (18 characters, not 11)
-                // So the real textSelection length is always higher than the actual allowed character limit number.
-                .setTextSelection(textSelectionLimit)
-                .run();
+              editor.chain().focus().setTextSelection(lastCharacterIndex).run();
             }}
             className="relative text-left w-full h-full text-sm [scrollbar-width:none] [-ms-overflow-style:none] pb-2 group"
           >
@@ -133,7 +127,8 @@ const Editor = ({
       <div className="h-8 flex shrink-0 mt-2">
         <div className="flex-1 flex items-center gap-4">
           <p className="text-sm text-[#808080]">
-            Caracteres: {editor.storage.characterCount.characters()} / {limit}
+            Caracteres: {editor.storage.characterCount.characters()} /{" "}
+            {characterLimit}
           </p>
           <p className="text-sm text-[#808080]">
             Palavras: {editor.storage.characterCount.words()}

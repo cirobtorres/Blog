@@ -53,7 +53,7 @@ export default function Comments({ currentUser }: { currentUser: User }) {
       id="comment-session"
       className="max-w-screen-md mx-auto flex flex-col mb-20 px-4"
     >
-      <CommentSectionHeader articleId={documentId} comments={comments} />
+      <CommentSectionHeader articleId={documentId} />
       <div className="flex flex-col mb-8">
         <Avatar currentUser={currentUser} />
         <Editor currentUser={currentUser} onSubmit={onCommentCreate} />
@@ -65,13 +65,6 @@ export default function Comments({ currentUser }: { currentUser: User }) {
           currentUser={currentUser}
         />
       ))}
-      {comments?.length === 0 && (
-        <div className="mt-10">
-          <h3 className="text-xl text-center text-[#747474]">
-            Ninguém comentou ainda...
-          </h3>
-        </div>
-      )}
       {pageLengthMemmorized && (
         <LoadMoreButton func={loadMore} loadFunc={loading} />
       )}

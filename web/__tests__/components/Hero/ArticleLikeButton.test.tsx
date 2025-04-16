@@ -138,6 +138,8 @@ describe("ArticleLikeButton", () => {
     });
 
     it("presses button like", async () => {
+      // Silence console.error
+      jest.spyOn(console, "error").mockImplementation(() => {});
       render(
         <ArticleLikeButton
           currentUser={authenticatedUserMock}

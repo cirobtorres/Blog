@@ -13,28 +13,28 @@ const CodeBlock = ({
   id: string;
   htmlToRender: string;
 }) => {
-  const [collapse, setCollapse] = useState(false);
+  // const [collapse, setCollapse] = useState(false);
   const [highlightedCode, setHighlightedCode] = useState<string>("");
   const highlighterRef = useRef<Highlighter>(null);
 
   // Update code block collapse state and save it to localStorage
-  const updateCollapse = useCallback(
-    (state: boolean) => {
-      setCollapse(() => {
-        return state;
-      });
-      localStorage.setItem(`collapsible-${id}`, JSON.stringify(state));
-    },
-    [id]
-  );
+  // const updateCollapse = useCallback(
+  //   (state: boolean) => {
+  //     setCollapse(() => {
+  //       return state;
+  //     });
+  //     localStorage.setItem(`collapsible-${id}`, JSON.stringify(state));
+  //   },
+  //   [id]
+  // );
 
   // Save code block collapse state when user enters the page or when he clicks the button
-  useEffect(() => {
-    const collapsible = localStorage.getItem(`collapsible-${id}`);
-    if (collapsible) {
-      updateCollapse(JSON.parse(collapsible));
-    }
-  }, [id, updateCollapse]);
+  // useEffect(() => {
+  //   const collapsible = localStorage.getItem(`collapsible-${id}`);
+  //   if (collapsible) {
+  //     updateCollapse(JSON.parse(collapsible));
+  //   }
+  // }, [id, updateCollapse]);
 
   // Load highlighter and highlight code blocks when its received from the server
   useEffect(() => {
@@ -69,7 +69,7 @@ const FullCodeBlock = ({ code }: { code: string }) => {
       dangerouslySetInnerHTML={{
         __html: code,
       }}
-      className={`blog-code [&_pre]:scrollbar [&_pre]:overflow-y-auto [&_code]:py-1`}
+      className={`blog-code rounded-b-xl overflow-hidden [&_pre]:scrollbar [&_pre]:overflow-y-auto [&_code]:py-3`}
     />
   );
 };

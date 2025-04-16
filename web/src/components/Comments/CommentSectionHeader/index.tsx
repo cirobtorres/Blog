@@ -7,18 +7,33 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../../Shadcnui/select";
+import { useComment } from "@/hooks/useComment";
 
-type SelectValueProps = "Mais recente" | "Mais antigo" | "Maior likes";
+type SelectValueProps = "Mais recentes" | "Mais antigos" | "Maior likes";
 
-const CommentSectionHeader = ({
-  articleId,
-  comments,
-}: {
-  articleId: string;
-  comments: CommentProps[] | null;
-}) => {
+const CommentSectionHeader = ({ articleId }: { articleId: string }) => {
+  const { changeSorting } = useComment();
   const [selectValue, setSelectValue] =
-    useState<SelectValueProps>("Mais recente");
+    useState<SelectValueProps>("Mais recentes");
+  function handleSort(label: string) {
+    switch (label) {
+      case "antigos":
+        changeSorting(["createdAt:asc"]);
+        setSelectValue("Mais antigos");
+        break;
+      case "likes":
+        changeSorting([
+          // "comment_likes:users_permissions_user:count",
+          "createdAt:desc",
+        ]);
+        setSelectValue("Maior likes");
+        break;
+      default: // Mais recentes
+        changeSorting(["createdAt:desc"]);
+        setSelectValue("Mais recentes");
+        break;
+    }
+  }
   return (
     <div
       id="comment-session-header"
@@ -26,11 +41,15 @@ const CommentSectionHeader = ({
       tabIndex={-1}
     >
       <h3 className="flex items-center h-12 px-2 text-3xl font-extrabold">
-        <CommentCount articleId={articleId} comments={comments} />
+        <CommentCount articleId={articleId} />
       </h3>
-      <Select>
+      <Select
+        onValueChange={(value: SelectValueProps) => {
+          handleSort(value);
+        }}
+      >
         <p className="flex pr-2">Ordenar por:</p>
-        <SelectTrigger className="w-[180px]">
+        <SelectTrigger className="w-[180px] [&>*:nth-child(2)]:flex-1 [&>*:nth-child(2)]:text-left [&>*:nth-child(2)]:pl-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -52,24 +71,9 @@ const CommentSectionHeader = ({
           <SelectValue placeholder={selectValue} />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem
-            value="Mais recente"
-            onSelect={() => setSelectValue("Mais recente")}
-          >
-            Mais recente
-          </SelectItem>
-          <SelectItem
-            value="Mais antigo"
-            onSelect={() => setSelectValue("Mais antigo")}
-          >
-            Mais antigo
-          </SelectItem>
-          <SelectItem
-            value="Maior likes"
-            onSelect={() => setSelectValue("Maior likes")}
-          >
-            Maior likes
-          </SelectItem>
+          <SelectItem value="recentes">Mais recentes</SelectItem>
+          <SelectItem value="antigos">Mais antigos</SelectItem>
+          <SelectItem value="likes">Maior likes</SelectItem>
         </SelectContent>
       </Select>
     </div>

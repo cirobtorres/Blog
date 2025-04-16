@@ -89,7 +89,7 @@ const ParseRichTextBlocks = ({ body }: { body: string }) => {
 
       return (
         <article key={finalBlock.id} className="w-full relative mb-4">
-          <div className="flex items-center relative w-full h-12 pl-6 pr-12 border-t border-x border-blog-border bg-blog-background-2">
+          <div className="flex items-center relative w-full h-12 pl-6 pr-12 border-t border-x border-blog-border rounded-t-xl bg-blog-background-2">
             {fileName && (
               <span className="text-sm text-[#808080] transition-all duration-500 overflow-x-auto [&::-webkit-scrollbar]:hidden">
                 {fileName}

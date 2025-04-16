@@ -19,6 +19,7 @@ export default {
         "blog-background-2": "var(--blog-background-2)",
         "blog-background-3": "var(--blog-background-3)",
         "blog-border": "var(--blog-border)",
+        "blog-ring": "var(--blog-ring)",
         "blog-background-backdrop": "var(--blog-background-backdrop)",
         "blog-background-backdrop-hover":
           "var(--blog-background-backdrop-hover)",
