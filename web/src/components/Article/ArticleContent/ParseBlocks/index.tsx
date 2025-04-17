@@ -55,24 +55,32 @@ const ParseRichTextBlocks = ({ body }: { body: string }) => {
     });
 
   return blocks.map((finalBlock) => {
-    // Search blocks for <a> tag
+    // Adds arrow-up-right to any external links
+    const domain = process.env.NEXT_PUBLIC_REGEX_DOMAIN || /localhost/;
     const blockHtml = cheerio.load(finalBlock.htmlToRender);
     blockHtml("a").each((_, element) => {
       const href = blockHtml(element).attr("href") || "";
-      // <a> tags of external link has a special design
-      if (!href.match(/localhost/)) {
+      if (!href.match(domain)) {
         const text = blockHtml(element).text();
-
-        // Rebuild <a> tag
-        const newAnchor = `
-          <a href="${href}" target="_blank" class="external-link">
-            <span>${text}</span>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block align-top w-[14px] h-[14px]">
-              <path d="M21 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h6"/>
-              <path d="m21 3-9 9"/>
-              <path d="M15 3h6v6"/>
-            </svg>
-          </a>`;
+        const newAnchor =
+          `<a href="${href}" target="_blank" class="external-link"><span>${text}</span>` +
+          `<svg` +
+          ` xmlns="http://www.w3.org/2000/svg"` +
+          ` width="24"` +
+          ` height="24"` +
+          ` viewBox="0 0 24 24"` +
+          ` fill="none"` +
+          ` stroke="currentColor"` +
+          ` stroke-width="2"` +
+          ` stroke-linecap="round"` +
+          ` stroke-linejoin="round"` +
+          ` class="lucide lucide-arrow-up-right-icon lucide-arrow-up-right inline-block align-top w-[14px] h-[14px]"` +
+          `>` +
+          `<path` +
+          ` d="M7 7h10v10"` +
+          `/>` +
+          `<path d="M7 17 17 7"/></svg>` +
+          `</a>`;
         blockHtml(element).replaceWith(newAnchor); // Replace old <a> tag by the new one
       }
     });

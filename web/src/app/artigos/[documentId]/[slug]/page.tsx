@@ -1,13 +1,13 @@
-import { getArticle } from "../../../../service/articles";
-import { DynamicBody } from "../../../../components/Body";
 import Hero from "../../../../components/Hero";
 import Article from "../../../../components/Article";
 import TagsRelated from "../../../../components/TagsRelated";
 import RelatedArticles from "../../../../components/RelatedArticles";
-import { getUserMeLoader } from "@/service/user-me-loader";
+import { getArticle } from "../../../../service/articles";
+import { DynamicBody } from "../../../../components/Body";
 import { getGlobal } from "../../../../service/global";
-import Comments from "@/components/Comments";
+import { getUserMeLoader } from "@/service/user/user-me-loader";
 import { CommentProvider } from "@/providers/CommentProvider";
+import Comments from "@/components/Comments";
 
 export async function generateMetadata({ params }: Params) {
   const { documentId } = await params;

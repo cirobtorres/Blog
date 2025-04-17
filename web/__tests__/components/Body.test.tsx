@@ -1,7 +1,7 @@
 import { faker } from "@faker-js/faker";
 import { render, screen, waitFor } from "@testing-library/react";
 import { DynamicBody, StaticBody } from "../../src/components/Body";
-import { getUserMeLoader } from "../../src/service/user-me-loader";
+import { getUserMeLoader } from "../../src/service/user/user-me-loader";
 import { resolvedComponentWithProps } from "../../__mocks__/utilities/resolvedComponent";
 
 faker.seed(1); // Snapshot
@@ -20,11 +20,11 @@ jest.mock("next/navigation", () => ({
   useSearchParams: jest.fn(() => new URLSearchParams()),
 }));
 
-jest.mock("../../src/service/get-auth-token", () => ({
+jest.mock("../../src/service/user/get-auth-token", () => ({
   getAuthToken: jest.fn().mockResolvedValue("mocked-auth-token"),
 }));
 
-jest.mock("../../src/service/user-me-loader", () => ({
+jest.mock("../../src/service/user/user-me-loader", () => ({
   getUserMeLoader: jest.fn(),
 }));
 

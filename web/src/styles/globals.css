@@ -20,8 +20,8 @@
   --blog-background-1: hsl(0, 0%, 100%);
   --blog-background-2: hsl(0, 0%, 98%);
   --blog-background-3: hsl(0, 0%, 96%);
-  --blog-background-backdrop: hsla(0, 0%, 90%, 0.25);
-  --blog-background-backdrop-hover: hsla(0, 0%, 85%, 0.25);
+  --blog-background-backdrop: hsla(0, 0%, 85%, 0.25);
+  --blog-background-backdrop-hover: hsla(0, 0%, 90%, 0.25);
 
   --blog-ring: var(--blog-black);
 

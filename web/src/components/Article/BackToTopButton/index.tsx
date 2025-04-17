@@ -55,7 +55,9 @@ const BackToTopButton = ({
 
   return (
     <div
-      className={`self-start sticky mx-auto top-1/2 -translate-y-1/2`}
+      id="btt-btn-container"
+      data-testid="btt-btn-container"
+      className="self-start sticky mx-auto top-1/2 -translate-y-1/2"
       style={{
         marginTop: `calc(50vh - ${diameter}px)`,
         marginBottom: `calc(50vh - ${diameter}px)`,
@@ -65,48 +67,61 @@ const BackToTopButton = ({
         <Tooltip>
           <TooltipTrigger asChild>
             <button
+              id="btt-btn"
+              data-testid="btt-btn"
               type="button"
-              onClick={() => window.scrollTo(0, 0)}
+              aria-label="Voltar ao topo da página"
+              title="Voltar ao topo da página"
               style={{ height: `${diameter}px` }}
+              onClick={() => window.scrollTo(0, 0)}
               className="relative flex group rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-blog-foreground-readable-hover"
             >
-              <div className="relative">
-                <svg
-                  className="relative -rotate-90"
-                  style={{ width: `${diameter}px`, height: `${diameter}px` }}
-                >
-                  <circle
-                    cx={outerRadius}
-                    cy={outerRadius}
-                    r={`${innerRadius}px`}
-                    strokeWidth={`${strokeWidth}px`}
-                    strokeDasharray={circunference.current}
-                    className="w-fit h-fit fill-none stroke-blog-background-2"
-                    style={{ strokeDashoffset: 0 }}
-                  />
-                  <circle
-                    id="progress-circle"
-                    cx={outerRadius}
-                    cy={outerRadius}
-                    r={`${innerRadius}px`}
-                    strokeWidth={`${strokeWidth}px`}
-                    strokeDasharray={circunference.current}
-                    style={{ strokeDashoffset: circunference.current }}
-                    className="w-fit h-fit fill-none stroke-blog-foreground-highlight"
-                  />
-                  <circle
-                    id="progress-circle-blur"
-                    cx={outerRadius}
-                    cy={outerRadius}
-                    r={`${innerRadius}px`}
-                    strokeWidth={`${strokeWidth}px`}
-                    strokeDasharray={circunference.current}
-                    style={{ strokeDashoffset: circunference.current }}
-                    className="w-fit h-fit fill-none stroke-blog-foreground-highlight blur-sm"
-                  />
-                </svg>
-                <FaArrowUp className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 text-xl group-hover:animate-bouncing-arrow-up" />
-              </div>
+              <svg
+                className="relative -rotate-90"
+                role="presentation"
+                aria-hidden="true"
+                focusable="false"
+                style={{ width: `${diameter}px`, height: `${diameter}px` }}
+              >
+                <circle
+                  cx={outerRadius}
+                  cy={outerRadius}
+                  r={`${innerRadius}px`}
+                  strokeWidth={`${strokeWidth}px`}
+                  strokeDasharray={circunference.current}
+                  className="w-fit h-fit fill-none stroke-blog-background-2"
+                  style={{ strokeDashoffset: 0 }}
+                />
+                <circle
+                  id="progress-circle"
+                  data-testid="progress-circle"
+                  cx={outerRadius}
+                  cy={outerRadius}
+                  r={`${innerRadius}px`}
+                  strokeWidth={`${strokeWidth}px`}
+                  strokeDasharray={circunference.current}
+                  style={{ strokeDashoffset: circunference.current }}
+                  className="w-fit h-fit fill-none stroke-blog-foreground-highlight"
+                />
+                <circle
+                  id="progress-circle-blur"
+                  data-testid="progress-circle-blur"
+                  cx={outerRadius}
+                  cy={outerRadius}
+                  r={`${innerRadius}px`}
+                  strokeWidth={`${strokeWidth}px`}
+                  strokeDasharray={circunference.current}
+                  style={{ strokeDashoffset: circunference.current }}
+                  className="w-fit h-fit fill-none stroke-blog-foreground-highlight blur-sm"
+                />
+              </svg>
+              <FaArrowUp
+                id="btt-arrow-up"
+                data-testid="btt-arrow-up"
+                aria-hidden="true"
+                focusable="false"
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 text-xl group-hover:animate-bouncing-arrow-up"
+              />
             </button>
           </TooltipTrigger>
           <TooltipContent>

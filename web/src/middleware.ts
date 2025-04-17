@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { getUserMeLoader } from "./service/user-me-loader";
+import { getUserMeLoader } from "./service/user/user-me-loader";
 import { protectedRoutes } from "./config/routes";
 
 export async function middleware(request: NextRequest) {
@@ -37,12 +37,11 @@ export async function middleware(request: NextRequest) {
   try {
     const user = await getUserMeLoader();
 
-    // Protecting routes
+    // Protected routes (none yet)
     if (protectedRoutes.includes(currentPath) && !user.ok) {
-      // Store the current path for redirect after login
-      const loginUrl = new URL("/login", request.url);
-      loginUrl.searchParams.set("redirect", currentPath);
-      return NextResponse.redirect(loginUrl);
+      // const loginUrl = new URL("/login", request.url);
+      // loginUrl.searchParams.set("redirect", currentPath);
+      // return NextResponse.redirect(loginUrl);
     }
 
     return NextResponse.next();

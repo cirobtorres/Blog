@@ -16,9 +16,12 @@ export async function GET(
   params: { params: { provider: string } }
 ) {
   const { searchParams } = new URL(request.url);
-  const token = searchParams.get("access_token");
 
-  if (!token) return NextResponse.redirect(new URL("/", request.url));
+  const token = searchParams.get("access_token");
+  const redirectTo = searchParams.get("redirect") ?? "/";
+
+  // if (!token) return NextResponse.redirect(new URL("/", request.url));
+  if (!token) return NextResponse.redirect(new URL(redirectTo, request.url));
 
   const provider = (await params.params).provider;
 
@@ -35,5 +38,6 @@ export async function GET(
 
   (await cookies()).set("jwt", data.jwt, config);
 
-  return NextResponse.redirect(new URL("/", request.url));
+  // return NextResponse.redirect(new URL("/", request.url));
+  return NextResponse.redirect(new URL(redirectTo, request.url));
 }

@@ -8,11 +8,18 @@ import {
 import logout from "../../../../service/logout";
 import Image from "next/image";
 import PopoverLoginContent from "@/components/Authentication/PopoverLoginContent";
+import { useEffect, useState } from "react";
+import { Skeleton } from "@/components/Shadcnui/skeleton";
 
 const HeaderAuthentication = ({ currentUser }: { currentUser: User }) => {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
   return (
     <>
-      {currentUser.ok && (
+      {mounted && currentUser.ok && (
         // hua = header-user-authenticated
         <li
           id="hua"
@@ -73,14 +80,14 @@ const HeaderAuthentication = ({ currentUser }: { currentUser: User }) => {
           </Popover>
         </li>
       )}
-      {!currentUser.ok && (
+      {mounted && !currentUser.ok && (
         // huu = header-user-unauthenticated
         <li id="huu" data-testid="huu">
           <Popover>
             <PopoverTrigger
               id="huu-login-trigger"
               data-testid="huu-login-trigger"
-              className="flex items-center p-0.5 rounded"
+              className="flex items-center rounded"
             >
               <div className="relative flex size-8 shrink-0 overflow-hidden rounded-full">
                 <Image
@@ -96,6 +103,7 @@ const HeaderAuthentication = ({ currentUser }: { currentUser: User }) => {
           </Popover>
         </li>
       )}
+      {!mounted && <Skeleton className="size-8 rounded-full" />}
     </>
   );
 };

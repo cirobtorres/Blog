@@ -74,13 +74,13 @@ const CommentOptions = ({
             <div className="flex flex-col">
               <button
                 onClick={() => setIsEditing(!isEditing)}
-                className="p-2 justify-center cursor-pointer transition-colors duration-500 hover:bg-blog-background-backdrop-hover"
+                className="p-2 justify-center cursor-pointer transition-colors duration-300 hover:text-blog-foreground-readable-hover hover:bg-blog-background-backdrop-hover"
               >
                 Editar
               </button>
               <button
                 onClick={() => setOpenDialog(true)}
-                className="p-2 justify-center cursor-pointer transition-colors duration-500 hover:bg-blog-background-backdrop-hover"
+                className="p-2 justify-center cursor-pointer transition-colors duration-300 hover:text-blog-foreground-readable-hover hover:bg-blog-background-backdrop-hover"
               >
                 Excluir
               </button>

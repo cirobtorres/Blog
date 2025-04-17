@@ -138,7 +138,6 @@ describe("PopoverLoginContent", () => {
         `flex flex-col justify-center items-center gap-1 px-2 pb-2` +
           ` [&_a]:transition-colors [&_a]:duration-500` +
           ` [&_a]:flex [&_a]:justify-center [&_a]:items-center [&_a]:gap-2 [&_a]:py-1 [&_a]:px-3` +
-          ` [&_a]:text-blog-foreground-readable hover:[&_a]:text-blog-foreground-readable-hover` +
           ` [&_a]:bg-opacity-50 [&_a]:rounded [&_a]:w-full`
       );
 

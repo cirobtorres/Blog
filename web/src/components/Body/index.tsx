@@ -1,4 +1,4 @@
-import { getUserMeLoader } from "../../service/user-me-loader";
+import { getUserMeLoader } from "../../service/user/user-me-loader";
 import { FloatingHeader, StaticHeader } from "../Header";
 import Footer from "../Footer";
 
