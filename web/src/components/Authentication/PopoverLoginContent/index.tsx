@@ -6,8 +6,10 @@ import { providers } from "@/config/providers";
 import { loginEmail } from "@/service/login";
 
 const PopoverLoginContent = ({
+  redirectTo,
   align = "start",
 }: {
+  redirectTo: string;
   align?: "center" | "end" | "start";
 }) => {
   return (
@@ -19,7 +21,7 @@ const PopoverLoginContent = ({
       className="shadow-xl rounded-xl max-w-96 p-0"
     >
       <div className="p-2 pb-0">
-        <LoginEmail />
+        <LoginEmail redirectTo={redirectTo} />
         <Or />
       </div>
       <ProviderLogin />
@@ -44,10 +46,12 @@ const initialState = {
   },
 };
 
-const LoginEmail = () => {
+const LoginEmail = ({ redirectTo }: { redirectTo: string }) => {
   const [state, action, pending] = useActionState(
-    (state: PrevState | undefined, formData: FormData) =>
-      loginEmail(state || initialState, formData),
+    (state: PrevState | undefined, formData: FormData) => {
+      formData.set("redirectTo", redirectTo);
+      return loginEmail(state || initialState, formData);
+    },
     initialState
   );
 

@@ -90,7 +90,7 @@ const Trigger = () => {
         ` w-full min-h-9` +
         ` flex items-center` +
         ` border border-blog-border rounded` +
-        ` bg-opacity-50 bg-[#d8d8d8] dark:bg-[#1d1d1d]` +
+        ` bg-[rgba(216,216,216,.5)] dark:bg-[rgba(31,31,31,.75)]` +
         ` hover:bg-blog-border` +
         ` transition-all duration-500` +
         ` group group-focus-visible:bg-blog-border`

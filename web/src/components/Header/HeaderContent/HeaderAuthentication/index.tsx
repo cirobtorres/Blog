@@ -10,13 +10,16 @@ import Image from "next/image";
 import PopoverLoginContent from "@/components/Authentication/PopoverLoginContent";
 import { useEffect, useState } from "react";
 import { Skeleton } from "@/components/Shadcnui/skeleton";
+import { usePathname } from "next/navigation";
 
 const HeaderAuthentication = ({ currentUser }: { currentUser: User }) => {
   const [mounted, setMounted] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     setMounted(true);
   }, []);
+
   return (
     <>
       {mounted && currentUser.ok && (
@@ -99,7 +102,7 @@ const HeaderAuthentication = ({ currentUser }: { currentUser: User }) => {
                 />
               </div>
             </PopoverTrigger>
-            <PopoverLoginContent align="center" />
+            <PopoverLoginContent redirectTo={pathname} align="center" />
           </Popover>
         </li>
       )}

@@ -1,5 +1,5 @@
 import { useParams } from "next/navigation";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import {
   clientCountComments,
   clientDeleteComment,
@@ -25,9 +25,21 @@ import ShowRepliesButton from "./ShowRepliesButton";
 const CommentRow = ({
   comment,
   currentUser,
+  isChild,
+  isTempChild,
+  setParentChildsLength,
+  setParentChilds,
+  setParentCurrent,
+  setParentTemporaryChilds,
 }: {
   comment: CommentProps;
   currentUser: User;
+  isChild?: boolean;
+  isTempChild?: boolean;
+  setParentChilds: Dispatch<SetStateAction<CommentProps[] | []>>;
+  setParentChildsLength: Dispatch<SetStateAction<boolean>>;
+  setParentCurrent?: Dispatch<SetStateAction<boolean>>;
+  setParentTemporaryChilds?: Dispatch<SetStateAction<CommentProps[] | []>>;
 }) => {
   // CommentRow has three comment entities:
   //    1. currentComment;
@@ -41,9 +53,11 @@ const CommentRow = ({
   const [currentComment, setCurrentComment] = useState<CommentProps | null>(
     comment
   );
+  const [currentCommentChildsLength, setCurrentCommentChildsLength] = useState(
+    comment.comments.length > 0
+  );
   // Childs--------------------------------------------------------------------------------
   const [childs, setChilds] = useState<CommentProps[]>([]);
-  const [totalChilds, setTotalChilds] = useState<number>(0);
   // Temporary Childs----------------------------------------------------------------------
   const [temporaryChilds, setTemporaryChilds] = useState<CommentProps[]>([]);
   const [current, setCurrent] = useState(false); // Whether they're visible or not
@@ -106,8 +120,7 @@ const CommentRow = ({
       );
       return [...prevChilds, ...newChilds];
     });
-    setTotalChilds(total);
-    setIsChildrenOnDb(totalChilds > childs.length);
+    setIsChildrenOnDb(total > childs.length);
   }, [page]);
 
   // Create--------------------------------------------------------------------------------
@@ -164,15 +177,45 @@ const CommentRow = ({
   async function onCommentDelete(): Promise<void> {
     return deleteCommentFn
       .execute({ documentId: currentComment?.documentId })
-      .then((documentId) => {
+      .then(async (documentId) => {
+        // parents
         deleteLocalComment(documentId as string);
         setCurrentComment(null);
-        // setChilds((prev: CommentProps[]) =>
-        //   prev.filter((child: CommentProps) => child.documentId !== documentId)
-        // );
-        // setTemporaryChilds((prev: CommentProps[]) =>
-        //   prev.filter((child: CommentProps) => child.documentId !== documentId)
-        // );
+        // childs
+        if (isChild) {
+          setParentChilds((prev) => {
+            const childs = prev.filter(
+              (child) => child.documentId !== documentId
+            );
+            if (childs.length === 0) {
+              setParentChildsLength(false);
+              if (setParentCurrent) setParentCurrent(false);
+            }
+            return childs;
+          });
+        }
+        // tempChilds
+        if (isTempChild) {
+          setParentChilds((prev) => {
+            const childs = prev.filter(
+              (child) => child.documentId !== documentId
+            );
+            if (childs.length === 0) {
+              setParentChildsLength(false);
+              if (setParentCurrent) setParentCurrent(false);
+            }
+            return childs;
+          });
+          if (setParentTemporaryChilds)
+            setParentTemporaryChilds((prev) => {
+              const parentChilds = prev.filter(
+                (child) => child.documentId !== documentId
+              );
+              if (parentChilds.length === 0)
+                if (setParentCurrent) setParentCurrent(false);
+              return parentChilds;
+            });
+        }
       })
       .then(() => {
         toast({ description: "Comentário excluído" });
@@ -230,7 +273,7 @@ const CommentRow = ({
             />
           </div>
         )}
-        {(currentComment.comments?.length > 0 || current) && (
+        {(currentCommentChildsLength || current) && (
           <div className="pl-12">
             <ShowRepliesButton
               isHidden={isChildrenHidden}
@@ -241,10 +284,11 @@ const CommentRow = ({
               isHidden={isChildrenHidden}
               currentUser={currentUser}
               childs={childs}
-              setChilds={setChilds}
               childsOnDb={isChildrenOnDb}
               loading={loading}
               loadMore={loadMore}
+              setParentChilds={setChilds}
+              setParentChildsLength={setCurrentCommentChildsLength}
             />
             {createReplyFnLoading && <CommentLoadingSpinning />}
             {temporaryChilds &&
@@ -253,6 +297,11 @@ const CommentRow = ({
                   key={child.documentId}
                   comment={child}
                   currentUser={currentUser}
+                  setParentCurrent={setCurrent}
+                  isTempChild={current}
+                  setParentChilds={setChilds}
+                  setParentChildsLength={setCurrentCommentChildsLength}
+                  setParentTemporaryChilds={setTemporaryChilds}
                 />
               ))}
           </div>

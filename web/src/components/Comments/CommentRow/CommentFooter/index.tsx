@@ -138,24 +138,27 @@ const CommentFooter = ({
           >
             Responder
           </button>
-          <button className="text-sm p-1 flex items-center gap-1 transition-colors duration-500 text-blog-foreground-readable hover:text-blog-foreground-readable-hover">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="lucide lucide-flag-icon lucide-flag"
-            >
-              <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z" />
-              <line x1="4" x2="4" y1="22" y2="15" />
-            </svg>
-            Reportar
-          </button>
+          {currentUser.data.documentId !==
+            comment.users_permissions_user.documentId && (
+            <button className="text-sm p-1 flex items-center gap-1 transition-colors duration-500 text-blog-foreground-readable hover:text-blog-foreground-readable-hover">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="lucide lucide-flag-icon lucide-flag"
+              >
+                <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z" />
+                <line x1="4" x2="4" y1="22" y2="15" />
+              </svg>
+              Reportar
+            </button>
+          )}
         </div>
       )
     );
@@ -198,7 +201,7 @@ const CommentFooter = ({
               Responder
             </div>
           </PopoverTrigger>
-          <PopoverTrigger>
+          {/* <PopoverTrigger>
             <div className="text-sm p-1 flex items-center gap-1 transition-colors duration-500 text-blog-foreground-readable hover:text-blog-foreground-readable-hover">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -217,7 +220,7 @@ const CommentFooter = ({
               </svg>
               Reportar
             </div>
-          </PopoverTrigger>
+          </PopoverTrigger> */}
         </div>
         <PopoverLoginContent align="center" />
       </Popover>

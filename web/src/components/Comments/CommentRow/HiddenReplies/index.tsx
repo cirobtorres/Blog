@@ -6,18 +6,20 @@ const HiddenReplies = ({
   currentUser,
   childs,
   childsOnDb,
-  setChilds,
   isHidden,
   loadMore,
   loading,
+  setParentChilds,
+  setParentChildsLength,
 }: {
   currentUser: User;
   childs: CommentProps[];
   childsOnDb: boolean;
-  setChilds: Dispatch<SetStateAction<CommentProps[]>>;
   isHidden: boolean;
-  loadMore: () => void;
   loading: boolean;
+  loadMore: () => void;
+  setParentChilds: Dispatch<SetStateAction<CommentProps[] | []>>;
+  setParentChildsLength: Dispatch<SetStateAction<boolean>>;
 }) => {
   return (
     <div
@@ -29,7 +31,9 @@ const HiddenReplies = ({
         <CommentRow
           key={child.documentId}
           comment={child}
-          setMyChilds={setChilds}
+          setParentChilds={setParentChilds}
+          isChild={!!child.parent_id}
+          setParentChildsLength={setParentChildsLength}
           currentUser={currentUser}
         />
       ))}

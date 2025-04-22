@@ -58,7 +58,7 @@ const loginEmail = async (prevState: PrevState, formData: FormData) => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { jwt, user } = await login.json();
 
-    const redirectParam = formData.get("redirect")?.toString() ?? "/";
+    const redirectParam = formData.get("redirectTo")?.toString() ?? "/";
     const redirectUrl = `/connect/local/redirect?jwt=${jwt}&redirect=${encodeURIComponent(
       redirectParam
     )}`;
