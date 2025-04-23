@@ -11,16 +11,18 @@ import {
 import { toast } from "../../../../../hooks/useToast";
 
 function cleanCodeBeforeCopy(code: string) {
-  return code.replace(
-    /(?:\/\/|#|--|\*) \[!code (highlight|filename):[^\]]+\]/g,
-    ""
-    /*
+  return code
+    .replace(
+      /^(?:\/\/|#|--|\*)\s*\[!code\s+(?:filepath|highlight)(?::[^\]]+)?\]\s*\r?\n?/gm,
+      ""
+      /*
       // → JS, TS, C, Java
       # → Python, Shell Script, Ruby
       -- → SQL, Lua
       * → JSDoc, JavaDoc
     */
-  );
+    )
+    .trim();
 }
 
 const CopyButton = ({ htmlToRender }: { htmlToRender: string }) => {

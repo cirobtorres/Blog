@@ -1,15 +1,16 @@
-import Image from "next/image";
-import { FaQuestion } from "react-icons/fa";
 import * as cheerio from "cheerio";
+import Image from "next/image";
 import CopyButton from "./CopyButton";
 import SliderCarousel from "../../../Shadcnui/thumbCarousel";
 import QuizObjects from "./QuizObject";
+import { FaQuestion } from "react-icons/fa";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "../../../Shadcnui/accordion";
+import { extractCodeData } from "@/utils/extractCodeData";
 import CodeBlock from "./ControlCodeGrid";
 
 const ParseRichTextBlocks = ({ body }: { body: string }) => {
@@ -89,23 +90,21 @@ const ParseRichTextBlocks = ({ body }: { body: string }) => {
     finalBlock.htmlToRender = blockHtml.html();
 
     if (finalBlock.tagType === "PRE") {
-      // [!code file:<path/to/file/filenamte.extension>]
-      const fileRegex = /\/\/\s*\[!code\s+file:([^\]]+)\]/;
-      const match = finalBlock.htmlToRender.match(fileRegex);
-      const fileName = match ? match[1] : null;
-      const cleanHtmlToRender = finalBlock.htmlToRender.replace(fileRegex, "");
+      const { filepath, htmlToRender } = extractCodeData(
+        finalBlock.htmlToRender
+      );
 
       return (
         <article key={finalBlock.id} className="w-full relative mb-4">
           <div className="flex items-center relative w-full h-12 pl-6 pr-12 border-t border-x border-blog-border rounded-t-xl bg-blog-background-2">
-            {fileName && (
+            {filepath && (
               <span className="text-sm text-[#808080] transition-all duration-500 overflow-x-auto [&::-webkit-scrollbar]:hidden">
-                {fileName}
+                {filepath}
               </span>
             )}
-            <CopyButton htmlToRender={cleanHtmlToRender} />
+            <CopyButton htmlToRender={htmlToRender} />
           </div>
-          <CodeBlock id={finalBlock.id} htmlToRender={cleanHtmlToRender} />
+          <CodeBlock htmlToRender={htmlToRender} />
         </article>
       );
     }

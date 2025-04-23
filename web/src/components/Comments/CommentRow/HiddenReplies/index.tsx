@@ -4,18 +4,18 @@ import LoadMoreButton from "../../LoadMoreButton";
 
 const HiddenReplies = ({
   currentUser,
-  childs,
-  childsOnDb,
-  isHidden,
-  loadMore,
+  currentChilds,
+  isChildrenOnDb,
+  isChildrenHidden,
   loading,
+  loadMore,
   setParentChilds,
   setParentChildsLength,
 }: {
   currentUser: User;
-  childs: CommentProps[];
-  childsOnDb: boolean;
-  isHidden: boolean;
+  currentChilds: CommentProps[];
+  isChildrenOnDb: boolean;
+  isChildrenHidden: boolean;
   loading: boolean;
   loadMore: () => void;
   setParentChilds: Dispatch<SetStateAction<CommentProps[] | []>>;
@@ -24,20 +24,20 @@ const HiddenReplies = ({
   return (
     <div
       className={`${
-        isHidden ? "hidden" : "block"
+        isChildrenHidden ? "hidden" : "block"
       } flex flex-col justify-center`}
     >
-      {childs.map((child: CommentProps) => (
+      {currentChilds.map((currentChild: CommentProps) => (
         <CommentRow
-          key={child.documentId}
-          comment={child}
-          setParentChilds={setParentChilds}
-          isChild={!!child.parent_id}
-          setParentChildsLength={setParentChildsLength}
+          key={currentChild.documentId}
+          comment={currentChild}
           currentUser={currentUser}
+          isChild={!!currentChild.parent_id}
+          setParentChilds={setParentChilds}
+          setParentChildsLength={setParentChildsLength}
         />
       ))}
-      {childsOnDb && <LoadMoreButton func={loadMore} loadFunc={loading} />}
+      {isChildrenOnDb && <LoadMoreButton func={loadMore} loadFunc={loading} />}
     </div>
   );
 };

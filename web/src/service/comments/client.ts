@@ -62,9 +62,13 @@ export const useAsyncFn = (
         setError(null);
         return data;
       })
-      .catch((error) => {
+      .catch((error: unknown) => {
         setValue(null);
-        setError(error.message);
+        if (error instanceof Error) {
+          setError(error.message);
+        } else {
+          setError(String(error));
+        }
       })
       .finally(() => {
         setLoading(false);
@@ -93,13 +97,11 @@ export const clientCountComments = async (
         parent_id,
       },
     })
-    .then((res) => {
-      const typedRes = res as {
-        comments_connection: { pageInfo: { total: number } };
-      };
+    .then((res: { comments_connection: { pageInfo: { total: number } } }) => {
+      const typedRes = res;
       return typedRes.comments_connection.pageInfo.total;
     })
-    .catch((error) => {
+    .catch((error: unknown) => {
       console.error(error);
       return Promise.reject(new Error("Failed to fetch count comments"));
     });
@@ -138,13 +140,15 @@ export const clientGetComments = async (
       pagination,
       sort,
     })
-    .then((res) => {
-      const typedRes = res as {
+    .then(
+      (res: {
         comments_connection: { nodes: CommentProps[]; pageInfo: PageInfo };
-      };
-      return typedRes.comments_connection.nodes;
-    })
-    .catch((error) => {
+      }) => {
+        const typedRes = res;
+        return typedRes.comments_connection.nodes;
+      }
+    )
+    .catch((error: unknown) => {
       console.error(error);
       return Promise.reject(new Error("Failed to fetch get comments"));
     });
@@ -157,11 +161,11 @@ export const clientGetComment = async ({
 }) => {
   return graphqlCommentClient
     .request(GET_COMMENT, { documentId })
-    .then((res) => {
-      const { comment } = res as { comment: CommentProps };
+    .then((res: { comment: CommentProps }) => {
+      const { comment } = res;
       return { data: comment };
     })
-    .catch((error) => {
+    .catch((error: unknown) => {
       console.error(error);
       return Promise.reject(new Error("Failed to fetch get comment"));
     });
@@ -188,11 +192,11 @@ export const clientSaveComment = async ({
         parent_id,
       },
     })
-    .then((res) => {
-      const typedRes = res as { createComment: CommentProps };
+    .then((res: { createComment: CommentProps }) => {
+      const typedRes = res;
       return typedRes.createComment;
     })
-    .catch((error) => {
+    .catch((error: unknown) => {
       console.error(error);
       return Promise.reject(new Error("Failed to fetch save comment"));
     });
@@ -213,13 +217,11 @@ export const clientUpdateComment = async ({
         body: sanitizedBody,
       },
     })
-    .then((res) => {
-      const typedRes = res as {
-        updateComment: CommentProps;
-      };
+    .then((res: { updateComment: CommentProps }) => {
+      const typedRes = res;
       return typedRes.updateComment;
     })
-    .catch((error) => {
+    .catch((error: unknown) => {
       console.error(error);
       return Promise.reject(new Error("Failed to fetch update comment"));
     });
@@ -234,11 +236,11 @@ export const clientDeleteComment = async ({
     .request(DELETE_COMMENT, {
       documentId,
     })
-    .then((res) => {
-      const typedRes = res as { deleteComment: { documentId: string } };
+    .then((res: { deleteComment: { documentId: string } }) => {
+      const typedRes = res;
       return typedRes.deleteComment.documentId;
     })
-    .catch((error) => {
+    .catch((error: unknown) => {
       console.error(error);
       return Promise.reject(new Error("Failed to fetch delete comment"));
     });

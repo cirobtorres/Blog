@@ -28,14 +28,23 @@ const highlightPreBlocks = (htmlContent: string, highlighter: Highlighter) => {
             /*
             https://shiki.style/packages/transformers
   
+            JS, TS, C, Java code:
             // [!code highlight]
             // [!code highlight:<numbers_of_lines>]
   
-            Python code:
-              # [!code highlight]
-              # [!code highlight:<numbers_of_lines>]
+            Python, Shell Script, Ruby code:
+            # [!code highlight]
+            # [!code highlight:<numbers_of_lines>]
+            
+            SQL, Lua code:
+            -- [!code highlight]
+            -- [!code highlight:<numbers_of_lines>]
+            
+            JSDoc, JavaDoc code:
+            * [!code highlight]
+            * [!code highlight:<numbers_of_lines>]
               
-            outputs: 
+            output: 
               <span class="line highlighted">
             */
           }),

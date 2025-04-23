@@ -29,25 +29,25 @@ const CommentRow = ({
   isTempChild,
   setParentChildsLength,
   setParentChilds,
-  setParentCurrent,
-  setParentTemporaryChilds,
+  setExistsTempChildsOnParent,
+  setTemporaryChildsOnParent,
 }: {
   comment: CommentProps;
   currentUser: User;
   isChild?: boolean;
   isTempChild?: boolean;
-  setParentChilds: Dispatch<SetStateAction<CommentProps[] | []>>;
-  setParentChildsLength: Dispatch<SetStateAction<boolean>>;
-  setParentCurrent?: Dispatch<SetStateAction<boolean>>;
-  setParentTemporaryChilds?: Dispatch<SetStateAction<CommentProps[] | []>>;
+  setParentChilds?: Dispatch<SetStateAction<CommentProps[] | []>>;
+  setParentChildsLength?: Dispatch<SetStateAction<boolean>>;
+  setExistsTempChildsOnParent?: Dispatch<SetStateAction<boolean>>;
+  setTemporaryChildsOnParent?: Dispatch<SetStateAction<CommentProps[] | []>>;
 }) => {
   // CommentRow has three comment entities:
   //    1. currentComment;
   //    2. childs (currentComment childs);
-  //    3. temporaryChilds (childs already saved but not yet queried from the database).
+  //    3. tempChilds (childs already saved but not yet queried from the database).
   // childs are assigned when "Respostas" is opened (areChildrenHidden = false).
-  // temporaryChilds are comments immediatly created (exists only within the same session they've been created).
-  // temporaryChilds are only rendered when "Respostas" is hidden (areChildrenHidden = true).
+  // tempChilds are comments immediatly created (exists only within the same session they've been created).
+  // tempChilds are only rendered when "Respostas" is hidden (areChildrenHidden = true).
 
   // Comment----------------------------------------------------------------------
   const [currentComment, setCurrentComment] = useState<CommentProps | null>(
@@ -57,10 +57,10 @@ const CommentRow = ({
     comment.comments.length > 0
   );
   // Childs--------------------------------------------------------------------------------
-  const [childs, setChilds] = useState<CommentProps[]>([]);
+  const [currentChilds, setCurrentChilds] = useState<CommentProps[]>([]);
   // Temporary Childs----------------------------------------------------------------------
-  const [temporaryChilds, setTemporaryChilds] = useState<CommentProps[]>([]);
-  const [current, setCurrent] = useState(false); // Whether they're visible or not
+  const [tempChilds, setTempChilds] = useState<CommentProps[]>([]); // Temporary childs
+  const [existsTempChilds, setExistsTempChilds] = useState(false); // Whether they're visible or not
   // Params--------------------------------------------------------------------------------
   const params: { documentId: string; slug: string } = useParams();
   const { documentId }: { documentId: string } = params;
@@ -84,7 +84,7 @@ const CommentRow = ({
 
   // Visibility----------------------------------------------------------------------------
   function toggleRepliesVisibility() {
-    setTemporaryChilds([]);
+    setTempChilds([]);
     setIsChildrenHidden(!isChildrenHidden);
     if (page < 1) loadMore(); // When clicking for the first time (first query to db).
   }
@@ -94,7 +94,7 @@ const CommentRow = ({
 
   const { loading } = useAsync(async () => {
     if (page === 0) return;
-    const [moreChilds, total] = await Promise.all([
+    const [moreChilds, total]: [CommentProps[], number] = await Promise.all([
       // clientGetComments retrieves the comments.
       clientGetComments(
         documentId as string, // Article documentId
@@ -109,7 +109,7 @@ const CommentRow = ({
         }
       ),
     ]);
-    setChilds((prevChilds) => {
+    setCurrentChilds((prevChilds) => {
       const newChilds = moreChilds.filter(
         (newChild) =>
           !prevChilds.some(
@@ -120,7 +120,7 @@ const CommentRow = ({
       );
       return [...prevChilds, ...newChilds];
     });
-    setIsChildrenOnDb(total > childs.length);
+    setIsChildrenOnDb(total > moreChilds.length);
   }, [page]);
 
   // Create--------------------------------------------------------------------------------
@@ -135,19 +135,22 @@ const CommentRow = ({
       })
       .then(async (comment) => {
         setIsReplying(false);
-        createLocalReply(comment as CommentProps);
+        createLocalReply(comment);
         const { data: newComment } = await clientGetComment({
           documentId: (comment as CommentProps).documentId,
         });
-        setCurrent(true);
+        setExistsTempChilds(true);
         if (isChildrenHidden)
-          setTemporaryChilds((prevChilds) => [...prevChilds, newComment]);
-        setChilds((prevChilds) => [...prevChilds, newComment as CommentProps]);
+          setTempChilds((prevChilds) => [...prevChilds, newComment]);
+        setCurrentChilds((prevChilds) => [
+          ...prevChilds,
+          newComment as CommentProps,
+        ]);
       })
       .then(() => {
         toast({ description: "Comentário criado!" });
       })
-      .catch((error) => {
+      .catch((error: unknown) => {
         console.error(error);
         toast({ description: "Erro ao criar comentário" });
       })
@@ -161,13 +164,13 @@ const CommentRow = ({
       .then((updatedComment) => {
         return updatedComment as CommentProps;
       })
-      .then((updatedComment) => {
+      .then((updatedComment: CommentProps) => {
         setIsEditing(false);
         updateLocalComment(updatedComment);
         setCurrentComment(() => updatedComment);
         toast({ description: "Comentário editado!" });
       })
-      .catch((error) => {
+      .catch((error: unknown) => {
         toast({ description: "Erro ao editar comentário" });
         console.error(error);
       });
@@ -177,42 +180,43 @@ const CommentRow = ({
   async function onCommentDelete(): Promise<void> {
     return deleteCommentFn
       .execute({ documentId: currentComment?.documentId })
-      .then(async (documentId) => {
+      .then((documentId) => {
         // parents
         deleteLocalComment(documentId as string);
         setCurrentComment(null);
         // childs
-        if (isChild) {
+        if (isChild && setParentChilds && setParentChildsLength) {
           setParentChilds((prev) => {
             const childs = prev.filter(
               (child) => child.documentId !== documentId
             );
             if (childs.length === 0) {
               setParentChildsLength(false);
-              if (setParentCurrent) setParentCurrent(false);
+              if (setExistsTempChildsOnParent)
+                setExistsTempChildsOnParent(false);
             }
             return childs;
           });
         }
         // tempChilds
-        if (isTempChild) {
+        if (isTempChild && setParentChilds && setParentChildsLength) {
           setParentChilds((prev) => {
             const childs = prev.filter(
               (child) => child.documentId !== documentId
             );
             if (childs.length === 0) {
               setParentChildsLength(false);
-              if (setParentCurrent) setParentCurrent(false);
+              if (setExistsTempChildsOnParent)
+                setExistsTempChildsOnParent(false);
             }
             return childs;
           });
-          if (setParentTemporaryChilds)
-            setParentTemporaryChilds((prev) => {
+          if (setTemporaryChildsOnParent && setExistsTempChildsOnParent)
+            setTemporaryChildsOnParent((prev) => {
               const parentChilds = prev.filter(
                 (child) => child.documentId !== documentId
               );
-              if (parentChilds.length === 0)
-                if (setParentCurrent) setParentCurrent(false);
+              if (parentChilds.length === 0) setExistsTempChildsOnParent(false);
               return parentChilds;
             });
         }
@@ -221,7 +225,7 @@ const CommentRow = ({
         toast({ description: "Comentário excluído" });
         return;
       })
-      .catch((error) => {
+      .catch((error: unknown) => {
         toast({ description: "Erro ao excluir comentário" });
         console.error(error);
         return;
@@ -258,7 +262,7 @@ const CommentRow = ({
             isEditing={isEditing}
             currentUser={currentUser}
             setIsEditing={setIsEditing}
-            setChilds={setChilds}
+            setChilds={setCurrentChilds}
             onDelete={onCommentDelete}
           />
         </div>
@@ -273,35 +277,35 @@ const CommentRow = ({
             />
           </div>
         )}
-        {(currentCommentChildsLength || current) && (
+        {(currentCommentChildsLength || existsTempChilds) && (
           <div className="pl-12">
             <ShowRepliesButton
-              isHidden={isChildrenHidden}
+              isChildrenHidden={isChildrenHidden}
               alternateHidden={toggleRepliesVisibility}
             />
             {loading && page === 1 && <CommentLoadingSpinning />}
             <HiddenReplies
-              isHidden={isChildrenHidden}
+              isChildrenHidden={isChildrenHidden}
               currentUser={currentUser}
-              childs={childs}
-              childsOnDb={isChildrenOnDb}
+              currentChilds={currentChilds}
+              isChildrenOnDb={isChildrenOnDb}
               loading={loading}
               loadMore={loadMore}
-              setParentChilds={setChilds}
+              setParentChilds={setCurrentChilds}
               setParentChildsLength={setCurrentCommentChildsLength}
             />
             {createReplyFnLoading && <CommentLoadingSpinning />}
-            {temporaryChilds &&
-              temporaryChilds.map((child) => (
+            {tempChilds &&
+              tempChilds.map((child) => (
                 <CommentRow
                   key={child.documentId}
                   comment={child}
                   currentUser={currentUser}
-                  setParentCurrent={setCurrent}
-                  isTempChild={current}
-                  setParentChilds={setChilds}
+                  setExistsTempChildsOnParent={setExistsTempChilds}
+                  isTempChild={existsTempChilds}
+                  setParentChilds={setCurrentChilds}
                   setParentChildsLength={setCurrentCommentChildsLength}
-                  setParentTemporaryChilds={setTemporaryChilds}
+                  setTemporaryChildsOnParent={setTempChilds}
                 />
               ))}
           </div>

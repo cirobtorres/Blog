@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import Link from "next/link";
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -30,26 +29,24 @@ const BlogNavigationMenu = () => {
     >
       <NavigationMenuList>
         <NavigationMenuItem>
-          <Link href="/artigos" legacyBehavior passHref>
-            <NavigationMenuLink
-              className={`text-sm w-20 ${
-                isArticlesActive ? "text-blog-foreground-highlight " : ""
-              } ${navigationMenuTriggerStyle()}`}
-            >
-              Artigos
-            </NavigationMenuLink>
-          </Link>
+          <NavigationMenuLink
+            href="/artigos"
+            className={`text-sm w-20 ${
+              isArticlesActive ? "text-blog-foreground-highlight " : ""
+            } ${navigationMenuTriggerStyle()}`}
+          >
+            Artigos
+          </NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <Link href="/sobre" legacyBehavior passHref>
-            <NavigationMenuLink
-              className={`text-sm w-20 ${
-                isAboutActive ? "text-blog-foreground-highlight " : ""
-              } ${navigationMenuTriggerStyle()}`}
-            >
-              Sobre
-            </NavigationMenuLink>
-          </Link>
+          <NavigationMenuLink
+            href="/sobre"
+            className={`text-sm w-20 ${
+              isAboutActive ? "text-blog-foreground-highlight " : ""
+            } ${navigationMenuTriggerStyle()}`}
+          >
+            Sobre
+          </NavigationMenuLink>
         </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>

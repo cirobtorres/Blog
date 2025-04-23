@@ -7,6 +7,7 @@ import Placeholder from "@tiptap/extension-placeholder";
 import Text from "@tiptap/extension-text";
 import CharacterCount from "@tiptap/extension-character-count";
 import PopoverLoginContent from "@/components/Authentication/PopoverLoginContent";
+import { usePathname } from "next/navigation";
 
 const characterLimit = 512;
 
@@ -25,6 +26,7 @@ const Editor = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [dialog, setDialog] = useState(false);
+  const pathname = usePathname();
 
   const editor = useEditor(
     {
@@ -54,23 +56,6 @@ const Editor = ({
         },
       },
       content: initialContent,
-      // onUpdate: ({ editor }) => {
-      //   // Prevents user from adding multiple empty paragraphs
-      //   const jsonContent = editor.getJSON();
-      //   jsonContent.content = jsonContent.content?.filter(
-      //     (node, index, arr) => {
-      //       if (node.type === "paragraph" && !node.content) {
-      //         return (
-      //           index === 0 ||
-      //           arr[index - 1].type !== "paragraph" ||
-      //           arr[index - 1].content
-      //         );
-      //       }
-      //       return true;
-      //     }
-      //   );
-      //   editor.commands.setContent(jsonContent);
-      // },
     },
     [currentUser.ok]
   );
@@ -122,7 +107,7 @@ const Editor = ({
             <div className="absolute top-[calc(100%)] left-1/2 -translate-x-1/2 w-0 h-[2px] bg-blog-foreground-highlight group-focus-within:w-full group-focus-within:duration-200" />
           </EditorContent>
         </PopoverTrigger>
-        <PopoverLoginContent />
+        <PopoverLoginContent redirectTo={pathname} />
       </Popover>
       <div className="h-8 flex shrink-0 mt-2">
         <div className="flex-1 flex items-center gap-4">

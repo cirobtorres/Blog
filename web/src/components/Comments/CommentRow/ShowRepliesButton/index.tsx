@@ -1,8 +1,8 @@
 const ShowRepliesButton = ({
-  isHidden,
+  isChildrenHidden,
   alternateHidden,
 }: {
-  isHidden: boolean;
+  isChildrenHidden: boolean;
   alternateHidden: () => void;
 }) => {
   return (
@@ -22,7 +22,7 @@ const ShowRepliesButton = ({
         strokeLinecap="round"
         strokeLinejoin="round"
         className="lucide lucide-chevron-down duration-100"
-        style={{ rotate: isHidden ? "0deg" : "180deg" }}
+        style={{ rotate: isChildrenHidden ? "0deg" : "180deg" }}
       >
         <path d="m6 9 6 6 6-6" />
       </svg>

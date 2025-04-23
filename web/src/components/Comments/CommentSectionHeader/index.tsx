@@ -37,7 +37,7 @@ const CommentSectionHeader = ({ articleId }: { articleId: string }) => {
   return (
     <div
       id="comment-session-header"
-      className="pt-20 flex justify-center items-center mx-auto gap-2 mb-12 max-[600px]:flex-col"
+      className="pt-20 flex justify-center items-center mx-auto gap-2 mb-12 max-[600px]:flex-col outline-none"
       tabIndex={-1}
     >
       <h3 className="flex items-center h-12 px-2 text-3xl font-extrabold">

@@ -1,17 +1,16 @@
 "use client";
 
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { useParams } from "next/navigation";
 import {
   clientCountComments,
   clientGetComments,
   useAsync,
 } from "@/service/comments/client";
-// import { CommentLoadingSkeleton } from "../components/Comments/CommentLoading";
 
 type CommentProviderProps = {
   comments: CommentProps[];
-  pageLengthMemmorized: boolean;
+  hasDbMoreComments: boolean;
   loading: boolean;
   loadMore: () => void;
   changeSorting: (documentId: string[]) => void;
@@ -23,7 +22,7 @@ type CommentProviderProps = {
 
 export const CommentContext = React.createContext<CommentProviderProps>({
   comments: [],
-  pageLengthMemmorized: false,
+  hasDbMoreComments: false,
   loading: false,
   loadMore: () => {},
   changeSorting: () => {},
@@ -35,45 +34,51 @@ export const CommentContext = React.createContext<CommentProviderProps>({
 
 export function CommentProvider({ children }: { children: React.ReactNode }) {
   const { documentId } = useParams();
-  const [page, setPage] = useState(1);
+  const [start, setStart] = useState(0);
+  const [counterDelete, setCounterDelete] = useState(0);
 
-  const pageSize = 5;
+  const limit = 5;
 
   const [comments, setComments] = useState<CommentProps[]>([]);
-  const [totalComments, setTotalComments] = useState<number>(0);
+  const [countDBComments, setCountDBComments] = useState<number>(0);
   const [sort, setSort] = useState(["createdAt:desc"]);
 
   const { loading } = useAsync(async () => {
     const [moreComments, total] = await Promise.all([
-      clientGetComments(documentId as string, { page, pageSize }, null, sort),
+      clientGetComments(documentId as string, { start, limit }, null, sort),
       clientCountComments(documentId as string, { documentId: { eq: null } }),
     ]);
+    if (moreComments.length === 0) return;
     setComments((prevComments) => {
       const newComments = moreComments.filter(
-        (newComment) =>
+        (newComment: CommentProps) =>
           !prevComments.some(
             (prevComment) => prevComment.documentId === newComment.documentId
           )
       );
       return [...prevComments, ...newComments];
     });
-    setTotalComments(total);
-  }, [documentId, page, sort]);
+    setCountDBComments(() => total);
+  }, [documentId, start, sort]);
 
-  const pageLengthMemmorized = totalComments > comments.length;
+  const hasDbMoreComments = useMemo(() => {
+    return countDBComments > comments.length;
+  }, [countDBComments, comments]);
 
   const changeSorting = useCallback((sorting: string[]) => {
     setSort(sorting);
-    setPage(1);
+    setStart(0);
     setComments([]);
   }, []);
 
   const loadMore = useCallback(() => {
-    setPage((prev) => prev + 1);
-  }, []);
+    setStart((prev) => prev + 5 - counterDelete);
+    setCounterDelete(0);
+  }, [counterDelete]);
 
   const createLocalComment = useCallback((comment: CommentProps) => {
     setComments((prev) => [comment, ...prev]);
+    setCountDBComments((prev) => prev + 1);
   }, []);
 
   const createLocalReply = useCallback((child: CommentProps) => {
@@ -108,13 +113,15 @@ export function CommentProvider({ children }: { children: React.ReactNode }) {
     setComments((prev) =>
       prev.filter((comment) => comment.documentId !== documentId)
     );
+    setCountDBComments((prev) => prev - 1);
+    setCounterDelete((prev) => prev + 1);
   }, []);
 
   return (
     <CommentContext.Provider
       value={{
         comments,
-        pageLengthMemmorized,
+        hasDbMoreComments,
         loading,
         loadMore,
         changeSorting,
@@ -125,13 +132,6 @@ export function CommentProvider({ children }: { children: React.ReactNode }) {
       }}
     >
       {children}
-      {/* {loading && page === 1 ? (
-        <div className="mt-20 mb-20">
-          <CommentLoadingSkeleton />
-        </div>
-      ) : (
-        children
-      )} */}
     </CommentContext.Provider>
   );
 }

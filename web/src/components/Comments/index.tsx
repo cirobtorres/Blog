@@ -1,8 +1,8 @@
 "use client";
 
+import { useCallback } from "react";
 import { useParams } from "next/navigation";
 import { clientSaveComment, useAsyncFn } from "../../service/comments/client";
-import { useCallback } from "react";
 import { useComment } from "../../hooks/useComment";
 import { toast } from "../../hooks/useToast";
 import CommentRow from "./CommentRow";
@@ -17,7 +17,7 @@ export default function Comments({ currentUser }: { currentUser: User }) {
 
   const commentContext = useComment();
   const comments = commentContext?.comments;
-  const pageLengthMemmorized = commentContext?.pageLengthMemmorized;
+  const hasDbMoreComments = commentContext?.hasDbMoreComments;
   const loading = commentContext?.loading;
   const createLocalComment = commentContext?.createLocalComment;
   const loadMore = commentContext?.loadMore;
@@ -32,10 +32,10 @@ export default function Comments({ currentUser }: { currentUser: User }) {
         userId: currentUser.data?.documentId,
       })
         .then((comment) => {
-          createLocalComment(comment as CommentProps);
+          createLocalComment(comment);
           toast({ description: "Comentário criado!" });
         })
-        .catch((error) => {
+        .catch((error: unknown) => {
           console.error(error);
           toast({ description: "Erro ao criar comentário" });
         });
@@ -65,7 +65,7 @@ export default function Comments({ currentUser }: { currentUser: User }) {
           currentUser={currentUser}
         />
       ))}
-      {pageLengthMemmorized && (
+      {hasDbMoreComments && (
         <LoadMoreButton func={loadMore} loadFunc={loading} />
       )}
     </section>
