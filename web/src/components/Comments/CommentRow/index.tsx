@@ -135,7 +135,7 @@ const CommentRow = ({
       })
       .then(async (comment) => {
         setIsReplying(false);
-        createLocalReply(comment);
+        createLocalReply(comment as CommentProps);
         const { data: newComment } = await clientGetComment({
           documentId: (comment as CommentProps).documentId,
         });

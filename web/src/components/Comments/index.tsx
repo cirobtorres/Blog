@@ -32,7 +32,7 @@ export default function Comments({ currentUser }: { currentUser: User }) {
         userId: currentUser.data?.documentId,
       })
         .then((comment) => {
-          createLocalComment(comment);
+          createLocalComment(comment as CommentProps);
           toast({ description: "Comentário criado!" });
         })
         .catch((error: unknown) => {

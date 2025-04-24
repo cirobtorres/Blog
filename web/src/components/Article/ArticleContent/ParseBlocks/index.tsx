@@ -11,7 +11,7 @@ import {
   AccordionTrigger,
 } from "../../../Shadcnui/accordion";
 import { extractCodeData } from "@/utils/extractCodeData";
-import CodeBlock from "./ControlCodeGrid";
+import CodeBlock from "./CodeBlock";
 
 const ParseRichTextBlocks = ({ body }: { body: string }) => {
   const $ = cheerio.load(body);
