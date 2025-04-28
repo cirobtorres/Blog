@@ -3,7 +3,7 @@
 exports[`SearchBar matches the snapshot 1`] = `
 <DocumentFragment>
   <button
-    aria-controls="radix-:ri:"
+    aria-controls="radix-«ri»"
     aria-expanded="false"
     aria-haspopup="dialog"
     class="w-full rounded flex-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-blog-foreground-readable-hover group"
@@ -12,7 +12,7 @@ exports[`SearchBar matches the snapshot 1`] = `
     type="button"
   >
     <div
-      class="relative w-full min-h-9 flex items-center border border-blog-border rounded bg-opacity-50 bg-[#d8d8d8] dark:bg-[#1d1d1d] hover:bg-blog-border transition-all duration-500 group group-focus-visible:bg-blog-border"
+      class="relative w-full min-h-9 flex items-center border border-blog-border rounded bg-[rgba(216,216,216,.5)] dark:bg-[rgba(31,31,31,.75)] hover:bg-blog-border transition-all duration-500 group group-focus-visible:bg-blog-border"
       data-testid="search-bar-trigger"
     >
       <svg

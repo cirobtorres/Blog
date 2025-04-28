@@ -30,7 +30,7 @@ const CommentRow = ({
   setParentChildsLength,
   setParentChilds,
   setExistsTempChildsOnParent,
-  setTemporaryChildsOnParent,
+  setTempChildsOnParent,
 }: {
   comment: CommentProps;
   currentUser: User;
@@ -39,7 +39,7 @@ const CommentRow = ({
   setParentChilds?: Dispatch<SetStateAction<CommentProps[] | []>>;
   setParentChildsLength?: Dispatch<SetStateAction<boolean>>;
   setExistsTempChildsOnParent?: Dispatch<SetStateAction<boolean>>;
-  setTemporaryChildsOnParent?: Dispatch<SetStateAction<CommentProps[] | []>>;
+  setTempChildsOnParent?: Dispatch<SetStateAction<CommentProps[] | []>>;
 }) => {
   // CommentRow has three comment entities:
   //    1. currentComment;
@@ -211,8 +211,8 @@ const CommentRow = ({
             }
             return childs;
           });
-          if (setTemporaryChildsOnParent && setExistsTempChildsOnParent)
-            setTemporaryChildsOnParent((prev) => {
+          if (setTempChildsOnParent && setExistsTempChildsOnParent)
+            setTempChildsOnParent((prev) => {
               const parentChilds = prev.filter(
                 (child) => child.documentId !== documentId
               );
@@ -305,7 +305,7 @@ const CommentRow = ({
                   isTempChild={existsTempChilds}
                   setParentChilds={setCurrentChilds}
                   setParentChildsLength={setCurrentCommentChildsLength}
-                  setTemporaryChildsOnParent={setTempChilds}
+                  setTempChildsOnParent={setTempChilds}
                 />
               ))}
           </div>

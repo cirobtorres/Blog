@@ -7,7 +7,6 @@ import { useComment } from "../../hooks/useComment";
 import { toast } from "../../hooks/useToast";
 import CommentRow from "./CommentRow";
 import Editor from "./Editor";
-import { Avatar } from "./Avatar";
 import LoadMoreButton from "./LoadMoreButton";
 import CommentSectionHeader from "./CommentSectionHeader";
 
@@ -55,8 +54,7 @@ export default function Comments({ currentUser }: { currentUser: User }) {
     >
       <CommentSectionHeader articleId={documentId} />
       <div className="flex flex-col mb-8">
-        <Avatar currentUser={currentUser} />
-        <Editor currentUser={currentUser} onSubmit={onCommentCreate} />
+        <Editor root currentUser={currentUser} onSubmit={onCommentCreate} />
       </div>
       {comments?.map((comment: CommentProps) => (
         <CommentRow

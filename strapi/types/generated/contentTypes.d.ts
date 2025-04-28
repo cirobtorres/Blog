@@ -1192,13 +1192,13 @@ export interface PluginUsersPermissionsUser
   };
   options: {
     draftAndPublish: false;
-    timestamps: true;
   };
   attributes: {
     article_likes: Schema.Attribute.Relation<
       'oneToMany',
       'api::article-like.article-like'
     >;
+    avatar: Schema.Attribute.String;
     blocked: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     comment_likes: Schema.Attribute.Relation<
       'oneToMany',

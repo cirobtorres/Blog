@@ -1,13 +1,11 @@
 import { faker } from "@faker-js/faker";
 import { act, render, screen } from "@testing-library/react";
-import {
-  ArticleCard,
-  ArticleCardList,
-} from "../../../src/components/Cards/ArticleCardList";
+import { ArticleCardList } from "../../../src/components/Cards/ArticleCardList";
 import { requestBackEndImage } from "../../../__mocks__/utilities/mountNextImage";
 import { formatDateToCustomFormat } from "@/utils/dates";
 import { axe, toHaveNoViolations } from "jest-axe";
 import { mockArticles } from "../../../__mocks__/mockArticles";
+import ArticleCard from "@/components/Cards/ArticleCard";
 
 faker.seed(1); // Snapshots
 

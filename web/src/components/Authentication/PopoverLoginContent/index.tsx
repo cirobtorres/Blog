@@ -4,14 +4,14 @@ import { CommentLoadingSpinning } from "@/components/Comments/CommentLoading";
 import { PopoverContent } from "@/components/Shadcnui/popover";
 import { providers } from "@/config/providers";
 import { loginEmail } from "@/service/login";
+import { usePathname } from "next/navigation";
 
 const PopoverLoginContent = ({
-  redirectTo,
   align = "start",
 }: {
-  redirectTo: string;
   align?: "center" | "end" | "start";
 }) => {
+  const pathname = usePathname();
   return (
     <PopoverContent
       // huu = header-user-unauthenticated
@@ -21,7 +21,7 @@ const PopoverLoginContent = ({
       className="shadow-xl rounded-xl max-w-96 p-0"
     >
       <div className="p-2 pb-0">
-        <LoginEmail redirectTo={redirectTo} />
+        <LoginEmail redirectTo={pathname} />
         <Or />
       </div>
       <ProviderLogin />
@@ -176,12 +176,19 @@ const Or = () => {
   );
 };
 
+// function ProviderLogin({ redirectTo }: { redirectTo: string }) {
 function ProviderLogin() {
   // Do NEVER switch URL localhost for IP 127.0.0.1
   const backendUrl =
     process.env.NEXT_PUBLIC_BACKEND_URL ?? "http://localhost:1337";
 
   const generateProviderUrl = (provider: string) => {
+    // Redirect does not work for providers
+    // Strapi ignores redirect params
+    // The redirect for a provider is hardcoded
+    // return `${backendUrl}/api/connect/${provider}/redirect?redirect=${encodeURIComponent(
+    //   redirectTo
+    // )}`;
     return `${backendUrl}/api/connect/${provider}`;
   };
 

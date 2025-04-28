@@ -9,7 +9,7 @@
     "displayName": "User"
   },
   "options": {
-    "timestamps": true
+    "draftAndPublish": false
   },
   "attributes": {
     "username": {
@@ -82,6 +82,9 @@
       "relation": "oneToMany",
       "target": "api::article-like.article-like",
       "mappedBy": "users_permissions_user"
+    },
+    "avatar": {
+      "type": "string"
     }
   }
 }

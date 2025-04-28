@@ -1,5 +1,5 @@
 import { getArticles } from "../../service/articles";
-import { ArticleCard } from "../Cards/ArticleCardList";
+import ArticleCard from "../Cards/ArticleCard";
 import { Carousel, CarouselContent, CarouselItem } from "../Shadcnui/carousel";
 
 const RelatedArticles = async () => {
@@ -36,14 +36,7 @@ const RelatedArticles = async () => {
                     id={`rac-item-${article.documentId}`} // related-article-carousel
                     data-testid={`rac-item-${article.documentId}`} // related-article-carousel
                     key={article.documentId}
-                    className={
-                      `max-w-96` +
-                      ` transition-shadow duration-500` +
-                      ` hover:shadow-blog-highlight` +
-                      ` rounded-lg` +
-                      ` p-2 my-2` +
-                      ` group`
-                    }
+                    className="max-w-96 my-2 group"
                   >
                     <ArticleCard article={article} />
                   </CarouselItem>

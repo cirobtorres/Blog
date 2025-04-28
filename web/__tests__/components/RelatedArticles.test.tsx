@@ -77,12 +77,7 @@ describe("RelatedArticles", () => {
           `rac-item-${articleMock.documentId}`
         );
         expect(carouselItem).toBeInTheDocument();
-        expect(carouselItem).toHaveClass("max-w-96");
-        expect(carouselItem).toHaveClass("transition-shadow duration-500");
-        expect(carouselItem).toHaveClass("hover:shadow-blog-highlight");
-        expect(carouselItem).toHaveClass("rounded-lg");
-        expect(carouselItem).toHaveClass("p-2 my-2");
-        expect(carouselItem).toHaveClass("group");
+        expect(carouselItem).toHaveClass("max-w-96 my-2 group");
       });
     });
   });
